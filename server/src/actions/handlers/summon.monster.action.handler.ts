@@ -1,8 +1,6 @@
 import { Zone } from 'src/graphql';
-import {
-  GameCardRepository,
-  GameUserRepository,
-} from '../../services/game.service';
+import { GameCardRepository } from '../../repositories/game.card.repository';
+import { GameUserRepository } from '../../repositories/game.user.repository';
 import { GameActionDispatchInput, BattlePosition } from '../../graphql/index';
 import { GameEntity } from '../../entities/game.entity';
 import { EntityManager } from 'typeorm';

@@ -16,7 +16,6 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { Repository, Connection, EntityRepository } from 'typeorm';
-import { GameUserEntity } from 'src/entities/game.user.entity';
 import { GameCardRepository } from '../repositories/game.card.repository';
 import { GameUserRepository } from '../repositories/game.user.repository';
 

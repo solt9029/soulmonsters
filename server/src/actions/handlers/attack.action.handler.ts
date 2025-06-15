@@ -2,11 +2,9 @@ import { MAX_ENERGY } from './../../constants/rule';
 import { GameUserEntity } from 'src/entities/game.user.entity';
 import { GameEntity } from './../../entities/game.entity';
 import { Zone } from 'src/graphql';
-import {
-  GameUserRepository,
-  GameCardRepository,
-  GameStateRepository,
-} from '../../services/game.service';
+import { GameStateRepository } from '../../services/game.service';
+import { GameCardRepository } from '../../repositories/game.card.repository';
+import { GameUserRepository } from '../../repositories/game.user.repository';
 import {
   GameActionDispatchInput,
   BattlePosition,

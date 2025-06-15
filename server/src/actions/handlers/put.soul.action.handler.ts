@@ -1,6 +1,6 @@
 import { GameStateEntity } from './../../entities/game.state.entity';
 import { Zone, StateType } from 'src/graphql';
-import { GameCardRepository } from '../../services/game.service';
+import { GameCardRepository } from '../../repositories/game.card.repository';
 import { GameEntity } from '../../entities/game.entity';
 import { GameActionDispatchInput } from '../../graphql/index';
 import { EntityManager } from 'typeorm';
