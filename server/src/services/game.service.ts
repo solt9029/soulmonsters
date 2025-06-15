@@ -7,7 +7,6 @@ import { GameActionDispatchInput } from './../graphql/index';
 import { UserService } from './user.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
-import { GameCardEntity } from './../entities/game.card.entity';
 import { DeckCardEntity } from './../entities/deck.card.entity';
 import { GameEntity } from './../entities/game.entity';
 import {
@@ -18,6 +17,7 @@ import {
 } from '@nestjs/common';
 import { Repository, Connection, EntityRepository } from 'typeorm';
 import { GameUserEntity } from 'src/entities/game.user.entity';
+import { GameCardRepository } from '../repositories/game.card.repository';
 
 @EntityRepository(GameEntity)
 export class GameRepository extends Repository<GameEntity> {}
@@ -27,9 +27,6 @@ export class GameUserRepository extends Repository<GameUserEntity> {}
 
 @EntityRepository(DeckCardEntity)
 export class DeckCardRepository extends Repository<DeckCardEntity> {}
-
-@EntityRepository(GameCardEntity)
-export class GameCardRepository extends Repository<GameCardEntity> {}
 
 @EntityRepository(GameStateEntity)
 export class GameStateRepository extends Repository<GameStateEntity> {}
