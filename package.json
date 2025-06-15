@@ -16,9 +16,7 @@
     "build:server": "yarn workspace soulmonsters-server build",
     "test:client": "yarn workspace soulmonsters-client test",
     "test:server": "yarn workspace soulmonsters-server test",
-    "lint:client": "yarn workspace soulmonsters-client lint",
-    "lint:server": "yarn workspace soulmonsters-server lint",
-    "install:all": "yarn install"
+    "lint:client": "yarn workspace soulmonsters-client lint"
   },
   "engines": {
     "node": "22.14.0",
