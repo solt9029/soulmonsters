@@ -18,12 +18,10 @@ import {
 import { Repository, Connection, EntityRepository } from 'typeorm';
 import { GameUserEntity } from 'src/entities/game.user.entity';
 import { GameCardRepository } from '../repositories/game.card.repository';
+import { GameUserRepository } from '../repositories/game.user.repository';
 
 @EntityRepository(GameEntity)
 export class GameRepository extends Repository<GameEntity> {}
-
-@EntityRepository(GameUserEntity)
-export class GameUserRepository extends Repository<GameUserEntity> {}
 
 @EntityRepository(DeckCardEntity)
 export class DeckCardRepository extends Repository<DeckCardEntity> {}
@@ -148,14 +146,10 @@ export class GameService {
         throw new BadRequestException('Min Count');
       }
 
-      const waitingGameRawDataPackets: {
-        id: number;
-      }[] = await gameUserRepository.query(
-        'SELECT gameId AS id FROM gameUsers GROUP BY gameId HAVING COUNT(*) = 1 LIMIT 1 LOCK IN SHARE MODE',
-      );
+      const waitingGameId = await gameUserRepository.findWaitingGameId();
 
       // If waiting game does not exist, create new game
-      if (waitingGameRawDataPackets.length === 0) {
+      if (waitingGameId === undefined) {
         const gameInsertResult = await gameRepository.insert({});
         const gameId = gameInsertResult.identifiers[0].id;
         const gameCardEntities = this.gameCardEntityFactory.create(
@@ -182,7 +176,7 @@ export class GameService {
         .setLock('pessimistic_read')
         .leftJoinAndSelect('games.gameUsers', 'gameUsers')
         .where('games.id = :gameId', {
-          gameId: waitingGameRawDataPackets[0].id,
+          gameId: waitingGameId,
         })
         .getOne();
       const gameCardEntities = this.gameCardEntityFactory.create(
