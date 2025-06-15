@@ -1,0 +1,40 @@
+type Card implements Node {
+  id: Int!
+  name: String!
+  kind: Kind!
+  type: Type!
+  attribute: Attribute
+  attack: Int
+  defence: Int
+  cost: Int
+  detail: String
+  picture: String!
+}
+
+enum Kind {
+  MONSTER
+  CIRCLE_MONSTER
+  QUICK
+  BLOCK
+}
+
+enum Attribute {
+  RED
+  BLUE
+  WHITE
+  GREEN
+  PURPLE
+  BLACK
+}
+
+enum Type {
+  CIRCLE
+  TRIANGLE
+  RECTANGLE
+  WHITE_STAR
+  BLACK_STA
+}
+
+type Query {
+  cards: [Card!]!
+}

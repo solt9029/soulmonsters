@@ -1,0 +1,17 @@
+import { ActionStep } from './action-steps';
+
+export const InitialActionStep = {
+  START_DRAW_TIME: ActionStep.COMPLETED,
+  START_ENERGY_TIME: ActionStep.COMPLETED,
+  START_PUT_TIME: ActionStep.COMPLETED,
+  START_SOMETHING_TIME: ActionStep.COMPLETED,
+  START_BATTLE_TIME: ActionStep.COMPLETED,
+  START_END_TIME: ActionStep.COMPLETED,
+  FINISH_END_TIME: ActionStep.COMPLETED,
+  PUT_SOUL: ActionStep.COMPLETED,
+  CHANGE_BATTLE_POSITION: ActionStep.COMPLETED,
+  USE_SOUL_CANON: ActionStep.COMPLETED,
+  SUMMON_MONSTER: ActionStep.COMPLETED,
+  ATTACK: ActionStep.SELECT_ATTACK_TARGET,
+  USE_SOUL_BARRIER: ActionStep.COMPLETED, // TODO: to be changed
+};

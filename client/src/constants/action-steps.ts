@@ -1,0 +1,4 @@
+export enum ActionStep {
+  SELECT_ATTACK_TARGET = 'SELECT_ATTACK_TARGET',
+  COMPLETED = 'COMPLETED',
+}

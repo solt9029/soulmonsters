@@ -1,0 +1,20 @@
+type DeckCard implements Node {
+  id: Int!
+  count: Int!
+  deck: Deck!
+  card: Card!
+}
+
+input DeckCardUpdateInput {
+  deckId: Int!
+  cardId: Int!
+}
+
+type Mutation {
+  plusDeckCard(data: DeckCardUpdateInput!): DeckCard!
+  minusDeckCard(data: DeckCardUpdateInput!): DeckCard!
+}
+
+type Query {
+  deckCards(deckId: Int!): [DeckCard!]!
+}

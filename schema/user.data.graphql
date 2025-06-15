@@ -1,0 +1,10 @@
+type UserData implements Node {
+  id: Int!
+  userId: String!
+  winningCount: Int!
+  losingCount: Int!
+}
+
+type Query {
+  userData(userId: String!): UserData!
+}

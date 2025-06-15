@@ -1,0 +1,19 @@
+type Deck implements Node {
+  id: Int!
+  userId: String!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input DeckCreateInput {
+  name: String!
+}
+
+type Mutation {
+  createDeck(data: DeckCreateInput!): Deck!
+}
+
+type Query {
+  decks: [Deck!]!
+}

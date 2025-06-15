@@ -1,0 +1,13 @@
+query decks {
+  decks {
+    id
+    name
+  }
+}
+
+mutation createDeck($name: String!) {
+  createDeck(data: {name: $name}) {
+    id
+    name
+  }
+}

@@ -1,0 +1,18 @@
+query cards {
+  cards {
+    ...Card
+  }
+}
+
+fragment Card on Card {
+  id
+  name 
+  kind 
+  attribute 
+  type 
+  attack 
+  defence 
+  cost 
+  detail 
+  picture
+}

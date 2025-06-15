@@ -1,0 +1,11 @@
+type GameUser implements Node {
+  id: Int!
+  userId: String!
+  user: User!
+  energy: Int
+  lifePoint: Int!
+  lastViewedAt: DateTime
+  deck: Deck!
+  game: Game!
+  actionTypes: [ActionType!]!
+}

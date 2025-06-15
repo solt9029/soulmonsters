@@ -1,0 +1,41 @@
+enum Phase {
+  DRAW
+  ENERGY
+  PUT
+  SOMETHING
+  BATTLE
+  END
+}
+
+type Game implements Node {
+  id: Int!
+  turnUserId: String
+  phase: Phase
+  winnerUserId: String
+  startedAt: DateTime
+  endedAt: DateTime
+  gameUsers: [GameUser!]!
+  gameCards: [GameCard!]!
+}
+
+input ActionPayload {
+  gameCardId: Int
+  targetGameCardIds: [Int!]
+  costGameCardIds: [Int!]
+  targetGameUserIds: [Int!]
+}
+
+input GameActionDispatchInput {
+  type: ActionType!
+  payload: ActionPayload!
+}
+
+type Query {
+  game(id: Int!): Game!
+  activeGameId: Int
+}
+
+type Mutation {
+  startGame(deckId: Int!): Game!
+  dispatchGameAction(id: Int!, data: GameActionDispatchInput!): Game!
+}

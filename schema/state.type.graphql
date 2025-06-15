@@ -1,0 +1,5 @@
+enum StateType {
+  ATTACK_COUNT
+  PUT_SOUL_COUNT
+  SELF_POWER_CHANGE
+}
