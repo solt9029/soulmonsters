@@ -9,11 +9,14 @@
   ],
   "scripts": {
     "client": "yarn workspace soulmonsters-client",
-    "server": "yarn workspace soulmonsters-server"
-  },
-  "engines": {
-    "node": "22.14.0",
-    "yarn": "1.22.22"
+    "server": "yarn workspace soulmonsters-server",
+    "start:client": "yarn workspace soulmonsters-client start",
+    "start:server": "yarn workspace soulmonsters-server start:dev",
+    "build:client": "yarn workspace soulmonsters-client build",
+    "build:server": "yarn workspace soulmonsters-server build",
+    "test:client": "yarn workspace soulmonsters-client test",
+    "test:server": "yarn workspace soulmonsters-server test",
+    "lint:client": "yarn workspace soulmonsters-client lint"
   },
   "author": "solt9029",
   "license": "UNLICENSED"
