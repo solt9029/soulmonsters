@@ -73,7 +73,6 @@ export type Query = {
   deckCards: Array<DeckCard>;
   decks: Array<Deck>;
   game: Game;
-  gameHistories: Array<GameHistory>;
   userData: UserData;
 };
 
@@ -85,11 +84,6 @@ export type QueryDeckCardsArgs = {
 
 export type QueryGameArgs = {
   id: Scalars['Int'];
-};
-
-
-export type QueryGameHistoriesArgs = {
-  gameId: Scalars['Int'];
 };
 
 
@@ -215,7 +209,6 @@ export type Game = Node & {
   endedAt?: Maybe<Scalars['DateTime']>;
   gameUsers: Array<GameUser>;
   gameCards: Array<GameCard>;
-  gameHistories: Array<GameHistory>;
 };
 
 export type ActionPayload = {
@@ -228,13 +221,6 @@ export type ActionPayload = {
 export type GameActionDispatchInput = {
   type: ActionType;
   payload: ActionPayload;
-};
-
-export type GameHistory = Node & {
-   __typename?: 'GameHistory';
-  id: Scalars['Int'];
-  detail: Scalars['String'];
-  createdAt: Scalars['DateTime'];
 };
 
 export type GameUser = Node & {
