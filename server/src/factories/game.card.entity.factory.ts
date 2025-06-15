@@ -36,9 +36,9 @@ export class GameCardEntityFactory {
 
     const userId = deckCardEntities[0].deck.userId;
 
-    const cardEntities: CardEntity[] = deckCardEntities.flatMap(value => {
-      return new Array(value.count).fill(value.card);
-    });
+    const cardEntities: CardEntity[] = deckCardEntities
+      .map(value => new Array(value.count).fill(value.card))
+      .flat();
     const shuffledCardEntities = shuffle(cardEntities);
 
     return shuffledCardEntities.map((value, index) => {
