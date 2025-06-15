@@ -65,7 +65,7 @@ const {
     GraphQLModule.forRoot({
       playground: true,
       introspection: true,
-      typePaths: ['src/graphql/schema/*.graphql'],
+      typePaths: ['../schema/*.graphql'],
       definitions: {
         path: 'src/graphql/index.ts',
         outputAs: 'class',
