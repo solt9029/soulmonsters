@@ -1,0 +1,29 @@
+{
+  "name": "soulmonsters",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A soul monsters card game with React client and NestJS server",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "client": "yarn workspace soulmonsters-client",
+    "server": "yarn workspace soulmonsters-server",
+    "start:client": "yarn workspace soulmonsters-client start",
+    "start:server": "yarn workspace soulmonsters-server start:dev",
+    "build:client": "yarn workspace soulmonsters-client build",
+    "build:server": "yarn workspace soulmonsters-server build",
+    "test:client": "yarn workspace soulmonsters-client test",
+    "test:server": "yarn workspace soulmonsters-server test",
+    "lint:client": "yarn workspace soulmonsters-client lint",
+    "lint:server": "yarn workspace soulmonsters-server lint",
+    "install:all": "yarn install"
+  },
+  "engines": {
+    "node": "22.14.0",
+    "yarn": "1.22.22"
+  },
+  "author": "solt9029",
+  "license": "UNLICENSED"
+}
