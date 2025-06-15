@@ -17,7 +17,7 @@ import {
 } from '@nestjs/common';
 import { Repository, Connection, EntityRepository } from 'typeorm';
 import { GameUserEntity } from 'src/entities/game.user.entity';
-import { GameCardRepository } from '../repositories';
+import { GameCardRepository } from '../repositories/game.card.repository';
 
 @EntityRepository(GameEntity)
 export class GameRepository extends Repository<GameEntity> {}
@@ -162,7 +162,7 @@ export class GameService {
           deckCardEntities,
           gameId,
         );
-        await gameCardRepository.insertGameCards(gameCardEntities);
+        await gameCardRepository.insert(gameCardEntities);
         await gameUserRepository.insert({
           userId,
           deck: { id: deckId },
@@ -189,7 +189,7 @@ export class GameService {
         deckCardEntities,
         waitingGameEntity.id,
       );
-      await gameCardRepository.insertGameCards(gameCardEntities);
+      await gameCardRepository.insert(gameCardEntities);
       const turnUserId =
         Math.floor(Math.random() * 2) === 1
           ? waitingGameEntity.gameUsers[0].userId
