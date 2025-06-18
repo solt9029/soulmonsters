@@ -1,7 +1,7 @@
 import { GameStateEntity } from './../../entities/game.state.entity';
 import { GameEntity } from './../../entities/game.entity';
 import { EntityManager } from 'typeorm';
-import { GameRepository } from 'src/services/game.service';
+import { GameRepository } from 'src/repositories/game.repository';
 import { StateType } from 'src/graphql';
 
 function isYourAttackCountState(gameState: GameStateEntity, userId: string) {

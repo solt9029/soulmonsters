@@ -8,8 +8,8 @@ import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { GameEntity } from './../entities/game.entity';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
 import { Connection } from 'typeorm';
-import { GameCardRepository } from '../repositories/game.card.repository';
-import { GameUserRepository } from '../repositories/game.user.repository';
+import { GameCardRepository } from 'src/repositories/game.card.repository';
+import { GameUserRepository } from 'src/repositories/game.user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
 import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 

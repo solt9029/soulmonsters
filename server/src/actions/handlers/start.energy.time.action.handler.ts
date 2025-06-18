@@ -1,5 +1,5 @@
 import { Phase } from '../../graphql/index';
-import { GameRepository } from '../../services/game.service';
+import { GameRepository } from 'src/repositories/game.repository';
 import { GameUserRepository } from '../../repositories/game.user.repository';
 import { GameEntity } from '../../entities/game.entity';
 import { EntityManager } from 'typeorm';

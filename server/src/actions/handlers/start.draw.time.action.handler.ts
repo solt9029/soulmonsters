@@ -3,7 +3,7 @@ import { Phase } from '../../graphql/index';
 import { GameCardRepository } from '../../repositories/game.card.repository';
 import { GameEntity } from '../../entities/game.entity';
 import { EntityManager } from 'typeorm';
-import { GameRepository } from 'src/services/game.service';
+import { GameRepository } from 'src/repositories/game.repository';
 
 export async function handleStartDrawTimeAction(
   manager: EntityManager,
