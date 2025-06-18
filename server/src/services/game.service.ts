@@ -3,12 +3,11 @@ import { handleAction } from './../actions/action.handler';
 import { ActionValidator } from '../actions/action.validator';
 import { ActionGrantor } from '../actions/action.grantor';
 import { GameActionDispatchInput } from './../graphql/index';
-import { UserService } from './user.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { GameEntity } from './../entities/game.entity';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
-import { Repository, Connection, EntityRepository } from 'typeorm';
+import { Connection } from 'typeorm';
 import { GameCardRepository } from '../repositories/game.card.repository';
 import { GameUserRepository } from '../repositories/game.user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
@@ -18,8 +17,7 @@ import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 export class GameService {
   constructor(
     @InjectRepository(GameEntity)
-    private readonly gameRepository: Repository<GameEntity>,
-    private readonly userService: UserService,
+    private readonly gameRepository: GameRepository,
     private connection: Connection,
     private gameCardEntityFactory: GameCardEntityFactory,
     private actionGrantor: ActionGrantor,
