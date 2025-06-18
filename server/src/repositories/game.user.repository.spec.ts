@@ -21,9 +21,7 @@ describe('GameUserRepository', () => {
       ],
     }).compile();
 
-    gameUserRepository = module.get<GameUserRepository>(
-      getRepositoryToken(GameUserEntity),
-    );
+    gameUserRepository = module.get<GameUserRepository>(getRepositoryToken(GameUserEntity));
 
     const connection = getConnection();
     gameRepository = connection.getRepository(GameEntity);
@@ -33,10 +31,7 @@ describe('GameUserRepository', () => {
   });
 
   // Factory methods for test data creation
-  const createDeck = async (
-    userId: string,
-    name: string,
-  ): Promise<DeckEntity> => {
+  const createDeck = async (userId: string, name: string): Promise<DeckEntity> => {
     const deck = deckRepository.create({
       userId,
       name,
@@ -54,7 +49,7 @@ describe('GameUserRepository', () => {
     game: GameEntity,
     deck: DeckEntity,
     options: Partial<GameUserEntity> = {},
-  ): Promise<GameUserEntity> => {
+  ) => {
     const gameUser = gameUserRepository.create({
       userId,
       energy: 0,
@@ -67,14 +62,7 @@ describe('GameUserRepository', () => {
     return await gameUserRepository.save(gameUser);
   };
 
-  const createGameWithSinglePlayer = async (
-    userId: string = 'user1',
-    deckName: string = 'Test Deck',
-  ): Promise<{
-    game: GameEntity;
-    deck: DeckEntity;
-    gameUser: GameUserEntity;
-  }> => {
+  const createGameWithSinglePlayer = async (userId: string = 'user1', deckName: string = 'Test Deck') => {
     const deck = await createDeck(userId, deckName);
     const game = await createGame();
     const gameUser = await createGameUser(userId, game, deck);
@@ -86,13 +74,7 @@ describe('GameUserRepository', () => {
     user2Id: string = 'user2',
     deck1Name: string = 'Test Deck 1',
     deck2Name: string = 'Test Deck 2',
-  ): Promise<{
-    game: GameEntity;
-    deck1: DeckEntity;
-    deck2: DeckEntity;
-    gameUser1: GameUserEntity;
-    gameUser2: GameUserEntity;
-  }> => {
+  ) => {
     const deck1 = await createDeck(user1Id, deck1Name);
     const deck2 = await createDeck(user2Id, deck2Name);
     const game = await createGame();
@@ -125,10 +107,7 @@ describe('GameUserRepository', () => {
     });
 
     it('should return the first gameId when multiple waiting games exist', async () => {
-      const { game: game1 } = await createGameWithSinglePlayer(
-        'user1',
-        'Test Deck 1',
-      );
+      const { game: game1 } = await createGameWithSinglePlayer('user1', 'Test Deck 1');
       await createGameWithSinglePlayer('user2', 'Test Deck 2');
 
       const result = await gameUserRepository.findWaitingGameId();
@@ -137,16 +116,8 @@ describe('GameUserRepository', () => {
     });
 
     it('should return waiting game ID when both waiting and full games exist', async () => {
-      await createGameWithTwoPlayers(
-        'user1',
-        'user2',
-        'Test Deck 1',
-        'Test Deck 2',
-      );
-      const { game: waitingGame } = await createGameWithSinglePlayer(
-        'user3',
-        'Test Deck 3',
-      );
+      await createGameWithTwoPlayers('user1', 'user2', 'Test Deck 1', 'Test Deck 2');
+      const { game: waitingGame } = await createGameWithSinglePlayer('user3', 'Test Deck 3');
 
       const result = await gameUserRepository.findWaitingGameId();
 
