@@ -86,7 +86,6 @@ describe('GameUserRepository', () => {
   describe('findWaitingGameId', () => {
     it('should return undefined when no waiting game exists', async () => {
       const result = await gameUserRepository.findWaitingGameId();
-
       expect(result).toBeUndefined();
     });
 
@@ -94,7 +93,6 @@ describe('GameUserRepository', () => {
       const { game } = await createGameWithSinglePlayer();
 
       const result = await gameUserRepository.findWaitingGameId();
-
       expect(result).toBe(game.id);
     });
 
@@ -102,7 +100,6 @@ describe('GameUserRepository', () => {
       await createGameWithTwoPlayers();
 
       const result = await gameUserRepository.findWaitingGameId();
-
       expect(result).toBeUndefined();
     });
 
@@ -111,7 +108,6 @@ describe('GameUserRepository', () => {
       await createGameWithSinglePlayer('user2', 'Test Deck 2');
 
       const result = await gameUserRepository.findWaitingGameId();
-
       expect(result).toBe(game1.id);
     });
 
@@ -120,7 +116,6 @@ describe('GameUserRepository', () => {
       const { game: waitingGame } = await createGameWithSinglePlayer('user3', 'Test Deck 3');
 
       const result = await gameUserRepository.findWaitingGameId();
-
       expect(result).toBe(waitingGame.id);
     });
   });
