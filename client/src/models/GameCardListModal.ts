@@ -6,9 +6,7 @@ export interface GameCardListModalInterface {
   isOpen: boolean;
 }
 
-export default class GameCardListModal extends Record<
-  GameCardListModalInterface
->(
+export default class GameCardListModal extends Record<GameCardListModalInterface>(
   {
     data: [],
     isOpen: false,
