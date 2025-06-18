@@ -1,6 +1,6 @@
-require('dotenv').config({ path: '.env.test' });
+const env = require('dotenv').config({ path: require('path').resolve(__dirname, './.env.test') });
 
-const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYNCHRONIZE } = process.env;
+const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYNCHRONIZE } = env.parsed;
 
 module.exports = {
   type: DB_TYPE,
