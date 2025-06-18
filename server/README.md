@@ -25,3 +25,9 @@ npm run typeorm migration:run
 
 npm run start:dev
 ```
+
+## migration
+
+```sh
+yarn run typeorm migration:create -n FileName
+```
