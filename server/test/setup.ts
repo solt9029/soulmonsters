@@ -15,8 +15,8 @@ beforeAll(async () => {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     entities: [path.resolve(__dirname, '../src/entities/*.ts')],
-    synchronize: true,
-    dropSchema: true,
+    synchronize: process.env.DB_SYNCHRONIZE?.toLowerCase() === 'true',
+    dropSchema: false,
     logging: false,
   });
 });
