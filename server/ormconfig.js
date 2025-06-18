@@ -1,14 +1,8 @@
-require('dotenv').config();
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+});
 
-const {
-  DB_TYPE,
-  DB_HOST,
-  DB_PORT,
-  DB_USERNAME,
-  DB_PASSWORD,
-  DB_DATABASE,
-  DB_SYNCHRONIZE,
-} = process.env;
+const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYNCHRONIZE } = process.env;
 
 module.exports = {
   type: DB_TYPE,
@@ -17,7 +11,7 @@ module.exports = {
   username: DB_USERNAME,
   password: DB_PASSWORD,
   database: DB_DATABASE,
-  synchronize: DB_SYNCHRONIZE,
+  synchronize: DB_SYNCHRONIZE?.toLowerCase() === 'true',
   logging: false,
   entities: ['src/entities/*.ts'],
   migrations: ['src/database/migrations/*.ts'],
