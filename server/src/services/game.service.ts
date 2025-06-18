@@ -24,35 +24,18 @@ export class GameService {
     private actionValidator: ActionValidator,
   ) {}
 
-  async findActiveGameByUserId(userId: string): Promise<GameEntity> {
-    return await this.gameRepository
-      .createQueryBuilder('games')
-      .leftJoinAndSelect('games.gameUsers', 'gameUsers')
-      .where('games.winnerUserId IS NULL')
-      .andWhere('gameUsers.userId = :userId', { userId })
-      .getOne();
+  async findActiveGameByUserId(userId: string): Promise<GameEntity | undefined> {
+    return await this.gameRepository.findActiveGameByUserId(userId);
   }
 
-  async findById(id: number): Promise<GameEntity> {
-    return await this.gameRepository.findOne({
-      where: { id },
-      relations: ['gameUsers', 'gameUsers.deck', 'gameCards', 'gameCards.card', 'gameStates', 'gameStates.gameCard'],
-    });
+  async findById(id: number): Promise<GameEntity | undefined> {
+    return await this.gameRepository.findByIdWithRelations(id);
   }
 
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
     return this.connection.transaction(async manager => {
       const gameRepository = manager.getCustomRepository(GameRepository);
-      const gameEntity = await gameRepository
-        .createQueryBuilder('games')
-        .setLock('pessimistic_read')
-        .leftJoinAndSelect('games.gameUsers', 'gameUsers')
-        .leftJoinAndSelect('games.gameCards', 'gameCards')
-        .leftJoinAndSelect('gameCards.card', 'card')
-        .leftJoinAndSelect('games.gameStates', 'gameStates')
-        .leftJoinAndSelect('gameStates.gameCard', 'gameCard')
-        .where('games.id = :id', { id })
-        .getOne();
+      const gameEntity = await gameRepository.findByIdWithRelationsAndLock(id);
 
       const grantedGameEntity = this.actionGrantor.grantActions(gameEntity, userId);
 
@@ -78,12 +61,7 @@ export class GameService {
       const gameUserRepository = manager.getCustomRepository(GameUserRepository);
       const gameCardRepository = manager.getCustomRepository(GameCardRepository);
 
-      const userActiveGameEntity = await gameRepository
-        .createQueryBuilder('games')
-        .leftJoinAndSelect('games.gameUsers', 'gameUsers')
-        .where('games.winnerUserId IS NULL')
-        .andWhere('gameUsers.userId = :userId', { userId })
-        .getOne();
+      const userActiveGameEntity = await gameRepository.findActiveGameByUserId(userId);
       if (userActiveGameEntity !== undefined) {
         throw new BadRequestException('User Active');
       }
@@ -118,21 +96,11 @@ export class GameService {
           game: { id: gameId },
         });
 
-        return await gameRepository.findOne({
-          where: { id: gameId },
-          relations: ['gameUsers', 'gameUsers.deck'],
-        });
+        return await gameRepository.findByIdWithGameUsersAndDeck(gameId);
       }
 
       // join the waiting game
-      const waitingGameEntity = await gameRepository
-        .createQueryBuilder('games')
-        .setLock('pessimistic_read')
-        .leftJoinAndSelect('games.gameUsers', 'gameUsers')
-        .where('games.id = :gameId', {
-          gameId: waitingGameId,
-        })
-        .getOne();
+      const waitingGameEntity = await gameRepository.findByIdWithRelationsAndLock(waitingGameId);
       const gameCardEntities = this.gameCardEntityFactory.create(deckCardEntities, waitingGameEntity.id);
       await gameCardRepository.insert(gameCardEntities);
       const turnUserId = Math.floor(Math.random() * 2) === 1 ? waitingGameEntity.gameUsers[0].userId : userId;
@@ -148,10 +116,7 @@ export class GameService {
         { energy: turnUserId === userId ? 1 : 0 },
       );
       await gameRepository.update({ id: waitingGameEntity.id }, { startedAt: new Date(), turnUserId });
-      return await gameRepository.findOne({
-        where: { id: waitingGameEntity.id },
-        relations: ['gameUsers', 'gameUsers.deck'],
-      });
+      return await gameRepository.findByIdWithGameUsersAndDeck(waitingGameEntity.id);
     });
   }
 }
