@@ -67,60 +67,24 @@ export class Initialize1749995983797 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      'ALTER TABLE `deckCards` DROP FOREIGN KEY `FK_2f311ec3f91467ed53191796250`',
-      undefined,
-    );
-    await queryRunner.query(
-      'ALTER TABLE `deckCards` DROP FOREIGN KEY `FK_f6ec9673aa14e8b3e34c8572ffd`',
-      undefined,
-    );
-    await queryRunner.query(
-      'ALTER TABLE `gameUsers` DROP FOREIGN KEY `FK_3bfa9c030d76978b74ef2a329c0`',
-      undefined,
-    );
-    await queryRunner.query(
-      'ALTER TABLE `gameUsers` DROP FOREIGN KEY `FK_53bd8bf8475ab3cb883ba3fb0eb`',
-      undefined,
-    );
-    await queryRunner.query(
-      'ALTER TABLE `gameStates` DROP FOREIGN KEY `FK_7d035df69448fca8d246e6147e2`',
-      undefined,
-    );
-    await queryRunner.query(
-      'ALTER TABLE `gameStates` DROP FOREIGN KEY `FK_144387f1094beb080d9cf0c5036`',
-      undefined,
-    );
-    await queryRunner.query(
-      'ALTER TABLE `gameCards` DROP FOREIGN KEY `FK_a19cbc424172d0e792c89a2603e`',
-      undefined,
-    );
-    await queryRunner.query(
-      'ALTER TABLE `gameCards` DROP FOREIGN KEY `FK_12fe977b2121f39769a24e28923`',
-      undefined,
-    );
+    await queryRunner.query('ALTER TABLE `deckCards` DROP FOREIGN KEY `FK_2f311ec3f91467ed53191796250`', undefined);
+    await queryRunner.query('ALTER TABLE `deckCards` DROP FOREIGN KEY `FK_f6ec9673aa14e8b3e34c8572ffd`', undefined);
+    await queryRunner.query('ALTER TABLE `gameUsers` DROP FOREIGN KEY `FK_3bfa9c030d76978b74ef2a329c0`', undefined);
+    await queryRunner.query('ALTER TABLE `gameUsers` DROP FOREIGN KEY `FK_53bd8bf8475ab3cb883ba3fb0eb`', undefined);
+    await queryRunner.query('ALTER TABLE `gameStates` DROP FOREIGN KEY `FK_7d035df69448fca8d246e6147e2`', undefined);
+    await queryRunner.query('ALTER TABLE `gameStates` DROP FOREIGN KEY `FK_144387f1094beb080d9cf0c5036`', undefined);
+    await queryRunner.query('ALTER TABLE `gameCards` DROP FOREIGN KEY `FK_a19cbc424172d0e792c89a2603e`', undefined);
+    await queryRunner.query('ALTER TABLE `gameCards` DROP FOREIGN KEY `FK_12fe977b2121f39769a24e28923`', undefined);
     await queryRunner.query('DROP TABLE `cards`', undefined);
-    await queryRunner.query(
-      'DROP INDEX `IDX_7cf4fca9445dfa0f5247ec78d7` ON `deckCards`',
-      undefined,
-    );
+    await queryRunner.query('DROP INDEX `IDX_7cf4fca9445dfa0f5247ec78d7` ON `deckCards`', undefined);
     await queryRunner.query('DROP TABLE `deckCards`', undefined);
     await queryRunner.query('DROP TABLE `decks`', undefined);
-    await queryRunner.query(
-      'DROP INDEX `IDX_65236f59399a6fe1e89c392d6c` ON `gameUsers`',
-      undefined,
-    );
-    await queryRunner.query(
-      'DROP INDEX `IDX_52a96d957f59a6e11a76fd9f15` ON `gameUsers`',
-      undefined,
-    );
+    await queryRunner.query('DROP INDEX `IDX_65236f59399a6fe1e89c392d6c` ON `gameUsers`', undefined);
+    await queryRunner.query('DROP INDEX `IDX_52a96d957f59a6e11a76fd9f15` ON `gameUsers`', undefined);
     await queryRunner.query('DROP TABLE `gameUsers`', undefined);
     await queryRunner.query('DROP TABLE `games`', undefined);
     await queryRunner.query('DROP TABLE `gameStates`', undefined);
-    await queryRunner.query(
-      'DROP INDEX `IDX_741d94d1201afdd81dae35eccc` ON `gameCards`',
-      undefined,
-    );
+    await queryRunner.query('DROP INDEX `IDX_741d94d1201afdd81dae35eccc` ON `gameCards`', undefined);
     await queryRunner.query('DROP TABLE `gameCards`', undefined);
   }
 }

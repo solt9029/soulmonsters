@@ -23,15 +23,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameUserEntity } from 'src/entities/game.user.entity';
 
-const {
-  DB_TYPE,
-  DB_HOST,
-  DB_PORT,
-  DB_USERNAME,
-  DB_PASSWORD,
-  DB_DATABASE,
-  DB_SYNCHRONIZE,
-} = process.env;
+const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYNCHRONIZE } = process.env;
 
 @Module({
   imports: [
@@ -42,15 +34,7 @@ const {
       username: DB_USERNAME,
       password: DB_PASSWORD,
       database: DB_DATABASE,
-      entities: [
-        DeckEntity,
-        CardEntity,
-        DeckCardEntity,
-        GameEntity,
-        GameUserEntity,
-        GameCardEntity,
-        GameStateEntity,
-      ],
+      entities: [DeckEntity, CardEntity, DeckCardEntity, GameEntity, GameUserEntity, GameCardEntity, GameStateEntity],
       synchronize: DB_SYNCHRONIZE?.toLowerCase() === 'true',
     }),
     TypeOrmModule.forFeature([

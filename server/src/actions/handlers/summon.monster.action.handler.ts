@@ -14,9 +14,7 @@ export async function handleSummonMonsterAction(
   const gameCardRepository = manager.getCustomRepository(GameCardRepository);
   const gameUserRepository = manager.getCustomRepository(GameUserRepository);
 
-  const gameCard = gameEntity.gameCards.find(
-    value => value.id === data.payload.gameCardId,
-  );
+  const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
 
   // reduce energy
   await gameUserRepository.query(
@@ -24,12 +22,9 @@ export async function handleSummonMonsterAction(
   );
 
   const yourBattleGameCards = gameEntity.gameCards
-    .filter(
-      value => value.zone === Zone.BATTLE && value.currentUserId === userId,
-    )
+    .filter(value => value.zone === Zone.BATTLE && value.currentUserId === userId)
     .sort((a, b) => b.position - a.position);
-  const yourBattleGameCardMaxPosition =
-    yourBattleGameCards.length > 0 ? yourBattleGameCards[0].position : -1;
+  const yourBattleGameCardMaxPosition = yourBattleGameCards.length > 0 ? yourBattleGameCards[0].position : -1;
 
   // put the target monster card on your battle zone
   await gameCardRepository.update(

@@ -9,12 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { DeckCardEntity } from './../entities/deck.card.entity';
 import { GameEntity } from './../entities/game.entity';
-import {
-  Injectable,
-  BadRequestException,
-  HttpStatus,
-  HttpException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
 import { Repository, Connection, EntityRepository } from 'typeorm';
 import { GameCardRepository } from '../repositories/game.card.repository';
 import { GameUserRepository } from '../repositories/game.user.repository';
@@ -52,22 +47,11 @@ export class GameService {
   async findById(id: number): Promise<GameEntity> {
     return await this.gameRepository.findOne({
       where: { id },
-      relations: [
-        'gameUsers',
-        'gameUsers.deck',
-        'gameCards',
-        'gameCards.card',
-        'gameStates',
-        'gameStates.gameCard',
-      ],
+      relations: ['gameUsers', 'gameUsers.deck', 'gameCards', 'gameCards.card', 'gameStates', 'gameStates.gameCard'],
     });
   }
 
-  async dispatchAction(
-    id: number,
-    userId: string,
-    data: GameActionDispatchInput,
-  ) {
+  async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
     return this.connection.transaction(async manager => {
       const gameRepository = manager.getCustomRepository(GameRepository);
       const gameEntity = await gameRepository
@@ -81,10 +65,7 @@ export class GameService {
         .where('games.id = :id', { id })
         .getOne();
 
-      const grantedGameEntity = this.actionGrantor.grantActions(
-        gameEntity,
-        userId,
-      );
+      const grantedGameEntity = this.actionGrantor.grantActions(gameEntity, userId);
 
       this.actionValidator.validateActions(data, grantedGameEntity, userId);
 
@@ -103,16 +84,10 @@ export class GameService {
 
   async start(userId: string, deckId: number) {
     return this.connection.transaction(async manager => {
-      const deckCardRepository = manager.getCustomRepository(
-        DeckCardRepository,
-      );
+      const deckCardRepository = manager.getCustomRepository(DeckCardRepository);
       const gameRepository = manager.getCustomRepository(GameRepository);
-      const gameUserRepository = manager.getCustomRepository(
-        GameUserRepository,
-      );
-      const gameCardRepository = manager.getCustomRepository(
-        GameCardRepository,
-      );
+      const gameUserRepository = manager.getCustomRepository(GameUserRepository);
+      const gameCardRepository = manager.getCustomRepository(GameCardRepository);
 
       const userActiveGameEntity = await gameRepository
         .createQueryBuilder('games')
@@ -131,16 +106,10 @@ export class GameService {
         .leftJoinAndSelect('deckCards.deck', 'deck')
         .where('deckCards.deckId = :deckId', { deckId })
         .getMany();
-      if (
-        deckCardEntities.length > 0 &&
-        deckCardEntities[0].deck.userId !== userId
-      ) {
+      if (deckCardEntities.length > 0 && deckCardEntities[0].deck.userId !== userId) {
         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
       }
-      const totalCount = deckCardEntities.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.count,
-        0,
-      );
+      const totalCount = deckCardEntities.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0);
       if (totalCount < MIN_DECK_CARD_COUNT) {
         throw new BadRequestException('Min Count');
       }
@@ -151,10 +120,7 @@ export class GameService {
       if (waitingGameId === undefined) {
         const gameInsertResult = await gameRepository.insert({});
         const gameId = gameInsertResult.identifiers[0].id;
-        const gameCardEntities = this.gameCardEntityFactory.create(
-          deckCardEntities,
-          gameId,
-        );
+        const gameCardEntities = this.gameCardEntityFactory.create(deckCardEntities, gameId);
         await gameCardRepository.insert(gameCardEntities);
         await gameUserRepository.insert({
           userId,
@@ -178,15 +144,9 @@ export class GameService {
           gameId: waitingGameId,
         })
         .getOne();
-      const gameCardEntities = this.gameCardEntityFactory.create(
-        deckCardEntities,
-        waitingGameEntity.id,
-      );
+      const gameCardEntities = this.gameCardEntityFactory.create(deckCardEntities, waitingGameEntity.id);
       await gameCardRepository.insert(gameCardEntities);
-      const turnUserId =
-        Math.floor(Math.random() * 2) === 1
-          ? waitingGameEntity.gameUsers[0].userId
-          : userId;
+      const turnUserId = Math.floor(Math.random() * 2) === 1 ? waitingGameEntity.gameUsers[0].userId : userId;
       await gameUserRepository.insert({
         userId,
         deck: { id: deckId },
@@ -198,10 +158,7 @@ export class GameService {
         { userId: waitingGameEntity.gameUsers[0].userId },
         { energy: turnUserId === userId ? 1 : 0 },
       );
-      await gameRepository.update(
-        { id: waitingGameEntity.id },
-        { startedAt: new Date(), turnUserId },
-      );
+      await gameRepository.update({ id: waitingGameEntity.id }, { startedAt: new Date(), turnUserId });
       return await gameRepository.findOne({
         where: { id: waitingGameEntity.id },
         relations: ['gameUsers', 'gameUsers.deck'],

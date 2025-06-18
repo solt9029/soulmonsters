@@ -9,11 +9,7 @@ import { validateAttackAction } from './validators/attack.action.validator';
 
 @Injectable()
 export class ActionValidator {
-  validateActions(
-    data: GameActionDispatchInput,
-    grantedGame: GameEntity,
-    userId: string,
-  ) {
+  validateActions(data: GameActionDispatchInput, grantedGame: GameEntity, userId: string) {
     switch (data.type) {
       case ActionType.START_DRAW_TIME:
         return validateStartDrawTimeAction(grantedGame, userId);

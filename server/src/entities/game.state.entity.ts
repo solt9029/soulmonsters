@@ -1,14 +1,7 @@
 import { GameEntity } from './game.entity';
 import { GameCardEntity } from './game.card.entity';
 import { StateType } from '../graphql/index';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 
 type State =
   | {

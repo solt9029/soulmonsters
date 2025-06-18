@@ -1,14 +1,7 @@
 import { GameUserEntity } from './game.user.entity';
 import { DeckCardEntity } from './deck.card.entity';
 import { Deck } from './../graphql/index';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  CreateDateColumn,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: 'decks' })
 export class DeckEntity extends Deck {

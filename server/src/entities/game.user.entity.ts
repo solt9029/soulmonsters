@@ -1,15 +1,7 @@
 import { GameUser } from './../graphql/index';
 import { DeckEntity } from './deck.entity';
 import { GameEntity } from './game.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  Unique,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({ name: 'gameUsers' })
 @Unique(['userId', 'game'])

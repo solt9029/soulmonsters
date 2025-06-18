@@ -52,10 +52,7 @@ export class GameResolver {
   }
 
   @Mutation()
-  async startGame(
-    @User() user: auth.DecodedIdToken,
-    @Args('deckId') deckId: number,
-  ) {
+  async startGame(@User() user: auth.DecodedIdToken, @Args('deckId') deckId: number) {
     return await this.gameService.start(user.uid, deckId);
   }
 

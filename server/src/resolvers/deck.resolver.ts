@@ -17,10 +17,7 @@ export class DeckResolver {
   }
 
   @Mutation()
-  async createDeck(
-    @User() user: auth.DecodedIdToken,
-    @Args('data') data: ValidatedDeckCreateInput,
-  ) {
+  async createDeck(@User() user: auth.DecodedIdToken, @Args('data') data: ValidatedDeckCreateInput) {
     return await this.deckService.create(user.uid, data.name);
   }
 }

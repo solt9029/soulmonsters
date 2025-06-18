@@ -5,37 +5,18 @@ import { GameRepository } from 'src/services/game.service';
 import { StateType } from 'src/graphql';
 
 function isYourAttackCountState(gameState: GameStateEntity, userId: string) {
-  return (
-    gameState.state.type === StateType.ATTACK_COUNT &&
-    gameState.gameCard.currentUserId === userId
-  );
+  return gameState.state.type === StateType.ATTACK_COUNT && gameState.gameCard.currentUserId === userId;
 }
 
-function isYourPutSoulCountState(
-  gameState: GameStateEntity,
-  gameUserId: number,
-) {
-  return (
-    gameState.state.type === StateType.PUT_SOUL_COUNT &&
-    gameState.state.data.gameUserId === gameUserId
-  );
+function isYourPutSoulCountState(gameState: GameStateEntity, gameUserId: number) {
+  return gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId;
 }
 
-export async function handleFinishEndTimeAction(
-  manager: EntityManager,
-  userId: string,
-  id: number,
-  game: GameEntity,
-) {
+export async function handleFinishEndTimeAction(manager: EntityManager, userId: string, id: number, game: GameEntity) {
   const gameRepository = manager.getCustomRepository(GameRepository);
-  const opponentGameUser = game.gameUsers.find(
-    value => value.userId !== userId,
-  );
+  const opponentGameUser = game.gameUsers.find(value => value.userId !== userId);
 
-  await gameRepository.update(
-    { id },
-    { phase: null, turnUserId: opponentGameUser.userId },
-  );
+  await gameRepository.update({ id }, { phase: null, turnUserId: opponentGameUser.userId });
 
   // delete rule states
   const yourGameUser = game.gameUsers.find(value => value.userId === userId);
@@ -45,9 +26,7 @@ export async function handleFinishEndTimeAction(
   });
   const filteredGameStateIds = gameStates
     .filter(
-      gameState =>
-        isYourAttackCountState(gameState, userId) ||
-        isYourPutSoulCountState(gameState, yourGameUser.id),
+      gameState => isYourAttackCountState(gameState, userId) || isYourPutSoulCountState(gameState, yourGameUser.id),
     )
     .map(gameState => gameState.id);
   manager.delete(GameStateEntity, filteredGameStateIds);

@@ -13,9 +13,7 @@ export async function handleStartEnergyTimeAction(
 ) {
   const gameUserRepository = manager.getCustomRepository(GameUserRepository);
   const gameRepository = manager.getCustomRepository(GameRepository);
-  const yourGameUser = gameEntity.gameUsers.find(
-    value => value.userId === userId,
-  );
+  const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
   if (!yourGameUser) {
     throw new BadRequestException('User Not Found');
   }
@@ -23,9 +21,6 @@ export async function handleStartEnergyTimeAction(
   if (newEnergy > 8) {
     newEnergy = 8;
   }
-  await gameUserRepository.update(
-    { userId, game: { id } },
-    { energy: newEnergy },
-  );
+  await gameUserRepository.update({ userId, game: { id } }, { energy: newEnergy });
   await gameRepository.update({ id }, { phase: Phase.ENERGY });
 }

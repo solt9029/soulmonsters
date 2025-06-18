@@ -3,13 +3,7 @@ import { DeckCardUpdateInput } from './../graphql/index';
 import { DeckCardService } from './../services/deck.card.service';
 import { AuthGuard } from './../guards/auth.guard';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import {
-  UseGuards,
-  HttpStatus,
-  HttpException,
-  BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
+import { UseGuards, HttpStatus, HttpException, BadRequestException, NotFoundException } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 
@@ -23,22 +17,13 @@ export class DeckCardResolver {
     return 1;
   }
 
-  constructor(
-    private readonly deckCardService: DeckCardService,
-    private readonly deckService: DeckService,
-  ) {}
+  constructor(private readonly deckCardService: DeckCardService, private readonly deckService: DeckService) {}
 
   @Query()
-  async deckCards(
-    @User() user: auth.DecodedIdToken,
-    @Args('deckId') deckId: number,
-  ) {
+  async deckCards(@User() user: auth.DecodedIdToken, @Args('deckId') deckId: number) {
     const deckCardEntities = await this.deckCardService.findByDeckId(deckId);
 
-    if (
-      deckCardEntities.length > 0 &&
-      deckCardEntities[0].deck.userId !== user.uid
-    ) {
+    if (deckCardEntities.length > 0 && deckCardEntities[0].deck.userId !== user.uid) {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
 
@@ -46,16 +31,10 @@ export class DeckCardResolver {
   }
 
   @Mutation()
-  async plusDeckCard(
-    @Args('data') data: DeckCardUpdateInput,
-    @User() user: auth.DecodedIdToken,
-  ) {
+  async plusDeckCard(@Args('data') data: DeckCardUpdateInput, @User() user: auth.DecodedIdToken) {
     const { deckId, cardId } = data;
 
-    const deckCardEntity = await this.deckCardService.findByDeckIdAndCardId(
-      deckId,
-      cardId,
-    );
+    const deckCardEntity = await this.deckCardService.findByDeckIdAndCardId(deckId, cardId);
 
     if (deckCardEntity !== undefined) {
       if (deckCardEntity.deck.userId !== user.uid) {
@@ -64,10 +43,7 @@ export class DeckCardResolver {
       if (deckCardEntity.count >= DeckCardResolver.MAX_COUNT) {
         throw new BadRequestException('Max Count');
       }
-      return await this.deckCardService.updateCountById(
-        deckCardEntity.id,
-        deckCardEntity.count + 1,
-      );
+      return await this.deckCardService.updateCountById(deckCardEntity.id, deckCardEntity.count + 1);
     }
 
     const deckEntity = await this.deckService.findById(deckId);
@@ -81,16 +57,10 @@ export class DeckCardResolver {
   }
 
   @Mutation()
-  async minusDeckCard(
-    @Args('data') data: DeckCardUpdateInput,
-    @User() user: auth.DecodedIdToken,
-  ) {
+  async minusDeckCard(@Args('data') data: DeckCardUpdateInput, @User() user: auth.DecodedIdToken) {
     const { deckId, cardId } = data;
 
-    const deckCardEntity = await this.deckCardService.findByDeckIdAndCardId(
-      deckId,
-      cardId,
-    );
+    const deckCardEntity = await this.deckCardService.findByDeckIdAndCardId(deckId, cardId);
 
     if (deckCardEntity === undefined) {
       throw new NotFoundException();
@@ -101,10 +71,7 @@ export class DeckCardResolver {
     }
 
     if (deckCardEntity.count > DeckCardResolver.MIN_COUNT) {
-      return await this.deckCardService.updateCountById(
-        deckCardEntity.id,
-        deckCardEntity.count - 1,
-      );
+      return await this.deckCardService.updateCountById(deckCardEntity.id, deckCardEntity.count - 1);
     }
 
     return await this.deckCardService.delete(deckCardEntity.id);

@@ -17,10 +17,7 @@ export class DeckCardService {
     });
   }
 
-  async findByDeckIdAndCardId(
-    deckId: number,
-    cardId: number,
-  ): Promise<DeckCardEntity | undefined> {
+  async findByDeckIdAndCardId(deckId: number, cardId: number): Promise<DeckCardEntity | undefined> {
     return await this.deckCardRepository.findOne({
       where: { deck: { id: deckId }, card: { id: cardId } },
       relations: ['card', 'deck'],

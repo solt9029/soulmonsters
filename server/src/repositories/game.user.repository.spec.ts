@@ -62,7 +62,7 @@ describe('GameUserRepository', () => {
     return await gameUserRepository.save(gameUser);
   };
 
-  const createGameWithSinglePlayer = async (userId: string = 'user1', deckName: string = 'Test Deck') => {
+  const createGameWithSinglePlayer = async (userId = 'user1', deckName = 'Test Deck') => {
     const deck = await createDeck(userId, deckName);
     const game = await createGame();
     const gameUser = await createGameUser(userId, game, deck);
@@ -70,10 +70,10 @@ describe('GameUserRepository', () => {
   };
 
   const createGameWithTwoPlayers = async (
-    user1Id: string = 'user1',
-    user2Id: string = 'user2',
-    deck1Name: string = 'Test Deck 1',
-    deck2Name: string = 'Test Deck 2',
+    user1Id = 'user1',
+    user2Id = 'user2',
+    deck1Name = 'Test Deck 1',
+    deck2Name = 'Test Deck 2',
   ) => {
     const deck1 = await createDeck(user1Id, deck1Name);
     const deck2 = await createDeck(user2Id, deck2Name);

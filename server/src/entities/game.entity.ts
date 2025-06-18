@@ -2,14 +2,7 @@ import { GameStateEntity } from './game.state.entity';
 import { GameCardEntity } from './game.card.entity';
 import { GameUserEntity } from './game.user.entity';
 import { Game, Phase } from './../graphql/index';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: 'games' })
 export class GameEntity extends Game {

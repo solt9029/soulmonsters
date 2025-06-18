@@ -36,9 +36,7 @@ export class GameCardEntityFactory {
 
     const userId = deckCardEntities[0].deck.userId;
 
-    const cardEntities: CardEntity[] = deckCardEntities
-      .map(value => new Array(value.count).fill(value.card))
-      .flat();
+    const cardEntities: CardEntity[] = deckCardEntities.map(value => new Array(value.count).fill(value.card)).flat();
     const shuffledCardEntities = shuffle(cardEntities);
 
     return shuffledCardEntities.map((value, index) => {
@@ -46,12 +44,9 @@ export class GameCardEntityFactory {
 
       gameCardEntity.originalUserId = userId;
       gameCardEntity.currentUserId = userId;
-      gameCardEntity.zone =
-        index >= GameCardEntityFactory.HAND_COUNT ? Zone.DECK : Zone.HAND;
+      gameCardEntity.zone = index >= GameCardEntityFactory.HAND_COUNT ? Zone.DECK : Zone.HAND;
       gameCardEntity.position =
-        index >= GameCardEntityFactory.HAND_COUNT
-          ? index - GameCardEntityFactory.HAND_COUNT
-          : index;
+        index >= GameCardEntityFactory.HAND_COUNT ? index - GameCardEntityFactory.HAND_COUNT : index;
       gameCardEntity.card = value;
       gameCardEntity.game = new GameEntity();
       gameCardEntity.game.id = gameId;
@@ -72,14 +67,10 @@ export class GameCardEntityFactory {
     return gameCardEntity;
   }
 
-  filterByUserId(
-    gameCardEntity: GameCardEntity,
-    userId: string,
-  ): GameCardEntity {
+  filterByUserId(gameCardEntity: GameCardEntity, userId: string): GameCardEntity {
     if (
       isVisibleForAll(gameCardEntity.zone) ||
-      (gameCardEntity.currentUserId === userId &&
-        isVisibleForCurrentUser(gameCardEntity.zone))
+      (gameCardEntity.currentUserId === userId && isVisibleForCurrentUser(gameCardEntity.zone))
     ) {
       return gameCardEntity;
     }
