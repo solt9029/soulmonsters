@@ -25,26 +25,21 @@ describe('GameUserRepository', () => {
       getRepositoryToken(GameUserEntity),
     );
 
-    // 実際のデータベース接続からリポジトリを取得
     const connection = getConnection();
     gameRepository = connection.getRepository(GameEntity);
     deckRepository = connection.getRepository(DeckEntity);
 
-    // GameUserRepositoryに実際のデータベース接続を設定
     Object.assign(gameUserRepository, connection.getRepository(GameUserEntity));
   });
 
   describe('findWaitingGameId', () => {
-    it('待機中のゲームが存在しない場合、undefinedを返す', async () => {
-      // テスト実行（データなし）
+    it('should return undefined when no waiting game exists', async () => {
       const result = await gameUserRepository.findWaitingGameId();
 
-      // 検証
       expect(result).toBeUndefined();
     });
 
-    it('待機中のゲーム（1人のプレイヤー）が存在する場合、gameIdを返す', async () => {
-      // テストデータ作成
+    it('should return gameId when waiting game with one player exists', async () => {
       const deck = deckRepository.create({
         userId: 'user1',
         name: 'Test Deck',
@@ -64,15 +59,12 @@ describe('GameUserRepository', () => {
       });
       await gameUserRepository.save(gameUser);
 
-      // テスト実行
       const result = await gameUserRepository.findWaitingGameId();
 
-      // 検証
       expect(result).toBe(game.id);
     });
 
-    it('複数のゲームが存在するが、すべて2人以上の場合、undefinedを返す', async () => {
-      // テストデータ作成（2人のプレイヤーがいるゲーム）
+    it('should return undefined when multiple games exist but all have 2 or more players', async () => {
       const deck1 = deckRepository.create({
         userId: 'user1',
         name: 'Test Deck 1',
@@ -104,15 +96,12 @@ describe('GameUserRepository', () => {
       });
       await gameUserRepository.save([gameUser1, gameUser2]);
 
-      // テスト実行
       const result = await gameUserRepository.findWaitingGameId();
 
-      // 検証
       expect(result).toBeUndefined();
     });
 
-    it('複数の待機中ゲームが存在する場合、最初の1つのgameIdを返す', async () => {
-      // テストデータ作成（2つの待機中ゲーム）
+    it('should return the first gameId when multiple waiting games exist', async () => {
       const deck1 = deckRepository.create({
         userId: 'user1',
         name: 'Test Deck 1',
@@ -145,15 +134,12 @@ describe('GameUserRepository', () => {
       });
       await gameUserRepository.save([gameUser1, gameUser2]);
 
-      // テスト実行
       const result = await gameUserRepository.findWaitingGameId();
 
-      // 検証（最初に作成されたゲームのIDが返される）
       expect(result).toBe(game1.id);
     });
 
-    it('混在する場合（待機中と満員のゲーム）、待機中のゲームIDを返す', async () => {
-      // テストデータ作成
+    it('should return waiting game ID when both waiting and full games exist', async () => {
       const deck1 = deckRepository.create({
         userId: 'user1',
         name: 'Test Deck 1',
@@ -168,7 +154,6 @@ describe('GameUserRepository', () => {
       });
       await deckRepository.save([deck1, deck2, deck3]);
 
-      // 満員のゲーム（2人）
       const fullGame = gameRepository.create({});
       await gameRepository.save(fullGame);
 
@@ -189,7 +174,6 @@ describe('GameUserRepository', () => {
         deck: deck2,
       });
 
-      // 待機中のゲーム（1人）
       const waitingGame = gameRepository.create({});
       await gameRepository.save(waitingGame);
 
@@ -208,10 +192,8 @@ describe('GameUserRepository', () => {
         waitingGameUser,
       ]);
 
-      // テスト実行
       const result = await gameUserRepository.findWaitingGameId();
 
-      // 検証
       expect(result).toBe(waitingGame.id);
     });
   });
