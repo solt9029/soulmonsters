@@ -1,27 +1,18 @@
 import { MIN_DECK_CARD_COUNT } from './../constants/rule';
 import { handleAction } from './../actions/action.handler';
-import { GameStateEntity } from '../entities/game.state.entity';
 import { ActionValidator } from '../actions/action.validator';
 import { ActionGrantor } from '../actions/action.grantor';
 import { GameActionDispatchInput } from './../graphql/index';
 import { UserService } from './user.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
-import { DeckCardEntity } from './../entities/deck.card.entity';
 import { GameEntity } from './../entities/game.entity';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
 import { Repository, Connection, EntityRepository } from 'typeorm';
 import { GameCardRepository } from '../repositories/game.card.repository';
 import { GameUserRepository } from '../repositories/game.user.repository';
-
-@EntityRepository(GameEntity)
-export class GameRepository extends Repository<GameEntity> {}
-
-@EntityRepository(DeckCardEntity)
-export class DeckCardRepository extends Repository<DeckCardEntity> {}
-
-@EntityRepository(GameStateEntity)
-export class GameStateRepository extends Repository<GameStateEntity> {}
+import { GameRepository } from 'src/repositories/game.repository';
+import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 
 @Injectable()
 export class GameService {
