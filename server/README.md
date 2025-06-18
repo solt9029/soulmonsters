@@ -14,14 +14,22 @@ cd server
 nvm use # automatically switch to the node version specified in .nvmrc
 yarn install
 
-docker-compose up -d
-
 cp .env.example .env
 vi .env
 
-yarn run typeorm migration:run
+yarn db:up
+yarn db:migrate
 
-yarn run start:dev
+yarn start:dev
+```
+
+## testing
+
+```sh
+yarn test:db:up
+yarn test:db:migrate
+
+yarn test
 ```
 
 ## migration
@@ -38,5 +46,5 @@ yarn run start:dev
 - If you would like to create a custom migration file, you can generate a file through the command.
 
 ```sh
-yarn run typeorm migration:create -n FileName
+yarn typeorm migration:create -n FileName
 ```
