@@ -89,8 +89,8 @@ export default function Card({ id, picture, isInDeck }: Props) {
     }),
   });
 
-  return (
-    <div ref={drag}>
+  return drag(
+    <div>
       <RCard onClick={handleClick}>
         <CardImg src={picture} />
       </RCard>
