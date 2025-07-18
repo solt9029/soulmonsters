@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import App from './components/App';
 import { initializeApp } from 'firebase/app';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import apolloClient from './apollo-client';
 import { BrowserRouter } from 'react-router-dom';
