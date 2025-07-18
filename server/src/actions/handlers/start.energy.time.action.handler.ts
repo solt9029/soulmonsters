@@ -6,19 +6,8 @@ import { EntityManager } from 'typeorm';
 import { BadRequestException } from '@nestjs/common';
 
 const calcNewEnergy = (gameEntity: GameEntity, userId: string): number | undefined => {
-  const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
-
-  if (!yourGameUser) {
-    return undefined;
-  }
-
-  let newEnergy = yourGameUser.energy + 2;
-
-  if (newEnergy > 8) {
-    newEnergy = 8;
-  }
-
-  return newEnergy;
+  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+  return gameUser ? Math.min(gameUser.energy + 2, 8) : undefined;
 };
 
 export async function handleStartEnergyTimeAction(
