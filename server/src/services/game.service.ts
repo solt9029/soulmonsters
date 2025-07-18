@@ -66,6 +66,7 @@ export class GameService {
       const gameCardRepository = manager.getCustomRepository(GameCardRepository);
 
       const userActiveGameEntity = await gameRepository.findActiveGameByUserId(userId);
+
       if (userActiveGameEntity !== undefined) {
         throw new BadRequestException('User Active');
       }
@@ -77,9 +78,11 @@ export class GameService {
         .leftJoinAndSelect('deckCards.deck', 'deck')
         .where('deckCards.deckId = :deckId', { deckId })
         .getMany();
+
       if (deckCardEntities.length > 0 && deckCardEntities[0].deck.userId !== userId) {
         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
       }
+
       const totalCount = deckCardEntities.reduce((accumulator, currentValue) => accumulator + currentValue.count, 0);
       if (totalCount < MIN_DECK_CARD_COUNT) {
         throw new BadRequestException('Min Count');
