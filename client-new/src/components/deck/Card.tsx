@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Card as RCard, CardImg } from 'reactstrap';
 import { useDrag, type DragSourceMonitor } from 'react-dnd';
 import * as ItemTypes from '../../constants/item-types';
