@@ -62,9 +62,11 @@ export async function handleAttackAction(
           { id: gameCard.id },
           { position: newYourSoulGameCardPosition, zone: Zone.SOUL },
         );
+
         await gameCardRepository.query(
           `UPDATE gameCards SET position = position - 1 WHERE gameId = ${gameEntity.id} AND zone = "BATTLE" AND currentUserId = "${yourGameUser.id}" AND position > ${gameCard.position} ORDER BY position`,
         );
+
         if (yourGameUser.energy < MAX_ENERGY) {
           await manager.update(GameUserEntity, { id: yourGameUser.id }, { energy: yourGameUser.energy + 1 });
         }
@@ -73,6 +75,7 @@ export async function handleAttackAction(
       if (gameCard.attack != targetGameCard.attack) {
         const damagePoint = Math.abs(gameCard.attack - targetGameCard.attack);
         const damagedGameUser = gameCard.attack > targetGameCard.attack ? opponentGameUser : yourGameUser;
+
         await gameUserRepository.update(
           { id: damagedGameUser.id },
           { lifePoint: damagedGameUser.lifePoint - damagePoint },
