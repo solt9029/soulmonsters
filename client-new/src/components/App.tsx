@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Help from '../pages/Help';

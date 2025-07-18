@@ -66,10 +66,14 @@ export default function Card({ id, picture, isInDeck }: Props) {
 
   const type = isInDeck ? ItemTypes.DECK_CARD : ItemTypes.CARD;
 
-  const drag = useDrag({
+  const [, drag] = useDrag({
+    type,
     item: { id, type },
-    end: (item: { id: string } | undefined, monitor: DragSourceMonitor) => {
-      const dropResult = monitor.getDropResult();
+    end: (
+      item: { id: number; type: string } | undefined,
+      monitor: DragSourceMonitor
+    ) => {
+      const dropResult = monitor.getDropResult<{ type: string }>();
       if (!item || !dropResult || !selectedDeckId) {
         return;
       }
@@ -86,8 +90,10 @@ export default function Card({ id, picture, isInDeck }: Props) {
   });
 
   return (
-    <RCard onClick={handleClick} innerRef={drag[1]}>
-      <CardImg src={picture} />
-    </RCard>
+    <div ref={drag}>
+      <RCard onClick={handleClick}>
+        <CardImg src={picture} />
+      </RCard>
+    </div>
   );
 }
