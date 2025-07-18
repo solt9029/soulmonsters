@@ -47,13 +47,16 @@ export async function handleAttackAction(
           { id: targetGameCard.id },
           { position: newOpponentSoulGameCardPosition, zone: Zone.SOUL },
         );
+
         await gameCardRepository.query(
           `UPDATE gameCards SET position = position - 1 WHERE gameId = ${gameEntity.id} AND zone = "BATTLE" AND currentUserId = "${opponentGameUser.id}" AND position > ${targetGameCard.position} ORDER BY position`,
         );
+
         if (opponentGameUser.energy < MAX_ENERGY) {
           await manager.update(GameUserEntity, { id: opponentGameUser.id }, { energy: opponentGameUser.energy + 1 });
         }
       }
+
       if (gameCard.attack <= targetGameCard.attack) {
         await gameCardRepository.update(
           { id: gameCard.id },
@@ -66,6 +69,7 @@ export async function handleAttackAction(
           await manager.update(GameUserEntity, { id: yourGameUser.id }, { energy: yourGameUser.energy + 1 });
         }
       }
+
       if (gameCard.attack != targetGameCard.attack) {
         const damagePoint = Math.abs(gameCard.attack - targetGameCard.attack);
         const damagedGameUser = gameCard.attack > targetGameCard.attack ? opponentGameUser : yourGameUser;
@@ -75,18 +79,22 @@ export async function handleAttackAction(
         );
       }
     }
+
     if (targetGameCard.battlePosition === BattlePosition.DEFENCE) {
       if (gameCard.attack > targetGameCard.defence) {
         await gameCardRepository.update(
           { id: targetGameCard.id },
           { position: newOpponentSoulGameCardPosition, zone: Zone.SOUL },
         );
+
         await gameCardRepository.query(
           `UPDATE gameCards SET position = position - 1 WHERE gameId = ${gameEntity.id} AND zone = "BATTLE" AND currentUserId = "${opponentGameUser.id}" AND position > ${targetGameCard.position} ORDER BY position`,
         );
       }
+
       if (gameCard.attack < targetGameCard.defence) {
         const damagePoint = targetGameCard.defence - gameCard.attack;
+
         await gameUserRepository.update(
           { id: yourGameUser.id },
           { lifePoint: opponentGameUser.lifePoint - damagePoint },
@@ -99,11 +107,14 @@ export async function handleAttackAction(
   const updatedGameCard = await gameCardRepository.findOne({
     id: data.payload.gameCardId,
   });
+
   const gameStates = await gameStateRepository.find({
     game: gameEntity,
     gameCard: updatedGameCard,
   });
+
   const attackCountGameState = gameStates.find(gameState => gameState.state.type === StateType.ATTACK_COUNT);
+
   if (updatedGameCard.zone === Zone.BATTLE) {
     if (attackCountGameState === undefined) {
       await gameStateRepository.insert({
@@ -113,6 +124,7 @@ export async function handleAttackAction(
       });
       return;
     }
+
     await gameStateRepository.update(
       { id: attackCountGameState.id },
       {
