@@ -3,7 +3,7 @@ import firebase from 'firebase';
 
 export interface UserInterface {
   data: firebase.User | null;
-  error: Error | null;
+  error: Error | null | unknown;
   isLoading: boolean;
 }
 
@@ -26,10 +26,10 @@ export default class User extends Record<UserInterface>(
   doneLogout(): User {
     return new User();
   }
-  failedLogin(error: Error): User {
+  failedLogin(error: unknown): User {
     return new User({ error });
   }
-  failedLogout(error: Error): User {
+  failedLogout(error: unknown): User {
     const data = this.data;
     return new User({ error, data });
   }
