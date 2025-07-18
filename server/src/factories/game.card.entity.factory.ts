@@ -29,6 +29,7 @@ export class GameCardEntityFactory {
     return 5;
   }
 
+  // デッキを元にGameCardEntityを生成する
   create(deckCardEntities: DeckCardEntity[], gameId: number): GameCardEntity[] {
     if (deckCardEntities.length <= 0) {
       return [];
@@ -55,6 +56,8 @@ export class GameCardEntityFactory {
     });
   }
 
+  // カードの情報をGameCardEntityにそのまま埋め込む
+  // カードが置かれているゾーンなどによっては相手が見えない情報もあるので、そういうのを後から filterByUserId でフィルタリングするための下準備
   addInfo(gameCardEntity: GameCardEntity) {
     gameCardEntity.name = gameCardEntity.card.name;
     gameCardEntity.kind = gameCardEntity.card.kind;
@@ -67,6 +70,8 @@ export class GameCardEntityFactory {
     return gameCardEntity;
   }
 
+  // 自分が見えない, 相手が見えないなどの情報をフィルタリングする
+  // 例: 相手の手札は見えない
   filterByUserId(gameCardEntity: GameCardEntity, userId: string): GameCardEntity {
     if (
       isVisibleForAll(gameCardEntity.zone) ||
