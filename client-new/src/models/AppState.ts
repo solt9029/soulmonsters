@@ -1,5 +1,5 @@
 import ActionStatus from './ActionStatus';
-import { ApolloError } from 'apollo-client';
+import { ApolloError } from '@apollo/client';
 import User from './User';
 import DeckModal from './DeckModal';
 import GameCardModal from './GameCardModal';

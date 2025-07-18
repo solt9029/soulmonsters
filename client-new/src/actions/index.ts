@@ -1,5 +1,5 @@
 import GameCardListModal from '../models/GameCardListModal';
-import { ApolloError } from 'apollo-client';
+import { ApolloError } from '@apollo/client';
 import { type ErrorName } from '../models/AppState';
 import DeckModal from '../models/DeckModal';
 import User from '../models/User';
@@ -44,4 +44,4 @@ type Action =
     }
   | { type: 'CLOSE_GAME_MODAL' };
 
-export default Action;
+export type { Action as default };
