@@ -1,3 +1,0 @@
-[submodule "src/graphql/schema"]
-	path = src/graphql/schema
-	url = git@github.com:solt9029/soulmonsters-schema.git
