@@ -29,6 +29,7 @@ export class GameCardEntityFactory {
     return 5;
   }
 
+  // ⭐️ ゲーム初期化時に使われる
   // デッキを元にGameCardEntityを生成する
   create(deckCardEntities: DeckCardEntity[], gameId: number): GameCardEntity[] {
     if (deckCardEntities.length <= 0) {
@@ -56,6 +57,7 @@ export class GameCardEntityFactory {
     });
   }
 
+  // ⭐️ ゲーム参照時に使われる
   // カードの情報をGameCardEntityにそのまま埋め込む
   // カードが置かれているゾーンなどによっては相手が見えない情報もあるので、そういうのを後から filterByUserId でフィルタリングするための下準備
   addInfo(gameCardEntity: GameCardEntity) {
@@ -70,6 +72,7 @@ export class GameCardEntityFactory {
     return gameCardEntity;
   }
 
+  // ⭐️ ゲーム参照時に使われる
   // 自分が見えない, 相手が見えないなどの情報をフィルタリングする
   // 例: 相手の手札は見えない
   filterByUserId(gameCardEntity: GameCardEntity, userId: string): GameCardEntity {
