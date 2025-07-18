@@ -6,6 +6,8 @@ import { AppContext } from '../../contexts/AppContext';
 import { login } from '../../actions/user';
 
 const StyledJumbotron = styled.div`
+  padding: 4rem 2rem;
+  margin-bottom: 2rem;
   background:
     linear-gradient(45deg, rgba(100, 100, 120, 0.9), rgba(100, 100, 110, 0.8)),
     url('/images/header.jpg') center no-repeat;
