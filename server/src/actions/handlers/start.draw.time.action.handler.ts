@@ -5,6 +5,27 @@ import { GameEntity } from '../../entities/game.entity';
 import { EntityManager } from 'typeorm';
 import { GameRepository } from 'src/repositories/game.repository';
 
+// NOTE: こんな感じで、GameEntityから何かを計算するロジックはたくさん抽出できそうに見える
+const calcTopDeckGameCardId = (gameEntity: GameEntity, userId: string): number | undefined => {
+  const deckGameCards = gameEntity.gameCards
+    .filter(value => value.zone === Zone.DECK && value.currentUserId === userId)
+    .sort((a, b) => b.position - a.position);
+
+  return deckGameCards.length > 0 ? deckGameCards[0].id : undefined;
+};
+
+const calcNewHandGameCardPosition = (gameEntity: GameEntity, userId: string): number => {
+  const handGameCards = gameEntity.gameCards
+    .filter(value => value.zone === Zone.HAND && value.currentUserId === userId)
+    .sort((a, b) => b.position - a.position);
+
+  return handGameCards[0].position + 1;
+};
+
+const calcNextGameTurnCount = (gameEntity: GameEntity): number => {
+  return gameEntity.turnCount + 1;
+};
+
 export async function handleStartDrawTimeAction(
   manager: EntityManager,
   id: number,
@@ -14,19 +35,16 @@ export async function handleStartDrawTimeAction(
   const gameRepository = manager.getCustomRepository(GameRepository);
   const gameCardRepository = manager.getCustomRepository(GameCardRepository);
 
-  await gameRepository.update({ id }, { phase: Phase.DRAW, turnCount: gameEntity.turnCount + 1 });
+  await gameRepository.update({ id }, { phase: Phase.DRAW, turnCount: calcNextGameTurnCount(gameEntity) });
 
-  const yourDeckGameCards = gameEntity.gameCards
-    .filter(value => value.zone === Zone.DECK && value.currentUserId === userId)
-    .sort((a, b) => b.position - a.position);
-  if (yourDeckGameCards.length <= 0) {
+  const topDeckGameCardId = calcTopDeckGameCardId(gameEntity, userId);
+
+  if (topDeckGameCardId === undefined) {
     // TODO: the opponent user wins
   }
-  const yourHandGameCards = gameEntity.gameCards
-    .filter(value => value.zone === Zone.HAND && value.currentUserId === userId)
-    .sort((a, b) => b.position - a.position);
+
   await gameCardRepository.update(
-    { id: yourDeckGameCards[0].id },
-    { zone: Zone.HAND, position: yourHandGameCards[0].position + 1 },
+    { id: topDeckGameCardId },
+    { zone: Zone.HAND, position: calcNewHandGameCardPosition(gameEntity, userId) },
   );
 }
