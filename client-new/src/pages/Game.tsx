@@ -1,4 +1,3 @@
-import React from 'react';
 import { useActiveGameIdQuery } from '../graphql/generated/graphql-client';
 import { Container } from '../styled/reactstrap';
 import StartGame from '../components/game/StartGame';

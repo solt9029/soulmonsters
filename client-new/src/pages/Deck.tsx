@@ -1,4 +1,3 @@
-import React from 'react';
 import DeckArea from '../components/deck/DeckArea';
 import CardArea from '../components/deck/CardArea';
 import AreaWrapper from '../styled/AreaWrapper';

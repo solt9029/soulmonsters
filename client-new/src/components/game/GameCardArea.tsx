@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Container, Row, Col } from '../../styled/reactstrap';
 import { Alert } from 'reactstrap';
 import styled from 'styled-components';

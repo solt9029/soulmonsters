@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import { useContext, useCallback } from 'react';
 import styled from 'styled-components';
 import { Alert, Button } from 'reactstrap';
 import { ActionStepAlertMessages } from '../../constants/action-step-alert-messages';

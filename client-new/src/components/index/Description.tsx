@@ -1,4 +1,3 @@
-import React from 'react';
 import { Col } from 'reactstrap';
 import { Container } from 'reactstrap';
 import styled from 'styled-components';

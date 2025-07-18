@@ -1,4 +1,4 @@
-import React, { useContext, ChangeEvent, useCallback } from 'react';
+import { useContext, ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
 import {
   useStartGameMutation,

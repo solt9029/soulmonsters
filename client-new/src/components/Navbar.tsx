@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { Fragment, useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink as RRDNavLink, useLocation } from 'react-router-dom';
 import {
@@ -96,14 +96,14 @@ export default function Navbar() {
         <StyledCollapse isOpen={isCollapseOpen} navbar>
           <Nav className="mr-auto" navbar>
             {user?.data !== null && (
-              <React.Fragment>
+              <Fragment>
                 <StyledNavLink tag={RRDNavLink} exact to="/deck">
                   デッキ構築
                 </StyledNavLink>
                 <StyledNavLink tag={RRDNavLink} exact to="/game">
                   ソウルバトル
                 </StyledNavLink>
-              </React.Fragment>
+              </Fragment>
             )}
 
             <StyledNavLink tag={RRDNavLink} exact to="/rule">

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Alert } from 'reactstrap';
 import Card from './Card';
 import { useCardsQuery } from '../../graphql/generated/graphql-client';

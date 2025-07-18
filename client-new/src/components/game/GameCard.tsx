@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Card, CardImg } from 'reactstrap';
 import styled from 'styled-components';
 import { BACK_SIDE_CARD } from '../../constants/pictures';

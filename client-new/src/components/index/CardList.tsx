@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Container, Card, CardImg } from 'reactstrap';
 import { Col } from '../../styled/reactstrap';
 

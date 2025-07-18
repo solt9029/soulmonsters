@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { AppContext } from '../App';
 import { Zone, type GameCardFragment } from '../../graphql/generated/graphql-client';
 import { findGameCards } from '../../utils/game';
