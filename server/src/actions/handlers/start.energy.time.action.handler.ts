@@ -5,6 +5,22 @@ import { GameEntity } from '../../entities/game.entity';
 import { EntityManager } from 'typeorm';
 import { BadRequestException } from '@nestjs/common';
 
+const calcNewEnergy = (gameEntity: GameEntity, userId: string): number | undefined => {
+  const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+
+  if (!yourGameUser) {
+    return undefined;
+  }
+
+  let newEnergy = yourGameUser.energy + 2;
+
+  if (newEnergy > 8) {
+    newEnergy = 8;
+  }
+
+  return newEnergy;
+};
+
 export async function handleStartEnergyTimeAction(
   manager: EntityManager,
   id: number,
@@ -14,16 +30,10 @@ export async function handleStartEnergyTimeAction(
   const gameUserRepository = manager.getCustomRepository(GameUserRepository);
   const gameRepository = manager.getCustomRepository(GameRepository);
 
-  const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+  const newEnergy = calcNewEnergy(gameEntity, userId);
 
-  if (!yourGameUser) {
+  if (newEnergy === undefined) {
     throw new BadRequestException('User Not Found');
-  }
-
-  let newEnergy = yourGameUser.energy + 2;
-
-  if (newEnergy > 8) {
-    newEnergy = 8;
   }
 
   await gameUserRepository.update({ userId, game: { id } }, { energy: newEnergy });
