@@ -16,8 +16,6 @@ import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 @Injectable()
 export class GameService {
   constructor(
-    @InjectRepository(GameEntity)
-    private readonly gameRepository: GameRepository,
     private connection: Connection,
     private gameCardEntityFactory: GameCardEntityFactory,
     private actionGrantor: ActionGrantor,
@@ -25,11 +23,13 @@ export class GameService {
   ) {}
 
   async findActiveGameByUserId(userId: string): Promise<GameEntity | undefined> {
-    return await this.gameRepository.findActiveGameByUserId(userId);
+    const gameRepository = this.connection.getCustomRepository(GameRepository);
+    return await gameRepository.findActiveGameByUserId(userId);
   }
 
   async findById(id: number): Promise<GameEntity | undefined> {
-    return await this.gameRepository.findByIdWithRelations(id);
+    const gameRepository = this.connection.getCustomRepository(GameRepository);
+    return await gameRepository.findByIdWithRelations(id);
   }
 
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
