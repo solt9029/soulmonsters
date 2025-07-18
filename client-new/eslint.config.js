@@ -7,7 +7,7 @@ import { globalIgnores } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default tseslint.config([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'src/graphql/generated/**']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
