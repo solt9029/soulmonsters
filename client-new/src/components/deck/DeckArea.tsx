@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, useContext } from 'react';
+import { type ChangeEvent, Fragment, useContext } from 'react';
 import { FormGroup, Input, Row, Alert } from 'reactstrap';
 import {
   useDecksQuery,
@@ -125,7 +125,7 @@ export default function DeckArea() {
             </Col>
           )}
 
-          {deckCardsQueryResult.data?.deckCards.map((deckCard, index) => {
+          {deckCardsQueryResult.data?.deckCards.map((deckCard) => {
             return (
               <Fragment>
                 {[...Array(deckCard.count)].map(() => (

@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import { type ComponentType } from 'react';
 import styled from 'styled-components';
 import { Col as RCol, Container as RContainer, Row as RRow } from 'reactstrap';
 

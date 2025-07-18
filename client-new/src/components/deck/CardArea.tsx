@@ -40,7 +40,7 @@ export default function CardArea() {
               </Alert>
             </Col>
           )}
-          {data?.cards.map((card, index) => (
+          {data?.cards.map((card) => (
             <Col
               marginBottom={12}
               paddingLeft={6}
