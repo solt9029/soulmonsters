@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import {
   DeckCardsDocument,
   usePlusDeckCardMutation,

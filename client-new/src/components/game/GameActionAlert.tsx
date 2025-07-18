@@ -2,7 +2,7 @@ import { useContext, useCallback } from 'react';
 import styled from 'styled-components';
 import { Alert, Button } from 'reactstrap';
 import { ActionStepAlertMessages } from '../../constants/action-step-alert-messages';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import { Col } from '../../styled/reactstrap';
 import ActionStatus from '../../models/ActionStatus';
 

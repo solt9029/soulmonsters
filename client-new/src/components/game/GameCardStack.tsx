@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Card, CardImg } from 'reactstrap';
 import styled from 'styled-components';
 import { BACK_SIDE_CARD } from '../../constants/pictures';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import {
   Zone,
   type GameCardFragment,

@@ -8,7 +8,7 @@ import {
   DeckCardsDocument,
 } from '../../graphql/generated/graphql-client';
 import * as AreaTypes from '../../constants/area-types';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 
 interface Props {
   id: number;

@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Help from '../pages/Help';
@@ -13,17 +13,7 @@ import { set, rm } from 'lockr';
 import Game from '../pages/Game';
 import AppState from '../models/AppState';
 import reducer from '../reducer';
-import { type default as Action } from '../actions';
-
-export interface AppContextInterface {
-  state: AppState;
-  dispatch: React.Dispatch<Action>;
-}
-
-export const AppContext = createContext<AppContextInterface>({
-  state: new AppState(),
-  dispatch: () => {},
-});
+import { AppContext } from '../contexts/AppContext';
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, new AppState());

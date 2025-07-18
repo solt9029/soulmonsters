@@ -10,7 +10,7 @@ import {
 import GameCardStack from './GameCardStack';
 import GameUser from './GameUser';
 import GameCardList from './GameCardList';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import { GameActionAlert } from './GameActionAlert';
 
 const StyledContainer = styled(Container)`

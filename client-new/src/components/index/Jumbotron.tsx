@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Container, Button } from 'reactstrap';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import { login } from '../../actions/user';
 
 const StyledJumbotron = styled.div`

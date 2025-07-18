@@ -1,4 +1,4 @@
-import { AppContext } from './../components/App';
+import { AppContext } from './../contexts/AppContext';
 import { useContext } from 'react';
 import { GameDocument } from './../graphql/generated/graphql-client';
 import { useDispatchGameActionMutation as _useDispatchGameActionMutation } from '../graphql/generated/graphql-client';

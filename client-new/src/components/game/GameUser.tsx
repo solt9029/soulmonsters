@@ -5,7 +5,7 @@ import {
   type GameUserFragment,
   useActiveGameIdQuery,
 } from '../../graphql/generated/graphql-client';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import { findGameUser } from '../../utils/game';
 import GameActionButton from './GameActionButton';
 import ActionStatus from '../../models/ActionStatus';

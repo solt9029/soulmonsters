@@ -4,7 +4,7 @@ import {
   useCreateDeckMutation,
   DecksDocument,
 } from '../../graphql/generated/graphql-client';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import styled from 'styled-components';
 
 const StyledButton = styled(Button)`

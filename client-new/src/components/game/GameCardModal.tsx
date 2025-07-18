@@ -8,7 +8,7 @@ import {
   Card,
   CardImg,
 } from 'reactstrap';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import { Row, Col } from '../../styled/reactstrap';
 import GameActionButton from './GameActionButton';
 

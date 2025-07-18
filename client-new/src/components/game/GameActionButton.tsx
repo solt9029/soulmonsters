@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Button } from 'reactstrap';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import styled from 'styled-components';
 import gameActionNames from '../../constants/game-action-names';
 import {

@@ -9,7 +9,7 @@ import Area from '../../styled/Area';
 import { useDrop } from 'react-dnd';
 import * as ItemTypes from '../../constants/item-types';
 import * as AreaTypes from '../../constants/area-types';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 import * as ErrorMessages from '../../constants/error-messages';
 import CreateDeckInput from './CreateDeckInput';
 import styled from 'styled-components';

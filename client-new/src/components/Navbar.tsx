@@ -16,7 +16,7 @@ import {
   DropdownItem,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { AppContext } from './App';
+import { AppContext } from '../contexts/AppContext';
 import { login, logout } from '../actions/user';
 
 const ServiceLogo = styled(NavbarBrand)`

@@ -1,4 +1,4 @@
-import { useContext, ChangeEvent, useCallback } from 'react';
+import { useContext, type ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
 import {
   useStartGameMutation,
@@ -7,7 +7,7 @@ import {
 } from '../../graphql/generated/graphql-client';
 import { FormGroup, Input, Button } from 'reactstrap';
 import { Col } from '../../styled/reactstrap';
-import { AppContext } from '../App';
+import { AppContext } from '../../contexts/AppContext';
 
 const StyledButton = styled(Button)`
   width: 100%;
