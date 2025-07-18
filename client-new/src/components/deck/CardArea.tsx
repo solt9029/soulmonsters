@@ -1,7 +1,6 @@
 import { Row, Alert } from 'reactstrap';
 import Card from './Card';
 import { useCardsQuery } from '../../graphql/generated/graphql-client';
-import Area from '../../styled/Area';
 import * as AreaTypes from '../../constants/area-types';
 import * as ItemTypes from '../../constants/item-types';
 import { useDrop } from 'react-dnd';
@@ -24,8 +23,18 @@ export default function CardArea() {
     }),
   });
 
-  return (
-    <Area ref={drop} isActive={canDrop && isOver} isRight>
+  return drop(
+    <div
+      style={{
+        height: '100vh',
+        width: '100%',
+        backgroundSize: 'cover',
+        backgroundColor: canDrop && isOver ? '#444' : '#222',
+        border: 'solid 5px #ccc',
+        borderRightWidth: '5px',
+        overflow: 'auto',
+      }}
+    >
       <Container marginTop={12}>
         <StyledRow>
           {loading && (
@@ -55,6 +64,6 @@ export default function CardArea() {
           ))}
         </StyledRow>
       </Container>
-    </Area>
+    </div>
   );
 }

@@ -5,7 +5,6 @@ import {
   useDeckCardsLazyQuery,
 } from '../../graphql/generated/graphql-client';
 import Card from './Card';
-import Area from '../../styled/Area';
 import { useDrop } from 'react-dnd';
 import * as ItemTypes from '../../constants/item-types';
 import * as AreaTypes from '../../constants/area-types';
@@ -58,8 +57,18 @@ export default function DeckArea() {
     dispatch({ type: 'SET_SELECTED_DECK_ID', payload: deckId });
   };
 
-  return (
-    <Area ref={drop} isActive={canDrop && isOver}>
+  return drop(
+    <div
+      style={{
+        height: '100vh',
+        width: '100%',
+        backgroundSize: 'cover',
+        backgroundColor: canDrop && isOver ? '#444' : '#222',
+        border: 'solid 5px #ccc',
+        borderRightWidth: '0px',
+        overflow: 'auto',
+      }}
+    >
       <Container marginTop={12}>
         {decksQueryResult.error !== undefined && (
           <Alert color="danger">デッキ情報の取得中にエラーが発生しました</Alert>
@@ -150,6 +159,6 @@ export default function DeckArea() {
           })}
         </StyledRow>
       </Container>
-    </Area>
+    </div>
   );
 }
