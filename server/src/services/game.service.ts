@@ -37,11 +37,14 @@ export class GameService {
       const gameRepository = manager.getCustomRepository(GameRepository);
       const gameEntity = await gameRepository.findByIdWithRelationsAndLock(id);
 
+      // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
       const grantedGameEntity = this.actionGrantor.grantActions(gameEntity, userId);
 
+      // そのアクションが可能かどうかをチェックする
       this.actionValidator.validateActions(data, grantedGameEntity, userId);
 
       // TODO: reflect status for gameEntity
+      //   例: このカードが存在する場合、相手の攻撃力が500下がる、とかを反映する必要があるよ
       // [WARNING] this implementation is just for handleAttackAction. not correct!
       for (let i = 0; i < gameEntity.gameCards.length; i++) {
         gameEntity.gameCards[i].attack = gameEntity.gameCards[i].card.attack;
@@ -49,6 +52,7 @@ export class GameService {
       }
 
       // TODO:check events
+      //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
 
       return await handleAction(id, data, manager, userId, gameEntity);
     });
