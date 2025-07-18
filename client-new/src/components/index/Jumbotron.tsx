@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { Jumbotron as RJumbotron, Container, Button } from 'reactstrap';
+import { useContext } from 'react';
+import { Container, Button } from 'reactstrap';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../App';
 import { login } from '../../actions/user';
 
-const StyledJumbotron = styled(RJumbotron)`
+const StyledJumbotron = styled.div`
   background: linear-gradient(
       45deg,
       rgba(100, 100, 120, 0.9),

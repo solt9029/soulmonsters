@@ -15,7 +15,7 @@ const {
   VITE_FIREBASE_MESSAGING_SENDER_ID,
   VITE_FIREBASE_APP_ID,
   VITE_FIREBASE_MEASUREMENT_ID,
-} = process.env;
+} = import.meta.env;
 
 initializeApp({
   apiKey: VITE_FIREBASE_API_KEY,
