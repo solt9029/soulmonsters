@@ -17,21 +17,24 @@ export async function handlePutSoulAction(
   const yourSoulGameCardMaxPosition = yourSoulGameCards.length > 0 ? yourSoulGameCards[0].position : -1;
   const gameCardRepository = manager.getCustomRepository(GameCardRepository);
   const gameCard = await gameCardRepository.findOne({
-    id: data.payload.gameCardId,
+    where: { id: data.payload.gameCardId },
   });
   await gameCardRepository.update(
     { id: data.payload.gameCardId },
     { position: yourSoulGameCardMaxPosition + 1, zone: Zone.SOUL },
   );
-  await gameCardRepository.query(
-    `UPDATE gameCards SET position = position - 1 WHERE gameId = ${gameEntity.id} AND zone = "HAND" AND currentUserId = "${userId}" AND position > ${gameCard.position} ORDER BY position`,
+  await manager.query(
+    `UPDATE gameCards SET position = position - 1 WHERE gameId = ? AND zone = "HAND" AND currentUserId = ? AND position > ? ORDER BY position`,
+    [gameEntity.id, userId, gameCard.position],
   );
 
   // plus PUT_SOUL_COUNT
   const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
   const gameStates = await manager.find(GameStateEntity, {
-    game: gameEntity,
-    gameCard: null,
+    where: {
+      game: gameEntity,
+      gameCard: null,
+    },
   });
   let putSoulCountGameState = gameStates.find(
     gameState =>
@@ -47,5 +50,5 @@ export async function handlePutSoulAction(
   } else {
     putSoulCountGameState.state.data['value']++;
   }
-  manager.save(GameStateEntity, putSoulCountGameState);
+  await manager.save(GameStateEntity, putSoulCountGameState);
 }
