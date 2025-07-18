@@ -1,4 +1,9 @@
-import { getAuth, signInWithPopup, TwitterAuthProvider, signOut } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPopup,
+  TwitterAuthProvider,
+  signOut,
+} from 'firebase/auth';
 import { type Dispatch } from 'react';
 import { type default as Action } from '.';
 import { type default as AppState } from '../models/AppState';

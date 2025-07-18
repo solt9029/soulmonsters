@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+yarn.lock
+package-lock.json
+
+# Build outputs
+dist/
+build/
+
+# Generated files
+src/graphql/generated/
+
+# Configuration files
+.env
+.env.*
+
+# Other
+*.md

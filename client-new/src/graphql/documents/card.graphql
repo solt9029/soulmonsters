@@ -6,13 +6,13 @@ query cards {
 
 fragment Card on Card {
   id
-  name 
-  kind 
-  attribute 
-  type 
-  attack 
-  defence 
-  cost 
-  detail 
+  name
+  kind
+  attribute
+  type
+  attack
+  defence
+  cost
+  detail
   picture
 }

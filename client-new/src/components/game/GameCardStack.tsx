@@ -3,7 +3,10 @@ import { Card, CardImg } from 'reactstrap';
 import styled from 'styled-components';
 import { BACK_SIDE_CARD } from '../../constants/pictures';
 import { AppContext } from '../App';
-import { Zone, type GameCardFragment } from '../../graphql/generated/graphql-client';
+import {
+  Zone,
+  type GameCardFragment,
+} from '../../graphql/generated/graphql-client';
 import { findTopGameCard, findGameCards } from '../../utils/game';
 
 const StyledCard = styled(Card)`

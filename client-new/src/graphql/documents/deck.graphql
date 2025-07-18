@@ -6,7 +6,7 @@ query decks {
 }
 
 mutation createDeck($name: String!) {
-  createDeck(data: {name: $name}) {
+  createDeck(data: { name: $name }) {
     id
     name
   }

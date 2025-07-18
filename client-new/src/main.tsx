@@ -1,4 +1,4 @@
-import { createRoot } from 'react-dom/client'
+import { createRoot } from 'react-dom/client';
 import App from './components/App';
 import { initializeApp } from 'firebase/app';
 import { ApolloProvider } from '@apollo/client';
@@ -28,7 +28,7 @@ initializeApp({
   measurementId: VITE_FIREBASE_MEASUREMENT_ID,
 });
 
-createRoot(document.getElementById('root')!).render(  
+createRoot(document.getElementById('root')!).render(
   <ApolloProvider client={apolloClient}>
     <BrowserRouter>
       <App />
