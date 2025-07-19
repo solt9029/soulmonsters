@@ -11,6 +11,7 @@ import { GameRepository } from 'src/repositories/game.repository';
 import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 import { grantActions } from 'src/game/actions/grantors/index';
 import { initializeGameCards } from 'src/game/initializers';
+import { reflectStates } from 'src/game/states/reflectors';
 
 @Injectable()
 export class GameService {
@@ -34,21 +35,15 @@ export class GameService {
       // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
       const grantedGameEntity = grantActions(gameEntity, userId);
 
+      // GameState 状態を GameCard に反映する（攻撃力の減少など）
+      const statusReflectedGameEntity = reflectStates(grantedGameEntity, userId);
+
       // そのアクションが可能かどうかをチェックする
-      validateActions(data, grantedGameEntity, userId);
+      validateActions(data, statusReflectedGameEntity, userId);
 
-      // TODO: reflect status for gameEntity
-      //   例: このカードが存在する場合、相手の攻撃力が500下がる、とかを反映する必要があるよ
-      // [WARNING] this implementation is just for handleAttackAction. not correct!
-      for (let i = 0; i < gameEntity.gameCards.length; i++) {
-        gameEntity.gameCards[i].attack = gameEntity.gameCards[i].card.attack;
-        gameEntity.gameCards[i].defence = gameEntity.gameCards[i].card.defence;
-      }
-
-      // TODO:check events
+      // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
-
-      return await handleAction(id, data, manager, userId, gameEntity);
+      return await handleAction(id, data, manager, userId, statusReflectedGameEntity);
     });
   }
 

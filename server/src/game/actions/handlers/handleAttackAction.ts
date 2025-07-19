@@ -34,6 +34,8 @@ export async function handleAttackAction(
       { id: opponentGameUser.id },
       { lifePoint: opponentGameUser.lifePoint - gameCard.attack },
     );
+
+    // TODO: 冷徹な鳥だったら、2枚ドローする
   } else {
     const targetGameCard = gameEntity.gameCards.find(value => value.id === data.payload.targetGameCardIds[0]);
     const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
