@@ -4,11 +4,11 @@ import { EntityManager } from 'typeorm';
 import { GameRepository } from 'src/repositories/game.repository';
 import { StateType } from 'src/graphql';
 
-function isYourAttackCountState(gameState: GameStateEntity, userId: string) {
+function isAttackCountState(gameState: GameStateEntity, userId: string) {
   return gameState.state.type === StateType.ATTACK_COUNT && gameState.gameCard.currentUserId === userId;
 }
 
-function isYourPutSoulCountState(gameState: GameStateEntity, gameUserId: number) {
+function isPutSoulCountState(gameState: GameStateEntity, gameUserId: number) {
   return gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId;
 }
 
@@ -25,9 +25,7 @@ export async function handleFinishEndTimeAction(manager: EntityManager, userId: 
     where: { game },
   });
   const filteredGameStateIds = gameStates
-    .filter(
-      gameState => isYourAttackCountState(gameState, userId) || isYourPutSoulCountState(gameState, yourGameUser.id),
-    )
+    .filter(gameState => isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, yourGameUser.id))
     .map(gameState => gameState.id);
 
   // TODO: filteredGameStateIdsが空の場合は呼ばないようにする
