@@ -37,8 +37,5 @@ export async function handleSummonMonsterAction(
     },
   );
 
-  // pack your hand cards
-  await gameCardRepository.query(
-    `UPDATE gameCards SET position = position - 1 WHERE gameId = ${gameEntity.id} AND zone = "HAND" AND currentUserId = "${userId}" AND position > ${gameCard.position} ORDER BY position`,
-  );
+  await gameCardRepository.packHandPositions(gameEntity.id, userId, gameCard.position);
 }
