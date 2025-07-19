@@ -1,4 +1,3 @@
-import { ActionGrantor } from '../actions/action.grantor';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { GameUserEntityFactory } from './../factories/game.user.entity.factory';
 import { UserService } from './../services/user.service';
@@ -9,6 +8,7 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
+import { grantActions } from 'src/actions/action.grantor';
 
 @Resolver()
 @UseGuards(AuthGuard)
@@ -18,7 +18,6 @@ export class GameResolver {
     private readonly userService: UserService,
     private gameUserEntityFactory: GameUserEntityFactory,
     private gameCardEntityFactory: GameCardEntityFactory,
-    private actionGrantor: ActionGrantor,
   ) {}
 
   @Query()
@@ -37,7 +36,7 @@ export class GameResolver {
       .map(value => this.gameCardEntityFactory.addInfo(value))
       .map(value => this.gameCardEntityFactory.filterByUserId(value, user.uid));
 
-    gameEntity = this.actionGrantor.grantActions(gameEntity, user.uid);
+    gameEntity = grantActions(gameEntity, user.uid);
 
     return gameEntity;
   }

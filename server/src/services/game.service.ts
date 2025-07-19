@@ -1,9 +1,7 @@
 import { MIN_DECK_CARD_COUNT } from './../constants/rule';
 import { handleAction } from './../actions/action.handler';
 import { ActionValidator } from '../actions/action.validator';
-import { ActionGrantor } from '../actions/action.grantor';
 import { GameActionDispatchInput } from './../graphql/index';
-import { InjectRepository } from '@nestjs/typeorm';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { GameEntity } from './../entities/game.entity';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
@@ -12,13 +10,13 @@ import { GameCardRepository } from 'src/repositories/game.card.repository';
 import { GameUserRepository } from 'src/repositories/game.user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
 import { DeckCardRepository } from 'src/repositories/deck.card.repository';
+import { grantActions } from 'src/actions/action.grantor';
 
 @Injectable()
 export class GameService {
   constructor(
     private connection: Connection,
     private gameCardEntityFactory: GameCardEntityFactory,
-    private actionGrantor: ActionGrantor,
     private actionValidator: ActionValidator,
   ) {}
 
@@ -38,7 +36,7 @@ export class GameService {
       const gameEntity = await gameRepository.findByIdWithRelationsAndLock(id);
 
       // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
-      const grantedGameEntity = this.actionGrantor.grantActions(gameEntity, userId);
+      const grantedGameEntity = grantActions(gameEntity, userId);
 
       // そのアクションが可能かどうかをチェックする
       this.actionValidator.validateActions(data, grantedGameEntity, userId);

@@ -1,7 +1,6 @@
 import { GameStateEntity } from '../entities/game.state.entity';
 import { ActionValidator } from '../actions/action.validator';
 import { GameUserEntityFactory } from '../factories/game.user.entity.factory';
-import { ActionGrantor } from '../actions/action.grantor';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { GameCardEntity } from './../entities/game.card.entity';
 import { GameResolver } from './../resolvers/game.resolver';
@@ -72,7 +71,6 @@ const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYN
     GameResolver,
     GameCardEntityFactory,
     GameUserEntityFactory,
-    ActionGrantor,
     ActionValidator,
   ],
 })
