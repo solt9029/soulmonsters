@@ -35,7 +35,10 @@ export async function handleAttackAction(
       { lifePoint: opponentGameUser.lifePoint - gameCard.attack },
     );
 
-    // TODO: 冷徹な鳥だったら、2枚ドローする
+    // TODO: 本当はここではeventを単に保存した上で、あとからhandleActionとは別で処理してあげると良いかも？
+    if (gameCard.card.id === 11) {
+      // TODO: 冷徹な鳥（11）が直接攻撃をしたら2枚ドローできる
+    }
   } else {
     const targetGameCard = gameEntity.gameCards.find(value => value.id === data.payload.targetGameCardIds[0]);
     const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
