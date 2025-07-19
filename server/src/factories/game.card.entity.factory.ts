@@ -1,19 +1,6 @@
-import { GameEntity } from './../entities/game.entity';
-import { CardEntity } from '../entities/card.entity';
-import { DeckCardEntity } from '../entities/deck.card.entity';
 import { GameCardEntity } from '../entities/game.card.entity';
 import { Injectable } from '@nestjs/common';
 import { Zone } from 'src/graphql';
-
-function shuffle<T>(array: T[]): T[] {
-  const oldArray = [...array];
-  let newArray = new Array<T>();
-  while (oldArray.length) {
-    const i = Math.floor(Math.random() * oldArray.length);
-    newArray = newArray.concat(oldArray.splice(i, 1));
-  }
-  return newArray;
-}
 
 function isVisibleForAll(zone: Zone) {
   return zone === Zone.BATTLE || zone === Zone.SOUL || zone === Zone.MORGUE;
@@ -25,38 +12,6 @@ function isVisibleForCurrentUser(zone: Zone) {
 
 @Injectable()
 export class GameCardEntityFactory {
-  private static get HAND_COUNT() {
-    return 5;
-  }
-
-  // ⭐️ ゲーム初期化時に使われる
-  // デッキを元にGameCardEntityを生成する
-  create(deckCardEntities: DeckCardEntity[], gameId: number): GameCardEntity[] {
-    if (deckCardEntities.length <= 0) {
-      return [];
-    }
-
-    const userId = deckCardEntities[0].deck.userId;
-
-    const cardEntities: CardEntity[] = deckCardEntities.map(value => new Array(value.count).fill(value.card)).flat();
-    const shuffledCardEntities = shuffle(cardEntities);
-
-    return shuffledCardEntities.map((value, index) => {
-      const gameCardEntity = new GameCardEntity();
-
-      gameCardEntity.originalUserId = userId;
-      gameCardEntity.currentUserId = userId;
-      gameCardEntity.zone = index >= GameCardEntityFactory.HAND_COUNT ? Zone.DECK : Zone.HAND;
-      gameCardEntity.position =
-        index >= GameCardEntityFactory.HAND_COUNT ? index - GameCardEntityFactory.HAND_COUNT : index;
-      gameCardEntity.card = value;
-      gameCardEntity.game = new GameEntity();
-      gameCardEntity.game.id = gameId;
-
-      return gameCardEntity;
-    });
-  }
-
   // ⭐️ ゲーム参照時に使われる
   // カードの情報をGameCardEntityにそのまま埋め込む
   // カードが置かれているゾーンなどによっては相手が見えない情報もあるので、そういうのを後から filterByUserId でフィルタリングするための下準備

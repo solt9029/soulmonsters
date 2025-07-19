@@ -1,6 +1,6 @@
 import { MIN_DECK_CARD_COUNT } from './../constants/rule';
-import { handleAction } from '../actions/handlers/index';
-import { validateActions } from '../actions/validators/index';
+import { handleAction } from '../game/actions/handlers/index';
+import { validateActions } from '../game/actions/validators/index';
 import { GameActionDispatchInput } from './../graphql/index';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { GameEntity } from './../entities/game.entity';
@@ -10,7 +10,8 @@ import { GameCardRepository } from 'src/repositories/game.card.repository';
 import { GameUserRepository } from 'src/repositories/game.user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
 import { DeckCardRepository } from 'src/repositories/deck.card.repository';
-import { grantActions } from 'src/actions/grantors/index';
+import { grantActions } from 'src/game/actions/grantors/index';
+import { initializeGameCards } from 'src/game/initializers';
 
 @Injectable()
 export class GameService {
@@ -88,7 +89,7 @@ export class GameService {
       if (waitingGameId === undefined) {
         const gameInsertResult = await gameRepository.insert({});
         const gameId = gameInsertResult.identifiers[0].id;
-        const gameCardEntities = this.gameCardEntityFactory.create(deckCardEntities, gameId);
+        const gameCardEntities = initializeGameCards(deckCardEntities, gameId);
         await gameCardRepository.insert(gameCardEntities);
         await gameUserRepository.insert({
           userId,
@@ -102,7 +103,7 @@ export class GameService {
 
       // join the waiting game
       const waitingGameEntity = await gameRepository.findByIdWithRelationsAndLock(waitingGameId);
-      const gameCardEntities = this.gameCardEntityFactory.create(deckCardEntities, waitingGameEntity.id);
+      const gameCardEntities = initializeGameCards(deckCardEntities, waitingGameEntity.id);
       await gameCardRepository.insert(gameCardEntities);
       const turnUserId = Math.floor(Math.random() * 2) === 1 ? waitingGameEntity.gameUsers[0].userId : userId;
       await gameUserRepository.insert({

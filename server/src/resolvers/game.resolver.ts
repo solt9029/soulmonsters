@@ -8,7 +8,7 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
-import { grantActions } from 'src/actions/grantors/index';
+import { grantActions } from 'src/game/actions/grantors/index';
 
 @Resolver()
 @UseGuards(AuthGuard)
