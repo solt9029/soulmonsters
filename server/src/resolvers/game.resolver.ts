@@ -7,7 +7,7 @@ import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { grantActions } from 'src/game/actions/grantors/index';
-import { buildViewableGameCards } from 'src/game/viewers';
+import { buildViewableGameCards } from 'src/game/statuses/reflectors';
 
 @Resolver()
 @UseGuards(AuthGuard)
