@@ -1,4 +1,3 @@
-import { GameUserEntityFactory } from './../factories/game.user.entity.factory';
 import { UserService } from './../services/user.service';
 import { GameActionDispatchInput } from './../graphql/index';
 import { GameService } from './../services/game.service';
@@ -13,20 +12,20 @@ import { buildViewableGameCards } from 'src/game/viewers';
 @Resolver()
 @UseGuards(AuthGuard)
 export class GameResolver {
-  constructor(
-    private readonly gameService: GameService,
-    private readonly userService: UserService,
-    private gameUserEntityFactory: GameUserEntityFactory,
-  ) {}
+  constructor(private readonly gameService: GameService, private readonly userService: UserService) {}
 
   @Query()
   async game(@User() user: auth.DecodedIdToken, @Args('id') id: number) {
     let gameEntity = await this.gameService.findById(id);
 
     gameEntity.gameUsers = await Promise.all(
-      gameEntity.gameUsers.map(async value => {
-        const userRecord = await this.userService.findById(value.userId);
-        return this.gameUserEntityFactory.addUser(value, userRecord);
+      gameEntity.gameUsers.map(async gameUser => {
+        const userRecord = await this.userService.findById(gameUser.userId);
+
+        const { uid, displayName, photoURL } = userRecord;
+        gameUser.user = { id: uid, displayName, photoURL };
+
+        return gameUser;
       }),
     );
 

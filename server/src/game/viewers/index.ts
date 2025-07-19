@@ -1,3 +1,8 @@
+// TODO: この算出ロジックは、多分Gameのactionをhandleする前にも実行しておくべき。
+// もともとのcardに対して、適宜状態（state）を反映した値を計算して、gameCardに保持しておく（ほとんどはコピーになる）。
+// 例: 「このカードが存在する限り相手モンスターの攻撃力が100下がる」などがあれば、その情報をgameCardに反映する。
+// viewerという名前は適切ではなさそうな気がする。何がいいかな？
+
 import { GameCardEntity } from 'src/entities/game.card.entity';
 import { Zone } from 'src/graphql';
 
