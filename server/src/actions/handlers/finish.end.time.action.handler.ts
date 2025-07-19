@@ -12,23 +12,23 @@ function isPutSoulCountState(gameState: GameStateEntity, gameUserId: number) {
   return gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId;
 }
 
+const findCleanableGameStateIds = (gameEntity: GameEntity, userId: string) => {
+  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+
+  return gameEntity.gameStates
+    .filter(gameState => isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, gameUser.id))
+    .map(gameState => gameState.id);
+};
+
 export async function handleFinishEndTimeAction(manager: EntityManager, userId: string, id: number, game: GameEntity) {
   const gameRepository = manager.getCustomRepository(GameRepository);
   const opponentGameUser = game.gameUsers.find(value => value.userId !== userId);
 
   await gameRepository.update({ id }, { phase: null, turnUserId: opponentGameUser.userId });
 
-  // delete rule states
-  const yourGameUser = game.gameUsers.find(value => value.userId === userId);
-  const gameStates = await manager.find(GameStateEntity, {
-    relations: ['gameCard'],
-    where: { game },
-  });
-  const filteredGameStateIds = gameStates
-    .filter(gameState => isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, yourGameUser.id))
-    .map(gameState => gameState.id);
+  const cleanableGameStateIds = findCleanableGameStateIds(game, userId);
 
-  if (filteredGameStateIds.length > 0) {
-    await manager.delete(GameStateEntity, filteredGameStateIds);
+  if (cleanableGameStateIds.length > 0) {
+    await manager.delete(GameStateEntity, cleanableGameStateIds);
   }
 }
