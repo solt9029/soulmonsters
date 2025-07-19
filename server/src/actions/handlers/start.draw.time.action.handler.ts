@@ -5,7 +5,6 @@ import { GameEntity } from '../../entities/game.entity';
 import { EntityManager } from 'typeorm';
 import { GameRepository } from 'src/repositories/game.repository';
 
-// NOTE: こんな感じで、GameEntityから何かを計算するロジックはたくさん抽出できそうに見える
 const calcTopDeckGameCardId = (gameEntity: GameEntity, userId: string): number | undefined => {
   const deckGameCards = gameEntity.gameCards
     .filter(value => value.zone === Zone.DECK && value.currentUserId === userId)
