@@ -1,10 +1,10 @@
 import { GameActionDispatchInput } from '../../../graphql/index';
 import { ActionType } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
-import { validateStartDrawTimeAction } from './start.draw.time.action.validator';
-import { validateStartEnergyTimeAction } from './start.energy.time.action.validator';
-import { validatePutSoulAction } from './put.soul.action.validator';
-import { validateAttackAction } from './attack.action.validator';
+import { validateStartDrawTimeAction } from './validateStartDrawTimeAction';
+import { validateStartEnergyTimeAction } from './validateStartEnergyTimeAction';
+import { validatePutSoulAction } from './validatePutSoulAction';
+import { validateAttackAction } from './validateAttackAction';
 
 export function validateActions(data: GameActionDispatchInput, grantedGame: GameEntity, userId: string) {
   switch (data.type) {
