@@ -1,9 +1,5 @@
-// TODO: この算出ロジックは、多分Gameのactionをhandleする前にも実行しておくべき。
-// もともとのcardに対して、適宜状態（state）を反映した値を計算して、gameCardに保持しておく（ほとんどはコピーになる）。
-// 例: 「このカードが存在する限り相手モンスターの攻撃力が100下がる」などがあれば、その情報をgameCardに反映する。
-// viewerという名前は適切ではなさそうな気がする。何がいいかな？
-
 import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameEntity } from 'src/entities/game.entity';
 import { Zone } from 'src/graphql';
 
 function isVisibleForAll(zone: Zone) {
@@ -44,6 +40,14 @@ function filterByUserId(gameCardEntity: GameCardEntity, userId: string): GameCar
   return filteredGameCardEntity;
 }
 
-export const buildViewableGameCards = (gameCards: GameCardEntity[], userId: string): GameCardEntity[] => {
-  return gameCards.map(gameCard => addInfo(gameCard)).map(gameCard => filterByUserId(gameCard, userId));
+// TODO: この算出ロジックは、多分Gameのactionをhandleする前にも実行しておくべき。
+export const reflectStatus = (gameEntity: GameEntity, userId: string): GameEntity => {
+  gameEntity.gameCards = gameEntity.gameCards
+    .map(gameCard => addInfo(gameCard))
+    .map(gameCard => filterByUserId(gameCard, userId));
+
+  // TODO: GameStateに応じてGameCardの情報を適宜書き換える
+  //   例: 「このカードが存在する限り相手モンスターの攻撃力が100下がる」などがあれば、その情報をgameCardに反映する。
+
+  return gameEntity;
 };

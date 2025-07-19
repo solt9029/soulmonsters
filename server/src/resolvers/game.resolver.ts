@@ -7,7 +7,7 @@ import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { grantActions } from 'src/game/actions/grantors/index';
-import { buildViewableGameCards } from 'src/game/statuses/reflectors';
+import { reflectStatus } from 'src/game/states/reflectors';
 
 @Resolver()
 @UseGuards(AuthGuard)
@@ -20,17 +20,13 @@ export class GameResolver {
 
     gameEntity.gameUsers = await Promise.all(
       gameEntity.gameUsers.map(async gameUser => {
-        const userRecord = await this.userService.findById(gameUser.userId);
-
-        const { uid, displayName, photoURL } = userRecord;
+        const { uid, displayName, photoURL } = await this.userService.findById(gameUser.userId);
         gameUser.user = { id: uid, displayName, photoURL };
-
         return gameUser;
       }),
     );
 
-    // TODO: should reflect status here.
-    gameEntity.gameCards = buildViewableGameCards(gameEntity.gameCards, user.uid);
+    gameEntity = reflectStatus(gameEntity, user.uid);
     gameEntity = grantActions(gameEntity, user.uid);
 
     return gameEntity;
@@ -39,9 +35,11 @@ export class GameResolver {
   @Query()
   async activeGameId(@User() user: auth.DecodedIdToken) {
     const activeGame = await this.gameService.findActiveGameByUserId(user.uid);
+
     if (activeGame === undefined) {
       return null;
     }
+
     return activeGame.id;
   }
 
