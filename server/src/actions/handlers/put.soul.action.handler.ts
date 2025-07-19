@@ -13,6 +13,12 @@ const calcNewSoulGameCardPosition = (gameEntity: GameEntity, userId: string): nu
   return soulGameCards.length > 0 ? soulGameCards[0].position + 1 : 0;
 };
 
+const findPutSoulCountGameState = (gameEntity: GameEntity, gameUserId: number): GameStateEntity | undefined => {
+  return gameEntity.gameStates.find(
+    gameState => gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId,
+  );
+};
+
 export async function handlePutSoulAction(
   manager: EntityManager,
   userId: string,
@@ -23,6 +29,7 @@ export async function handlePutSoulAction(
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
 
+  // プットゾーンにカードを置く
   await gameCardRepository.update(
     { id: data.payload.gameCardId },
     { position: calcNewSoulGameCardPosition(gameEntity, userId), zone: Zone.SOUL },
@@ -31,24 +38,14 @@ export async function handlePutSoulAction(
   await gameCardRepository.packHandPositions(gameEntity.id, userId, gameCard.position);
 
   // plus PUT_SOUL_COUNT
-  const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
-  const gameStates = await manager.find(GameStateEntity, {
-    where: {
-      game: gameEntity,
-      gameCard: null,
-    },
-  });
-
-  let putSoulCountGameState = gameStates.find(
-    gameState =>
-      gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === yourGameUser.id,
-  );
+  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+  let putSoulCountGameState = findPutSoulCountGameState(gameEntity, gameUser.id);
 
   if (putSoulCountGameState === undefined) {
     putSoulCountGameState = new GameStateEntity();
     putSoulCountGameState.state = {
       type: StateType.PUT_SOUL_COUNT,
-      data: { value: 1, gameUserId: yourGameUser.id },
+      data: { value: 1, gameUserId: gameUser.id },
     };
     putSoulCountGameState.game = gameEntity;
   } else {
