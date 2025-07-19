@@ -19,6 +19,15 @@ const findPutSoulCountGameState = (gameEntity: GameEntity, gameUserId: number): 
   );
 };
 
+const initPutSoulCountGameState = (gameEntity: GameEntity, gameUserId: number): GameStateEntity => {
+  const gameStateEntity = new GameStateEntity();
+
+  gameStateEntity.game = gameEntity;
+  gameStateEntity.state = { type: StateType.PUT_SOUL_COUNT, data: { value: 1, gameUserId } };
+
+  return gameStateEntity;
+};
+
 export async function handlePutSoulAction(
   manager: EntityManager,
   userId: string,
@@ -42,12 +51,7 @@ export async function handlePutSoulAction(
   let putSoulCountGameState = findPutSoulCountGameState(gameEntity, gameUser.id);
 
   if (putSoulCountGameState === undefined) {
-    putSoulCountGameState = new GameStateEntity();
-    putSoulCountGameState.state = {
-      type: StateType.PUT_SOUL_COUNT,
-      data: { value: 1, gameUserId: gameUser.id },
-    };
-    putSoulCountGameState.game = gameEntity;
+    putSoulCountGameState = initPutSoulCountGameState(gameEntity, gameUser.id);
   } else {
     putSoulCountGameState.state.data['value']++;
   }
