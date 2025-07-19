@@ -23,11 +23,7 @@ export async function handleSummonMonsterAction(
   const gameUserRepository = manager.getCustomRepository(GameUserRepository);
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
-
-  // reduce energy
-  await gameUserRepository.query(
-    `UPDATE gameUsers SET energy = energy - ${gameCard.card.cost} WHERE gameId = ${gameEntity.id} AND userId = '${userId}'`,
-  );
+  await gameUserRepository.subtractEnergy(gameEntity.id, userId, gameCard.card.cost);
 
   const newBattleGameCardPosition = calcNewBattleGameCardPosition(gameEntity, userId);
 

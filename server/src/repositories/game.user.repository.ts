@@ -10,4 +10,10 @@ export class GameUserRepository extends Repository<GameUserEntity> {
 
     return result.length > 0 ? result[0].id : undefined;
   }
+
+  async subtractEnergy(gameId: number, userId: string, amount: number): Promise<void> {
+    await this.query(
+      `UPDATE gameUsers SET energy = energy - ${amount} WHERE gameId = ${gameId} AND userId = '${userId}'`,
+    );
+  }
 }
