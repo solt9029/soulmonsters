@@ -4,26 +4,29 @@ import { validateActions } from '../game/actions/validators/index';
 import { GameActionDispatchInput } from './../graphql/index';
 import { GameEntity } from './../entities/game.entity';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { GameCardRepository } from 'src/repositories/game.card.repository';
 import { GameUserRepository } from 'src/repositories/game.user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
 import { DeckCardRepository } from 'src/repositories/deck.card.repository';
+import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameUserEntity } from 'src/entities/game.user.entity';
+import { DeckCardEntity } from 'src/entities/deck.card.entity';
 import { grantActions } from 'src/game/actions/grantors/index';
 import { initializeGameCards } from 'src/game/initializers';
 import { reflectStates } from 'src/game/states/reflectors';
 
 @Injectable()
 export class GameService {
-  constructor(private connection: Connection) {}
+  constructor(private connection: DataSource) {}
 
   async findActiveGameByUserId(userId: string): Promise<GameEntity | undefined> {
-    const gameRepository = this.connection.getCustomRepository(GameRepository);
+    const gameRepository = this.connection.getRepository(GameEntity).extend(GameRepository.prototype);
     return await gameRepository.findActiveGameByUserId(userId);
   }
 
   async findById(id: number): Promise<GameEntity | undefined> {
-    const gameRepository = this.connection.getCustomRepository(GameRepository);
+    const gameRepository = this.connection.getRepository(GameEntity).extend(GameRepository.prototype);
     return await gameRepository.findByIdWithRelations(id);
   }
 

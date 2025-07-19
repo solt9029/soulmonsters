@@ -2,9 +2,8 @@ import { MAX_ENERGY } from '../../../constants/rule';
 import { GameUserEntity } from 'src/entities/game.user.entity';
 import { GameEntity } from '../../../entities/game.entity';
 import { Zone } from 'src/graphql';
-import { GameStateRepository } from 'src/repositories/game.state.repository';
-import { GameCardRepository } from '../../../repositories/game.card.repository';
-import { GameUserRepository } from '../../../repositories/game.user.repository';
+import { GameStateEntity } from 'src/entities/game.state.entity';
+import { GameCardEntity } from '../../../entities/game.card.entity';
 import { GameActionDispatchInput, BattlePosition, StateType } from '../../../graphql/index';
 import { EntityManager } from 'typeorm';
 
@@ -22,9 +21,9 @@ export async function handleAttackAction(
   data: GameActionDispatchInput,
   gameEntity: GameEntity,
 ) {
-  const gameUserRepository = manager.getCustomRepository(GameUserRepository);
-  const gameCardRepository = manager.getCustomRepository(GameCardRepository);
-  const gameStateRepository = manager.getCustomRepository(GameStateRepository);
+  const gameUserRepository = manager.getRepository(GameUserEntity);
+  const gameCardRepository = manager.getRepository(GameCardEntity);
+  const gameStateRepository = manager.getRepository(GameStateEntity);
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
   const opponentGameUser = gameEntity.gameUsers.find(value => value.userId !== userId);
@@ -113,12 +112,14 @@ export async function handleAttackAction(
 
   // add attack count state
   const updatedGameCard = await gameCardRepository.findOne({
-    id: data.payload.gameCardId,
+    where: { id: data.payload.gameCardId },
   });
 
   const gameStates = await gameStateRepository.find({
-    game: gameEntity,
-    gameCard: updatedGameCard,
+    where: {
+      game: { id: gameEntity.id },
+      gameCard: { id: updatedGameCard.id },
+    },
   });
 
   const attackCountGameState = gameStates.find(gameState => gameState.state.type === StateType.ATTACK_COUNT);
