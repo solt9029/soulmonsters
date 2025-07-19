@@ -28,6 +28,7 @@ export async function handleFinishEndTimeAction(manager: EntityManager, userId: 
     .filter(gameState => isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, yourGameUser.id))
     .map(gameState => gameState.id);
 
-  // TODO: filteredGameStateIdsが空の場合は呼ばないようにする
-  await manager.delete(GameStateEntity, filteredGameStateIds);
+  if (filteredGameStateIds.length > 0) {
+    await manager.delete(GameStateEntity, filteredGameStateIds);
+  }
 }
