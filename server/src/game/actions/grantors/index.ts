@@ -1,14 +1,14 @@
 import { GameEntity } from '../../../entities/game.entity';
-import { grantStartDrawTimeAction } from './start.draw.time.action.grantor';
-import { grantStartEnergyTimeAction } from './start.energy.time.action.grantor';
-import { grantStartPutTimeAction } from './start.put.time.action.grantor';
-import { grantStartSomethingTimeAction } from './start.something.time.action.grantor';
-import { grantPutSoulAction } from './put.soul.action.grantor';
-import { grantStartBattleTimeAction } from './start.battle.time.action.grantor';
-import { grantSummonMonsterAction } from './summon.monster.action.grantor';
-import { grantAttackAction } from './attack.action.grantor';
-import { grantStartEndTimeAction } from './start.end.time.action.grantor';
-import { grantFinishEndTimeAction } from './finish.end.time.action.grantor';
+import { grantStartDrawTimeAction } from './grantStartDrawTimeAction';
+import { grantStartEnergyTimeAction } from './grantStartEnergyTimeAction';
+import { grantStartPutTimeAction } from './grantStartPutTimeAction';
+import { grantStartSomethingTimeAction } from './grantStartSomethingTimeAction';
+import { grantPutSoulAction } from './grantPutSoulAction';
+import { grantStartBattleTimeAction } from './grantStartBattleTimeAction';
+import { grantSummonMonsterAction } from './grantSummonMonsterAction';
+import { grantAttackAction } from './grantAttackAction';
+import { grantStartEndTimeAction } from './grantStartEndTimeAction';
+import { grantFinishEndTimeAction } from './grantFinishEndTimeAction';
 
 export function grantActions(gameEntity: GameEntity, userId: string) {
   grantStartDrawTimeAction(gameEntity, userId);
