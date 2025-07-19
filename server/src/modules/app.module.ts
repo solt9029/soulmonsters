@@ -18,13 +18,14 @@ import { AppController } from '../controllers/app.controller';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameUserEntity } from 'src/entities/game.user.entity';
+import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 
 const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYNCHRONIZE } = process.env;
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: DB_TYPE,
+      type: DB_TYPE as MysqlConnectionOptions['type'],
       host: DB_HOST,
       port: parseInt(DB_PORT),
       username: DB_USERNAME,

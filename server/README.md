@@ -34,7 +34,7 @@ yarn test
 
 ## migration
 
-- Automatically generates migration files based on the defined entities while running the application on the local machine thanks to the synchronize option.
+Automatically generates migration files based on the defined entities while running the application on the local machine thanks to the synchronize option.
 
 ```ts
     TypeOrmModule.forRoot({
@@ -47,4 +47,21 @@ yarn test
 
 ```sh
 yarn typeorm migration:create -n FileName
+```
+
+## デバッグコンソール
+
+Rails consoleのようなインタラクティブなデバッグ環境を提供します。
+
+### 使い方
+
+```sh
+yarn console
+```
+
+### 使用例
+
+```javascript
+await connection.query("SELECT * FROM games LIMIT 5"):
+await cardService.findAll();
 ```
