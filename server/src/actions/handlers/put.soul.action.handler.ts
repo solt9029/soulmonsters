@@ -5,18 +5,20 @@ import { GameEntity } from '../../entities/game.entity';
 import { GameActionDispatchInput } from '../../graphql/index';
 import { EntityManager } from 'typeorm';
 
+const calcNewSoulGameCardPosition = (gameEntity: GameEntity, userId: string): number => {
+  const soulGameCards = gameEntity.gameCards
+    .filter(value => value.zone === Zone.SOUL && value.currentUserId === userId)
+    .sort((a, b) => b.position - a.position);
+
+  return soulGameCards.length > 0 ? soulGameCards[0].position + 1 : 0;
+};
+
 export async function handlePutSoulAction(
   manager: EntityManager,
   userId: string,
   data: GameActionDispatchInput,
   gameEntity: GameEntity,
 ) {
-  const yourSoulGameCards = gameEntity.gameCards
-    .filter(value => value.zone === Zone.SOUL && value.currentUserId === userId)
-    .sort((a, b) => b.position - a.position);
-
-  const yourSoulGameCardMaxPosition = yourSoulGameCards.length > 0 ? yourSoulGameCards[0].position : -1;
-
   const gameCardRepository = manager.getCustomRepository(GameCardRepository);
 
   const gameCard = await gameCardRepository.findOne({
@@ -25,7 +27,7 @@ export async function handlePutSoulAction(
 
   await gameCardRepository.update(
     { id: data.payload.gameCardId },
-    { position: yourSoulGameCardMaxPosition + 1, zone: Zone.SOUL },
+    { position: calcNewSoulGameCardPosition(gameEntity, userId), zone: Zone.SOUL },
   );
 
   await manager.query(
