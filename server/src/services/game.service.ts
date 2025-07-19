@@ -1,6 +1,6 @@
 import { MIN_DECK_CARD_COUNT } from './../constants/rule';
-import { handleAction } from './../actions/action.handler';
-import { validateActions } from '../actions/action.validator';
+import { handleAction } from '../actions/handlers/index';
+import { validateActions } from '../actions/validators/index';
 import { GameActionDispatchInput } from './../graphql/index';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { GameEntity } from './../entities/game.entity';
@@ -10,7 +10,7 @@ import { GameCardRepository } from 'src/repositories/game.card.repository';
 import { GameUserRepository } from 'src/repositories/game.user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
 import { DeckCardRepository } from 'src/repositories/deck.card.repository';
-import { grantActions } from 'src/actions/action.grantor';
+import { grantActions } from 'src/actions/grantors/index';
 
 @Injectable()
 export class GameService {
