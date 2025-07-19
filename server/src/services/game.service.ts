@@ -2,7 +2,6 @@ import { MIN_DECK_CARD_COUNT } from './../constants/rule';
 import { handleAction } from '../game/actions/handlers/index';
 import { validateActions } from '../game/actions/validators/index';
 import { GameActionDispatchInput } from './../graphql/index';
-import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { GameEntity } from './../entities/game.entity';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
 import { Connection } from 'typeorm';
@@ -15,7 +14,7 @@ import { initializeGameCards } from 'src/game/initializers';
 
 @Injectable()
 export class GameService {
-  constructor(private connection: Connection, private gameCardEntityFactory: GameCardEntityFactory) {}
+  constructor(private connection: Connection) {}
 
   async findActiveGameByUserId(userId: string): Promise<GameEntity | undefined> {
     const gameRepository = this.connection.getCustomRepository(GameRepository);
