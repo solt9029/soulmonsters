@@ -23,15 +23,13 @@ export async function handleSummonMonsterAction(
   const gameUserRepository = manager.getCustomRepository(GameUserRepository);
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
+
   await gameUserRepository.subtractEnergy(gameEntity.id, userId, gameCard.card.cost);
 
-  const newBattleGameCardPosition = calcNewBattleGameCardPosition(gameEntity, userId);
-
-  // put the target monster card on your battle zone
   await gameCardRepository.update(
     { id: data.payload.gameCardId },
     {
-      position: newBattleGameCardPosition,
+      position: calcNewBattleGameCardPosition(gameEntity, userId),
       zone: Zone.BATTLE,
       battlePosition: BattlePosition.ATTACK, // TODO: make this param selectable
     },
