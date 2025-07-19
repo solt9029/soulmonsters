@@ -1,6 +1,6 @@
 import { MIN_DECK_CARD_COUNT } from './../constants/rule';
 import { handleAction } from './../actions/action.handler';
-import { ActionValidator } from '../actions/action.validator';
+import { validateActions } from '../actions/action.validator';
 import { GameActionDispatchInput } from './../graphql/index';
 import { GameCardEntityFactory } from './../factories/game.card.entity.factory';
 import { GameEntity } from './../entities/game.entity';
@@ -14,11 +14,7 @@ import { grantActions } from 'src/actions/action.grantor';
 
 @Injectable()
 export class GameService {
-  constructor(
-    private connection: Connection,
-    private gameCardEntityFactory: GameCardEntityFactory,
-    private actionValidator: ActionValidator,
-  ) {}
+  constructor(private connection: Connection, private gameCardEntityFactory: GameCardEntityFactory) {}
 
   async findActiveGameByUserId(userId: string): Promise<GameEntity | undefined> {
     const gameRepository = this.connection.getCustomRepository(GameRepository);
@@ -39,7 +35,7 @@ export class GameService {
       const grantedGameEntity = grantActions(gameEntity, userId);
 
       // そのアクションが可能かどうかをチェックする
-      this.actionValidator.validateActions(data, grantedGameEntity, userId);
+      validateActions(data, grantedGameEntity, userId);
 
       // TODO: reflect status for gameEntity
       //   例: このカードが存在する場合、相手の攻撃力が500下がる、とかを反映する必要があるよ
