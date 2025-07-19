@@ -4,6 +4,11 @@ import { CardService } from '../src/services/card.service';
 import { DeckService } from '../src/services/deck.service';
 import { GameService } from '../src/services/game.service';
 import { UserService } from '../src/services/user.service';
+import { GameRepository } from '../src/repositories/game.repository';
+import { GameUserRepository } from '../src/repositories/game.user.repository';
+import { GameCardRepository } from '../src/repositories/game.card.repository';
+import { GameStateRepository } from '../src/repositories/game.state.repository';
+import { DeckCardRepository } from '../src/repositories/deck.card.repository';
 import { Connection } from 'typeorm';
 import * as repl from 'repl';
 
@@ -12,28 +17,21 @@ async function bootstrap() {
 
   const app = await NestFactory.createApplicationContext(AppModule);
 
+  // Get database connection
+  const connection = app.get(Connection);
+
   // Get services
   const cardService = app.get(CardService);
   const deckService = app.get(DeckService);
   const gameService = app.get(GameService);
   const userService = app.get(UserService);
 
-  // Get database connection
-  const connection = app.get(Connection);
-
-  console.log('✅ Nest.js application context loaded');
-  console.log('📋 Available variables:');
-  console.log('  - cardService');
-  console.log('  - deckService');
-  console.log('  - gameService');
-  console.log('  - userService');
-  console.log('  - connection (TypeORM connection)');
-  console.log('  - app (Nest.js application context)');
-  console.log('');
-  console.log('💡 Usage examples:');
-  console.log('  await connection.query("SELECT * FROM games LIMIT 5")');
-  console.log('  await gameService.findAll()');
-  console.log('');
+  // Get repositories using getCustomRepository
+  const gameRepository = connection.getCustomRepository(GameRepository);
+  const gameUserRepository = connection.getCustomRepository(GameUserRepository);
+  const gameCardRepository = connection.getCustomRepository(GameCardRepository);
+  const gameStateRepository = connection.getCustomRepository(GameStateRepository);
+  const deckCardRepository = connection.getCustomRepository(DeckCardRepository);
 
   // Start REPL
   const replServer = repl.start({
@@ -46,6 +44,11 @@ async function bootstrap() {
   replServer.context.deckService = deckService;
   replServer.context.gameService = gameService;
   replServer.context.userService = userService;
+  replServer.context.gameRepository = gameRepository;
+  replServer.context.gameUserRepository = gameUserRepository;
+  replServer.context.gameCardRepository = gameCardRepository;
+  replServer.context.gameStateRepository = gameStateRepository;
+  replServer.context.deckCardRepository = deckCardRepository;
   replServer.context.connection = connection;
   replServer.context.app = app;
 
