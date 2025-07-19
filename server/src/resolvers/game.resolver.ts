@@ -7,7 +7,7 @@ import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { grantActions } from 'src/game/actions/grantors/index';
-import { reflectStatus } from 'src/game/states/reflectors';
+import { reflectStates } from 'src/game/states/reflectors';
 
 @Resolver()
 @UseGuards(AuthGuard)
@@ -26,7 +26,7 @@ export class GameResolver {
       }),
     );
 
-    gameEntity = reflectStatus(gameEntity, user.uid);
+    gameEntity = reflectStates(gameEntity, user.uid);
     gameEntity = grantActions(gameEntity, user.uid);
 
     return gameEntity;

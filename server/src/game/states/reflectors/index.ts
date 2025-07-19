@@ -41,7 +41,7 @@ function filterByUserId(gameCardEntity: GameCardEntity, userId: string): GameCar
 }
 
 // TODO: この算出ロジックは、多分Gameのactionをhandleする前にも実行しておくべき。
-export const reflectStatus = (gameEntity: GameEntity, userId: string): GameEntity => {
+export const reflectStates = (gameEntity: GameEntity, userId: string): GameEntity => {
   gameEntity.gameCards = gameEntity.gameCards
     .map(gameCard => addInfo(gameCard))
     .map(gameCard => filterByUserId(gameCard, userId));
