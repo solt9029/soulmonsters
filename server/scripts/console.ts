@@ -16,39 +16,23 @@ async function bootstrap() {
   console.log('Starting Nest.js Console...');
 
   const app = await NestFactory.createApplicationContext(AppModule);
-
-  // Get database connection
   const connection = app.get(Connection);
 
-  // Get services
-  const cardService = app.get(CardService);
-  const deckService = app.get(DeckService);
-  const gameService = app.get(GameService);
-  const userService = app.get(UserService);
-
-  // Get repositories using getCustomRepository
-  const gameRepository = connection.getCustomRepository(GameRepository);
-  const gameUserRepository = connection.getCustomRepository(GameUserRepository);
-  const gameCardRepository = connection.getCustomRepository(GameCardRepository);
-  const gameStateRepository = connection.getCustomRepository(GameStateRepository);
-  const deckCardRepository = connection.getCustomRepository(DeckCardRepository);
-
-  // Start REPL
   const replServer = repl.start({
     prompt: 'nest> ',
     useColors: true,
   });
 
   // Add variables to REPL context
-  replServer.context.cardService = cardService;
-  replServer.context.deckService = deckService;
-  replServer.context.gameService = gameService;
-  replServer.context.userService = userService;
-  replServer.context.gameRepository = gameRepository;
-  replServer.context.gameUserRepository = gameUserRepository;
-  replServer.context.gameCardRepository = gameCardRepository;
-  replServer.context.gameStateRepository = gameStateRepository;
-  replServer.context.deckCardRepository = deckCardRepository;
+  replServer.context.cardService = app.get(CardService);
+  replServer.context.deckService = app.get(DeckService);
+  replServer.context.gameService = app.get(GameService);
+  replServer.context.userService = app.get(UserService);
+  replServer.context.gameRepository = connection.getCustomRepository(GameRepository);
+  replServer.context.gameUserRepository = connection.getCustomRepository(GameUserRepository);
+  replServer.context.gameCardRepository = connection.getCustomRepository(GameCardRepository);
+  replServer.context.gameStateRepository = connection.getCustomRepository(GameStateRepository);
+  replServer.context.deckCardRepository = connection.getCustomRepository(DeckCardRepository);
   replServer.context.connection = connection;
   replServer.context.app = app;
 
