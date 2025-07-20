@@ -9,14 +9,14 @@ import { GameUserRepository } from '../src/repositories/game.user.repository';
 import { GameCardRepository } from '../src/repositories/game.card.repository';
 import { GameStateRepository } from '../src/repositories/game.state.repository';
 import { DeckCardRepository } from '../src/repositories/deck.card.repository';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import * as repl from 'repl';
 
 async function bootstrap() {
   console.log('Starting Nest.js Console...');
 
   const app = await NestFactory.createApplicationContext(AppModule);
-  const connection = app.get(Connection);
+  const dataSource = app.get(DataSource);
 
   const replServer = repl.start({
     prompt: 'nest> ',
@@ -28,12 +28,12 @@ async function bootstrap() {
   replServer.context.deckService = app.get(DeckService);
   replServer.context.gameService = app.get(GameService);
   replServer.context.userService = app.get(UserService);
-  replServer.context.gameRepository = connection.getCustomRepository(GameRepository);
-  replServer.context.gameUserRepository = connection.getCustomRepository(GameUserRepository);
-  replServer.context.gameCardRepository = connection.getCustomRepository(GameCardRepository);
-  replServer.context.gameStateRepository = connection.getCustomRepository(GameStateRepository);
-  replServer.context.deckCardRepository = connection.getCustomRepository(DeckCardRepository);
-  replServer.context.connection = connection;
+  replServer.context.gameRepository = GameRepository;
+  replServer.context.gameUserRepository = GameUserRepository;
+  replServer.context.gameCardRepository = GameCardRepository;
+  replServer.context.gameStateRepository = GameStateRepository;
+  replServer.context.deckCardRepository = DeckCardRepository;
+  replServer.context.dataSource = dataSource;
   replServer.context.app = app;
 
   // Handle REPL exit

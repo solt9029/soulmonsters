@@ -23,7 +23,9 @@ export function initializeGameCards(deckCardEntities: DeckCardEntity[], gameId: 
 
   const userId = deckCardEntities[0].deck.userId;
 
-  const cardEntities: CardEntity[] = deckCardEntities.map(value => new Array(value.count).fill(value.card)).flat();
+  const cardEntities: CardEntity[] = [].concat(
+    ...deckCardEntities.map(value => new Array<CardEntity>(value.count).fill(value.card)),
+  );
   const shuffledCardEntities = shuffle(cardEntities);
 
   return shuffledCardEntities.map((value, index) => {

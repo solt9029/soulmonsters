@@ -1,5 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { AppDataSource } from '../dataSource';
 import { DeckCardEntity } from '../entities/deck.card.entity';
 
-@EntityRepository(DeckCardEntity)
-export class DeckCardRepository extends Repository<DeckCardEntity> {}
+export const DeckCardRepository = AppDataSource.getRepository(DeckCardEntity);

@@ -22,9 +22,9 @@ export async function handleAttackAction(
   data: GameActionDispatchInput,
   gameEntity: GameEntity,
 ) {
-  const gameUserRepository = manager.getCustomRepository(GameUserRepository);
-  const gameCardRepository = manager.getCustomRepository(GameCardRepository);
-  const gameStateRepository = manager.getCustomRepository(GameStateRepository);
+  const gameUserRepository = manager.withRepository(GameUserRepository);
+  const gameCardRepository = manager.withRepository(GameCardRepository);
+  const gameStateRepository = manager.withRepository(GameStateRepository);
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
   const opponentGameUser = gameEntity.gameUsers.find(value => value.userId !== userId);
@@ -103,22 +103,21 @@ export async function handleAttackAction(
       if (gameCard.attack < targetGameCard.defence) {
         const damagePoint = targetGameCard.defence - gameCard.attack;
 
-        await gameUserRepository.update(
-          { id: yourGameUser.id },
-          { lifePoint: opponentGameUser.lifePoint - damagePoint },
-        );
+        await gameUserRepository.update({ id: yourGameUser.id }, { lifePoint: yourGameUser.lifePoint - damagePoint });
       }
     }
   }
 
   // add attack count state
   const updatedGameCard = await gameCardRepository.findOne({
-    id: data.payload.gameCardId,
+    where: { id: data.payload.gameCardId },
   });
 
   const gameStates = await gameStateRepository.find({
-    game: gameEntity,
-    gameCard: updatedGameCard,
+    where: {
+      game: { id: gameEntity.id },
+      gameCard: { id: updatedGameCard.id },
+    },
   });
 
   const attackCountGameState = gameStates.find(gameState => gameState.state.type === StateType.ATTACK_COUNT);
@@ -126,10 +125,11 @@ export async function handleAttackAction(
   if (updatedGameCard.zone === Zone.BATTLE) {
     if (attackCountGameState === undefined) {
       await gameStateRepository.insert({
-        game: gameEntity,
-        gameCard: updatedGameCard,
+        game: { id: gameEntity.id },
+        gameCard: { id: updatedGameCard.id },
         state: { type: StateType.ATTACK_COUNT, data: { value: 1 } },
       });
+
       return;
     }
 

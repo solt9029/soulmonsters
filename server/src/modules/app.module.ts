@@ -18,22 +18,12 @@ import { AppController } from '../controllers/app.controller';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameUserEntity } from 'src/entities/game.user.entity';
-import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
-
-const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYNCHRONIZE } = process.env;
+import { AppDataSource } from 'src/dataSource';
+import { ApolloDriver } from '@nestjs/apollo';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: DB_TYPE as MysqlConnectionOptions['type'],
-      host: DB_HOST,
-      port: parseInt(DB_PORT),
-      username: DB_USERNAME,
-      password: DB_PASSWORD,
-      database: DB_DATABASE,
-      entities: [DeckEntity, CardEntity, DeckCardEntity, GameEntity, GameUserEntity, GameCardEntity, GameStateEntity],
-      synchronize: DB_SYNCHRONIZE?.toLowerCase() === 'true',
-    }),
+    TypeOrmModule.forRoot(AppDataSource.options),
     TypeOrmModule.forFeature([
       DeckEntity,
       CardEntity,
@@ -44,6 +34,7 @@ const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYN
       GameStateEntity,
     ]),
     GraphQLModule.forRoot({
+      driver: ApolloDriver,
       playground: true,
       introspection: true,
       typePaths: ['../schema/*.graphql'],
