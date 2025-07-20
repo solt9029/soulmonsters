@@ -113,12 +113,14 @@ export async function handleAttackAction(
 
   // add attack count state
   const updatedGameCard = await gameCardRepository.findOne({
-    id: data.payload.gameCardId,
+    where: { id: data.payload.gameCardId },
   });
 
   const gameStates = await gameStateRepository.find({
-    game: gameEntity,
-    gameCard: updatedGameCard,
+    where: {
+      game: gameEntity,
+      gameCard: updatedGameCard,
+    },
   });
 
   const attackCountGameState = gameStates.find(gameState => gameState.state.type === StateType.ATTACK_COUNT);
