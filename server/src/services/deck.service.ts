@@ -10,7 +10,7 @@ export class DeckService {
     private readonly deckRepository: Repository<DeckEntity>,
   ) {}
 
-  async findById(id: number): Promise<DeckEntity | null> {
+  async findById(id: number) {
     return await this.deckRepository.findOne({ where: { id } });
   }
 
