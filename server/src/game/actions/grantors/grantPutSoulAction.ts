@@ -5,6 +5,11 @@ import { Phase, ActionType } from '../../../graphql/index';
 export function grantPutSoulAction(gameEntity: GameEntity, userId: string) {
   if (gameEntity.phase === Phase.PUT && gameEntity.turnUserId === userId) {
     const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+
+    if (!yourGameUser) {
+      return;
+    }
+
     const putSoulGameState = gameEntity.gameStates.find(
       gameState =>
         gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === yourGameUser.id,

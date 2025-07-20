@@ -38,6 +38,14 @@ export async function handlePutSoulAction(
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
 
+  if (!gameCard) {
+    throw new Error('Game card not found');
+  }
+
+  if (data.payload.gameCardId == null) {
+    throw new Error('Game card ID is null');
+  }
+
   // プットゾーンにカードを置く
   await gameCardRepository.update(
     { id: data.payload.gameCardId },
@@ -48,6 +56,11 @@ export async function handlePutSoulAction(
 
   // plus PUT_SOUL_COUNT
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+
+  if (!gameUser) {
+    throw new Error('Game user not found');
+  }
+
   let putSoulCountGameState = findPutSoulCountGameState(gameEntity, gameUser.id);
 
   if (putSoulCountGameState === undefined) {

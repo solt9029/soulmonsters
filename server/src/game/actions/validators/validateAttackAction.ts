@@ -28,8 +28,20 @@ export function validateAttackAction(data: GameActionDispatchInput, game: GameEn
   }
 
   if (hasTargetGameCardId) {
+    if (!targetGameCardIds || targetGameCardIds.length === 0) {
+      throw new BadRequestException('Target game card IDs not provided');
+    }
+
     const targetGameCard = game.gameCards.find(value => value.id === targetGameCardIds[0]);
     const opponentGameUser = game.gameUsers.find(value => value.userId !== userId);
+
+    if (!targetGameCard) {
+      throw new BadRequestException('Target game card not found');
+    }
+
+    if (!opponentGameUser) {
+      throw new BadRequestException('Opponent game user not found');
+    }
 
     if (targetGameCard.zone !== Zone.BATTLE || targetGameCard.currentUserId !== opponentGameUser.userId) {
       throw new BadRequestException('選択された攻撃対象が相手のバトルゾーンのモンスターではありません');

@@ -15,6 +15,10 @@ function isPutSoulCountState(gameState: GameStateEntity, gameUserId: number) {
 const findCleanableGameStateIds = (gameEntity: GameEntity, userId: string) => {
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
 
+  if (!gameUser) {
+    throw new Error('Game user not found');
+  }
+
   return gameEntity.gameStates
     .filter(gameState => isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, gameUser.id))
     .map(gameState => gameState.id);
@@ -24,7 +28,11 @@ export async function handleFinishEndTimeAction(manager: EntityManager, userId: 
   const gameRepository = manager.withRepository(GameRepository);
   const opponentGameUser = game.gameUsers.find(value => value.userId !== userId);
 
-  await gameRepository.update({ id }, { phase: null, turnUserId: opponentGameUser.userId });
+  if (!opponentGameUser) {
+    throw new Error('Opponent game user not found');
+  }
+
+  await gameRepository.update({ id }, { turnUserId: opponentGameUser.userId });
 
   const cleanableGameStateIds = findCleanableGameStateIds(game, userId);
 

@@ -24,6 +24,14 @@ export async function handleSummonMonsterAction(
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
 
+  if (!gameCard) {
+    throw new Error('Game card not found');
+  }
+
+  if (data.payload.gameCardId == null) {
+    throw new Error('Game card ID is null');
+  }
+
   await gameUserRepository.subtractEnergy(gameEntity.id, userId, gameCard.card.cost);
 
   await gameCardRepository.update(
