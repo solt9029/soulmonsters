@@ -20,10 +20,14 @@ export class DeckService {
 
   async create(userId: string, name: string): Promise<DeckEntity> {
     const insertResult = await this.deckRepository.insert({ userId, name });
-    return await this.deckRepository.findOne({
+    const result = await this.deckRepository.findOne({
       where: {
         id: insertResult.identifiers[0].id,
       },
     });
+    if (!result) {
+      throw new Error('Deck not found after creation');
+    }
+    return result;
   }
 }

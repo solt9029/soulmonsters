@@ -26,7 +26,11 @@ export class DeckCardService {
 
   async updateCountById(id: number, count: number): Promise<DeckCardEntity> {
     await this.deckCardRepository.update({ id }, { count });
-    return await this.deckCardRepository.findOne({ where: { id } });
+    const result = await this.deckCardRepository.findOne({ where: { id } });
+    if (!result) {
+      throw new Error('Deck card not found after update');
+    }
+    return result;
   }
 
   async create(deckId: number, cardId: number): Promise<DeckCardEntity> {
@@ -35,15 +39,22 @@ export class DeckCardService {
       card: { id: cardId },
       count: 1,
     });
-    return await this.deckCardRepository.findOne({
+    const result = await this.deckCardRepository.findOne({
       where: { id: insertResult.identifiers[0].id },
     });
+    if (!result) {
+      throw new Error('Deck card not found after creation');
+    }
+    return result;
   }
 
   async delete(id: number): Promise<DeckCardEntity> {
     const deckCardEntity = await this.deckCardRepository.findOne({
       where: { id },
     });
+    if (!deckCardEntity) {
+      throw new Error('Deck card not found');
+    }
     await this.deckCardRepository.delete({ id });
     return deckCardEntity;
   }

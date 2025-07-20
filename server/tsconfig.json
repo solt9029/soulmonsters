@@ -10,7 +10,14 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strictNullChecks": true
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules", 
+    "dist", 
+    "src/**/*.spec.ts", 
+    "src/**/*.test.ts", 
+    "src/graphql/index.ts"
+  ]
 }

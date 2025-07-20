@@ -29,7 +29,19 @@ export async function handleAttackAction(
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
   const opponentGameUser = gameEntity.gameUsers.find(value => value.userId !== userId);
 
+  if (!gameCard) {
+    throw new Error('Game card not found');
+  }
+
+  if (!opponentGameUser) {
+    throw new Error('Opponent game user not found');
+  }
+
   if (data.payload.targetGameUserIds?.length === 1) {
+    if (gameCard.attack == null) {
+      throw new Error('Game card attack is null');
+    }
+
     await gameUserRepository.update(
       { id: opponentGameUser.id },
       { lifePoint: opponentGameUser.lifePoint - gameCard.attack },
@@ -40,13 +52,29 @@ export async function handleAttackAction(
       // TODO: 冷徹な鳥（11）が直接攻撃をしたら2枚ドローできる
     }
   } else {
-    const targetGameCard = gameEntity.gameCards.find(value => value.id === data.payload.targetGameCardIds[0]);
+    if (!data.payload.targetGameCardIds || data.payload.targetGameCardIds.length === 0) {
+      throw new Error('Target game card IDs not provided');
+    }
+
+    const targetGameCard = gameEntity.gameCards.find(value => value.id === data.payload.targetGameCardIds![0]);
     const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+
+    if (!targetGameCard) {
+      throw new Error('Target game card not found');
+    }
+
+    if (!yourGameUser) {
+      throw new Error('Your game user not found');
+    }
 
     const newYourSoulGameCardPosition = calcNewSoulGameCardPosition(gameEntity, userId);
     const newOpponentSoulGameCardPosition = calcNewSoulGameCardPosition(gameEntity, opponentGameUser.userId);
 
     if (targetGameCard.battlePosition === BattlePosition.ATTACK) {
+      if (gameCard.attack == null || targetGameCard.attack == null) {
+        throw new Error('Attack values are null');
+      }
+
       if (gameCard.attack >= targetGameCard.attack) {
         await gameCardRepository.update(
           { id: targetGameCard.id },
@@ -89,6 +117,10 @@ export async function handleAttackAction(
     }
 
     if (targetGameCard.battlePosition === BattlePosition.DEFENCE) {
+      if (gameCard.attack == null || targetGameCard.defence == null) {
+        throw new Error('Attack or defence values are null');
+      }
+
       if (gameCard.attack > targetGameCard.defence) {
         await gameCardRepository.update(
           { id: targetGameCard.id },
@@ -109,9 +141,17 @@ export async function handleAttackAction(
   }
 
   // add attack count state
+  if (data.payload.gameCardId == null) {
+    throw new Error('Game card ID is null');
+  }
+
   const updatedGameCard = await gameCardRepository.findOne({
     where: { id: data.payload.gameCardId },
   });
+
+  if (!updatedGameCard) {
+    throw new Error('Updated game card not found');
+  }
 
   const gameStates = await gameStateRepository.find({
     where: {

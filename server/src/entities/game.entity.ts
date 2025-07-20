@@ -9,14 +9,14 @@ export class GameEntity extends Game {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
-  turnUserId: string;
+  @Column({ type: 'varchar', nullable: true })
+  turnUserId: string | null;
 
-  @Column({ nullable: true })
-  phase: Phase;
+  @Column({ type: 'varchar', nullable: true })
+  phase: Phase | null;
 
-  @Column({ nullable: true })
-  winnerUserId: string;
+  @Column({ type: 'varchar', nullable: true })
+  winnerUserId: string | null;
 
   @Column({ default: 0 })
   turnCount: number;

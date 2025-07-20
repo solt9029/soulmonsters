@@ -18,6 +18,10 @@ export class GameResolver {
   async game(@User() user: auth.DecodedIdToken, @Args('id') id: number) {
     let gameEntity = await this.gameService.findById(id);
 
+    if (!gameEntity) {
+      throw new Error('Game not found');
+    }
+
     gameEntity.gameUsers = await Promise.all(
       gameEntity.gameUsers.map(async gameUser => {
         const { uid, displayName, photoURL } = await this.userService.findById(gameUser.userId);

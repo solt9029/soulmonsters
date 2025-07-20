@@ -31,6 +31,10 @@ export class GameService {
       const gameRepository = manager.withRepository(GameRepository);
       const gameEntity = await gameRepository.findByIdWithRelationsAndLock(id);
 
+      if (!gameEntity) {
+        throw new Error('Game not found');
+      }
+
       // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
       const grantedGameEntity = grantActions(gameEntity, userId);
 
@@ -96,6 +100,11 @@ export class GameService {
 
       // join the waiting game
       const waitingGameEntity = await gameRepository.findByIdWithRelationsAndLock(waitingGameId);
+
+      if (!waitingGameEntity) {
+        throw new Error('Waiting game not found');
+      }
+
       const gameCardEntities = initializeGameCards(deckCardEntities, waitingGameEntity.id);
       await gameCardRepository.insert(gameCardEntities);
       const turnUserId = Math.floor(Math.random() * 2) === 1 ? waitingGameEntity.gameUsers[0].userId : userId;
