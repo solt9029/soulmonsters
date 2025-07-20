@@ -1,5 +1,3 @@
-import { GameStateEntity } from '../../../entities/game.state.entity';
-import { Zone, StateType, Game } from 'src/graphql';
 import { GameCardRepository } from '../../../repositories/game.card.repository';
 import { GameEntity } from '../../../entities/game.entity';
 import { GameActionDispatchInput } from '../../../graphql/index';

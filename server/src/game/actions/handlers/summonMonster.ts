@@ -1,6 +1,5 @@
-import { Zone } from 'src/graphql';
 import { GameCardRepository } from '../../../repositories/game.card.repository';
-import { GameActionDispatchInput, BattlePosition } from '../../../graphql/index';
+import { GameActionDispatchInput } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
 import { subtractUserEnergy } from './summonMonster/subtractUserEnergy';
