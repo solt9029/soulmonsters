@@ -115,8 +115,8 @@ export async function handleAttackAction(
 
   const gameStates = await gameStateRepository.find({
     where: {
-      game: gameEntity,
-      gameCard: updatedGameCard,
+      game: { id: gameEntity.id },
+      gameCard: { id: updatedGameCard.id },
     },
   });
 
@@ -125,10 +125,11 @@ export async function handleAttackAction(
   if (updatedGameCard.zone === Zone.BATTLE) {
     if (attackCountGameState === undefined) {
       await gameStateRepository.insert({
-        game: gameEntity,
-        gameCard: updatedGameCard,
+        game: { id: gameEntity.id },
+        gameCard: { id: updatedGameCard.id },
         state: { type: StateType.ATTACK_COUNT, data: { value: 1 } },
       });
+
       return;
     }
 

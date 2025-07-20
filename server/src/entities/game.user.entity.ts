@@ -1,4 +1,4 @@
-import { GameUser } from './../graphql/index';
+import { GameUser, ActionType } from './../graphql/index';
 import { DeckEntity } from './deck.entity';
 import { GameEntity } from './game.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm';
@@ -41,5 +41,5 @@ export class GameUserEntity extends GameUser {
   )
   game: GameEntity;
 
-  actionTypes = [];
+  actionTypes: ActionType[] = [];
 }
