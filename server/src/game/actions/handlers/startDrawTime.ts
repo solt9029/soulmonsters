@@ -1,9 +1,7 @@
 import { Zone } from 'src/graphql';
 import { Phase } from '../../../graphql/index';
-import { GameCardRepository } from '../../../repositories/game.card.repository';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
-import { GameRepository } from 'src/repositories/game.repository';
 
 const calcTopDeckGameCardId = (gameEntity: GameEntity, userId: string): number | undefined => {
   const deckGameCards = gameEntity.gameCards
@@ -18,11 +16,36 @@ const calcNewHandGameCardPosition = (gameEntity: GameEntity, userId: string): nu
     .filter(value => value.zone === Zone.HAND && value.currentUserId === userId)
     .sort((a, b) => b.position - a.position);
 
-  return handGameCards[0].position + 1;
+  return handGameCards.length > 0 ? handGameCards[0].position + 1 : 0;
 };
 
 const calcNextGameTurnCount = (gameEntity: GameEntity): number => {
   return gameEntity.turnCount + 1;
+};
+
+const updateGamePhaseAndTurn = (gameEntity: GameEntity): GameEntity => {
+  return {
+    ...gameEntity,
+    phase: Phase.DRAW,
+    turnCount: calcNextGameTurnCount(gameEntity),
+  };
+};
+
+const drawCardFromDeck = (gameEntity: GameEntity, userId: string): GameEntity => {
+  const topDeckGameCardId = calcTopDeckGameCardId(gameEntity, userId);
+
+  if (topDeckGameCardId === undefined) {
+    // TODO: the opponent user wins
+    return gameEntity;
+  }
+
+  const newPosition = calcNewHandGameCardPosition(gameEntity, userId);
+
+  const gameCards = gameEntity.gameCards.map(gameCard =>
+    gameCard.id === topDeckGameCardId ? { ...gameCard, zone: Zone.HAND, position: newPosition } : { ...gameCard },
+  );
+
+  return { ...gameEntity, gameCards };
 };
 
 export async function handleStartDrawTimeAction(
@@ -31,19 +54,8 @@ export async function handleStartDrawTimeAction(
   userId: string,
   gameEntity: GameEntity,
 ) {
-  const gameRepository = manager.withRepository(GameRepository);
-  const gameCardRepository = manager.withRepository(GameCardRepository);
+  gameEntity = updateGamePhaseAndTurn(gameEntity);
+  gameEntity = drawCardFromDeck(gameEntity, userId);
 
-  await gameRepository.update({ id }, { phase: Phase.DRAW, turnCount: calcNextGameTurnCount(gameEntity) });
-
-  const topDeckGameCardId = calcTopDeckGameCardId(gameEntity, userId);
-
-  if (topDeckGameCardId === undefined) {
-    // TODO: the opponent user wins
-  }
-
-  await gameCardRepository.update(
-    { id: topDeckGameCardId },
-    { zone: Zone.HAND, position: calcNewHandGameCardPosition(gameEntity, userId) },
-  );
+  await manager.save(GameEntity, gameEntity);
 }
