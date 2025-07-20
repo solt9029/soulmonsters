@@ -1,30 +1,34 @@
 import { Phase } from '../../../graphql/index';
-import { GameRepository } from 'src/repositories/game.repository';
-import { GameUserRepository } from '../../../repositories/game.user.repository';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
-import { BadRequestException } from '@nestjs/common';
 
-const calcNewEnergy = (gameEntity: GameEntity, userId: string): number | undefined => {
-  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
-  return gameUser ? Math.min(gameUser.energy + 2, 8) : undefined;
+const calcNewEnergy = (gameEntity: GameEntity, userId: string): number => {
+  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
+  return Math.min(gameUser.energy + 2, 8);
+};
+
+const increaseGameUserEnergy = (gameEntity: GameEntity, userId: string): GameEntity => {
+  const newEnergy = calcNewEnergy(gameEntity, userId);
+
+  const gameUsers = gameEntity.gameUsers.map(gameUser =>
+    gameUser.userId === userId ? { ...gameUser, energy: newEnergy } : { ...gameUser },
+  );
+
+  return { ...gameEntity, gameUsers };
+};
+
+const startEnergyPhase = (gameEntity: GameEntity): GameEntity => {
+  return { ...gameEntity, phase: Phase.ENERGY };
 };
 
 export async function handleStartEnergyTimeAction(
   manager: EntityManager,
-  id: number,
+  _id: number,
   userId: string,
   gameEntity: GameEntity,
 ) {
-  const gameUserRepository = manager.withRepository(GameUserRepository);
-  const gameRepository = manager.withRepository(GameRepository);
+  gameEntity = increaseGameUserEnergy(gameEntity, userId);
+  gameEntity = startEnergyPhase(gameEntity);
 
-  const newEnergy = calcNewEnergy(gameEntity, userId);
-
-  if (newEnergy === undefined) {
-    throw new BadRequestException('User Not Found');
-  }
-
-  await gameUserRepository.update({ userId, game: { id } }, { energy: newEnergy });
-  await gameRepository.update({ id }, { phase: Phase.ENERGY });
+  await manager.save(GameEntity, gameEntity);
 }
