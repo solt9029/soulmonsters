@@ -18,11 +18,8 @@ import { AppController } from '../controllers/app.controller';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameUserEntity } from 'src/entities/game.user.entity';
-import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 import { AppDataSource } from 'src/dataSource';
 import { ApolloDriver } from '@nestjs/apollo';
-
-const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYNCHRONIZE } = process.env;
 
 @Module({
   imports: [
