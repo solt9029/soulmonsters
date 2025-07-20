@@ -36,7 +36,7 @@ export class DeckCardResolver {
 
     const deckCardEntity = await this.deckCardService.findByDeckIdAndCardId(deckId, cardId);
 
-    if (deckCardEntity !== undefined) {
+    if (deckCardEntity !== null) {
       if (deckCardEntity.deck.userId !== user.uid) {
         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
       }
@@ -47,7 +47,7 @@ export class DeckCardResolver {
     }
 
     const deckEntity = await this.deckService.findById(deckId);
-    if (deckEntity === undefined) {
+    if (deckEntity === null) {
       throw new NotFoundException();
     }
     if (deckEntity.userId !== user.uid) {
@@ -62,7 +62,7 @@ export class DeckCardResolver {
 
     const deckCardEntity = await this.deckCardService.findByDeckIdAndCardId(deckId, cardId);
 
-    if (deckCardEntity === undefined) {
+    if (deckCardEntity === null) {
       throw new NotFoundException();
     }
 
