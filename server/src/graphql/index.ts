@@ -1,11 +1,13 @@
 
-/** ------------------------------------------------------
+/*
+ * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
  * -------------------------------------------------------
  */
 
 /* tslint:disable */
 /* eslint-disable */
+
 export enum ActionType {
     START_DRAW_TIME = "START_DRAW_TIME",
     START_ENERGY_TIME = "START_ENERGY_TIME",
@@ -75,10 +77,10 @@ export enum Zone {
 }
 
 export class ActionPayload {
-    gameCardId?: number;
-    targetGameCardIds?: number[];
-    costGameCardIds?: number[];
-    targetGameUserIds?: number[];
+    gameCardId?: Nullable<number>;
+    targetGameCardIds?: Nullable<number[]>;
+    costGameCardIds?: Nullable<number[]>;
+    targetGameUserIds?: Nullable<number[]>;
 }
 
 export class DeckCardUpdateInput {
@@ -104,11 +106,11 @@ export class Card implements Node {
     name: string;
     kind: Kind;
     type: Type;
-    attribute?: Attribute;
-    attack?: number;
-    defence?: number;
-    cost?: number;
-    detail?: string;
+    attribute?: Nullable<Attribute>;
+    attack?: Nullable<number>;
+    defence?: Nullable<number>;
+    cost?: Nullable<number>;
+    detail?: Nullable<string>;
     picture: string;
 }
 
@@ -129,11 +131,11 @@ export class DeckCard implements Node {
 
 export class Game implements Node {
     id: number;
-    turnUserId?: string;
-    phase?: Phase;
-    winnerUserId?: string;
-    startedAt?: DateTime;
-    endedAt?: DateTime;
+    turnUserId?: Nullable<string>;
+    phase?: Nullable<Phase>;
+    winnerUserId?: Nullable<string>;
+    startedAt?: Nullable<DateTime>;
+    endedAt?: Nullable<DateTime>;
     gameUsers: GameUser[];
     gameCards: GameCard[];
 }
@@ -144,16 +146,16 @@ export class GameCard implements Node {
     currentUserId: string;
     zone: Zone;
     position: number;
-    battlePosition?: BattlePosition;
-    name?: string;
-    kind?: Kind;
-    type?: Type;
-    attribute?: Attribute;
-    attack?: number;
-    defence?: number;
-    cost?: number;
-    detail?: string;
-    card?: Card;
+    battlePosition?: Nullable<BattlePosition>;
+    name?: Nullable<string>;
+    kind?: Nullable<Kind>;
+    type?: Nullable<Type>;
+    attribute?: Nullable<Attribute>;
+    attack?: Nullable<number>;
+    defence?: Nullable<number>;
+    cost?: Nullable<number>;
+    detail?: Nullable<string>;
+    card?: Nullable<Card>;
     actionTypes: ActionType[];
 }
 
@@ -161,9 +163,9 @@ export class GameUser implements Node {
     id: number;
     userId: string;
     user: User;
-    energy?: number;
+    energy?: Nullable<number>;
     lifePoint: number;
-    lastViewedAt?: DateTime;
+    lastViewedAt?: Nullable<DateTime>;
     deck: Deck;
     game: Game;
     actionTypes: ActionType[];
@@ -190,15 +192,15 @@ export abstract class IQuery {
 
     abstract game(id: number): Game | Promise<Game>;
 
-    abstract activeGameId(): number | Promise<number>;
+    abstract activeGameId(): Nullable<number> | Promise<Nullable<number>>;
 
     abstract userData(userId: string): UserData | Promise<UserData>;
 }
 
 export class User {
     id: string;
-    displayName?: string;
-    photoURL?: string;
+    displayName?: Nullable<string>;
+    photoURL?: Nullable<string>;
 }
 
 export class UserData implements Node {
@@ -209,3 +211,4 @@ export class UserData implements Node {
 }
 
 export type DateTime = any;
+type Nullable<T> = T | null;
