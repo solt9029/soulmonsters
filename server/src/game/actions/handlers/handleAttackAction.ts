@@ -103,10 +103,7 @@ export async function handleAttackAction(
       if (gameCard.attack < targetGameCard.defence) {
         const damagePoint = targetGameCard.defence - gameCard.attack;
 
-        await gameUserRepository.update(
-          { id: yourGameUser.id },
-          { lifePoint: opponentGameUser.lifePoint - damagePoint },
-        );
+        await gameUserRepository.update({ id: yourGameUser.id }, { lifePoint: yourGameUser.lifePoint - damagePoint });
       }
     }
   }
