@@ -27,12 +27,6 @@ const initPutSoulCountGameState = (gameEntity: GameEntity, gameUserId: number): 
   return gameStateEntity;
 };
 
-const packHandPositionsInMemory = (gameEntity: GameEntity, userId: string, removedPosition: number): void => {
-  gameEntity.gameCards
-    .filter(card => card.zone === Zone.HAND && card.currentUserId === userId && card.position > removedPosition)
-    .forEach(card => (card.position -= 1));
-};
-
 export async function handlePutSoulAction(
   manager: EntityManager,
   userId: string,
@@ -52,11 +46,21 @@ export async function handlePutSoulAction(
   // エンティティ操作（メモリ上での変更）
   // カードをSOULゾーンに移動
   const originalPosition = gameCard.position;
-  gameCard.position = calcNewSoulGameCardPosition(gameEntity, userId);
-  gameCard.zone = Zone.SOUL;
+  for (let i = 0; i < gameEntity.gameCards.length; i++) {
+    if (gameEntity.gameCards[i].id === gameCard.id) {
+      gameEntity.gameCards[i].zone = Zone.SOUL;
+      gameEntity.gameCards[i].position = calcNewSoulGameCardPosition(gameEntity, userId);
+    }
+  }
 
   // 手札位置の再配置をメモリ上で実行
-  packHandPositionsInMemory(gameEntity, userId, originalPosition);
+  // packHandPositionsInMemory(gameEntity, userId, originalPosition);
+  for (let i = 0; i < gameEntity.gameCards.length; i++) {
+    const card = gameEntity.gameCards[i];
+    if (card.zone === Zone.HAND && card.currentUserId === userId && card.position > originalPosition) {
+      card.position -= 1;
+    }
+  }
 
   // PUT_SOUL_COUNTの更新
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);

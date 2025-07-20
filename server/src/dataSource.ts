@@ -14,7 +14,7 @@ export const AppDataSource = new DataSource({
   password: DB_PASSWORD,
   database: DB_DATABASE,
   synchronize: DB_SYNCHRONIZE?.toLowerCase() === 'true',
-  logging: false,
+  logging: true,
   entities: [path.join(__dirname, 'entities/*.{ts,js}')],
   migrations: [path.join(__dirname, 'database/migrations/*.{ts,js}')],
 });
