@@ -80,11 +80,10 @@ export async function handlePutSoulAction(
 ) {
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId)!;
   const originalPosition = gameCard.position;
-  gameEntity = putSoulGameCard(gameEntity, userId, data.payload.gameCardId!);
-
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
-  gameEntity = savePutCountGameState(gameEntity, gameUser.id);
 
+  gameEntity = putSoulGameCard(gameEntity, userId, data.payload.gameCardId!);
+  gameEntity = savePutCountGameState(gameEntity, gameUser.id);
   await manager.save(GameEntity, gameEntity);
 
   const gameCardRepository = manager.withRepository(GameCardRepository);
