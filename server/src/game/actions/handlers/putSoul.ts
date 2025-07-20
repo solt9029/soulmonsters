@@ -1,6 +1,5 @@
 import { GameStateEntity } from '../../../entities/game.state.entity';
 import { Zone, StateType } from 'src/graphql';
-import { GameCardRepository } from '../../../repositories/game.card.repository';
 import { GameEntity } from '../../../entities/game.entity';
 import { GameActionDispatchInput } from '../../../graphql/index';
 import { EntityManager } from 'typeorm';
@@ -28,14 +27,18 @@ const initPutSoulCountGameState = (gameEntity: GameEntity, gameUserId: number): 
   return gameStateEntity;
 };
 
+const packHandPositionsInMemory = (gameEntity: GameEntity, userId: string, removedPosition: number): void => {
+  gameEntity.gameCards
+    .filter(card => card.zone === Zone.HAND && card.currentUserId === userId && card.position > removedPosition)
+    .forEach(card => (card.position -= 1));
+};
+
 export async function handlePutSoulAction(
   manager: EntityManager,
   userId: string,
   data: GameActionDispatchInput,
   gameEntity: GameEntity,
 ) {
-  const gameCardRepository = manager.withRepository(GameCardRepository);
-
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
 
   if (!gameCard) {
@@ -46,15 +49,16 @@ export async function handlePutSoulAction(
     throw new Error('Game card ID is null');
   }
 
-  // プットゾーンにカードを置く
-  await gameCardRepository.update(
-    { id: data.payload.gameCardId },
-    { position: calcNewSoulGameCardPosition(gameEntity, userId), zone: Zone.SOUL },
-  );
+  // エンティティ操作（メモリ上での変更）
+  // カードをSOULゾーンに移動
+  const originalPosition = gameCard.position;
+  gameCard.position = calcNewSoulGameCardPosition(gameEntity, userId);
+  gameCard.zone = Zone.SOUL;
 
-  await gameCardRepository.packHandPositions(gameEntity.id, userId, gameCard.position);
+  // 手札位置の再配置をメモリ上で実行
+  packHandPositionsInMemory(gameEntity, userId, originalPosition);
 
-  // plus PUT_SOUL_COUNT
+  // PUT_SOUL_COUNTの更新
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
 
   if (!gameUser) {
@@ -65,9 +69,13 @@ export async function handlePutSoulAction(
 
   if (putSoulCountGameState === undefined) {
     putSoulCountGameState = initPutSoulCountGameState(gameEntity, gameUser.id);
+    gameEntity.gameStates.push(putSoulCountGameState);
   } else {
-    putSoulCountGameState.state.data['value']++;
+    if (putSoulCountGameState.state.type === StateType.PUT_SOUL_COUNT) {
+      putSoulCountGameState.state.data.value++;
+    }
   }
 
-  await manager.save(GameStateEntity, putSoulCountGameState);
+  // 一括保存
+  await manager.save(GameEntity, gameEntity);
 }

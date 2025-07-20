@@ -42,12 +42,14 @@ export class GameEntity extends Game {
   @OneToMany(
     () => GameCardEntity,
     gameCardEntity => gameCardEntity.game,
+    { cascade: true },
   )
   gameCards: GameCardEntity[];
 
   @OneToMany(
     () => GameStateEntity,
     gameStateEntity => gameStateEntity.game,
+    { cascade: true },
   )
   gameStates: GameStateEntity[];
 }
