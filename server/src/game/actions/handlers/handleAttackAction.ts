@@ -22,9 +22,9 @@ export async function handleAttackAction(
   data: GameActionDispatchInput,
   gameEntity: GameEntity,
 ) {
-  const gameUserRepository = manager.getCustomRepository(GameUserRepository);
-  const gameCardRepository = manager.getCustomRepository(GameCardRepository);
-  const gameStateRepository = manager.getCustomRepository(GameStateRepository);
+  const gameUserRepository = manager.getRepository(GameUserRepository.target).extend(GameUserRepository);
+  const gameCardRepository = manager.getRepository(GameCardRepository.target).extend(GameCardRepository);
+  const gameStateRepository = manager.getRepository(GameStateRepository.target).extend(GameStateRepository);
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
   const opponentGameUser = gameEntity.gameUsers.find(value => value.userId !== userId);

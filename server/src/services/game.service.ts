@@ -4,7 +4,7 @@ import { validateActions } from '../game/actions/validators/index';
 import { GameActionDispatchInput } from './../graphql/index';
 import { GameEntity } from './../entities/game.entity';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
-import { Connection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { GameCardRepository } from 'src/repositories/game.card.repository';
 import { GameUserRepository } from 'src/repositories/game.user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
@@ -12,24 +12,23 @@ import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 import { grantActions } from 'src/game/actions/grantors/index';
 import { initializeGameCards } from 'src/game/initializers';
 import { reflectStates } from 'src/game/states/reflectors';
+import { AppDataSource } from '../dataSource';
 
 @Injectable()
 export class GameService {
-  constructor(private connection: Connection) {}
+  constructor(private dataSource: DataSource) {}
 
-  async findActiveGameByUserId(userId: string): Promise<GameEntity | undefined> {
-    const gameRepository = this.connection.getCustomRepository(GameRepository);
-    return await gameRepository.findActiveGameByUserId(userId);
+  async findActiveGameByUserId(userId: string): Promise<GameEntity | null> {
+    return await GameRepository.findActiveGameByUserId(userId);
   }
 
-  async findById(id: number): Promise<GameEntity | undefined> {
-    const gameRepository = this.connection.getCustomRepository(GameRepository);
-    return await gameRepository.findByIdWithRelations(id);
+  async findById(id: number): Promise<GameEntity | null> {
+    return await GameRepository.findByIdWithRelations(id);
   }
 
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
-    return this.connection.transaction(async manager => {
-      const gameRepository = manager.getCustomRepository(GameRepository);
+    return this.dataSource.transaction(async manager => {
+      const gameRepository = manager.getRepository(GameRepository.target).extend(GameRepository);
       const gameEntity = await gameRepository.findByIdWithRelationsAndLock(id);
 
       // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
@@ -48,11 +47,11 @@ export class GameService {
   }
 
   async start(userId: string, deckId: number) {
-    return this.connection.transaction(async manager => {
-      const deckCardRepository = manager.getCustomRepository(DeckCardRepository);
-      const gameRepository = manager.getCustomRepository(GameRepository);
-      const gameUserRepository = manager.getCustomRepository(GameUserRepository);
-      const gameCardRepository = manager.getCustomRepository(GameCardRepository);
+    return this.dataSource.transaction(async manager => {
+      const deckCardRepository = manager.getRepository(DeckCardRepository.target);
+      const gameRepository = manager.getRepository(GameRepository.target).extend(GameRepository);
+      const gameUserRepository = manager.getRepository(GameUserRepository.target).extend(GameUserRepository);
+      const gameCardRepository = manager.getRepository(GameCardRepository.target).extend(GameCardRepository);
 
       const userActiveGameEntity = await gameRepository.findActiveGameByUserId(userId);
 

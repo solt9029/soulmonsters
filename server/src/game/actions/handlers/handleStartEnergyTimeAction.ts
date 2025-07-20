@@ -16,8 +16,8 @@ export async function handleStartEnergyTimeAction(
   userId: string,
   gameEntity: GameEntity,
 ) {
-  const gameUserRepository = manager.getCustomRepository(GameUserRepository);
-  const gameRepository = manager.getCustomRepository(GameRepository);
+  const gameUserRepository = manager.getRepository(GameUserRepository.target).extend(GameUserRepository);
+  const gameRepository = manager.getRepository(GameRepository.target).extend(GameRepository);
 
   const newEnergy = calcNewEnergy(gameEntity, userId);
 

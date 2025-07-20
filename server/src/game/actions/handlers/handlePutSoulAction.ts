@@ -34,7 +34,7 @@ export async function handlePutSoulAction(
   data: GameActionDispatchInput,
   gameEntity: GameEntity,
 ) {
-  const gameCardRepository = manager.getCustomRepository(GameCardRepository);
+  const gameCardRepository = manager.getRepository(GameCardRepository.target).extend(GameCardRepository);
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
 
