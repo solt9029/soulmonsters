@@ -62,6 +62,13 @@ export async function handlePutSoulAction(
     }
   }
 
+  gameEntity.gameCards = gameEntity.gameCards.sort((a, b) => {
+    // SOULゾーンをHANDより前に
+    if (a.zone === Zone.SOUL && b.zone !== Zone.SOUL) return -1;
+    if (a.zone !== Zone.SOUL && b.zone === Zone.SOUL) return 1;
+    return a.position - b.position;
+  });
+
   // PUT_SOUL_COUNTの更新
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
 
