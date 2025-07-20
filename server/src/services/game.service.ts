@@ -55,7 +55,7 @@ export class GameService {
 
       const userActiveGameEntity = await gameRepository.findActiveGameByUserId(userId);
 
-      if (userActiveGameEntity !== undefined) {
+      if (userActiveGameEntity !== null) {
         throw new BadRequestException('User Active');
       }
 
