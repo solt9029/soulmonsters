@@ -11,13 +11,12 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": ["jest", "node"]
   },
   "exclude": [
     "node_modules", 
     "dist", 
-    "src/**/*.spec.ts", 
-    "src/**/*.test.ts", 
     "src/graphql/index.ts"
   ]
 }

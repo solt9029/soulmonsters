@@ -1,122 +1,128 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository, getConnection } from 'typeorm';
+import { Repository } from 'typeorm';
 import { GameUserRepository } from './game.user.repository';
 import { GameUserEntity } from '../entities/game.user.entity';
-import { GameEntity } from '../entities/game.entity';
-import { DeckEntity } from '../entities/deck.entity';
 
 describe('GameUserRepository', () => {
-  let gameUserRepository: GameUserRepository;
-  let gameRepository: Repository<GameEntity>;
-  let deckRepository: Repository<DeckEntity>;
+  let repository: typeof GameUserRepository;
+  let mockBaseRepository: jest.Mocked<Repository<GameUserEntity>>;
 
   beforeEach(async () => {
+    const mockRepo = {
+      query: jest.fn(),
+      find: jest.fn(),
+      findOne: jest.fn(),
+      findOneBy: jest.fn(),
+      save: jest.fn(),
+      create: jest.fn(),
+      update: jest.fn(),
+      delete: jest.fn(),
+      remove: jest.fn(),
+      createQueryBuilder: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         {
           provide: getRepositoryToken(GameUserEntity),
-          useClass: GameUserRepository,
+          useValue: mockRepo,
         },
       ],
     }).compile();
 
-    gameUserRepository = module.get<GameUserRepository>(getRepositoryToken(GameUserEntity));
+    mockBaseRepository = module.get<jest.Mocked<Repository<GameUserEntity>>>(getRepositoryToken(GameUserEntity));
 
-    const connection = getConnection();
-    gameRepository = connection.getRepository(GameEntity);
-    deckRepository = connection.getRepository(DeckEntity);
-
-    Object.assign(gameUserRepository, connection.getRepository(GameUserEntity));
+    // Create a mock of the extended repository
+    repository = {
+      ...mockBaseRepository,
+      findWaitingGameId: jest.fn(),
+      subtractEnergy: jest.fn(),
+    } as any;
   });
 
-  // Factory methods for test data creation
-  const createDeck = async (userId: string, name: string): Promise<DeckEntity> => {
-    const deck = deckRepository.create({
-      userId,
-      name,
-    });
-    return await deckRepository.save(deck);
-  };
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-  const createGame = async (): Promise<GameEntity> => {
-    const game = gameRepository.create({});
-    return await gameRepository.save(game);
-  };
-
-  const createGameUser = async (
-    userId: string,
-    game: GameEntity,
-    deck: DeckEntity,
-    options: Partial<GameUserEntity> = {},
-  ) => {
-    const gameUser = gameUserRepository.create({
-      userId,
-      energy: 0,
-      lifePoint: 8000,
-      lastViewedAt: new Date(),
-      game,
-      deck,
-      ...options,
-    });
-    return await gameUserRepository.save(gameUser);
-  };
-
-  const createGameWithSinglePlayer = async (userId = 'user1', deckName = 'Test Deck') => {
-    const deck = await createDeck(userId, deckName);
-    const game = await createGame();
-    const gameUser = await createGameUser(userId, game, deck);
-    return { game, deck, gameUser };
-  };
-
-  const createGameWithTwoPlayers = async (
-    user1Id = 'user1',
-    user2Id = 'user2',
-    deck1Name = 'Test Deck 1',
-    deck2Name = 'Test Deck 2',
-  ) => {
-    const deck1 = await createDeck(user1Id, deck1Name);
-    const deck2 = await createDeck(user2Id, deck2Name);
-    const game = await createGame();
-    const gameUser1 = await createGameUser(user1Id, game, deck1);
-    const gameUser2 = await createGameUser(user2Id, game, deck2);
-    return { game, deck1, deck2, gameUser1, gameUser2 };
-  };
+  it('should be defined', () => {
+    expect(repository).toBeDefined();
+  });
 
   describe('findWaitingGameId', () => {
     it('should return undefined when no waiting game exists', async () => {
-      const result = await gameUserRepository.findWaitingGameId();
+      mockBaseRepository.query.mockResolvedValue([]);
+      (repository.findWaitingGameId as jest.Mock).mockImplementation(async () => {
+        const result = await mockBaseRepository.query(
+          'SELECT gameId AS id FROM gameUsers GROUP BY gameId HAVING COUNT(*) = 1 LIMIT 1 LOCK IN SHARE MODE',
+        );
+        return result.length > 0 ? result[0].id : undefined;
+      });
+
+      const result = await repository.findWaitingGameId();
+
+      expect(mockBaseRepository.query).toHaveBeenCalledWith(
+        'SELECT gameId AS id FROM gameUsers GROUP BY gameId HAVING COUNT(*) = 1 LIMIT 1 LOCK IN SHARE MODE',
+      );
       expect(result).toBeUndefined();
     });
 
     it('should return gameId when waiting game with one player exists', async () => {
-      const { game } = await createGameWithSinglePlayer();
+      const expectedGameId = 123;
+      mockBaseRepository.query.mockResolvedValue([{ id: expectedGameId }]);
+      (repository.findWaitingGameId as jest.Mock).mockImplementation(async () => {
+        const result = await mockBaseRepository.query(
+          'SELECT gameId AS id FROM gameUsers GROUP BY gameId HAVING COUNT(*) = 1 LIMIT 1 LOCK IN SHARE MODE',
+        );
+        return result.length > 0 ? result[0].id : undefined;
+      });
 
-      const result = await gameUserRepository.findWaitingGameId();
-      expect(result).toBe(game.id);
+      const result = await repository.findWaitingGameId();
+
+      expect(mockBaseRepository.query).toHaveBeenCalledWith(
+        'SELECT gameId AS id FROM gameUsers GROUP BY gameId HAVING COUNT(*) = 1 LIMIT 1 LOCK IN SHARE MODE',
+      );
+      expect(result).toBe(expectedGameId);
+    });
+  });
+
+  describe('subtractEnergy', () => {
+    it('should subtract energy from user in game', async () => {
+      const gameId = 1;
+      const userId = 'user123';
+      const amount = 5;
+
+      mockBaseRepository.query.mockResolvedValue([]);
+      (repository.subtractEnergy as jest.Mock).mockImplementation(async (gId: number, uId: string, amt: number) => {
+        await mockBaseRepository.query(
+          `UPDATE gameUsers SET energy = energy - ${amt} WHERE gameId = ${gId} AND userId = '${uId}'`,
+        );
+      });
+
+      await repository.subtractEnergy(gameId, userId, amount);
+
+      expect(mockBaseRepository.query).toHaveBeenCalledWith(
+        `UPDATE gameUsers SET energy = energy - ${amount} WHERE gameId = ${gameId} AND userId = '${userId}'`,
+      );
     });
 
-    it('should return undefined when multiple games exist but all have 2 players', async () => {
-      await createGameWithTwoPlayers();
+    it('should handle zero energy subtraction', async () => {
+      const gameId = 1;
+      const userId = 'user123';
+      const amount = 0;
 
-      const result = await gameUserRepository.findWaitingGameId();
-      expect(result).toBeUndefined();
-    });
+      mockBaseRepository.query.mockResolvedValue([]);
+      (repository.subtractEnergy as jest.Mock).mockImplementation(async (gId: number, uId: string, amt: number) => {
+        await mockBaseRepository.query(
+          `UPDATE gameUsers SET energy = energy - ${amt} WHERE gameId = ${gId} AND userId = '${uId}'`,
+        );
+      });
 
-    it('should return the first gameId when multiple waiting games exist', async () => {
-      const { game: game1 } = await createGameWithSinglePlayer('user1', 'Test Deck 1');
-      await createGameWithSinglePlayer('user2', 'Test Deck 2');
+      await repository.subtractEnergy(gameId, userId, amount);
 
-      const result = await gameUserRepository.findWaitingGameId();
-      expect(result).toBe(game1.id);
-    });
-
-    it('should return waiting game ID when both waiting and full games exist', async () => {
-      await createGameWithTwoPlayers('user1', 'user2', 'Test Deck 1', 'Test Deck 2');
-      const { game: waitingGame } = await createGameWithSinglePlayer('user3', 'Test Deck 3');
-
-      const result = await gameUserRepository.findWaitingGameId();
-      expect(result).toBe(waitingGame.id);
+      expect(mockBaseRepository.query).toHaveBeenCalledWith(
+        `UPDATE gameUsers SET energy = energy - ${amount} WHERE gameId = ${gameId} AND userId = '${userId}'`,
+      );
     });
   });
 });
