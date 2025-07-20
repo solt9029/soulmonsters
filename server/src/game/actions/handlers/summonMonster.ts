@@ -3,35 +3,8 @@ import { GameCardRepository } from '../../../repositories/game.card.repository';
 import { GameActionDispatchInput, BattlePosition } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
-
-const calcNewBattleGameCardPosition = (gameEntity: GameEntity, userId: string): number => {
-  const battleGameCards = gameEntity.gameCards
-    .filter(value => value.zone === Zone.BATTLE && value.currentUserId === userId)
-    .sort((a, b) => b.position - a.position);
-
-  return battleGameCards.length > 0 ? battleGameCards[0].position + 1 : 0;
-};
-
-const subtractUserEnergy = (gameEntity: GameEntity, userId: string, amount: number): GameEntity => {
-  const gameUsers = gameEntity.gameUsers.map(gameUser =>
-    gameUser.userId === userId ? { ...gameUser, energy: gameUser.energy - amount } : { ...gameUser },
-  );
-  return { ...gameEntity, gameUsers };
-};
-
-const summonGameCard = (gameEntity: GameEntity, userId: string, gameCardId: number): GameEntity => {
-  const gameCards = gameEntity.gameCards.map(gameCard =>
-    gameCard.id === gameCardId
-      ? {
-          ...gameCard,
-          position: calcNewBattleGameCardPosition(gameEntity, userId),
-          zone: Zone.BATTLE,
-          battlePosition: BattlePosition.ATTACK,
-        }
-      : { ...gameCard },
-  );
-  return { ...gameEntity, gameCards };
-};
+import { subtractUserEnergy } from './summonMonster/subtractUserEnergy';
+import { summonGameCard } from './summonMonster/summonGameCard';
 
 export async function handleSummonMonsterAction(
   manager: EntityManager,
