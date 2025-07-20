@@ -31,8 +31,8 @@ export async function handleStartDrawTimeAction(
   userId: string,
   gameEntity: GameEntity,
 ) {
-  const gameRepository = manager.getRepository(GameRepository.target).extend(GameRepository);
-  const gameCardRepository = manager.getRepository(GameCardRepository.target).extend(GameCardRepository);
+  const gameRepository = manager.withRepository(GameRepository);
+  const gameCardRepository = manager.withRepository(GameCardRepository);
 
   await gameRepository.update({ id }, { phase: Phase.DRAW, turnCount: calcNextGameTurnCount(gameEntity) });
 

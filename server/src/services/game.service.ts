@@ -28,7 +28,7 @@ export class GameService {
 
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
     return this.dataSource.transaction(async manager => {
-      const gameRepository = manager.getRepository(GameRepository.target).extend(GameRepository);
+      const gameRepository = manager.withRepository(GameRepository);
       const gameEntity = await gameRepository.findByIdWithRelationsAndLock(id);
 
       // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
@@ -48,10 +48,10 @@ export class GameService {
 
   async start(userId: string, deckId: number) {
     return this.dataSource.transaction(async manager => {
-      const deckCardRepository = manager.getRepository(DeckCardRepository.target);
-      const gameRepository = manager.getRepository(GameRepository.target).extend(GameRepository);
-      const gameUserRepository = manager.getRepository(GameUserRepository.target).extend(GameUserRepository);
-      const gameCardRepository = manager.getRepository(GameCardRepository.target).extend(GameCardRepository);
+      const deckCardRepository = manager.withRepository(DeckCardRepository);
+      const gameRepository = manager.withRepository(GameRepository);
+      const gameUserRepository = manager.withRepository(GameUserRepository);
+      const gameCardRepository = manager.withRepository(GameCardRepository);
 
       const userActiveGameEntity = await gameRepository.findActiveGameByUserId(userId);
 

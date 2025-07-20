@@ -19,8 +19,8 @@ export async function handleSummonMonsterAction(
   data: GameActionDispatchInput,
   gameEntity: GameEntity,
 ) {
-  const gameCardRepository = manager.getRepository(GameCardRepository.target).extend(GameCardRepository);
-  const gameUserRepository = manager.getRepository(GameUserRepository.target).extend(GameUserRepository);
+  const gameCardRepository = manager.withRepository(GameCardRepository);
+  const gameUserRepository = manager.withRepository(GameUserRepository);
 
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId);
 
