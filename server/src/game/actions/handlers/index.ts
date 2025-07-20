@@ -1,17 +1,17 @@
 import { GameEntity } from '../../../entities/game.entity';
 import { GameActionDispatchInput } from '../../../graphql/index';
 import { ActionType } from '../../../graphql/index';
-import { handleStartDrawTimeAction } from './handleStartDrawTimeAction';
+import { handleStartDrawTimeAction } from './startDrawTime';
 import { EntityManager } from 'typeorm';
-import { handleStartEnergyTimeAction } from './handleStartEnergyTimeAction';
-import { handleStartPutTimeAction } from './handleStartPutTimeAction';
-import { handlePutSoulAction } from './handlePutSoulAction';
-import { handleStartSomethingTimeAction } from './handleStartSomethingTimeAction';
-import { handleSummonMonsterAction } from './handleSummonMonsterAction';
-import { handleStartBattleTimeAction } from './handleStartBattleTimeAction';
-import { handleStartEndTimeAction } from './handleStartEndTimeAction';
-import { handleAttackAction } from './handleAttackAction';
-import { handleFinishEndTimeAction } from './handleFinishEndTimeAction';
+import { handleStartEnergyTimeAction } from './startEnergyTime';
+import { handleStartPutTimeAction } from './startPutTime';
+import { handlePutSoulAction } from './putSoul';
+import { handleStartSomethingTimeAction } from './startSomethingTime';
+import { handleSummonMonsterAction } from './summonMonster';
+import { handleStartBattleTimeAction } from './startBattleTime';
+import { handleStartEndTimeAction } from './startEndTime';
+import { handleAttackAction } from './attack';
+import { handleFinishEndTimeAction } from './finishEndTime';
 
 export async function handleAction(
   id: number,
