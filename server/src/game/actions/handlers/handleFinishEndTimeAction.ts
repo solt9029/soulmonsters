@@ -32,7 +32,7 @@ export async function handleFinishEndTimeAction(manager: EntityManager, userId: 
     throw new Error('Opponent game user not found');
   }
 
-  await gameRepository.update({ id }, { turnUserId: opponentGameUser.userId });
+  await gameRepository.update({ id }, { phase: null, turnUserId: opponentGameUser.userId });
 
   const cleanableGameStateIds = findCleanableGameStateIds(game, userId);
 
