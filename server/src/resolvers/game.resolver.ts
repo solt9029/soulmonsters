@@ -35,12 +35,7 @@ export class GameResolver {
   @Query()
   async activeGameId(@User() user: auth.DecodedIdToken) {
     const activeGame = await this.gameService.findActiveGameByUserId(user.uid);
-
-    if (activeGame === undefined) {
-      return null;
-    }
-
-    return activeGame.id;
+    return activeGame?.id;
   }
 
   @Mutation()
