@@ -13,12 +13,6 @@ const calcNewSoulGameCardPosition = (gameEntity: GameEntity, userId: string): nu
   return soulGameCards.length > 0 ? soulGameCards[0].position + 1 : 0;
 };
 
-const findPutSoulCountGameState = (gameEntity: GameEntity, gameUserId: number): GameStateEntity | undefined => {
-  return gameEntity.gameStates.find(
-    gameState => gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId,
-  );
-};
-
 const initPutSoulCountGameState = (gameEntity: GameEntity, gameUserId: number): GameStateEntity => {
   return {
     ...new GameStateEntity(),
@@ -42,34 +36,27 @@ const putSoulGameCard = (gameEntity: GameEntity, userId: string, gameCardId: num
 };
 
 const savePutCountGameState = (gameEntity: GameEntity, gameUserId: number): GameEntity => {
-  const putSoulCountGameState = findPutSoulCountGameState(gameEntity, gameUserId);
+  const targetGameStateId = gameEntity.gameStates.findIndex(
+    gameState => gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId,
+  );
 
-  if (putSoulCountGameState === undefined) {
+  if (targetGameStateId === -1) {
     return {
       ...gameEntity,
       gameStates: [...gameEntity.gameStates, initPutSoulCountGameState(gameEntity, gameUserId)],
     };
   }
 
-  const gameStates = gameEntity.gameStates.map(gameState =>
-    gameState.id === putSoulCountGameState.id && gameState.state.type === StateType.PUT_SOUL_COUNT
-      ? {
-          ...gameState,
-          state: {
-            ...gameState.state,
-            data: {
-              ...gameState.state.data,
-              value: gameState.state.data.value + 1,
-            },
-          },
-        }
-      : { ...gameState },
-  );
+  const gameStates = gameEntity.gameStates.map(gameState => {
+    if (gameState.id === targetGameStateId && gameState.state.type === StateType.PUT_SOUL_COUNT) {
+      const data = { ...gameState.state.data, value: gameState.state.data.value + 1 };
+      return { ...gameState, state: { ...gameState.state, data } };
+    }
 
-  return {
-    ...gameEntity,
-    gameStates,
-  };
+    return { ...gameState };
+  });
+
+  return { ...gameEntity, gameStates };
 };
 
 export async function handlePutSoulAction(
