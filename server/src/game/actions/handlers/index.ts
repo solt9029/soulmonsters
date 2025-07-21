@@ -26,17 +26,17 @@ export async function handleAction(
     case ActionType.START_ENERGY_TIME:
       return await handleStartEnergyTimeAction(manager, id, userId, gameEntity);
     case ActionType.START_PUT_TIME:
-      return await handleStartPutTimeAction(manager, id);
+      return await handleStartPutTimeAction(manager, gameEntity);
     case ActionType.PUT_SOUL:
       return await handlePutSoulAction(manager, userId, data, gameEntity);
     case ActionType.START_SOMETHING_TIME:
-      return await handleStartSomethingTimeAction(manager, id);
+      return await handleStartSomethingTimeAction(manager, gameEntity);
     case ActionType.SUMMON_MONSTER:
       return await handleSummonMonsterAction(manager, userId, data, gameEntity);
     case ActionType.START_BATTLE_TIME:
-      return await handleStartBattleTimeAction(manager, id);
+      return await handleStartBattleTimeAction(manager, gameEntity);
     case ActionType.START_END_TIME:
-      return await handleStartEndTimeAction(manager, id);
+      return await handleStartEndTimeAction(manager, gameEntity);
     case ActionType.ATTACK:
       return await handleAttackAction(manager, userId, data, gameEntity);
     case ActionType.FINISH_END_TIME:

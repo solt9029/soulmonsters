@@ -1,8 +1,8 @@
 import { Phase } from '../../../graphql/index';
 import { EntityManager } from 'typeorm';
-import { GameRepository } from 'src/repositories/game.repository';
+import { GameEntity } from 'src/entities/game.entity';
 
-export async function handleStartEndTimeAction(manager: EntityManager, id: number) {
-  const gameRepository = manager.withRepository(GameRepository);
-  await gameRepository.update({ id }, { phase: Phase.END });
+export async function handleStartEndTimeAction(manager: EntityManager, gameEntity: GameEntity) {
+  gameEntity.phase = Phase.END;
+  await manager.save(GameEntity, gameEntity);
 }
