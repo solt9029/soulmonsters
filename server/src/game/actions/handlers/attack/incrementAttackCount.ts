@@ -3,21 +3,15 @@ import { GameStateEntity } from '../../../../entities/game.state.entity';
 import { Zone, StateType } from '../../../../graphql';
 
 export const incrementAttackCount = (gameEntity: GameEntity, gameCardId: number): GameEntity => {
-  const gameCardIndex = gameEntity.gameCards.findIndex(card => card.id === gameCardId);
+  const gameCard = gameEntity.gameCards.find(gameCard => gameCard.id === gameCardId);
 
-  if (gameCardIndex === -1) {
+  if (gameCard === undefined) {
     throw new Error('Game card not found');
   }
-
-  const gameCard = gameEntity.gameCards[gameCardIndex];
 
   // バトルゾーンにあるカードのみ攻撃回数を記録
   if (gameCard.zone !== Zone.BATTLE) {
     return gameEntity;
-  }
-
-  if (!gameEntity.gameStates) {
-    gameEntity.gameStates = [];
   }
 
   const existingAttackCountStateIndex = gameEntity.gameStates.findIndex(
