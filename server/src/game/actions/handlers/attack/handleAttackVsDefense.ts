@@ -1,0 +1,35 @@
+import { GameEntity } from '../../../../entities/game.entity';
+import { destroyMonster } from './destroyMonster';
+import { dealDamageToPlayer } from './dealDamageToPlayer';
+
+export const handleAttackVsDefense = (
+  gameEntity: GameEntity,
+  attackerCardId: number,
+  defenderCardId: number,
+): GameEntity => {
+  const attackerCard = gameEntity.gameCards.find(card => card.id === attackerCardId);
+  const defenderCard = gameEntity.gameCards.find(card => card.id === defenderCardId);
+
+  if (!attackerCard) {
+    throw new Error('Attacker card not found');
+  }
+
+  if (!defenderCard) {
+    throw new Error('Defender card not found');
+  }
+
+  if (attackerCard.attack == null || defenderCard.defence == null) {
+    throw new Error('Attack or defence values are null');
+  }
+
+  let updatedGameEntity = gameEntity;
+
+  if (attackerCard.attack > defenderCard.defence) {
+    updatedGameEntity = destroyMonster(updatedGameEntity, defenderCardId);
+  } else if (attackerCard.attack < defenderCard.defence) {
+    const damagePoint = defenderCard.defence - attackerCard.attack;
+    updatedGameEntity = dealDamageToPlayer(updatedGameEntity, attackerCard.currentUserId, damagePoint);
+  }
+
+  return updatedGameEntity;
+};
