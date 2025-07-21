@@ -1,0 +1,20 @@
+import { GameEntity } from 'src/entities/game.entity';
+import { StateType } from 'src/graphql';
+
+const isAttackCountState = (gameState: any, userId: string): boolean => {
+  return gameState.state.type === StateType.ATTACK_COUNT && gameState.gameCard.currentUserId === userId;
+};
+
+const isPutSoulCountState = (gameState: any, gameUserId: number): boolean => {
+  return gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId;
+};
+
+export const cleanGameStates = (gameEntity: GameEntity, userId: string): GameEntity => {
+  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
+
+  gameEntity.gameStates = gameEntity.gameStates.filter(
+    gameState => !(isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, gameUser.id)),
+  );
+
+  return gameEntity;
+};
