@@ -29,15 +29,14 @@ export function initializeGameCards(deckCardEntities: DeckCardEntity[], gameId: 
   const shuffledCardEntities = shuffle(cardEntities);
 
   return shuffledCardEntities.map((value, index) => {
-    const gameCardEntity = new GameCardEntity();
-
-    gameCardEntity.originalUserId = userId;
-    gameCardEntity.currentUserId = userId;
-    gameCardEntity.zone = index >= HAND_COUNT ? Zone.DECK : Zone.HAND;
-    gameCardEntity.position = index >= HAND_COUNT ? index - HAND_COUNT : index;
-    gameCardEntity.card = value;
-    gameCardEntity.game = new GameEntity();
-    gameCardEntity.game.id = gameId;
+    const gameCardEntity = new GameCardEntity({
+      originalUserId: userId,
+      currentUserId: userId,
+      zone: index >= HAND_COUNT ? Zone.DECK : Zone.HAND,
+      position: index >= HAND_COUNT ? index - HAND_COUNT : index,
+      card: value,
+      game: new GameEntity({ id: gameId }),
+    });
 
     return gameCardEntity;
   });
