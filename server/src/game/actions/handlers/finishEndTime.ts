@@ -1,42 +1,42 @@
-import { GameStateEntity } from '../../../entities/game.state.entity';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
-import { GameRepository } from 'src/repositories/game.repository';
 import { StateType } from 'src/graphql';
 
-function isAttackCountState(gameState: GameStateEntity, userId: string) {
+const isAttackCountState = (gameState: any, userId: string): boolean => {
   return gameState.state.type === StateType.ATTACK_COUNT && gameState.gameCard.currentUserId === userId;
-}
-
-function isPutSoulCountState(gameState: GameStateEntity, gameUserId: number) {
-  return gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId;
-}
-
-const findCleanableGameStateIds = (gameEntity: GameEntity, userId: string) => {
-  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
-
-  if (!gameUser) {
-    throw new Error('Game user not found');
-  }
-
-  return gameEntity.gameStates
-    .filter(gameState => isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, gameUser.id))
-    .map(gameState => gameState.id);
 };
 
-export async function handleFinishEndTimeAction(manager: EntityManager, userId: string, id: number, game: GameEntity) {
-  const gameRepository = manager.withRepository(GameRepository);
-  const opponentGameUser = game.gameUsers.find(value => value.userId !== userId);
+const isPutSoulCountState = (gameState: any, gameUserId: number): boolean => {
+  return gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId;
+};
 
-  if (!opponentGameUser) {
-    throw new Error('Opponent game user not found');
-  }
+const cleanGameStates = (gameEntity: GameEntity, userId: string): GameEntity => {
+  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
 
-  await gameRepository.update({ id }, { phase: null, turnUserId: opponentGameUser.userId });
+  gameEntity.gameStates = gameEntity.gameStates.filter(
+    gameState => !(isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, gameUser.id)),
+  );
 
-  const cleanableGameStateIds = findCleanableGameStateIds(game, userId);
+  return gameEntity;
+};
 
-  if (cleanableGameStateIds.length > 0) {
-    await manager.delete(GameStateEntity, cleanableGameStateIds);
-  }
+const switchToOpponentTurn = (gameEntity: GameEntity, userId: string): GameEntity => {
+  const opponentGameUser = gameEntity.gameUsers.find(value => value.userId !== userId)!;
+
+  gameEntity.phase = null;
+  gameEntity.turnUserId = opponentGameUser.userId;
+
+  return gameEntity;
+};
+
+export async function handleFinishEndTimeAction(
+  manager: EntityManager,
+  userId: string,
+  _id: number,
+  gameEntity: GameEntity,
+) {
+  switchToOpponentTurn(gameEntity, userId);
+  cleanGameStates(gameEntity, userId);
+
+  await manager.save(GameEntity, gameEntity);
 }

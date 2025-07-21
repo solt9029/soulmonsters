@@ -26,7 +26,7 @@ export class GameStateEntity extends AppEntity<GameStateEntity> {
   @ManyToOne(
     () => GameEntity,
     gameEntity => gameEntity.gameStates,
-    { onDelete: 'CASCADE', nullable: false },
+    { onDelete: 'CASCADE', nullable: false, orphanedRowAction: 'delete' },
   )
   game: GameEntity;
 
