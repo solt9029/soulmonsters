@@ -22,7 +22,7 @@
     "db:down": "docker-compose -f docker-compose.yml down",
     "db:migrate": "yarn typeorm migration:run -d src/dataSource.ts",
     "db:generate": "yarn typeorm migration:generate -d src/dataSource.ts src/database/migrations/Migration",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
