@@ -13,6 +13,9 @@ import {
   OneToMany,
 } from 'typeorm';
 
+// TODO: constructorで、プロパティを受け取って初期化できるようにしたい
+// TODO: GameCardはextendsしたくない。BaseEntityってやつをextendsしたいから。多重継承はできない。
+
 @Entity({ name: 'gameCards' })
 @Unique(['position', 'zone', 'currentUserId'])
 export class GameCardEntity extends GameCard {
