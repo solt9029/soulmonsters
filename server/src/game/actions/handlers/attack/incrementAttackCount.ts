@@ -16,18 +16,18 @@ export const incrementAttackCount = (gameEntity: GameEntity, gameCardId: number)
     return gameEntity;
   }
 
-  if (!gameCard.gameStates) {
-    gameCard.gameStates = [];
+  if (!gameEntity.gameStates) {
+    gameEntity.gameStates = [];
   }
 
-  const existingAttackCountStateIndex = gameCard.gameStates.findIndex(
+  const existingAttackCountStateIndex = gameEntity.gameStates.findIndex(
     state => state.state.type === StateType.ATTACK_COUNT,
   );
 
-  if (existingAttackCountStateIndex !== -1) {
-    gameCard.gameStates[existingAttackCountStateIndex].state = {
+  if (existingAttackCountStateIndex >= 0) {
+    gameEntity.gameStates[existingAttackCountStateIndex].state = {
       type: StateType.ATTACK_COUNT,
-      data: { value: gameCard.gameStates[existingAttackCountStateIndex].state.data['value'] + 1 },
+      data: { value: gameEntity.gameStates[existingAttackCountStateIndex].state.data['value'] + 1 },
     };
   } else {
     const newGameState = new GameStateEntity();
@@ -36,7 +36,7 @@ export const incrementAttackCount = (gameEntity: GameEntity, gameCardId: number)
     newGameState.gameCard = gameCard;
     newGameState.state = { type: StateType.ATTACK_COUNT, data: { value: 1 } };
 
-    gameCard.gameStates.push(newGameState);
+    gameEntity.gameStates.push(newGameState);
   }
 
   return gameEntity;

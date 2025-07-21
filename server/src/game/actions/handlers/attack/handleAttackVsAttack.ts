@@ -62,33 +62,23 @@ export const handleAttackVsAttack = (
 
   const battleResult = determineBattleOutcome(attackerCard, defenderCard);
 
-  let updatedGameEntity = gameEntity;
-
   if (battleResult.attackerDestroyed) {
-    updatedGameEntity = destroyMonster(updatedGameEntity, attackerCardId);
-    updatedGameEntity = increaseEnergyToPlayer(updatedGameEntity, attackerCard.currentUserId);
+    destroyMonster(gameEntity, attackerCardId);
+    increaseEnergyToPlayer(gameEntity, attackerCard.currentUserId);
   }
 
   if (battleResult.defenderDestroyed) {
-    updatedGameEntity = destroyMonster(updatedGameEntity, defenderCardId);
-    updatedGameEntity = increaseEnergyToPlayer(updatedGameEntity, defenderCard.currentUserId);
+    destroyMonster(gameEntity, defenderCardId);
+    increaseEnergyToPlayer(gameEntity, defenderCard.currentUserId);
   }
 
   if (battleResult.damageToAttacker > 0) {
-    updatedGameEntity = dealDamageToPlayer(
-      updatedGameEntity,
-      attackerCard.currentUserId,
-      battleResult.damageToAttacker,
-    );
+    dealDamageToPlayer(gameEntity, attackerCard.currentUserId, battleResult.damageToAttacker);
   }
 
   if (battleResult.damageToDefender > 0) {
-    updatedGameEntity = dealDamageToPlayer(
-      updatedGameEntity,
-      defenderCard.currentUserId,
-      battleResult.damageToDefender,
-    );
+    dealDamageToPlayer(gameEntity, defenderCard.currentUserId, battleResult.damageToDefender);
   }
 
-  return updatedGameEntity;
+  return gameEntity;
 };

@@ -3,6 +3,7 @@ import { BattlePosition } from '../../../../graphql';
 import { handleAttackVsAttack } from './handleAttackVsAttack';
 import { handleAttackVsDefense } from './handleAttackVsDefense';
 
+// ダメージ計算・ソウルゾーンへの移動・エナジー加算などの責務を持つ
 export const monsterBattle = (gameEntity: GameEntity, attackerCardId: number, defenderCardId: number): GameEntity => {
   const defenderCard = gameEntity.gameCards.find(card => card.id === defenderCardId);
 

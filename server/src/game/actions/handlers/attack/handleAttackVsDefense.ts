@@ -22,14 +22,12 @@ export const handleAttackVsDefense = (
     throw new Error('Attack or defence values are null');
   }
 
-  let updatedGameEntity = gameEntity;
-
   if (attackerCard.attack > defenderCard.defence) {
-    updatedGameEntity = destroyMonster(updatedGameEntity, defenderCardId);
+    destroyMonster(gameEntity, defenderCardId);
   } else if (attackerCard.attack < defenderCard.defence) {
     const damagePoint = defenderCard.defence - attackerCard.attack;
-    updatedGameEntity = dealDamageToPlayer(updatedGameEntity, attackerCard.currentUserId, damagePoint);
+    dealDamageToPlayer(gameEntity, attackerCard.currentUserId, damagePoint);
   }
 
-  return updatedGameEntity;
+  return gameEntity;
 };
