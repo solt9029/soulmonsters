@@ -1,7 +1,7 @@
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
-import { cleanGameStates } from './finishEndTime/cleanGameStates';
 import { switchToOpponentTurn } from './finishEndTime/switchToOpponentTurn';
+import { cleanGameStates } from './finishEndTime/cleanGameStates';
 
 export async function handleFinishEndTimeAction(
   manager: EntityManager,
