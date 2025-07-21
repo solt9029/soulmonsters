@@ -5,7 +5,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Unique, CreateDateCo
 
 @Entity({ name: 'deckCards' })
 @Unique(['card', 'deck'])
-export class DeckCardEntity extends DeckCard {
+export class DeckCardEntity implements DeckCard {
   @PrimaryGeneratedColumn()
   id: number;
 

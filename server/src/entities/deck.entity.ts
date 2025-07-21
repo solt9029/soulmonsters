@@ -4,7 +4,7 @@ import { Deck } from './../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: 'decks' })
-export class DeckEntity extends Deck {
+export class DeckEntity implements Deck {
   @PrimaryGeneratedColumn()
   id: number;
 

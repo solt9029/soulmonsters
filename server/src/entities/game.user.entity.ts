@@ -1,12 +1,17 @@
-import { GameUser, ActionType } from './../graphql/index';
+import { GameUser, ActionType, User } from './../graphql/index';
 import { DeckEntity } from './deck.entity';
 import { GameEntity } from './game.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
+type EntityType = Omit<GameUser, 'game'> & {
+  game: GameEntity;
+};
+
 @Entity({ name: 'gameUsers' })
 @Unique(['userId', 'game'])
 @Unique(['deck', 'game'])
-export class GameUserEntity extends GameUser {
+export class GameUserEntity implements EntityType {
+  user: User;
   @PrimaryGeneratedColumn()
   id: number;
 

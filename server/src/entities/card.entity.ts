@@ -4,7 +4,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { GameCardEntity } from './game.card.entity';
 
 @Entity({ name: 'cards' })
-export class CardEntity extends Card {
+export class CardEntity implements Card {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -4,8 +4,12 @@ import { GameUserEntity } from './game.user.entity';
 import { Game, Phase } from './../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
+type EntityType = Omit<Game, 'gameUsers'> & {
+  gameUsers: GameUserEntity[];
+};
+
 @Entity({ name: 'games' })
-export class GameEntity extends Game {
+export class GameEntity implements EntityType {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -36,6 +40,7 @@ export class GameEntity extends Game {
   @OneToMany(
     () => GameUserEntity,
     gameUserEntity => gameUserEntity.game,
+    { cascade: true },
   )
   gameUsers: GameUserEntity[];
 

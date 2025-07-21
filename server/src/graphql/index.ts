@@ -76,23 +76,23 @@ export enum Zone {
     HAND = "HAND"
 }
 
-export class ActionPayload {
+export interface ActionPayload {
     gameCardId?: Nullable<number>;
     targetGameCardIds?: Nullable<number[]>;
     costGameCardIds?: Nullable<number[]>;
     targetGameUserIds?: Nullable<number[]>;
 }
 
-export class DeckCardUpdateInput {
+export interface DeckCardUpdateInput {
     deckId: number;
     cardId: number;
 }
 
-export class DeckCreateInput {
+export interface DeckCreateInput {
     name: string;
 }
 
-export class GameActionDispatchInput {
+export interface GameActionDispatchInput {
     type: ActionType;
     payload: ActionPayload;
 }
@@ -101,7 +101,7 @@ export interface Node {
     id: number;
 }
 
-export class Card implements Node {
+export interface Card extends Node {
     id: number;
     name: string;
     kind: Kind;
@@ -114,7 +114,7 @@ export class Card implements Node {
     picture: string;
 }
 
-export class Deck implements Node {
+export interface Deck extends Node {
     id: number;
     userId: string;
     name: string;
@@ -122,14 +122,14 @@ export class Deck implements Node {
     updatedAt: DateTime;
 }
 
-export class DeckCard implements Node {
+export interface DeckCard extends Node {
     id: number;
     count: number;
     deck: Deck;
     card: Card;
 }
 
-export class Game implements Node {
+export interface Game extends Node {
     id: number;
     turnUserId?: Nullable<string>;
     phase?: Nullable<Phase>;
@@ -140,7 +140,7 @@ export class Game implements Node {
     gameCards: GameCard[];
 }
 
-export class GameCard implements Node {
+export interface GameCard extends Node {
     id: number;
     originalUserId: string;
     currentUserId: string;
@@ -159,7 +159,7 @@ export class GameCard implements Node {
     actionTypes: ActionType[];
 }
 
-export class GameUser implements Node {
+export interface GameUser extends Node {
     id: number;
     userId: string;
     user: User;
@@ -171,39 +171,30 @@ export class GameUser implements Node {
     actionTypes: ActionType[];
 }
 
-export abstract class IMutation {
-    abstract plusDeckCard(data: DeckCardUpdateInput): DeckCard | Promise<DeckCard>;
-
-    abstract minusDeckCard(data: DeckCardUpdateInput): DeckCard | Promise<DeckCard>;
-
-    abstract createDeck(data: DeckCreateInput): Deck | Promise<Deck>;
-
-    abstract startGame(deckId: number): Game | Promise<Game>;
-
-    abstract dispatchGameAction(id: number, data: GameActionDispatchInput): Game | Promise<Game>;
+export interface IMutation {
+    plusDeckCard(data: DeckCardUpdateInput): DeckCard | Promise<DeckCard>;
+    minusDeckCard(data: DeckCardUpdateInput): DeckCard | Promise<DeckCard>;
+    createDeck(data: DeckCreateInput): Deck | Promise<Deck>;
+    startGame(deckId: number): Game | Promise<Game>;
+    dispatchGameAction(id: number, data: GameActionDispatchInput): Game | Promise<Game>;
 }
 
-export abstract class IQuery {
-    abstract cards(): Card[] | Promise<Card[]>;
-
-    abstract deckCards(deckId: number): DeckCard[] | Promise<DeckCard[]>;
-
-    abstract decks(): Deck[] | Promise<Deck[]>;
-
-    abstract game(id: number): Game | Promise<Game>;
-
-    abstract activeGameId(): Nullable<number> | Promise<Nullable<number>>;
-
-    abstract userData(userId: string): UserData | Promise<UserData>;
+export interface IQuery {
+    cards(): Card[] | Promise<Card[]>;
+    deckCards(deckId: number): DeckCard[] | Promise<DeckCard[]>;
+    decks(): Deck[] | Promise<Deck[]>;
+    game(id: number): Game | Promise<Game>;
+    activeGameId(): Nullable<number> | Promise<Nullable<number>>;
+    userData(userId: string): UserData | Promise<UserData>;
 }
 
-export class User {
+export interface User {
     id: string;
     displayName?: Nullable<string>;
     photoURL?: Nullable<string>;
 }
 
-export class UserData implements Node {
+export interface UserData extends Node {
     id: number;
     userId: string;
     winningCount: number;

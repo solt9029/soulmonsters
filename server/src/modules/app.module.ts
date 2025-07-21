@@ -40,7 +40,7 @@ import { ApolloDriver } from '@nestjs/apollo';
       typePaths: ['../schema/*.graphql'],
       definitions: {
         path: 'src/graphql/index.ts',
-        outputAs: 'class',
+        outputAs: 'interface',
       },
       resolverValidationOptions: {
         requireResolversForResolveType: false,

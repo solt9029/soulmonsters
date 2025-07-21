@@ -1,7 +1,7 @@
 import { GameStateEntity } from './game.state.entity';
 import { GameEntity } from './game.entity';
 import { CardEntity } from './card.entity';
-import { Zone, BattlePosition, GameCard, ActionType } from './../graphql/index';
+import { Zone, BattlePosition, GameCard, ActionType, Kind, Type, Attribute } from './../graphql/index';
 import {
   Entity,
   Column,
@@ -14,11 +14,10 @@ import {
 } from 'typeorm';
 
 // TODO: constructorで、プロパティを受け取って初期化できるようにしたい
-// TODO: GameCardはextendsしたくない。BaseEntityってやつをextendsしたいから。多重継承はできない。
 
 @Entity({ name: 'gameCards' })
 @Unique(['position', 'zone', 'currentUserId'])
-export class GameCardEntity extends GameCard {
+export class GameCardEntity implements GameCard {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -63,4 +62,12 @@ export class GameCardEntity extends GameCard {
   gameStates: GameStateEntity[];
 
   actionTypes: ActionType[] = [];
+  name?: string | null;
+  kind?: Kind | null;
+  type?: Type | null;
+  attribute?: Attribute | null;
+  attack?: number | null;
+  defence?: number | null;
+  cost?: number | null;
+  detail?: string | null;
 }
