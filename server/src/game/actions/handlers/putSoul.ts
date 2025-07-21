@@ -15,8 +15,8 @@ export async function handlePutSoulAction(
   const originalPosition = gameCard.position;
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
 
-  gameEntity = putSoulGameCard(gameEntity, userId, data.payload.gameCardId!);
-  gameEntity = savePutCountGameState(gameEntity, gameUser.id);
+  putSoulGameCard(gameEntity, userId, data.payload.gameCardId!);
+  savePutCountGameState(gameEntity, gameUser.id);
   await manager.save(GameEntity, gameEntity);
 
   const gameCardRepository = manager.withRepository(GameCardRepository);

@@ -10,15 +10,10 @@ const calcNewSoulGameCardPosition = (gameEntity: GameEntity, userId: string): nu
 };
 
 export const putSoulGameCard = (gameEntity: GameEntity, userId: string, gameCardId: number): GameEntity => {
-  const gameCards = gameEntity.gameCards.map(gameCard =>
-    gameCard.id === gameCardId
-      ? {
-          ...gameCard,
-          position: calcNewSoulGameCardPosition(gameEntity, userId),
-          zone: Zone.SOUL,
-        }
-      : { ...gameCard },
-  );
+  const index = gameEntity.gameCards.findIndex(gameCard => gameCard.id === gameCardId);
 
-  return { ...gameEntity, gameCards };
+  gameEntity.gameCards[index].zone = Zone.SOUL;
+  gameEntity.gameCards[index].position = calcNewSoulGameCardPosition(gameEntity, userId);
+
+  return gameEntity;
 };

@@ -14,8 +14,8 @@ export async function handleSummonMonsterAction(
   const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId)!;
   const originalPosition = gameCard.position;
 
-  gameEntity = subtractUserEnergy(gameEntity, userId, gameCard.card.cost);
-  gameEntity = summonGameCard(gameEntity, userId, data.payload.gameCardId!);
+  subtractUserEnergy(gameEntity, userId, gameCard.card.cost);
+  summonGameCard(gameEntity, userId, data.payload.gameCardId!);
   await manager.save(GameEntity, gameEntity);
 
   const gameCardRepository = manager.withRepository(GameCardRepository);

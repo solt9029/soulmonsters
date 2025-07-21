@@ -10,15 +10,11 @@ const calcNewBattleGameCardPosition = (gameEntity: GameEntity, userId: string): 
 };
 
 export const summonGameCard = (gameEntity: GameEntity, userId: string, gameCardId: number): GameEntity => {
-  const gameCards = gameEntity.gameCards.map(gameCard =>
-    gameCard.id === gameCardId
-      ? {
-          ...gameCard,
-          position: calcNewBattleGameCardPosition(gameEntity, userId),
-          zone: Zone.BATTLE,
-          battlePosition: BattlePosition.ATTACK,
-        }
-      : { ...gameCard },
-  );
-  return { ...gameEntity, gameCards };
+  const index = gameEntity.gameCards.findIndex(gameCard => gameCard.id === gameCardId);
+
+  gameEntity.gameCards[index].zone = Zone.BATTLE;
+  gameEntity.gameCards[index].battlePosition = BattlePosition.ATTACK;
+  gameEntity.gameCards[index].position = calcNewBattleGameCardPosition(gameEntity, userId);
+
+  return gameEntity;
 };
