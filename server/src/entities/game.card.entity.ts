@@ -12,12 +12,13 @@ import {
   Unique,
   OneToMany,
 } from 'typeorm';
+import { AppEntity } from './app.entity';
 
 // TODO: constructorで、プロパティを受け取って初期化できるようにしたい
 
 @Entity({ name: 'gameCards' })
 @Unique(['position', 'zone', 'currentUserId'])
-export class GameCardEntity implements GameCard {
+export class GameCardEntity extends AppEntity<GameCardEntity> implements GameCard {
   @PrimaryGeneratedColumn()
   id: number;
 

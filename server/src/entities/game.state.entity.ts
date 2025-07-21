@@ -2,6 +2,7 @@ import { GameEntity } from './game.entity';
 import { GameCardEntity } from './game.card.entity';
 import { StateType } from '../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { AppEntity } from './app.entity';
 
 type State =
   | {
@@ -18,7 +19,7 @@ type State =
     };
 
 @Entity({ name: 'gameStates' })
-export class GameStateEntity {
+export class GameStateEntity extends AppEntity<GameStateEntity> {
   @PrimaryGeneratedColumn()
   id: number;
 

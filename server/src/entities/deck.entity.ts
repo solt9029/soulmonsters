@@ -2,9 +2,10 @@ import { GameUserEntity } from './game.user.entity';
 import { DeckCardEntity } from './deck.card.entity';
 import { Deck } from './../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import { AppEntity } from './app.entity';
 
 @Entity({ name: 'decks' })
-export class DeckEntity implements Deck {
+export class DeckEntity extends AppEntity<DeckEntity> implements Deck {
   @PrimaryGeneratedColumn()
   id: number;
 
