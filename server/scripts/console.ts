@@ -1,3 +1,4 @@
+import { GameEntity } from 'src/entities/game.entity';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../src/modules/app.module';
 import { CardService } from '../src/services/card.service';
@@ -12,6 +13,7 @@ import { GameStateRepository } from '../src/repositories/game.state.repository';
 import { DeckCardRepository } from '../src/repositories/deck.card.repository';
 import { DataSource } from 'typeorm';
 import * as repl from 'repl';
+import { CardEntity } from 'src/entities/card.entity';
 
 async function bootstrap() {
   console.log('Starting Nest.js Console...');
@@ -43,16 +45,23 @@ async function bootstrap() {
 
   replServer.context.app = app;
   replServer.context.dataSource = dataSource;
+
   replServer.context.cardService = cardService;
   replServer.context.deckService = deckService;
   replServer.context.deckCardService = deckCardService;
   replServer.context.gameService = gameService;
   replServer.context.userService = userService;
+
   replServer.context.gameRepository = GameRepository;
   replServer.context.gameUserRepository = GameUserRepository;
   replServer.context.gameCardRepository = GameCardRepository;
   replServer.context.gameStateRepository = GameStateRepository;
   replServer.context.deckCardRepository = DeckCardRepository;
+
+  // TODO: 全部のEntityをここに登録する
+  replServer.context.GameEntity = GameEntity;
+  replServer.context.CardEntity = CardEntity;
+
   replServer.context.createDebugDeck = createDebugDeck;
 
   // Handle REPL exit
