@@ -3,12 +3,7 @@ import { EntityManager } from 'typeorm';
 import { switchToOpponentTurn } from './finishEndTime/switchToOpponentTurn';
 import { cleanGameStates } from './finishEndTime/cleanGameStates';
 
-export async function handleFinishEndTimeAction(
-  manager: EntityManager,
-  userId: string,
-  _id: number,
-  gameEntity: GameEntity,
-) {
+export async function handleFinishEndTimeAction(manager: EntityManager, userId: string, gameEntity: GameEntity) {
   switchToOpponentTurn(gameEntity, userId);
   cleanGameStates(gameEntity, userId);
 

@@ -48,12 +48,7 @@ const drawCardFromDeck = (gameEntity: GameEntity, userId: string): GameEntity =>
   return { ...gameEntity, gameCards };
 };
 
-export async function handleStartDrawTimeAction(
-  manager: EntityManager,
-  id: number,
-  userId: string,
-  gameEntity: GameEntity,
-) {
+export async function handleStartDrawTimeAction(manager: EntityManager, userId: string, gameEntity: GameEntity) {
   gameEntity = updateGamePhaseAndTurn(gameEntity);
   gameEntity = drawCardFromDeck(gameEntity, userId);
 

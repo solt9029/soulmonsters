@@ -13,11 +13,9 @@ import { handleStartEndTimeAction } from './startEndTime';
 import { handleAttackAction } from './attack';
 import { handleFinishEndTimeAction } from './finishEndTime';
 
-// TODO: gameEntity.id と id が同等なので、わざわざ id は受け取らなくて良い。
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
 // 理想メモ: game, gameUserId, opponentGameUser, data, manager
 export async function handleAction(
-  id: number,
   data: GameActionDispatchInput,
   manager: EntityManager,
   userId: string,
@@ -25,9 +23,9 @@ export async function handleAction(
 ) {
   switch (data.type) {
     case ActionType.START_DRAW_TIME:
-      return await handleStartDrawTimeAction(manager, id, userId, gameEntity);
+      return await handleStartDrawTimeAction(manager, userId, gameEntity);
     case ActionType.START_ENERGY_TIME:
-      return await handleStartEnergyTimeAction(manager, id, userId, gameEntity);
+      return await handleStartEnergyTimeAction(manager, userId, gameEntity);
     case ActionType.START_PUT_TIME:
       return await handleStartPutTimeAction(manager, gameEntity);
     case ActionType.PUT_SOUL:
@@ -43,7 +41,7 @@ export async function handleAction(
     case ActionType.ATTACK:
       return await handleAttackAction(manager, userId, data, gameEntity);
     case ActionType.FINISH_END_TIME:
-      return await handleFinishEndTimeAction(manager, userId, id, gameEntity);
+      return await handleFinishEndTimeAction(manager, userId, gameEntity);
     default:
       return;
   }
