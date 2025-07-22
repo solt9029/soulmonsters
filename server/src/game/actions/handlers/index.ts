@@ -13,6 +13,9 @@ import { handleStartEndTimeAction } from './startEndTime';
 import { handleAttackAction } from './attack';
 import { handleFinishEndTimeAction } from './finishEndTime';
 
+// TODO: gameEntity.id と id が同等なので、わざわざ id は受け取らなくて良い。
+// TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
+// 理想メモ: game, gameUserId, opponentGameUser, data, manager
 export async function handleAction(
   id: number,
   data: GameActionDispatchInput,
