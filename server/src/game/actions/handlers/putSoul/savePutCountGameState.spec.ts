@@ -11,11 +11,15 @@ describe('savePutCountGameState', () => {
     });
 
     const result = savePutCountGameState(gameEntity, 1);
+    const state = result.gameStates[0]?.state;
 
     expect(result.gameStates).toHaveLength(1);
-    expect(result.gameStates[0]?.state.type).toBe(StateType.PUT_SOUL_COUNT);
-    expect((result.gameStates[0]?.state.data as { gameUserId: number; value: number }).gameUserId).toBe(1);
-    expect((result.gameStates[0]?.state.data as { gameUserId: number; value: number }).value).toBe(1);
+    expect(state?.type).toBe(StateType.PUT_SOUL_COUNT);
+
+    if (state?.type === StateType.PUT_SOUL_COUNT) {
+      expect(state.data.gameUserId).toBe(1);
+      expect(state.data.value).toBe(1);
+    }
   });
 
   it('should increment existing PUT_SOUL_COUNT state value', () => {
@@ -32,10 +36,14 @@ describe('savePutCountGameState', () => {
     });
 
     const result = savePutCountGameState(gameEntity, 1);
+    const state = result.gameStates[0]?.state;
 
     expect(result.gameStates).toHaveLength(1);
-    expect(result.gameStates[0]?.state.type).toBe(StateType.PUT_SOUL_COUNT);
-    expect((result.gameStates[0]?.state.data as { gameUserId: number; value: number }).gameUserId).toBe(1);
-    expect((result.gameStates[0]?.state.data as { gameUserId: number; value: number }).value).toBe(3);
+    expect(state?.type).toBe(StateType.PUT_SOUL_COUNT);
+
+    if (state?.type === StateType.PUT_SOUL_COUNT) {
+      expect(state.data.gameUserId).toBe(1);
+      expect(state.data.value).toBe(3);
+    }
   });
 });
