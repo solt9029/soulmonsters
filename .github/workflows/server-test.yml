@@ -44,6 +44,14 @@ jobs:
     
     - name: Run database migrations
       run: yarn db:migrate
+      env:
+        NODE_ENV: test
+        DB_HOST: localhost
+        DB_PORT: 3307
+        DB_USERNAME: root
+        DB_PASSWORD: root
+        DB_DATABASE: soulmonsters_test
+        DB_TYPE: mysql
 
     - name: Run tests
       run: yarn test
