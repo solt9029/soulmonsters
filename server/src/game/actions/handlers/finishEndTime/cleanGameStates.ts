@@ -10,7 +10,11 @@ const isPutSoulCountState = (gameState: any, gameUserId: number): boolean => {
 };
 
 export const cleanGameStates = (gameEntity: GameEntity, userId: string): GameEntity => {
-  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
+  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+
+  if (!gameUser) {
+    throw new Error('Game user not found');
+  }
 
   gameEntity.gameStates = gameEntity.gameStates.filter(
     gameState => !(isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, gameUser.id)),

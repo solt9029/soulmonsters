@@ -1,3 +1,4 @@
+import { GameCardEntity } from 'src/entities/game.card.entity';
 import { GameEntity } from 'src/entities/game.entity';
 import { Zone } from 'src/graphql';
 
@@ -10,10 +11,15 @@ const calcNewSoulGameCardPosition = (gameEntity: GameEntity, userId: string): nu
 };
 
 export const putSoulGameCard = (gameEntity: GameEntity, userId: string, gameCardId: number): GameEntity => {
-  const index = gameEntity.gameCards.findIndex(gameCard => gameCard.id === gameCardId);
-
-  gameEntity.gameCards[index].zone = Zone.SOUL;
-  gameEntity.gameCards[index].position = calcNewSoulGameCardPosition(gameEntity, userId);
+  gameEntity.gameCards = gameEntity.gameCards.map(gameCard =>
+    gameCard.id === gameCardId
+      ? new GameCardEntity({
+          ...gameCard,
+          zone: Zone.SOUL,
+          position: calcNewSoulGameCardPosition(gameEntity, userId),
+        })
+      : gameCard,
+  );
 
   return gameEntity;
 };

@@ -1,3 +1,4 @@
+import { GameCardEntity } from 'src/entities/game.card.entity';
 import { GameEntity } from 'src/entities/game.entity';
 import { BattlePosition, Zone } from 'src/graphql';
 
@@ -10,11 +11,16 @@ const calcNewBattleGameCardPosition = (gameEntity: GameEntity, userId: string): 
 };
 
 export const summonGameCard = (gameEntity: GameEntity, userId: string, gameCardId: number): GameEntity => {
-  const index = gameEntity.gameCards.findIndex(gameCard => gameCard.id === gameCardId);
-
-  gameEntity.gameCards[index].zone = Zone.BATTLE;
-  gameEntity.gameCards[index].battlePosition = BattlePosition.ATTACK;
-  gameEntity.gameCards[index].position = calcNewBattleGameCardPosition(gameEntity, userId);
+  gameEntity.gameCards = gameEntity.gameCards.map(gameCard =>
+    gameCard.id === gameCardId
+      ? new GameCardEntity({
+          ...gameCard,
+          zone: Zone.BATTLE,
+          battlePosition: BattlePosition.ATTACK,
+          position: calcNewBattleGameCardPosition(gameEntity, userId),
+        })
+      : gameCard,
+  );
 
   return gameEntity;
 };
