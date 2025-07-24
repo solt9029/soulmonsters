@@ -14,6 +14,7 @@ import { DeckCardRepository } from '../src/repositories/deck.card.repository';
 import { DataSource } from 'typeorm';
 import * as repl from 'repl';
 import { CardEntity } from 'src/entities/card.entity';
+import { GameCardEntity } from 'src/entities/game.card.entity';
 
 async function bootstrap() {
   console.log('Starting Nest.js Console...');
@@ -61,6 +62,7 @@ async function bootstrap() {
   // TODO: 全部のEntityをここに登録する
   replServer.context.GameEntity = GameEntity;
   replServer.context.CardEntity = CardEntity;
+  replServer.context.GameCardEntity = GameCardEntity;
 
   replServer.context.createDebugDeck = createDebugDeck;
 
