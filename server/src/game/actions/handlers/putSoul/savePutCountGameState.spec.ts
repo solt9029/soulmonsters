@@ -1,0 +1,41 @@
+import { GameEntity } from 'src/entities/game.entity';
+import { GameStateEntity } from 'src/entities/game.state.entity';
+import { StateType } from 'src/graphql';
+import { savePutCountGameState } from './savePutCountGameState';
+
+describe('savePutCountGameState', () => {
+  it('should create new PUT_SOUL_COUNT state when none exists', () => {
+    const gameEntity = new GameEntity({
+      id: 1,
+      gameStates: [],
+    });
+
+    const result = savePutCountGameState(gameEntity, 1);
+
+    expect(result.gameStates).toHaveLength(1);
+    expect(result.gameStates[0]?.state.type).toBe(StateType.PUT_SOUL_COUNT);
+    expect((result.gameStates[0]?.state.data as { gameUserId: number; value: number }).gameUserId).toBe(1);
+    expect((result.gameStates[0]?.state.data as { gameUserId: number; value: number }).value).toBe(1);
+  });
+
+  it('should increment existing PUT_SOUL_COUNT state value', () => {
+    const gameEntity = new GameEntity({
+      id: 1,
+      gameStates: [
+        new GameStateEntity({
+          state: {
+            type: StateType.PUT_SOUL_COUNT,
+            data: { gameUserId: 1, value: 2 },
+          },
+        }),
+      ],
+    });
+
+    const result = savePutCountGameState(gameEntity, 1);
+
+    expect(result.gameStates).toHaveLength(1);
+    expect(result.gameStates[0]?.state.type).toBe(StateType.PUT_SOUL_COUNT);
+    expect((result.gameStates[0]?.state.data as { gameUserId: number; value: number }).gameUserId).toBe(1);
+    expect((result.gameStates[0]?.state.data as { gameUserId: number; value: number }).value).toBe(3);
+  });
+});
