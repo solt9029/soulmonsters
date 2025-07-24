@@ -7,7 +7,7 @@ const calcNewBattleGameCardPosition = (gameEntity: GameEntity, userId: string): 
     .filter(value => value.zone === Zone.BATTLE && value.currentUserId === userId)
     .sort((a, b) => b.position - a.position);
 
-  return battleGameCards.length > 0 ? battleGameCards[0].position + 1 : 0;
+  return battleGameCards[0] ? battleGameCards[0].position + 1 : 0;
 };
 
 export const summonGameCard = (gameEntity: GameEntity, userId: string, gameCardId: number): GameEntity => {

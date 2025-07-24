@@ -23,7 +23,7 @@ export class DeckCardResolver {
   async deckCards(@User() user: auth.DecodedIdToken, @Args('deckId') deckId: number) {
     const deckCardEntities = await this.deckCardService.findByDeckId(deckId);
 
-    if (deckCardEntities.length > 0 && deckCardEntities[0].deck.userId !== user.uid) {
+    if (deckCardEntities.length > 0 && deckCardEntities[0]?.deck.userId !== user.uid) {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
 
