@@ -16,6 +16,9 @@ export async function handleSummonMonsterAction(
 
   subtractUserEnergy(gameEntity, userId, gameCard.card.cost);
   summonGameCard(gameEntity, userId, data.payload.gameCardId!);
+
+  // TODO: シマシマジュニアの場合、相手のエナジーを1減らし、自分のエナジーを1増やす
+
   await manager.save(GameEntity, gameEntity);
 
   const gameCardRepository = manager.withRepository(GameCardRepository);

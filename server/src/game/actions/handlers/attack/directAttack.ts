@@ -18,5 +18,7 @@ export const directAttack = (gameEntity: GameEntity, attackerCardId: number, opp
     drawCardFromDeck(gameEntity, attackerUserId);
   }
 
+  // TODO: タキビーの直接攻撃の場合、1000ポイントダメージを追加で与える
+
   return gameEntity;
 };
