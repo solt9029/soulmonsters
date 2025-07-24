@@ -24,8 +24,8 @@ const startEnergyPhase = (gameEntity: GameEntity): GameEntity => {
 };
 
 export async function handleStartEnergyTimeAction(manager: EntityManager, userId: string, gameEntity: GameEntity) {
-  gameEntity = increaseGameUserEnergy(gameEntity, userId);
-  gameEntity = startEnergyPhase(gameEntity);
+  increaseGameUserEnergy(gameEntity, userId);
+  startEnergyPhase(gameEntity);
 
   await manager.save(GameEntity, gameEntity);
 }
