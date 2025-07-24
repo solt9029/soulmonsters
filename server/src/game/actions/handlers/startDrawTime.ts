@@ -2,6 +2,7 @@ import { Zone } from 'src/graphql';
 import { Phase } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
+import { GameCardEntity } from 'src/entities/game.card.entity';
 
 const calcTopDeckGameCardId = (gameEntity: GameEntity, userId: string): number | undefined => {
   const deckGameCards = gameEntity.gameCards
@@ -24,11 +25,10 @@ const calcNextGameTurnCount = (gameEntity: GameEntity): number => {
 };
 
 const updateGamePhaseAndTurn = (gameEntity: GameEntity): GameEntity => {
-  return {
-    ...gameEntity,
-    phase: Phase.DRAW,
-    turnCount: calcNextGameTurnCount(gameEntity),
-  };
+  gameEntity.phase = Phase.DRAW;
+  gameEntity.turnCount = calcNextGameTurnCount(gameEntity);
+
+  return gameEntity;
 };
 
 const drawCardFromDeck = (gameEntity: GameEntity, userId: string): GameEntity => {
@@ -41,11 +41,17 @@ const drawCardFromDeck = (gameEntity: GameEntity, userId: string): GameEntity =>
 
   const newPosition = calcNewHandGameCardPosition(gameEntity, userId);
 
-  const gameCards = gameEntity.gameCards.map(gameCard =>
-    gameCard.id === topDeckGameCardId ? { ...gameCard, zone: Zone.HAND, position: newPosition } : { ...gameCard },
+  gameEntity.gameCards = gameEntity.gameCards.map(gameCard =>
+    gameCard.id === topDeckGameCardId
+      ? new GameCardEntity({
+          ...gameCard,
+          zone: Zone.HAND,
+          position: newPosition,
+        })
+      : gameCard,
   );
 
-  return { ...gameEntity, gameCards };
+  return gameEntity;
 };
 
 export async function handleStartDrawTimeAction(manager: EntityManager, userId: string, gameEntity: GameEntity) {

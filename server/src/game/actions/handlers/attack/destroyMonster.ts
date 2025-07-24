@@ -1,3 +1,4 @@
+import { GameCardEntity } from 'src/entities/game.card.entity';
 import { GameEntity } from 'src/entities/game.entity';
 import { Zone } from 'src/graphql';
 
@@ -10,16 +11,16 @@ const calcNewSoulGameCardPosition = (gameEntity: GameEntity, userId: string): nu
 };
 
 export const destroyMonster = (gameEntity: GameEntity, gameCardId: number): GameEntity => {
-  const index = gameEntity.gameCards.findIndex(gameCard => gameCard.id === gameCardId);
-
-  if (index === -1) {
-    throw new Error(`Game card with id ${gameCardId} not found in game entity.`);
-  }
-
-  const targetGameCard = gameEntity.gameCards[index];
-
-  gameEntity.gameCards[index].zone = Zone.SOUL;
-  gameEntity.gameCards[index].position = calcNewSoulGameCardPosition(gameEntity, targetGameCard.currentUserId);
+  gameEntity.gameCards = gameEntity.gameCards.map(gameCard => {
+    if (gameCard.id === gameCardId) {
+      return new GameCardEntity({
+        ...gameCard,
+        zone: Zone.SOUL,
+        position: calcNewSoulGameCardPosition(gameEntity, gameCard.currentUserId),
+      });
+    }
+    return gameCard;
+  });
 
   return gameEntity;
 };
