@@ -22,7 +22,7 @@ export class DeckService {
     const insertResult = await this.deckRepository.insert({ userId, name });
     const result = await this.deckRepository.findOne({
       where: {
-        id: insertResult.identifiers[0].id,
+        id: insertResult.identifiers[0]?.id,
       },
     });
     if (!result) {

@@ -40,7 +40,7 @@ export class DeckCardService {
       count: 1,
     });
     const result = await this.deckCardRepository.findOne({
-      where: { id: insertResult.identifiers[0].id },
+      where: { id: insertResult.identifiers[0]?.id },
     });
     if (!result) {
       throw new Error('Deck card not found after creation');

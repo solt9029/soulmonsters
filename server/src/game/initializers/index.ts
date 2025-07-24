@@ -21,7 +21,10 @@ export function initializeGameCards(deckCardEntities: DeckCardEntity[], gameId: 
     return [];
   }
 
-  const userId = deckCardEntities[0].deck.userId;
+  const userId = deckCardEntities[0]?.deck.userId;
+  if (!userId) {
+    return [];
+  }
 
   const cardEntities: CardEntity[] = ([] as CardEntity[]).concat(
     ...deckCardEntities.map(value => new Array<CardEntity>(value.count).fill(value.card)),

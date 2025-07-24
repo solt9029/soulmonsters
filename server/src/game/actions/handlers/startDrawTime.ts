@@ -9,7 +9,7 @@ const calcTopDeckGameCardId = (gameEntity: GameEntity, userId: string): number |
     .filter(value => value.zone === Zone.DECK && value.currentUserId === userId)
     .sort((a, b) => b.position - a.position);
 
-  return deckGameCards.length > 0 ? deckGameCards[0].id : undefined;
+  return deckGameCards[0]?.id;
 };
 
 const calcNewHandGameCardPosition = (gameEntity: GameEntity, userId: string): number => {
@@ -17,7 +17,7 @@ const calcNewHandGameCardPosition = (gameEntity: GameEntity, userId: string): nu
     .filter(value => value.zone === Zone.HAND && value.currentUserId === userId)
     .sort((a, b) => b.position - a.position);
 
-  return handGameCards.length > 0 ? handGameCards[0].position + 1 : 0;
+  return handGameCards[0] ? handGameCards[0].position + 1 : 0;
 };
 
 const calcNextGameTurnCount = (gameEntity: GameEntity): number => {

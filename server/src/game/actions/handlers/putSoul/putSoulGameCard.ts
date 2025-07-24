@@ -7,7 +7,7 @@ const calcNewSoulGameCardPosition = (gameEntity: GameEntity, userId: string): nu
     .filter(gameCard => gameCard.zone === Zone.SOUL && gameCard.currentUserId === userId)
     .sort((a, b) => b.position - a.position);
 
-  return soulGameCards.length > 0 ? soulGameCards[0].position + 1 : 0;
+  return soulGameCards[0] ? soulGameCards[0].position + 1 : 0;
 };
 
 export const putSoulGameCard = (gameEntity: GameEntity, userId: string, gameCardId: number): GameEntity => {
