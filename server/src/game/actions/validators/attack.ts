@@ -6,8 +6,10 @@ import { BadRequestException } from '@nestjs/common';
 export function validateAttackAction(data: GameActionDispatchInput, game: GameEntity, userId: string) {
   // check payload
   const { targetGameCardIds, targetGameUserIds, gameCardId } = data.payload;
+
   const hasTargetGameCardId = (targetGameCardIds || []).length === 1 && (targetGameUserIds || []).length === 0;
   const hasTargetGameUserId = (targetGameCardIds || []).length === 0 && (targetGameUserIds || []).length === 1;
+
   if (gameCardId === undefined || (!hasTargetGameCardId && !hasTargetGameUserId)) {
     throw new BadRequestException('攻撃の処理に失敗しました');
   }
@@ -22,6 +24,7 @@ export function validateAttackAction(data: GameActionDispatchInput, game: GameEn
     const opponentBattleGameCards = game.gameCards.filter(
       value => value.zone === Zone.BATTLE && value.currentUserId !== userId,
     );
+
     if (opponentBattleGameCards.length > 0) {
       throw new BadRequestException('相手のバトルゾーンにモンスターが存在します');
     }
@@ -52,6 +55,7 @@ export function validateAttackAction(data: GameActionDispatchInput, game: GameEn
     value =>
       value.state.type === StateType.ATTACK_COUNT && value.gameCard.id === gameCard.id && value.state.data.value > 0,
   );
+
   if (gameState) {
     throw new BadRequestException('既にこのターン中に攻撃済みです');
   }
