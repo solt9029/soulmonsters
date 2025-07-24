@@ -33,8 +33,6 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-          --character-set-server=utf8mb4
-          --collation-server=utf8mb4_unicode_ci
 
     steps:
     - uses: actions/checkout@v4
@@ -48,6 +46,13 @@ jobs:
 
     - name: Install dependencies
       run: yarn install --frozen-lockfile
+    
+    - name: Configure MySQL charset
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y mysql-client
+        mysql -h 127.0.0.1 -P 3307 -u root -proot -e "DROP DATABASE IF EXISTS soulmonsters_test;"
+        mysql -h 127.0.0.1 -P 3307 -u root -proot -e "CREATE DATABASE soulmonsters_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
     
     - name: Run database migrations
       run: yarn db:migrate
