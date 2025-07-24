@@ -1,16 +1,13 @@
 import { GameEntity } from '../../../../entities/game.entity';
 import { MAX_ENERGY } from '../../../../constants/rule';
+import { GameUserEntity } from 'src/entities/game.user.entity';
 
 export const increaseEnergyToPlayer = (gameEntity: GameEntity, userId: string): GameEntity => {
-  const userIndex = gameEntity.gameUsers.findIndex(gameUser => gameUser.userId === userId);
-
-  if (userIndex === -1) {
-    throw new Error('Game user not found');
-  }
-
-  if (gameEntity.gameUsers[userIndex].energy < MAX_ENERGY) {
-    gameEntity.gameUsers[userIndex].energy += 1;
-  }
+  gameEntity.gameUsers = gameEntity.gameUsers.map(gameUser =>
+    gameUser.userId === userId
+      ? new GameUserEntity({ ...gameUser, energy: Math.min(gameUser.energy + 1, MAX_ENERGY) })
+      : gameUser,
+  );
 
   return gameEntity;
 };

@@ -9,7 +9,6 @@ export const incrementAttackCount = (gameEntity: GameEntity, gameCardId: number)
     throw new Error('Game card not found');
   }
 
-  // バトルゾーンにあるカードのみ攻撃回数を記録
   if (gameCard.zone !== Zone.BATTLE) {
     return gameEntity;
   }
@@ -19,16 +18,23 @@ export const incrementAttackCount = (gameEntity: GameEntity, gameCardId: number)
   );
 
   if (existingAttackCountStateIndex >= 0) {
-    gameEntity.gameStates[existingAttackCountStateIndex].state = {
-      type: StateType.ATTACK_COUNT,
-      data: { value: gameEntity.gameStates[existingAttackCountStateIndex].state.data['value'] + 1 },
-    };
+    gameEntity.gameStates = gameEntity.gameStates.map(gameState =>
+      gameState.state.type === StateType.ATTACK_COUNT
+        ? new GameStateEntity({
+            ...gameState,
+            state: {
+              type: StateType.ATTACK_COUNT,
+              data: { value: gameState.state.data['value'] + 1 },
+            },
+          })
+        : gameState,
+    );
   } else {
-    const newGameState = new GameStateEntity();
-
-    newGameState.game = gameEntity;
-    newGameState.gameCard = gameCard;
-    newGameState.state = { type: StateType.ATTACK_COUNT, data: { value: 1 } };
+    const newGameState = new GameStateEntity({
+      game: gameEntity,
+      gameCard,
+      state: { type: StateType.ATTACK_COUNT, data: { value: 1 } },
+    });
 
     gameEntity.gameStates.push(newGameState);
   }

@@ -4,12 +4,8 @@ import { dealDamageToPlayer } from './dealDamageToPlayer';
 export const directAttack = (gameEntity: GameEntity, attackerCardId: number, opponentUserId: string): GameEntity => {
   const attackerCard = gameEntity.gameCards.find(card => card.id === attackerCardId);
 
-  if (!attackerCard) {
-    throw new Error('Attacker card not found');
-  }
-
-  if (attackerCard.attack == null) {
-    throw new Error('Game card attack is null');
+  if (!attackerCard?.attack) {
+    throw new Error();
   }
 
   let updatedGameEntity = dealDamageToPlayer(gameEntity, opponentUserId, attackerCard.attack);

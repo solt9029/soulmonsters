@@ -11,16 +11,15 @@ const calcNewSoulGameCardPosition = (gameEntity: GameEntity, userId: string): nu
 };
 
 export const destroyMonster = (gameEntity: GameEntity, gameCardId: number): GameEntity => {
-  gameEntity.gameCards = gameEntity.gameCards.map(gameCard => {
-    if (gameCard.id === gameCardId) {
-      return new GameCardEntity({
-        ...gameCard,
-        zone: Zone.SOUL,
-        position: calcNewSoulGameCardPosition(gameEntity, gameCard.currentUserId),
-      });
-    }
-    return gameCard;
-  });
+  gameEntity.gameCards = gameEntity.gameCards.map(gameCard =>
+    gameCard.id === gameCardId
+      ? new GameCardEntity({
+          ...gameCard,
+          zone: Zone.SOUL,
+          position: calcNewSoulGameCardPosition(gameEntity, gameCard.currentUserId),
+        })
+      : gameCard,
+  );
 
   return gameEntity;
 };

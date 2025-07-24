@@ -52,12 +52,8 @@ export const handleAttackVsAttack = (
   const attackerCard = gameEntity.gameCards.find(card => card.id === attackerCardId);
   const defenderCard = gameEntity.gameCards.find(card => card.id === defenderCardId);
 
-  if (!attackerCard) {
-    throw new Error('Attacker card not found');
-  }
-
-  if (!defenderCard) {
-    throw new Error('Defender card not found');
+  if (!attackerCard || !defenderCard) {
+    throw new Error();
   }
 
   const battleResult = determineBattleOutcome(attackerCard, defenderCard);
