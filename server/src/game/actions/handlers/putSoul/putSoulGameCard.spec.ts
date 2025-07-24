@@ -31,7 +31,7 @@ describe('putSoulGameCard', () => {
 
     const result = putSoulGameCard(gameEntity, 'user1', 3);
 
-    expect(result.gameCards[2].zone).toBe(Zone.SOUL);
-    expect(result.gameCards[2].position).toBe(2);
+    expect(result.gameCards[2]?.zone).toBe(Zone.SOUL);
+    expect(result.gameCards[2]?.position).toBe(2);
   });
 });
