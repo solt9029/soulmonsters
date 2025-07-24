@@ -14,12 +14,12 @@ export const incrementAttackCount = (gameEntity: GameEntity, gameCardId: number)
   }
 
   const existingAttackCountStateIndex = gameEntity.gameStates.findIndex(
-    state => state.state.type === StateType.ATTACK_COUNT,
+    state => state.state.type === StateType.ATTACK_COUNT && state.gameCard.id === gameCardId,
   );
 
   if (existingAttackCountStateIndex >= 0) {
     gameEntity.gameStates = gameEntity.gameStates.map(gameState =>
-      gameState.state.type === StateType.ATTACK_COUNT
+      gameState.state.type === StateType.ATTACK_COUNT && gameState.gameCard.id === gameCardId
         ? new GameStateEntity({
             ...gameState,
             state: {
