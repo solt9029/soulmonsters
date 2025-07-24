@@ -12,7 +12,11 @@ type EntityType = Omit<GameUser, 'game'> & {
 @Unique(['userId', 'game'])
 @Unique(['deck', 'game'])
 export class GameUserEntity extends AppEntity<GameUserEntity> implements EntityType {
-  user: User;
+  constructor(partial?: Partial<GameUserEntity>) {
+    super(partial);
+    this.actionTypes = this.actionTypes || [];
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -47,5 +51,6 @@ export class GameUserEntity extends AppEntity<GameUserEntity> implements EntityT
   )
   game: GameEntity;
 
-  actionTypes: ActionType[] = [];
+  user: User;
+  actionTypes: ActionType[];
 }

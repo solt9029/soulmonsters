@@ -17,6 +17,11 @@ import { AppEntity } from './app.entity';
 @Entity({ name: 'gameCards' })
 @Unique(['position', 'zone', 'currentUserId'])
 export class GameCardEntity extends AppEntity<GameCardEntity> implements GameCard {
+  constructor(partial?: Partial<GameCardEntity>) {
+    super(partial);
+    this.actionTypes = this.actionTypes || [];
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -62,7 +67,7 @@ export class GameCardEntity extends AppEntity<GameCardEntity> implements GameCar
   )
   gameStates: GameStateEntity[];
 
-  actionTypes: ActionType[] = [];
+  actionTypes: ActionType[];
   name?: string | null;
   kind?: Kind | null;
   type?: Type | null;
