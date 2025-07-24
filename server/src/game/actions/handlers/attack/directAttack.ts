@@ -1,5 +1,6 @@
 import { GameEntity } from '../../../../entities/game.entity';
 import { dealDamageToPlayer } from './dealDamageToPlayer';
+import { drawCardFromDeck } from '../startDrawTime/drawCardFromDeck';
 
 export const directAttack = (gameEntity: GameEntity, attackerCardId: number, opponentUserId: string): GameEntity => {
   const attackerCard = gameEntity.gameCards.find(card => card.id === attackerCardId);
@@ -8,12 +9,14 @@ export const directAttack = (gameEntity: GameEntity, attackerCardId: number, opp
     throw new Error();
   }
 
-  let updatedGameEntity = dealDamageToPlayer(gameEntity, opponentUserId, attackerCard.attack);
+  dealDamageToPlayer(gameEntity, opponentUserId, attackerCard.attack);
 
-  // カード固有の効果処理（例: カードID 11の冷徹な鳥の2枚ドロー）
+  // カード固有の効果処理（カードID 11の冷徹な鳥の2枚ドロー）
   if (attackerCard.card.id === 11) {
-    // TODO: 冷徹な鳥（11）が直接攻撃をしたら2枚ドローできる
+    const attackerUserId = attackerCard.currentUserId;
+    drawCardFromDeck(gameEntity, attackerUserId);
+    drawCardFromDeck(gameEntity, attackerUserId);
   }
 
-  return updatedGameEntity;
+  return gameEntity;
 };
