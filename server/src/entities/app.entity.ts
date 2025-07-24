@@ -1,7 +1,8 @@
-// TODO: typeormのBaseEntityを継承しておきたい。多分継承すると、メソッドとかがもりもりになる結果、gameEntityを受け取ってgameEntityをimmutableに返すあたりの処理がうまく動かずbuildがエラーになる
+import { BaseEntity } from 'typeorm';
 
-export class AppEntity<T = any> {
+export class AppEntity<T = any> extends BaseEntity {
   constructor(partial?: Partial<T>) {
+    super();
     Object.assign(this, partial);
   }
 }

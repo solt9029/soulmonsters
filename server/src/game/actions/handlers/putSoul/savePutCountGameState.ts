@@ -3,22 +3,16 @@ import { GameStateEntity } from 'src/entities/game.state.entity';
 import { StateType } from 'src/graphql';
 
 const initPutSoulCountGameState = (gameEntity: GameEntity, gameUserId: number): GameStateEntity => {
-  return {
-    ...new GameStateEntity(),
+  return new GameStateEntity({
     game: gameEntity,
     state: { type: StateType.PUT_SOUL_COUNT, data: { value: 1, gameUserId } },
-  };
+  });
 };
 
 export const savePutCountGameState = (gameEntity: GameEntity, gameUserId: number): GameEntity => {
   const index = gameEntity.gameStates.findIndex(
     gameState => gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId,
   );
-
-  if (index >= 0) {
-    (gameEntity.gameStates[index].state.data as any).value++;
-    return gameEntity;
-  }
 
   gameEntity.gameStates.push(initPutSoulCountGameState(gameEntity, gameUserId));
   return gameEntity;

@@ -1,6 +1,7 @@
 import { Phase } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
+import { GameUserEntity } from 'src/entities/game.user.entity';
 
 const calcNewEnergy = (gameEntity: GameEntity, userId: string): number => {
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
@@ -10,15 +11,16 @@ const calcNewEnergy = (gameEntity: GameEntity, userId: string): number => {
 const increaseGameUserEnergy = (gameEntity: GameEntity, userId: string): GameEntity => {
   const newEnergy = calcNewEnergy(gameEntity, userId);
 
-  const gameUsers = gameEntity.gameUsers.map(gameUser =>
-    gameUser.userId === userId ? { ...gameUser, energy: newEnergy } : { ...gameUser },
+  gameEntity.gameUsers = gameEntity.gameUsers.map(gameUser =>
+    gameUser.userId === userId ? new GameUserEntity({ ...gameUser, energy: newEnergy }) : gameUser,
   );
 
-  return { ...gameEntity, gameUsers };
+  return gameEntity;
 };
 
 const startEnergyPhase = (gameEntity: GameEntity): GameEntity => {
-  return { ...gameEntity, phase: Phase.ENERGY };
+  gameEntity.phase = Phase.ENERGY;
+  return gameEntity;
 };
 
 export async function handleStartEnergyTimeAction(manager: EntityManager, userId: string, gameEntity: GameEntity) {
