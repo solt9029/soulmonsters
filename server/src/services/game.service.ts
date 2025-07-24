@@ -71,7 +71,7 @@ export class GameService {
         .where('deckCards.deckId = :deckId', { deckId })
         .getMany();
 
-      if (deckCardEntities.length > 0 && deckCardEntities[0].deck.userId !== userId) {
+      if (deckCardEntities[0] && deckCardEntities[0].deck.userId !== userId) {
         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
       }
 
@@ -85,8 +85,14 @@ export class GameService {
       // If waiting game does not exist, create new game
       if (waitingGameId === undefined) {
         const gameInsertResult = await gameRepository.insert({});
+
+        if (!gameInsertResult.identifiers[0]) {
+          throw new Error('Failed to create game');
+        }
+
         const gameId = gameInsertResult.identifiers[0].id;
         const gameCardEntities = initializeGameCards(deckCardEntities, gameId);
+
         await gameCardRepository.insert(gameCardEntities);
         await gameUserRepository.insert({
           userId,
@@ -107,7 +113,15 @@ export class GameService {
 
       const gameCardEntities = initializeGameCards(deckCardEntities, waitingGameEntity.id);
       await gameCardRepository.insert(gameCardEntities);
-      const turnUserId = Math.floor(Math.random() * 2) === 1 ? waitingGameEntity.gameUsers[0].userId : userId;
+
+      const existingGameUser = waitingGameEntity.gameUsers[0];
+
+      if (!existingGameUser) {
+        throw new Error('First game user not found');
+      }
+
+      const turnUserId = Math.floor(Math.random() * 2) === 1 ? existingGameUser.userId : userId;
+
       await gameUserRepository.insert({
         userId,
         deck: { id: deckId },
@@ -115,11 +129,11 @@ export class GameService {
         lastViewedAt: new Date(),
         game: { id: waitingGameEntity.id },
       });
-      await gameUserRepository.update(
-        { userId: waitingGameEntity.gameUsers[0].userId },
-        { energy: turnUserId === userId ? 1 : 0 },
-      );
+
+      await gameUserRepository.update({ userId: existingGameUser.userId }, { energy: turnUserId === userId ? 1 : 0 });
+
       await gameRepository.update({ id: waitingGameEntity.id }, { startedAt: new Date(), turnUserId });
+
       return await gameRepository.findByIdWithGameUsersAndDeck(waitingGameEntity.id);
     });
   }
