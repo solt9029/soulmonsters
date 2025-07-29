@@ -9,6 +9,10 @@ const isPutSoulCountState = (gameState: any, gameUserId: number): boolean => {
   return gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId;
 };
 
+const isEffectRuteruteDrawCountState = (gameState: any): boolean => {
+  return gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT;
+};
+
 export const cleanGameStates = (gameEntity: GameEntity, userId: string): GameEntity => {
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
 
@@ -17,7 +21,12 @@ export const cleanGameStates = (gameEntity: GameEntity, userId: string): GameEnt
   }
 
   gameEntity.gameStates = gameEntity.gameStates.filter(
-    gameState => !(isAttackCountState(gameState, userId) || isPutSoulCountState(gameState, gameUser.id)),
+    gameState =>
+      !(
+        isAttackCountState(gameState, userId) ||
+        isPutSoulCountState(gameState, gameUser.id) ||
+        isEffectRuteruteDrawCountState(gameState)
+      ),
   );
 
   return gameEntity;

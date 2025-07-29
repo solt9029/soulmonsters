@@ -2,7 +2,7 @@ import { GameCardRepository } from '../../../repositories/game.card.repository';
 import { GameActionDispatchInput } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
-import { subtractUserEnergy } from './summonMonster/subtractUserEnergy';
+import { subtractUserEnergy } from './utils/subtractUserEnergy';
 import { summonGameCard } from './summonMonster/summonGameCard';
 
 export async function handleSummonMonsterAction(
