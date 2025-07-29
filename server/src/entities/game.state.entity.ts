@@ -19,7 +19,7 @@ type State =
     }
   | {
       type: StateType.EFFECT_RUTERUTE_DRAW_COUNT;
-      data: { gameUserId: number; value: number };
+      data: { gameUserId: number; value: number }; // TODO: gameUserIdは不要
     };
 
 @Entity({ name: 'gameStates' })
