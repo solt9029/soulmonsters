@@ -11,11 +11,10 @@ describe('saveEffectUseCountGameState', () => {
     const result = saveEffectUseCountGameState(gameEntity, 'RUTERUTE_DRAW', 1);
 
     expect(result.gameStates).toHaveLength(1);
-    expect(result.gameStates[0]?.state.type).toBe(StateType.EFFECT_USE_COUNT);
+    expect(result.gameStates[0]?.state.type).toBe(StateType.EFFECT_RUTERUTE_DRAW_COUNT);
     
     const state = result.gameStates[0]?.state;
-    if (state?.type === StateType.EFFECT_USE_COUNT) {
-      expect(state.data.effectType).toBe('RUTERUTE_DRAW');
+    if (state?.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT) {
       expect(state.data.gameUserId).toBe(1);
       expect(state.data.value).toBe(1);
     }
@@ -27,8 +26,8 @@ describe('saveEffectUseCountGameState', () => {
       new GameStateEntity({
         game: gameEntity,
         state: { 
-          type: StateType.EFFECT_USE_COUNT, 
-          data: { effectType: 'RUTERUTE_DRAW', gameUserId: 1, value: 1 } 
+          type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, 
+          data: { gameUserId: 1, value: 1 } 
         },
       }),
     ];
@@ -36,11 +35,10 @@ describe('saveEffectUseCountGameState', () => {
     const result = saveEffectUseCountGameState(gameEntity, 'RUTERUTE_DRAW', 1);
 
     expect(result.gameStates).toHaveLength(1);
-    expect(result.gameStates[0]?.state.type).toBe(StateType.EFFECT_USE_COUNT);
+    expect(result.gameStates[0]?.state.type).toBe(StateType.EFFECT_RUTERUTE_DRAW_COUNT);
     
     const state = result.gameStates[0]?.state;
-    if (state?.type === StateType.EFFECT_USE_COUNT) {
-      expect(state.data.effectType).toBe('RUTERUTE_DRAW');
+    if (state?.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT) {
       expect(state.data.gameUserId).toBe(1);
       expect(state.data.value).toBe(2);
     }

@@ -20,13 +20,12 @@ export function grantEffectAction(gameEntity: GameEntity, userId: string) {
 
     const effectUseState = gameEntity.gameStates.find(
       gameState =>
-        gameState.state.type === StateType.EFFECT_USE_COUNT &&
-        gameState.state.data.effectType === 'RUTERUTE_DRAW' &&
+        gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT &&
         gameState.state.data.gameUserId === yourGameUser.id,
     );
 
     const hasAlreadyUsedEffect = effectUseState && 
-      effectUseState.state.type === StateType.EFFECT_USE_COUNT && 
+      effectUseState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && 
       effectUseState.state.data.value > 0;
 
     if (hasAlreadyUsedEffect) {

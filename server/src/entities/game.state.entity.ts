@@ -4,7 +4,6 @@ import { StateType } from '../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { AppEntity } from './app.entity';
 
-// TODO: EFFECT_USE_COUNT ではなく、EFFECT_RUTERUTE_DRAW_COUNT のように詳細にする
 type State =
   | {
       type: StateType.ATTACK_COUNT;
@@ -19,8 +18,8 @@ type State =
       data: { value: number; gameUserId: number };
     }
   | {
-      type: StateType.EFFECT_USE_COUNT;
-      data: { effectType: string; gameUserId: number; value: number };
+      type: StateType.EFFECT_RUTERUTE_DRAW_COUNT;
+      data: { gameUserId: number; value: number };
     };
 
 @Entity({ name: 'gameStates' })
