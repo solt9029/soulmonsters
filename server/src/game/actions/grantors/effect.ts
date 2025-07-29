@@ -1,10 +1,14 @@
 import { GameEntity } from '../../../entities/game.entity';
-import { Zone, StateType, ActionType } from '../../../graphql/index';
+import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
 import { GameCardEntity } from '../../../entities/game.card.entity';
 
 export function grantEffectAction(gameEntity: GameEntity, userId: string) {
   const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
   if (!yourGameUser) {
+    return;
+  }
+
+  if (gameEntity.phase !== Phase.SOMETHING || gameEntity.turnUserId !== userId) {
     return;
   }
 
@@ -30,8 +34,6 @@ export function grantEffectAction(gameEntity: GameEntity, userId: string) {
     if (hasAlreadyUsedEffect) {
       return gameCard;
     }
-
-    // TODO: サムシングタイムかどうかをチェックする必要がある
 
     return new GameCardEntity({
       ...gameCard,
