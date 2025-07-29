@@ -4,6 +4,7 @@ import { StateType } from '../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { AppEntity } from './app.entity';
 
+// TODO: EFFECT_USE_COUNT ではなく、EFFECT_RUTERUTE_DRAW_COUNT のように詳細にする
 type State =
   | {
       type: StateType.ATTACK_COUNT;
