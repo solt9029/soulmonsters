@@ -12,7 +12,7 @@ describe('saveEffectUseCountGameState', () => {
 
     expect(result.gameStates).toHaveLength(1);
     expect(result.gameStates[0]?.state.type).toBe(StateType.EFFECT_RUTERUTE_DRAW_COUNT);
-    
+
     const state = result.gameStates[0]?.state;
     if (state?.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT) {
       expect(state.data.gameUserId).toBe(1);
@@ -25,9 +25,9 @@ describe('saveEffectUseCountGameState', () => {
     gameEntity.gameStates = [
       new GameStateEntity({
         game: gameEntity,
-        state: { 
-          type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, 
-          data: { gameUserId: 1, value: 1 } 
+        state: {
+          type: StateType.EFFECT_RUTERUTE_DRAW_COUNT,
+          data: { gameUserId: 1, value: 1 },
         },
       }),
     ];
@@ -36,7 +36,7 @@ describe('saveEffectUseCountGameState', () => {
 
     expect(result.gameStates).toHaveLength(1);
     expect(result.gameStates[0]?.state.type).toBe(StateType.EFFECT_RUTERUTE_DRAW_COUNT);
-    
+
     const state = result.gameStates[0]?.state;
     if (state?.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT) {
       expect(state.data.gameUserId).toBe(1);

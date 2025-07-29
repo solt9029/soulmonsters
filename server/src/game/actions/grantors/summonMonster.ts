@@ -10,10 +10,7 @@ export function grantSummonMonsterAction(gameEntity: GameEntity, userId: string)
 
   gameEntity.gameCards = gameEntity.gameCards.map(gameCard => {
     const canSummon =
-      gameCard &&
-      gameCard.zone === Zone.HAND &&
-      gameCard.currentUserId === userId &&
-      gameCard.kind === Kind.MONSTER;
+      gameCard && gameCard.zone === Zone.HAND && gameCard.currentUserId === userId && gameCard.kind === Kind.MONSTER;
 
     return canSummon
       ? new GameCardEntity({

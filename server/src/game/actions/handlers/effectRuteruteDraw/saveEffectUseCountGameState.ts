@@ -2,24 +2,30 @@ import { GameEntity } from 'src/entities/game.entity';
 import { GameStateEntity } from 'src/entities/game.state.entity';
 import { StateType } from 'src/graphql';
 
-const initEffectUseCountGameState = (gameEntity: GameEntity, effectType: string, gameUserId: number): GameStateEntity => {
+const initEffectUseCountGameState = (
+  gameEntity: GameEntity,
+  effectType: string,
+  gameUserId: number,
+): GameStateEntity => {
   return new GameStateEntity({
     game: gameEntity,
     state: { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { gameUserId, value: 1 } },
   });
 };
 
-export const saveEffectUseCountGameState = (gameEntity: GameEntity, effectType: string, gameUserId: number): GameEntity => {
+export const saveEffectUseCountGameState = (
+  gameEntity: GameEntity,
+  effectType: string,
+  gameUserId: number,
+): GameEntity => {
   const index = gameEntity.gameStates.findIndex(
-    gameState => 
-      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && 
-      gameState.state.data.gameUserId === gameUserId,
+    gameState =>
+      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.state.data.gameUserId === gameUserId,
   );
 
   if (index >= 0) {
     gameEntity.gameStates = gameEntity.gameStates.map(gameState =>
-      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && 
-      gameState.state.data.gameUserId === gameUserId
+      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.state.data.gameUserId === gameUserId
         ? new GameStateEntity({
             ...gameState,
             state: {
