@@ -2,7 +2,7 @@ import { GameEntity } from '../../../entities/game.entity';
 import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
 import { GameCardEntity } from '../../../entities/game.card.entity';
 
-export function grantEffectAction(gameEntity: GameEntity, userId: string) {
+export function grantEffectRuteRuteDrawAction(gameEntity: GameEntity, userId: string) {
   const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
   if (!yourGameUser) {
     return;
