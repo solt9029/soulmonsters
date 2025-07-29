@@ -19,6 +19,4 @@ export async function handleEffectRuteruteDraw(
   saveEffectUseCountGameState(gameEntity, 'RUTERUTE_DRAW', gameUser.id);
 
   await manager.save(GameEntity, gameEntity);
-
-  // TODO: packHandGameCards
 }
