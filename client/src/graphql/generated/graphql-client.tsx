@@ -2,33 +2,20 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T,
-> = { [_ in K]?: never };
-export type Incremental<T> =
-  | T
-  | {
-      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
-    };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
-  DateTime: { input: any; output: any };
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
 };
 
 export type ActionPayload = {
@@ -41,6 +28,7 @@ export type ActionPayload = {
 export enum ActionType {
   Attack = 'ATTACK',
   ChangeBattlePosition = 'CHANGE_BATTLE_POSITION',
+  EffectRuteruteDraw = 'EFFECT_RUTERUTE_DRAW',
   FinishEndTime = 'FINISH_END_TIME',
   PutSoul = 'PUT_SOUL',
   StartBattleTime = 'START_BATTLE_TIME',
@@ -51,7 +39,7 @@ export enum ActionType {
   StartSomethingTime = 'START_SOMETHING_TIME',
   SummonMonster = 'SUMMON_MONSTER',
   UseSoulBarrier = 'USE_SOUL_BARRIER',
-  UseSoulCanon = 'USE_SOUL_CANON',
+  UseSoulCanon = 'USE_SOUL_CANON'
 }
 
 export enum Attribute {
@@ -60,12 +48,12 @@ export enum Attribute {
   Green = 'GREEN',
   Purple = 'PURPLE',
   Red = 'RED',
-  White = 'WHITE',
+  White = 'WHITE'
 }
 
 export enum BattlePosition {
   Attack = 'ATTACK',
-  Defence = 'DEFENCE',
+  Defence = 'DEFENCE'
 }
 
 export type Card = Node & {
@@ -162,7 +150,7 @@ export enum Kind {
   Block = 'BLOCK',
   CircleMonster = 'CIRCLE_MONSTER',
   Monster = 'MONSTER',
-  Quick = 'QUICK',
+  Quick = 'QUICK'
 }
 
 export type Mutation = {
@@ -174,22 +162,27 @@ export type Mutation = {
   startGame: Game;
 };
 
+
 export type MutationCreateDeckArgs = {
   data: DeckCreateInput;
 };
+
 
 export type MutationDispatchGameActionArgs = {
   data: GameActionDispatchInput;
   id: Scalars['Int']['input'];
 };
 
+
 export type MutationMinusDeckCardArgs = {
   data: DeckCardUpdateInput;
 };
 
+
 export type MutationPlusDeckCardArgs = {
   data: DeckCardUpdateInput;
 };
+
 
 export type MutationStartGameArgs = {
   deckId: Scalars['Int']['input'];
@@ -205,7 +198,7 @@ export enum Phase {
   End = 'END',
   Energy = 'ENERGY',
   Put = 'PUT',
-  Something = 'SOMETHING',
+  Something = 'SOMETHING'
 }
 
 export type Query = {
@@ -218,13 +211,16 @@ export type Query = {
   userData: UserData;
 };
 
+
 export type QueryDeckCardsArgs = {
   deckId: Scalars['Int']['input'];
 };
 
+
 export type QueryGameArgs = {
   id: Scalars['Int']['input'];
 };
+
 
 export type QueryUserDataArgs = {
   userId: Scalars['String']['input'];
@@ -232,8 +228,9 @@ export type QueryUserDataArgs = {
 
 export enum StateType {
   AttackCount = 'ATTACK_COUNT',
+  EffectUseCount = 'EFFECT_USE_COUNT',
   PutSoulCount = 'PUT_SOUL_COUNT',
-  SelfPowerChange = 'SELF_POWER_CHANGE',
+  SelfPowerChange = 'SELF_POWER_CHANGE'
 }
 
 export enum Type {
@@ -241,7 +238,7 @@ export enum Type {
   Circle = 'CIRCLE',
   Rectangle = 'RECTANGLE',
   Triangle = 'TRIANGLE',
-  WhiteStar = 'WHITE_STAR',
+  WhiteStar = 'WHITE_STAR'
 }
 
 export type User = {
@@ -264,274 +261,140 @@ export enum Zone {
   Deck = 'DECK',
   Hand = 'HAND',
   Morgue = 'MORGUE',
-  Soul = 'SOUL',
+  Soul = 'SOUL'
 }
 
-export type CardsQueryVariables = Exact<{ [key: string]: never }>;
+export type CardsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type CardsQuery = {
-  __typename?: 'Query';
-  cards: Array<{
-    __typename?: 'Card';
-    id: number;
-    name: string;
-    kind: Kind;
-    attribute?: Attribute | null;
-    type: Type;
-    attack?: number | null;
-    defence?: number | null;
-    cost?: number | null;
-    detail?: string | null;
-    picture: string;
-  }>;
-};
 
-export type CardFragment = {
-  __typename?: 'Card';
-  id: number;
-  name: string;
-  kind: Kind;
-  attribute?: Attribute | null;
-  type: Type;
-  attack?: number | null;
-  defence?: number | null;
-  cost?: number | null;
-  detail?: string | null;
-  picture: string;
-};
+export type CardsQuery = { __typename?: 'Query', cards: Array<{ __typename?: 'Card', id: number, name: string, kind: Kind, attribute?: Attribute | null, type: Type, attack?: number | null, defence?: number | null, cost?: number | null, detail?: string | null, picture: string }> };
+
+export type CardFragment = { __typename?: 'Card', id: number, name: string, kind: Kind, attribute?: Attribute | null, type: Type, attack?: number | null, defence?: number | null, cost?: number | null, detail?: string | null, picture: string };
 
 export type DeckCardsQueryVariables = Exact<{
   deckId: Scalars['Int']['input'];
 }>;
 
-export type DeckCardsQuery = {
-  __typename?: 'Query';
-  deckCards: Array<{
-    __typename?: 'DeckCard';
-    id: number;
-    count: number;
-    card: {
-      __typename?: 'Card';
-      id: number;
-      name: string;
-      kind: Kind;
-      attribute?: Attribute | null;
-      type: Type;
-      attack?: number | null;
-      defence?: number | null;
-      cost?: number | null;
-      detail?: string | null;
-      picture: string;
-    };
-  }>;
-};
+
+export type DeckCardsQuery = { __typename?: 'Query', deckCards: Array<{ __typename?: 'DeckCard', id: number, count: number, card: { __typename?: 'Card', id: number, name: string, kind: Kind, attribute?: Attribute | null, type: Type, attack?: number | null, defence?: number | null, cost?: number | null, detail?: string | null, picture: string } }> };
 
 export type PlusDeckCardMutationVariables = Exact<{
   deckId: Scalars['Int']['input'];
   cardId: Scalars['Int']['input'];
 }>;
 
-export type PlusDeckCardMutation = {
-  __typename?: 'Mutation';
-  plusDeckCard: { __typename?: 'DeckCard'; id: number; count: number };
-};
+
+export type PlusDeckCardMutation = { __typename?: 'Mutation', plusDeckCard: { __typename?: 'DeckCard', id: number, count: number } };
 
 export type MinusDeckCardMutationVariables = Exact<{
   deckId: Scalars['Int']['input'];
   cardId: Scalars['Int']['input'];
 }>;
 
-export type MinusDeckCardMutation = {
-  __typename?: 'Mutation';
-  minusDeckCard: { __typename?: 'DeckCard'; id: number; count: number };
-};
 
-export type DecksQueryVariables = Exact<{ [key: string]: never }>;
+export type MinusDeckCardMutation = { __typename?: 'Mutation', minusDeckCard: { __typename?: 'DeckCard', id: number, count: number } };
 
-export type DecksQuery = {
-  __typename?: 'Query';
-  decks: Array<{ __typename?: 'Deck'; id: number; name: string }>;
-};
+export type DecksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DecksQuery = { __typename?: 'Query', decks: Array<{ __typename?: 'Deck', id: number, name: string }> };
 
 export type CreateDeckMutationVariables = Exact<{
   name: Scalars['String']['input'];
 }>;
 
-export type CreateDeckMutation = {
-  __typename?: 'Mutation';
-  createDeck: { __typename?: 'Deck'; id: number; name: string };
-};
 
-export type ActiveGameIdQueryVariables = Exact<{ [key: string]: never }>;
+export type CreateDeckMutation = { __typename?: 'Mutation', createDeck: { __typename?: 'Deck', id: number, name: string } };
 
-export type ActiveGameIdQuery = {
-  __typename?: 'Query';
-  activeGameId?: number | null;
-};
+export type ActiveGameIdQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ActiveGameIdQuery = { __typename?: 'Query', activeGameId?: number | null };
 
 export type GameQueryVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
 
-export type GameQuery = {
-  __typename?: 'Query';
-  game: {
-    __typename?: 'Game';
-    id: number;
-    turnUserId?: string | null;
-    phase?: Phase | null;
-    winnerUserId?: string | null;
-    startedAt?: any | null;
-    endedAt?: any | null;
-    gameUsers: Array<{
-      __typename?: 'GameUser';
-      id: number;
-      userId: string;
-      energy?: number | null;
-      lifePoint: number;
-      lastViewedAt?: any | null;
-      actionTypes: Array<ActionType>;
-      user: {
-        __typename?: 'User';
-        displayName?: string | null;
-        photoURL?: string | null;
-      };
-    }>;
-    gameCards: Array<{
-      __typename?: 'GameCard';
-      id: number;
-      originalUserId: string;
-      currentUserId: string;
-      zone: Zone;
-      position: number;
-      battlePosition?: BattlePosition | null;
-      name?: string | null;
-      kind?: Kind | null;
-      type?: Type | null;
-      attribute?: Attribute | null;
-      attack?: number | null;
-      defence?: number | null;
-      cost?: number | null;
-      detail?: string | null;
-      actionTypes: Array<ActionType>;
-      card?: { __typename?: 'Card'; id: number; picture: string } | null;
-    }>;
-  };
-};
+
+export type GameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: number, turnUserId?: string | null, phase?: Phase | null, winnerUserId?: string | null, startedAt?: any | null, endedAt?: any | null, gameUsers: Array<{ __typename?: 'GameUser', id: number, userId: string, energy?: number | null, lifePoint: number, lastViewedAt?: any | null, actionTypes: Array<ActionType>, user: { __typename?: 'User', displayName?: string | null, photoURL?: string | null } }>, gameCards: Array<{ __typename?: 'GameCard', id: number, originalUserId: string, currentUserId: string, zone: Zone, position: number, battlePosition?: BattlePosition | null, name?: string | null, kind?: Kind | null, type?: Type | null, attribute?: Attribute | null, attack?: number | null, defence?: number | null, cost?: number | null, detail?: string | null, actionTypes: Array<ActionType>, card?: { __typename?: 'Card', id: number, picture: string } | null }> } };
 
 export type StartGameMutationVariables = Exact<{
   deckId: Scalars['Int']['input'];
 }>;
 
-export type StartGameMutation = {
-  __typename?: 'Mutation';
-  startGame: { __typename?: 'Game'; id: number };
-};
+
+export type StartGameMutation = { __typename?: 'Mutation', startGame: { __typename?: 'Game', id: number } };
 
 export type DispatchGameActionMutationVariables = Exact<{
   id: Scalars['Int']['input'];
   data: GameActionDispatchInput;
 }>;
 
-export type DispatchGameActionMutation = {
-  __typename?: 'Mutation';
-  dispatchGameAction: { __typename?: 'Game'; id: number };
-};
 
-export type GameCardFragment = {
-  __typename?: 'GameCard';
-  id: number;
-  originalUserId: string;
-  currentUserId: string;
-  zone: Zone;
-  position: number;
-  battlePosition?: BattlePosition | null;
-  name?: string | null;
-  kind?: Kind | null;
-  type?: Type | null;
-  attribute?: Attribute | null;
-  attack?: number | null;
-  defence?: number | null;
-  cost?: number | null;
-  detail?: string | null;
-  actionTypes: Array<ActionType>;
-  card?: { __typename?: 'Card'; id: number; picture: string } | null;
-};
+export type DispatchGameActionMutation = { __typename?: 'Mutation', dispatchGameAction: { __typename?: 'Game', id: number } };
 
-export type GameUserFragment = {
-  __typename?: 'GameUser';
-  id: number;
-  userId: string;
-  energy?: number | null;
-  lifePoint: number;
-  lastViewedAt?: any | null;
-  actionTypes: Array<ActionType>;
-  user: {
-    __typename?: 'User';
-    displayName?: string | null;
-    photoURL?: string | null;
-  };
-};
+export type GameCardFragment = { __typename?: 'GameCard', id: number, originalUserId: string, currentUserId: string, zone: Zone, position: number, battlePosition?: BattlePosition | null, name?: string | null, kind?: Kind | null, type?: Type | null, attribute?: Attribute | null, attack?: number | null, defence?: number | null, cost?: number | null, detail?: string | null, actionTypes: Array<ActionType>, card?: { __typename?: 'Card', id: number, picture: string } | null };
+
+export type GameUserFragment = { __typename?: 'GameUser', id: number, userId: string, energy?: number | null, lifePoint: number, lastViewedAt?: any | null, actionTypes: Array<ActionType>, user: { __typename?: 'User', displayName?: string | null, photoURL?: string | null } };
 
 export const CardFragmentDoc = gql`
-  fragment Card on Card {
+    fragment Card on Card {
+  id
+  name
+  kind
+  attribute
+  type
+  attack
+  defence
+  cost
+  detail
+  picture
+}
+    `;
+export const GameCardFragmentDoc = gql`
+    fragment GameCard on GameCard {
+  id
+  originalUserId
+  currentUserId
+  zone
+  position
+  battlePosition
+  name
+  kind
+  type
+  attribute
+  attack
+  defence
+  cost
+  detail
+  actionTypes
+  card {
     id
-    name
-    kind
-    attribute
-    type
-    attack
-    defence
-    cost
-    detail
     picture
   }
-`;
-export const GameCardFragmentDoc = gql`
-  fragment GameCard on GameCard {
-    id
-    originalUserId
-    currentUserId
-    zone
-    position
-    battlePosition
-    name
-    kind
-    type
-    attribute
-    attack
-    defence
-    cost
-    detail
-    actionTypes
-    card {
-      id
-      picture
-    }
-  }
-`;
+}
+    `;
 export const GameUserFragmentDoc = gql`
-  fragment GameUser on GameUser {
-    id
-    userId
-    user {
-      displayName
-      photoURL
-    }
-    energy
-    lifePoint
-    lastViewedAt
-    actionTypes
+    fragment GameUser on GameUser {
+  id
+  userId
+  user {
+    displayName
+    photoURL
   }
-`;
+  energy
+  lifePoint
+  lastViewedAt
+  actionTypes
+}
+    `;
 export const CardsDocument = gql`
-  query cards {
-    cards {
-      ...Card
-    }
+    query cards {
+  cards {
+    ...Card
   }
-  ${CardFragmentDoc}
-`;
+}
+    ${CardFragmentDoc}`;
 
 /**
  * __useCardsQuery__
@@ -548,59 +411,33 @@ export const CardsDocument = gql`
  *   },
  * });
  */
-export function useCardsQuery(
-  baseOptions?: Apollo.QueryHookOptions<CardsQuery, CardsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<CardsQuery, CardsQueryVariables>(
-    CardsDocument,
-    options
-  );
-}
-export function useCardsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<CardsQuery, CardsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<CardsQuery, CardsQueryVariables>(
-    CardsDocument,
-    options
-  );
-}
-export function useCardsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<CardsQuery, CardsQueryVariables>
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<CardsQuery, CardsQueryVariables>(
-    CardsDocument,
-    options
-  );
-}
+export function useCardsQuery(baseOptions?: Apollo.QueryHookOptions<CardsQuery, CardsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CardsQuery, CardsQueryVariables>(CardsDocument, options);
+      }
+export function useCardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CardsQuery, CardsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CardsQuery, CardsQueryVariables>(CardsDocument, options);
+        }
+export function useCardsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CardsQuery, CardsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CardsQuery, CardsQueryVariables>(CardsDocument, options);
+        }
 export type CardsQueryHookResult = ReturnType<typeof useCardsQuery>;
 export type CardsLazyQueryHookResult = ReturnType<typeof useCardsLazyQuery>;
-export type CardsSuspenseQueryHookResult = ReturnType<
-  typeof useCardsSuspenseQuery
->;
-export type CardsQueryResult = Apollo.QueryResult<
-  CardsQuery,
-  CardsQueryVariables
->;
+export type CardsSuspenseQueryHookResult = ReturnType<typeof useCardsSuspenseQuery>;
+export type CardsQueryResult = Apollo.QueryResult<CardsQuery, CardsQueryVariables>;
 export const DeckCardsDocument = gql`
-  query deckCards($deckId: Int!) {
-    deckCards(deckId: $deckId) {
-      id
-      count
-      card {
-        ...Card
-      }
+    query deckCards($deckId: Int!) {
+  deckCards(deckId: $deckId) {
+    id
+    count
+    card {
+      ...Card
     }
   }
-  ${CardFragmentDoc}
-`;
+}
+    ${CardFragmentDoc}`;
 
 /**
  * __useDeckCardsQuery__
@@ -618,68 +455,31 @@ export const DeckCardsDocument = gql`
  *   },
  * });
  */
-export function useDeckCardsQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    DeckCardsQuery,
-    DeckCardsQueryVariables
-  > &
-    ({ variables: DeckCardsQueryVariables; skip?: boolean } | { skip: boolean })
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<DeckCardsQuery, DeckCardsQueryVariables>(
-    DeckCardsDocument,
-    options
-  );
-}
-export function useDeckCardsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    DeckCardsQuery,
-    DeckCardsQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<DeckCardsQuery, DeckCardsQueryVariables>(
-    DeckCardsDocument,
-    options
-  );
-}
-export function useDeckCardsSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<DeckCardsQuery, DeckCardsQueryVariables>
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<DeckCardsQuery, DeckCardsQueryVariables>(
-    DeckCardsDocument,
-    options
-  );
-}
+export function useDeckCardsQuery(baseOptions: Apollo.QueryHookOptions<DeckCardsQuery, DeckCardsQueryVariables> & ({ variables: DeckCardsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DeckCardsQuery, DeckCardsQueryVariables>(DeckCardsDocument, options);
+      }
+export function useDeckCardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DeckCardsQuery, DeckCardsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DeckCardsQuery, DeckCardsQueryVariables>(DeckCardsDocument, options);
+        }
+export function useDeckCardsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DeckCardsQuery, DeckCardsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<DeckCardsQuery, DeckCardsQueryVariables>(DeckCardsDocument, options);
+        }
 export type DeckCardsQueryHookResult = ReturnType<typeof useDeckCardsQuery>;
-export type DeckCardsLazyQueryHookResult = ReturnType<
-  typeof useDeckCardsLazyQuery
->;
-export type DeckCardsSuspenseQueryHookResult = ReturnType<
-  typeof useDeckCardsSuspenseQuery
->;
-export type DeckCardsQueryResult = Apollo.QueryResult<
-  DeckCardsQuery,
-  DeckCardsQueryVariables
->;
+export type DeckCardsLazyQueryHookResult = ReturnType<typeof useDeckCardsLazyQuery>;
+export type DeckCardsSuspenseQueryHookResult = ReturnType<typeof useDeckCardsSuspenseQuery>;
+export type DeckCardsQueryResult = Apollo.QueryResult<DeckCardsQuery, DeckCardsQueryVariables>;
 export const PlusDeckCardDocument = gql`
-  mutation plusDeckCard($deckId: Int!, $cardId: Int!) {
-    plusDeckCard(data: { deckId: $deckId, cardId: $cardId }) {
-      id
-      count
-    }
+    mutation plusDeckCard($deckId: Int!, $cardId: Int!) {
+  plusDeckCard(data: {deckId: $deckId, cardId: $cardId}) {
+    id
+    count
   }
-`;
-export type PlusDeckCardMutationFn = Apollo.MutationFunction<
-  PlusDeckCardMutation,
-  PlusDeckCardMutationVariables
->;
+}
+    `;
+export type PlusDeckCardMutationFn = Apollo.MutationFunction<PlusDeckCardMutation, PlusDeckCardMutationVariables>;
 
 /**
  * __usePlusDeckCardMutation__
@@ -699,39 +499,22 @@ export type PlusDeckCardMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function usePlusDeckCardMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    PlusDeckCardMutation,
-    PlusDeckCardMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    PlusDeckCardMutation,
-    PlusDeckCardMutationVariables
-  >(PlusDeckCardDocument, options);
-}
-export type PlusDeckCardMutationHookResult = ReturnType<
-  typeof usePlusDeckCardMutation
->;
-export type PlusDeckCardMutationResult =
-  Apollo.MutationResult<PlusDeckCardMutation>;
-export type PlusDeckCardMutationOptions = Apollo.BaseMutationOptions<
-  PlusDeckCardMutation,
-  PlusDeckCardMutationVariables
->;
+export function usePlusDeckCardMutation(baseOptions?: Apollo.MutationHookOptions<PlusDeckCardMutation, PlusDeckCardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PlusDeckCardMutation, PlusDeckCardMutationVariables>(PlusDeckCardDocument, options);
+      }
+export type PlusDeckCardMutationHookResult = ReturnType<typeof usePlusDeckCardMutation>;
+export type PlusDeckCardMutationResult = Apollo.MutationResult<PlusDeckCardMutation>;
+export type PlusDeckCardMutationOptions = Apollo.BaseMutationOptions<PlusDeckCardMutation, PlusDeckCardMutationVariables>;
 export const MinusDeckCardDocument = gql`
-  mutation minusDeckCard($deckId: Int!, $cardId: Int!) {
-    minusDeckCard(data: { deckId: $deckId, cardId: $cardId }) {
-      id
-      count
-    }
+    mutation minusDeckCard($deckId: Int!, $cardId: Int!) {
+  minusDeckCard(data: {deckId: $deckId, cardId: $cardId}) {
+    id
+    count
   }
-`;
-export type MinusDeckCardMutationFn = Apollo.MutationFunction<
-  MinusDeckCardMutation,
-  MinusDeckCardMutationVariables
->;
+}
+    `;
+export type MinusDeckCardMutationFn = Apollo.MutationFunction<MinusDeckCardMutation, MinusDeckCardMutationVariables>;
 
 /**
  * __useMinusDeckCardMutation__
@@ -751,35 +534,21 @@ export type MinusDeckCardMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useMinusDeckCardMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    MinusDeckCardMutation,
-    MinusDeckCardMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    MinusDeckCardMutation,
-    MinusDeckCardMutationVariables
-  >(MinusDeckCardDocument, options);
-}
-export type MinusDeckCardMutationHookResult = ReturnType<
-  typeof useMinusDeckCardMutation
->;
-export type MinusDeckCardMutationResult =
-  Apollo.MutationResult<MinusDeckCardMutation>;
-export type MinusDeckCardMutationOptions = Apollo.BaseMutationOptions<
-  MinusDeckCardMutation,
-  MinusDeckCardMutationVariables
->;
+export function useMinusDeckCardMutation(baseOptions?: Apollo.MutationHookOptions<MinusDeckCardMutation, MinusDeckCardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MinusDeckCardMutation, MinusDeckCardMutationVariables>(MinusDeckCardDocument, options);
+      }
+export type MinusDeckCardMutationHookResult = ReturnType<typeof useMinusDeckCardMutation>;
+export type MinusDeckCardMutationResult = Apollo.MutationResult<MinusDeckCardMutation>;
+export type MinusDeckCardMutationOptions = Apollo.BaseMutationOptions<MinusDeckCardMutation, MinusDeckCardMutationVariables>;
 export const DecksDocument = gql`
-  query decks {
-    decks {
-      id
-      name
-    }
+    query decks {
+  decks {
+    id
+    name
   }
-`;
+}
+    `;
 
 /**
  * __useDecksQuery__
@@ -796,59 +565,31 @@ export const DecksDocument = gql`
  *   },
  * });
  */
-export function useDecksQuery(
-  baseOptions?: Apollo.QueryHookOptions<DecksQuery, DecksQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<DecksQuery, DecksQueryVariables>(
-    DecksDocument,
-    options
-  );
-}
-export function useDecksLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<DecksQuery, DecksQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<DecksQuery, DecksQueryVariables>(
-    DecksDocument,
-    options
-  );
-}
-export function useDecksSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<DecksQuery, DecksQueryVariables>
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<DecksQuery, DecksQueryVariables>(
-    DecksDocument,
-    options
-  );
-}
+export function useDecksQuery(baseOptions?: Apollo.QueryHookOptions<DecksQuery, DecksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DecksQuery, DecksQueryVariables>(DecksDocument, options);
+      }
+export function useDecksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DecksQuery, DecksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DecksQuery, DecksQueryVariables>(DecksDocument, options);
+        }
+export function useDecksSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DecksQuery, DecksQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<DecksQuery, DecksQueryVariables>(DecksDocument, options);
+        }
 export type DecksQueryHookResult = ReturnType<typeof useDecksQuery>;
 export type DecksLazyQueryHookResult = ReturnType<typeof useDecksLazyQuery>;
-export type DecksSuspenseQueryHookResult = ReturnType<
-  typeof useDecksSuspenseQuery
->;
-export type DecksQueryResult = Apollo.QueryResult<
-  DecksQuery,
-  DecksQueryVariables
->;
+export type DecksSuspenseQueryHookResult = ReturnType<typeof useDecksSuspenseQuery>;
+export type DecksQueryResult = Apollo.QueryResult<DecksQuery, DecksQueryVariables>;
 export const CreateDeckDocument = gql`
-  mutation createDeck($name: String!) {
-    createDeck(data: { name: $name }) {
-      id
-      name
-    }
+    mutation createDeck($name: String!) {
+  createDeck(data: {name: $name}) {
+    id
+    name
   }
-`;
-export type CreateDeckMutationFn = Apollo.MutationFunction<
-  CreateDeckMutation,
-  CreateDeckMutationVariables
->;
+}
+    `;
+export type CreateDeckMutationFn = Apollo.MutationFunction<CreateDeckMutation, CreateDeckMutationVariables>;
 
 /**
  * __useCreateDeckMutation__
@@ -867,32 +608,18 @@ export type CreateDeckMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateDeckMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateDeckMutation,
-    CreateDeckMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateDeckMutation, CreateDeckMutationVariables>(
-    CreateDeckDocument,
-    options
-  );
-}
-export type CreateDeckMutationHookResult = ReturnType<
-  typeof useCreateDeckMutation
->;
-export type CreateDeckMutationResult =
-  Apollo.MutationResult<CreateDeckMutation>;
-export type CreateDeckMutationOptions = Apollo.BaseMutationOptions<
-  CreateDeckMutation,
-  CreateDeckMutationVariables
->;
+export function useCreateDeckMutation(baseOptions?: Apollo.MutationHookOptions<CreateDeckMutation, CreateDeckMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateDeckMutation, CreateDeckMutationVariables>(CreateDeckDocument, options);
+      }
+export type CreateDeckMutationHookResult = ReturnType<typeof useCreateDeckMutation>;
+export type CreateDeckMutationResult = Apollo.MutationResult<CreateDeckMutation>;
+export type CreateDeckMutationOptions = Apollo.BaseMutationOptions<CreateDeckMutation, CreateDeckMutationVariables>;
 export const ActiveGameIdDocument = gql`
-  query activeGameId {
-    activeGameId
-  }
-`;
+    query activeGameId {
+  activeGameId
+}
+    `;
 
 /**
  * __useActiveGameIdQuery__
@@ -909,80 +636,41 @@ export const ActiveGameIdDocument = gql`
  *   },
  * });
  */
-export function useActiveGameIdQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    ActiveGameIdQuery,
-    ActiveGameIdQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<ActiveGameIdQuery, ActiveGameIdQueryVariables>(
-    ActiveGameIdDocument,
-    options
-  );
-}
-export function useActiveGameIdLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ActiveGameIdQuery,
-    ActiveGameIdQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<ActiveGameIdQuery, ActiveGameIdQueryVariables>(
-    ActiveGameIdDocument,
-    options
-  );
-}
-export function useActiveGameIdSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<
-        ActiveGameIdQuery,
-        ActiveGameIdQueryVariables
-      >
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<ActiveGameIdQuery, ActiveGameIdQueryVariables>(
-    ActiveGameIdDocument,
-    options
-  );
-}
-export type ActiveGameIdQueryHookResult = ReturnType<
-  typeof useActiveGameIdQuery
->;
-export type ActiveGameIdLazyQueryHookResult = ReturnType<
-  typeof useActiveGameIdLazyQuery
->;
-export type ActiveGameIdSuspenseQueryHookResult = ReturnType<
-  typeof useActiveGameIdSuspenseQuery
->;
-export type ActiveGameIdQueryResult = Apollo.QueryResult<
-  ActiveGameIdQuery,
-  ActiveGameIdQueryVariables
->;
+export function useActiveGameIdQuery(baseOptions?: Apollo.QueryHookOptions<ActiveGameIdQuery, ActiveGameIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ActiveGameIdQuery, ActiveGameIdQueryVariables>(ActiveGameIdDocument, options);
+      }
+export function useActiveGameIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ActiveGameIdQuery, ActiveGameIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ActiveGameIdQuery, ActiveGameIdQueryVariables>(ActiveGameIdDocument, options);
+        }
+export function useActiveGameIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ActiveGameIdQuery, ActiveGameIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ActiveGameIdQuery, ActiveGameIdQueryVariables>(ActiveGameIdDocument, options);
+        }
+export type ActiveGameIdQueryHookResult = ReturnType<typeof useActiveGameIdQuery>;
+export type ActiveGameIdLazyQueryHookResult = ReturnType<typeof useActiveGameIdLazyQuery>;
+export type ActiveGameIdSuspenseQueryHookResult = ReturnType<typeof useActiveGameIdSuspenseQuery>;
+export type ActiveGameIdQueryResult = Apollo.QueryResult<ActiveGameIdQuery, ActiveGameIdQueryVariables>;
 export const GameDocument = gql`
-  query game($id: Int!) {
-    game(id: $id) {
-      id
-      turnUserId
-      phase
-      winnerUserId
-      startedAt
-      endedAt
-      gameUsers {
-        ...GameUser
-      }
-      gameCards {
-        ...GameCard
-      }
+    query game($id: Int!) {
+  game(id: $id) {
+    id
+    turnUserId
+    phase
+    winnerUserId
+    startedAt
+    endedAt
+    gameUsers {
+      ...GameUser
+    }
+    gameCards {
+      ...GameCard
     }
   }
-  ${GameUserFragmentDoc}
-  ${GameCardFragmentDoc}
-`;
+}
+    ${GameUserFragmentDoc}
+${GameCardFragmentDoc}`;
 
 /**
  * __useGameQuery__
@@ -1000,53 +688,30 @@ export const GameDocument = gql`
  *   },
  * });
  */
-export function useGameQuery(
-  baseOptions: Apollo.QueryHookOptions<GameQuery, GameQueryVariables> &
-    ({ variables: GameQueryVariables; skip?: boolean } | { skip: boolean })
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GameQuery, GameQueryVariables>(GameDocument, options);
-}
-export function useGameLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GameQuery, GameQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GameQuery, GameQueryVariables>(
-    GameDocument,
-    options
-  );
-}
-export function useGameSuspenseQuery(
-  baseOptions?:
-    | Apollo.SkipToken
-    | Apollo.SuspenseQueryHookOptions<GameQuery, GameQueryVariables>
-) {
-  const options =
-    baseOptions === Apollo.skipToken
-      ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
-  return Apollo.useSuspenseQuery<GameQuery, GameQueryVariables>(
-    GameDocument,
-    options
-  );
-}
+export function useGameQuery(baseOptions: Apollo.QueryHookOptions<GameQuery, GameQueryVariables> & ({ variables: GameQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GameQuery, GameQueryVariables>(GameDocument, options);
+      }
+export function useGameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GameQuery, GameQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GameQuery, GameQueryVariables>(GameDocument, options);
+        }
+export function useGameSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GameQuery, GameQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GameQuery, GameQueryVariables>(GameDocument, options);
+        }
 export type GameQueryHookResult = ReturnType<typeof useGameQuery>;
 export type GameLazyQueryHookResult = ReturnType<typeof useGameLazyQuery>;
-export type GameSuspenseQueryHookResult = ReturnType<
-  typeof useGameSuspenseQuery
->;
+export type GameSuspenseQueryHookResult = ReturnType<typeof useGameSuspenseQuery>;
 export type GameQueryResult = Apollo.QueryResult<GameQuery, GameQueryVariables>;
 export const StartGameDocument = gql`
-  mutation startGame($deckId: Int!) {
-    startGame(deckId: $deckId) {
-      id
-    }
+    mutation startGame($deckId: Int!) {
+  startGame(deckId: $deckId) {
+    id
   }
-`;
-export type StartGameMutationFn = Apollo.MutationFunction<
-  StartGameMutation,
-  StartGameMutationVariables
->;
+}
+    `;
+export type StartGameMutationFn = Apollo.MutationFunction<StartGameMutation, StartGameMutationVariables>;
 
 /**
  * __useStartGameMutation__
@@ -1065,37 +730,21 @@ export type StartGameMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useStartGameMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    StartGameMutation,
-    StartGameMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<StartGameMutation, StartGameMutationVariables>(
-    StartGameDocument,
-    options
-  );
-}
-export type StartGameMutationHookResult = ReturnType<
-  typeof useStartGameMutation
->;
+export function useStartGameMutation(baseOptions?: Apollo.MutationHookOptions<StartGameMutation, StartGameMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<StartGameMutation, StartGameMutationVariables>(StartGameDocument, options);
+      }
+export type StartGameMutationHookResult = ReturnType<typeof useStartGameMutation>;
 export type StartGameMutationResult = Apollo.MutationResult<StartGameMutation>;
-export type StartGameMutationOptions = Apollo.BaseMutationOptions<
-  StartGameMutation,
-  StartGameMutationVariables
->;
+export type StartGameMutationOptions = Apollo.BaseMutationOptions<StartGameMutation, StartGameMutationVariables>;
 export const DispatchGameActionDocument = gql`
-  mutation dispatchGameAction($id: Int!, $data: GameActionDispatchInput!) {
-    dispatchGameAction(id: $id, data: $data) {
-      id
-    }
+    mutation dispatchGameAction($id: Int!, $data: GameActionDispatchInput!) {
+  dispatchGameAction(id: $id, data: $data) {
+    id
   }
-`;
-export type DispatchGameActionMutationFn = Apollo.MutationFunction<
-  DispatchGameActionMutation,
-  DispatchGameActionMutationVariables
->;
+}
+    `;
+export type DispatchGameActionMutationFn = Apollo.MutationFunction<DispatchGameActionMutation, DispatchGameActionMutationVariables>;
 
 /**
  * __useDispatchGameActionMutation__
@@ -1115,24 +764,10 @@ export type DispatchGameActionMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useDispatchGameActionMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DispatchGameActionMutation,
-    DispatchGameActionMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    DispatchGameActionMutation,
-    DispatchGameActionMutationVariables
-  >(DispatchGameActionDocument, options);
-}
-export type DispatchGameActionMutationHookResult = ReturnType<
-  typeof useDispatchGameActionMutation
->;
-export type DispatchGameActionMutationResult =
-  Apollo.MutationResult<DispatchGameActionMutation>;
-export type DispatchGameActionMutationOptions = Apollo.BaseMutationOptions<
-  DispatchGameActionMutation,
-  DispatchGameActionMutationVariables
->;
+export function useDispatchGameActionMutation(baseOptions?: Apollo.MutationHookOptions<DispatchGameActionMutation, DispatchGameActionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DispatchGameActionMutation, DispatchGameActionMutationVariables>(DispatchGameActionDocument, options);
+      }
+export type DispatchGameActionMutationHookResult = ReturnType<typeof useDispatchGameActionMutation>;
+export type DispatchGameActionMutationResult = Apollo.MutationResult<DispatchGameActionMutation>;
+export type DispatchGameActionMutationOptions = Apollo.BaseMutationOptions<DispatchGameActionMutation, DispatchGameActionMutationVariables>;
