@@ -16,6 +16,10 @@ type State =
   | {
       type: StateType.PUT_SOUL_COUNT;
       data: { value: number; gameUserId: number };
+    }
+  | {
+      type: StateType.EFFECT_USE_COUNT;
+      data: { effectType: string; gameUserId: number; value: number };
     };
 
 @Entity({ name: 'gameStates' })

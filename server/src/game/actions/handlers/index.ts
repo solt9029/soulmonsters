@@ -12,6 +12,7 @@ import { handleStartBattleTimeAction } from './startBattleTime';
 import { handleStartEndTimeAction } from './startEndTime';
 import { handleAttackAction } from './attack';
 import { handleFinishEndTimeAction } from './finishEndTime';
+import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
 
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
 // 理想メモ: game, gameUserId, opponentGameUser, data, manager
@@ -42,6 +43,8 @@ export async function handleAction(
       return await handleAttackAction(manager, userId, data, gameEntity);
     case ActionType.FINISH_END_TIME:
       return await handleFinishEndTimeAction(manager, userId, gameEntity);
+    case ActionType.EFFECT_RUTERUTE_DRAW:
+      return await handleEffectRuteruteDraw(manager, userId, data, gameEntity);
     default:
       return;
   }
