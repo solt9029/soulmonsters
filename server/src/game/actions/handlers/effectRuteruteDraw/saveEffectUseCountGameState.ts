@@ -9,7 +9,7 @@ const initEffectUseCountGameState = (
 ): GameStateEntity => {
   return new GameStateEntity({
     game: gameEntity,
-    state: { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { gameUserId, value: 1 } },
+    state: { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } },
   });
 };
 
@@ -19,18 +19,17 @@ export const saveEffectUseCountGameState = (
   gameUserId: number,
 ): GameEntity => {
   const index = gameEntity.gameStates.findIndex(
-    gameState =>
-      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.state.data.gameUserId === gameUserId,
+    gameState => gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT,
   );
 
   if (index >= 0) {
     gameEntity.gameStates = gameEntity.gameStates.map(gameState =>
-      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.state.data.gameUserId === gameUserId
+      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT
         ? new GameStateEntity({
             ...gameState,
             state: {
               type: StateType.EFFECT_RUTERUTE_DRAW_COUNT,
-              data: { gameUserId, value: gameState.state.data.value + 1 },
+              data: { value: gameState.state.data.value + 1 },
             },
           })
         : gameState,
