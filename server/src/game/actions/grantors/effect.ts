@@ -9,10 +9,8 @@ export function grantEffectAction(gameEntity: GameEntity, userId: string) {
   }
 
   gameEntity.gameCards = gameEntity.gameCards.map(gameCard => {
-    const isRuteruteInBattleZone = 
-      gameCard.currentUserId === userId &&
-      gameCard.zone === Zone.BATTLE &&
-      gameCard.card?.id === 1;
+    const isRuteruteInBattleZone =
+      gameCard.currentUserId === userId && gameCard.zone === Zone.BATTLE && gameCard.card?.id === 1;
 
     if (!isRuteruteInBattleZone) {
       return gameCard;
@@ -24,13 +22,16 @@ export function grantEffectAction(gameEntity: GameEntity, userId: string) {
         gameState.state.data.gameUserId === yourGameUser.id,
     );
 
-    const hasAlreadyUsedEffect = effectUseState && 
-      effectUseState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && 
+    const hasAlreadyUsedEffect =
+      effectUseState &&
+      effectUseState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT &&
       effectUseState.state.data.value > 0;
 
     if (hasAlreadyUsedEffect) {
       return gameCard;
     }
+
+    // TODO: サムシングタイムかどうかをチェックする必要がある
 
     return new GameCardEntity({
       ...gameCard,
