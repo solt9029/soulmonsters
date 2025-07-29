@@ -228,7 +228,7 @@ export type QueryUserDataArgs = {
 
 export enum StateType {
   AttackCount = 'ATTACK_COUNT',
-  EffectUseCount = 'EFFECT_USE_COUNT',
+  EffectRuteruteDrawCount = 'EFFECT_RUTERUTE_DRAW_COUNT',
   PutSoulCount = 'PUT_SOUL_COUNT',
   SelfPowerChange = 'SELF_POWER_CHANGE'
 }

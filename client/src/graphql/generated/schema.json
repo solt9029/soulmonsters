@@ -1842,7 +1842,7 @@
             "deprecationReason": null
           },
           {
-            "name": "EFFECT_USE_COUNT",
+            "name": "EFFECT_RUTERUTE_DRAW_COUNT",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
