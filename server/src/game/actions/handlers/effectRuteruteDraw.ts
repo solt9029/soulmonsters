@@ -12,8 +12,12 @@ export async function handleEffectRuteruteDraw(
 ) {
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
 
+  // TODO: エナジーを1消費する
+
   drawCardFromDeck(gameEntity, userId);
   saveEffectUseCountGameState(gameEntity, 'RUTERUTE_DRAW', gameUser.id);
-  
+
   await manager.save(GameEntity, gameEntity);
+
+  // TODO: packHandGameCards
 }
