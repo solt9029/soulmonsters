@@ -21,7 +21,8 @@ export function grantEffectRuteRuteDrawAction(gameEntity: GameEntity, userId: st
     }
 
     const effectUseState = gameEntity.gameStates.find(
-      gameState => gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT,
+      gameState =>
+        gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCard?.id === gameCard.id,
     );
 
     const hasAlreadyUsedEffect =

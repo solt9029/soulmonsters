@@ -16,7 +16,7 @@ export async function handleEffectRuteruteDraw(
   subtractUserEnergy(gameEntity, userId, 1);
 
   drawCardFromDeck(gameEntity, userId);
-  saveEffectUseCountGameState(gameEntity, 'RUTERUTE_DRAW', gameUser.id);
+  saveEffectUseCountGameState(gameEntity, gameUser.id);
 
   await manager.save(GameEntity, gameEntity);
 }
