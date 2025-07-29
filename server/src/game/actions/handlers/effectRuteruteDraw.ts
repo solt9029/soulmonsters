@@ -8,17 +8,12 @@ import { subtractUserEnergy } from './utils/subtractUserEnergy';
 export async function handleEffectRuteruteDraw(
   manager: EntityManager,
   userId: string,
-  _data: GameActionDispatchInput,
+  data: GameActionDispatchInput,
   gameEntity: GameEntity,
 ) {
-  // TODO: dataでgameCardIdを受け取るようにする
-
-  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
-
   subtractUserEnergy(gameEntity, userId, 1);
-
   drawCardFromDeck(gameEntity, userId);
-  saveEffectUseCountGameState(gameEntity, gameUser.id);
+  saveEffectUseCountGameState(gameEntity, data.payload.gameCardId!);
 
   await manager.save(GameEntity, gameEntity);
 }

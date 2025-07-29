@@ -3,11 +3,6 @@ import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
 import { GameCardEntity } from '../../../entities/game.card.entity';
 
 export function grantEffectRuteRuteDrawAction(gameEntity: GameEntity, userId: string) {
-  const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
-  if (!yourGameUser) {
-    return;
-  }
-
   if (gameEntity.phase !== Phase.SOMETHING || gameEntity.turnUserId !== userId) {
     return;
   }
@@ -20,15 +15,13 @@ export function grantEffectRuteRuteDrawAction(gameEntity: GameEntity, userId: st
       return gameCard;
     }
 
-    const effectUseState = gameEntity.gameStates.find(
+    const gameState = gameEntity.gameStates.find(
       gameState =>
         gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCard?.id === gameCard.id,
     );
 
     const hasAlreadyUsedEffect =
-      effectUseState &&
-      effectUseState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT &&
-      effectUseState.state.data.value > 0;
+      gameState && gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.state.data.value > 0;
 
     if (hasAlreadyUsedEffect) {
       return gameCard;

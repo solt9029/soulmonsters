@@ -11,26 +11,22 @@ const initEffectUseCountGameState = (gameEntity: GameEntity, gameCard: GameCardE
   });
 };
 
-export const saveEffectUseCountGameState = (gameEntity: GameEntity, gameUserId: number): GameEntity => {
-  const ruteruteCard = gameEntity.gameCards.find(
-    gameCard =>
-      gameCard.currentUserId === gameEntity.gameUsers.find(u => u.id === gameUserId)?.userId &&
-      gameCard.zone === Zone.BATTLE &&
-      gameCard.card?.id === 1,
-  );
+export const saveEffectUseCountGameState = (gameEntity: GameEntity, gameCardId: number): GameEntity => {
+  const gameCard = gameEntity.gameCards.find(gameCard => gameCard.id === gameCardId);
 
-  if (!ruteruteCard) {
-    return gameEntity;
+  if (!gameCard) {
+    throw new Error();
   }
 
-  const index = gameEntity.gameStates.findIndex(
-    gameState =>
-      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCard?.id === ruteruteCard.id,
-  );
+  const existsState =
+    gameEntity.gameStates.findIndex(
+      gameState =>
+        gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCard?.id === gameCard.id,
+    ) >= 0;
 
-  if (index >= 0) {
+  if (existsState) {
     gameEntity.gameStates = gameEntity.gameStates.map(gameState =>
-      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCard?.id === ruteruteCard.id
+      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCard?.id === gameCard.id
         ? new GameStateEntity({
             ...gameState,
             state: {
@@ -44,6 +40,6 @@ export const saveEffectUseCountGameState = (gameEntity: GameEntity, gameUserId: 
     return gameEntity;
   }
 
-  gameEntity.gameStates.push(initEffectUseCountGameState(gameEntity, ruteruteCard));
+  gameEntity.gameStates.push(initEffectUseCountGameState(gameEntity, gameCard));
   return gameEntity;
 };
