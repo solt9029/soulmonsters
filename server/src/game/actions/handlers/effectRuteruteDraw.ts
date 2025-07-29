@@ -11,6 +11,8 @@ export async function handleEffectRuteruteDraw(
   _data: GameActionDispatchInput,
   gameEntity: GameEntity,
 ) {
+  // TODO: dataでgameCardIdを受け取るようにする
+
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
 
   subtractUserEnergy(gameEntity, userId, 1);
