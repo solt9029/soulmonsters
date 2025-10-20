@@ -61,6 +61,23 @@ yarn console
 
 ### 使用例
 
+#### サービスの実行
+
 ```javascript
 await cardService.findAll();
+```
+
+#### SQL実行
+
+`sql()` ヘルパー関数を使って直接SQLを実行できます。
+
+```javascript
+// SELECTクエリ
+await sql('SELECT * FROM users LIMIT 10');
+
+// パラメータ付きクエリ
+await sql('SELECT * FROM games WHERE id = ?', [1]);
+
+// UPDATEクエリ
+await sql('UPDATE games SET status = ? WHERE id = ?', ['finished', 1]);
 ```

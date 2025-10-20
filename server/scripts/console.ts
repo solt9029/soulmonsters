@@ -44,6 +44,10 @@ async function bootstrap() {
     return deck;
   };
 
+  const sql = async (query: string, parameters?: any[]) => {
+    return await dataSource.query(query, parameters);
+  };
+
   replServer.context.app = app;
   replServer.context.dataSource = dataSource;
 
@@ -65,6 +69,7 @@ async function bootstrap() {
   replServer.context.GameCardEntity = GameCardEntity;
 
   replServer.context.createDebugDeck = createDebugDeck;
+  replServer.context.sql = sql;
 
   // Handle REPL exit
   replServer.on('exit', async () => {
