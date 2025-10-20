@@ -13,7 +13,7 @@ const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYN
 export const AppDataSource = new DataSource({
   type: DB_TYPE as any,
   host: DB_HOST,
-  port: parseInt(DB_PORT || '3306'),
+  port: parseInt(DB_PORT || '13306'),
   username: DB_USERNAME,
   password: DB_PASSWORD,
   database: DB_DATABASE,
