@@ -14,4 +14,5 @@ export const InitialActionStep = {
   SUMMON_MONSTER: ActionStep.COMPLETED,
   ATTACK: ActionStep.SELECT_ATTACK_TARGET,
   USE_SOUL_BARRIER: ActionStep.COMPLETED, // TODO: to be changed
+  EFFECT_RUTERUTE_DRAW: ActionStep.COMPLETED,
 };

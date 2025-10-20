@@ -12,4 +12,5 @@ export default {
   SUMMON_MONSTER: '召喚',
   ATTACK: '攻撃',
   USE_SOUL_BARRIER: 'ソウルバリア',
+  EFFECT_RUTERUTE_DRAW: '効果発動',
 };

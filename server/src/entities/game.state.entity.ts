@@ -16,6 +16,10 @@ type State =
   | {
       type: StateType.PUT_SOUL_COUNT;
       data: { value: number; gameUserId: number };
+    }
+  | {
+      type: StateType.EFFECT_RUTERUTE_DRAW_COUNT;
+      data: { value: number };
     };
 
 @Entity({ name: 'gameStates' })

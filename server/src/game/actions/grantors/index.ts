@@ -9,6 +9,7 @@ import { grantSummonMonsterAction } from './summonMonster';
 import { grantAttackAction } from './attack';
 import { grantStartEndTimeAction } from './startEndTime';
 import { grantFinishEndTimeAction } from './finishEndTime';
+import { grantEffectRuteRuteDrawAction } from './effectRuteruteDraw';
 
 export function grantActions(gameEntity: GameEntity, userId: string) {
   grantStartDrawTimeAction(gameEntity, userId);
@@ -21,6 +22,7 @@ export function grantActions(gameEntity: GameEntity, userId: string) {
   grantAttackAction(gameEntity, userId);
   grantStartEndTimeAction(gameEntity, userId);
   grantFinishEndTimeAction(gameEntity, userId);
+  grantEffectRuteRuteDrawAction(gameEntity, userId);
 
   return gameEntity;
 }
