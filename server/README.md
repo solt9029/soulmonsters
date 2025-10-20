@@ -62,6 +62,5 @@ yarn console
 ### 使用例
 
 ```javascript
-await connection.query("SELECT * FROM games LIMIT 5"):
 await cardService.findAll();
 ```
