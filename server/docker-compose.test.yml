@@ -1,11 +1,11 @@
-version: '3'
+version: "3"
 services:
   mysql-test:
     image: mysql:5.7
     platform: linux/amd64
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --innodb_lock_wait_timeout=10
     ports:
-      - '3307:3306' # 開発用と異なるポート
+      - "13307:3306" # 開発用と異なるポート
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=soulmonsters_test

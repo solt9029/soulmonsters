@@ -10,7 +10,7 @@ beforeAll(async () => {
   connection = await createConnection({
     type: 'mysql',
     host: process.env.DB_HOST,
-    port: parseInt(process.env.DB_PORT || '3307'),
+    port: parseInt(process.env.DB_PORT || '13307'),
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
