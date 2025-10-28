@@ -16,7 +16,7 @@ yarn install
 cp .env.example .env
 vi .env
 
-yarn start
+yarn dev
 ```
 
 ## graphql
