@@ -1,5 +1,5 @@
 import { MIN_DECK_CARD_COUNT } from './../constants/rule';
-import { handleAction } from '../game/actions/handlers/index';
+import { handleAction, handleActionWithValidation } from '../game/actions/handlers/index';
 import { validateActions } from '../game/actions/validators/index';
 import { GameActionDispatchInput } from './../graphql/index';
 import { GameEntity } from './../entities/game.entity';
@@ -41,12 +41,18 @@ export class GameService {
       // GameState 状態を GameCard に反映する（攻撃力の減少など）
       const statusReflectedGameEntity = reflectStates(grantedGameEntity, userId);
 
-      // そのアクションが可能かどうかをチェックする
-      validateActions(data, statusReflectedGameEntity, userId);
+      // そのアクションが可能かどうかをチェックし、ValidationResultを取得する
+      const validationResult = validateActions(data, statusReflectedGameEntity, userId);
 
       // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
-      return await handleAction(data, manager, userId, statusReflectedGameEntity);
+      
+      // ValidationResultがある場合は新しいアプローチ、ない場合は従来のアプローチ
+      if (validationResult) {
+        return await handleActionWithValidation(manager, userId, validationResult, statusReflectedGameEntity);
+      } else {
+        return await handleAction(data, manager, userId, statusReflectedGameEntity);
+      }
     });
   }
 
