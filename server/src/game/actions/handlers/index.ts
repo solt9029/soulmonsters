@@ -13,6 +13,7 @@ import { handleStartEndTimeAction } from './startEndTime';
 import { handleAttackAction } from './attack';
 import { handleFinishEndTimeAction } from './finishEndTime';
 import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
+import { ValidationResult } from '../validators/index';
 
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
 // 理想メモ: game, gameUserId, opponentGameUser, data, manager
@@ -21,6 +22,7 @@ export async function handleAction(
   manager: EntityManager,
   userId: string,
   gameEntity: GameEntity,
+  validationResult: ValidationResult,
 ) {
   switch (data.type) {
     case ActionType.START_DRAW_TIME:
@@ -30,7 +32,10 @@ export async function handleAction(
     case ActionType.START_PUT_TIME:
       return await handleStartPutTimeAction(manager, gameEntity);
     case ActionType.PUT_SOUL:
-      return await handlePutSoulAction(manager, userId, data, gameEntity);
+      if (validationResult) {
+        return await handlePutSoulAction(manager, userId, validationResult, gameEntity);
+      }
+      throw new Error('Validation result required for PUT_SOUL action');
     case ActionType.START_SOMETHING_TIME:
       return await handleStartSomethingTimeAction(manager, gameEntity);
     case ActionType.SUMMON_MONSTER:

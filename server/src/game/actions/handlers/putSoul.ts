@@ -1,21 +1,20 @@
 import { GameCardRepository } from '../../../repositories/game.card.repository';
 import { GameEntity } from '../../../entities/game.entity';
-import { GameActionDispatchInput } from '../../../graphql/index';
 import { EntityManager } from 'typeorm';
 import { putSoulGameCard } from './putSoul/putSoulGameCard';
 import { savePutCountGameState } from './putSoul/savePutCountGameState';
+import { PutSoulValidationResult } from '../validators/putSoul';
 
 export async function handlePutSoulAction(
   manager: EntityManager,
   userId: string,
-  data: GameActionDispatchInput,
+  validationResult: PutSoulValidationResult,
   gameEntity: GameEntity,
 ) {
-  const gameCard = gameEntity.gameCards.find(value => value.id === data.payload.gameCardId)!;
+  const { gameCard, gameUser, gameCardId } = validationResult;
   const originalPosition = gameCard.position;
-  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
 
-  putSoulGameCard(gameEntity, userId, data.payload.gameCardId!);
+  putSoulGameCard(gameEntity, userId, gameCardId);
   savePutCountGameState(gameEntity, gameUser.id);
   await manager.save(GameEntity, gameEntity);
 
