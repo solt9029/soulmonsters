@@ -13,6 +13,8 @@ import { handleStartEndTimeAction } from './startEndTime';
 import { handleAttackAction } from './attack';
 import { handleFinishEndTimeAction } from './finishEndTime';
 import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
+import { PutSoulValidationResult } from '../validators/putSoul';
+import { AttackValidationResult } from '../validators/attack';
 
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
 // 理想メモ: game, gameUserId, opponentGameUser, data, manager
@@ -21,6 +23,7 @@ export async function handleAction(
   manager: EntityManager,
   userId: string,
   gameEntity: GameEntity,
+  validationResult?: PutSoulValidationResult | AttackValidationResult,
 ) {
   switch (data.type) {
     case ActionType.START_DRAW_TIME:
@@ -30,6 +33,9 @@ export async function handleAction(
     case ActionType.START_PUT_TIME:
       return await handleStartPutTimeAction(manager, gameEntity);
     case ActionType.PUT_SOUL:
+      if (validationResult && 'gameCard' in validationResult && 'gameUser' in validationResult && 'gameCardId' in validationResult && !('attackTarget' in validationResult)) {
+        return await handlePutSoulAction(manager, userId, validationResult as PutSoulValidationResult, gameEntity);
+      }
       return await handlePutSoulAction(manager, userId, data, gameEntity);
     case ActionType.START_SOMETHING_TIME:
       return await handleStartSomethingTimeAction(manager, gameEntity);
@@ -40,6 +46,9 @@ export async function handleAction(
     case ActionType.START_END_TIME:
       return await handleStartEndTimeAction(manager, gameEntity);
     case ActionType.ATTACK:
+      if (validationResult && 'attackTarget' in validationResult) {
+        return await handleAttackAction(manager, userId, validationResult as AttackValidationResult, gameEntity);
+      }
       return await handleAttackAction(manager, userId, data, gameEntity);
     case ActionType.FINISH_END_TIME:
       return await handleFinishEndTimeAction(manager, userId, gameEntity);

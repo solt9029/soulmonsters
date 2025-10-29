@@ -1,9 +1,20 @@
 import { GameActionDispatchInput, Zone, StateType } from '../../../graphql/index';
 import { ActionType } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
+import { GameCardEntity } from '../../../entities/game.card.entity';
+import { GameUserEntity } from '../../../entities/game.user.entity';
 import { BadRequestException } from '@nestjs/common';
 
-export function validateAttackAction(data: GameActionDispatchInput, game: GameEntity, userId: string) {
+export interface AttackValidationResult {
+  gameCard: GameCardEntity;
+  gameCardId: number;
+  opponentGameUser: GameUserEntity;
+  attackTarget: 
+    | { type: 'direct'; targetUserId: string }
+    | { type: 'monster'; targetGameCard: GameCardEntity; targetGameCardId: number };
+}
+
+export function validateAttackAction(data: GameActionDispatchInput, game: GameEntity, userId: string): AttackValidationResult {
   // check payload
   const { targetGameCardIds, targetGameUserIds, gameCardId } = data.payload;
 
@@ -15,8 +26,11 @@ export function validateAttackAction(data: GameActionDispatchInput, game: GameEn
   }
 
   const gameCard = game.gameCards.find(value => value.id === gameCardId);
+  const opponentGameUser = game.gameUsers.find(value => value.userId !== userId);
 
-  if (!gameCard?.actionTypes?.includes(ActionType.ATTACK) || game.turnUserId !== userId) {
+  if (!gameCard?.actionTypes?.includes(ActionType.ATTACK) || 
+      game.turnUserId !== userId || 
+      !opponentGameUser) {
     throw new BadRequestException('攻撃の処理に失敗しました');
   }
 
@@ -36,14 +50,9 @@ export function validateAttackAction(data: GameActionDispatchInput, game: GameEn
     }
 
     const targetGameCard = game.gameCards.find(value => value.id === targetGameCardIds[0]);
-    const opponentGameUser = game.gameUsers.find(value => value.userId !== userId);
 
     if (!targetGameCard) {
       throw new BadRequestException('Target game card not found');
-    }
-
-    if (!opponentGameUser) {
-      throw new BadRequestException('Opponent game user not found');
     }
 
     if (targetGameCard.zone !== Zone.BATTLE || targetGameCard.currentUserId !== opponentGameUser.userId) {
@@ -59,4 +68,20 @@ export function validateAttackAction(data: GameActionDispatchInput, game: GameEn
   if (gameState) {
     throw new BadRequestException('既にこのターン中に攻撃済みです');
   }
+
+  // Determine attack target and return validation result
+  let attackTarget: AttackValidationResult['attackTarget'];
+  
+  if (hasTargetGameUserId) {
+    attackTarget = { type: 'direct', targetUserId: opponentGameUser.userId };
+  } else {
+    const targetGameCard = game.gameCards.find(value => value.id === targetGameCardIds![0])!;
+    attackTarget = { 
+      type: 'monster', 
+      targetGameCard, 
+      targetGameCardId: targetGameCardIds![0] 
+    };
+  }
+  
+  return { gameCard, gameCardId, opponentGameUser, attackTarget };
 }

@@ -41,12 +41,12 @@ export class GameService {
       // GameState 状態を GameCard に反映する（攻撃力の減少など）
       const statusReflectedGameEntity = reflectStates(grantedGameEntity, userId);
 
-      // そのアクションが可能かどうかをチェックする
-      validateActions(data, statusReflectedGameEntity, userId);
+      // そのアクションが可能かどうかをチェックし、バリデーション結果を取得する
+      const validationResult = validateActions(data, statusReflectedGameEntity, userId);
 
       // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
-      return await handleAction(data, manager, userId, statusReflectedGameEntity);
+      return await handleAction(data, manager, userId, statusReflectedGameEntity, validationResult);
     });
   }
 
