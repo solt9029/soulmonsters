@@ -5,6 +5,7 @@ import { validateStartDrawTimeAction } from './startDrawTime';
 import { validateStartEnergyTimeAction } from './startEnergyTime';
 import { validatePutSoulAction } from './putSoul';
 import { validateAttackAction } from './attack';
+import { validateSummonMonsterAction } from './summonMonster';
 
 export function validateActions(data: GameActionDispatchInput, grantedGame: GameEntity, userId: string) {
   switch (data.type) {
@@ -16,6 +17,8 @@ export function validateActions(data: GameActionDispatchInput, grantedGame: Game
       return validatePutSoulAction(data, grantedGame, userId);
     case ActionType.ATTACK:
       return validateAttackAction(data, grantedGame, userId);
+    case ActionType.SUMMON_MONSTER:
+      return validateSummonMonsterAction(data, grantedGame, userId);
     default:
       return;
   }

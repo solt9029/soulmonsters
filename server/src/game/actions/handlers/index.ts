@@ -15,6 +15,7 @@ import { handleFinishEndTimeAction } from './finishEndTime';
 import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
 import { PutSoulValidationResult } from '../validators/putSoul';
 import { AttackValidationResult } from '../validators/attack';
+import { SummonMonsterValidationResult } from '../validators/summonMonster';
 
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
 // 理想メモ: game, gameUserId, opponentGameUser, data, manager
@@ -23,7 +24,7 @@ export async function handleAction(
   manager: EntityManager,
   userId: string,
   gameEntity: GameEntity,
-  validationResult?: PutSoulValidationResult | AttackValidationResult,
+  validationResult?: PutSoulValidationResult | AttackValidationResult | SummonMonsterValidationResult,
 ) {
   switch (data.type) {
     case ActionType.START_DRAW_TIME:
@@ -40,6 +41,9 @@ export async function handleAction(
     case ActionType.START_SOMETHING_TIME:
       return await handleStartSomethingTimeAction(manager, gameEntity);
     case ActionType.SUMMON_MONSTER:
+      if (validationResult && 'gameCard' in validationResult && 'gameUser' in validationResult && 'gameCardId' in validationResult && !('attackTarget' in validationResult)) {
+        return await handleSummonMonsterAction(manager, userId, validationResult as SummonMonsterValidationResult, gameEntity);
+      }
       return await handleSummonMonsterAction(manager, userId, data, gameEntity);
     case ActionType.START_BATTLE_TIME:
       return await handleStartBattleTimeAction(manager, gameEntity);
