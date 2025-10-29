@@ -3,10 +3,12 @@ import { ActionType } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
 import { validateStartDrawTimeAction } from './startDrawTime';
 import { validateStartEnergyTimeAction } from './startEnergyTime';
-import { validatePutSoulAction } from './putSoul';
+import { validatePutSoulAction, PutSoulValidationResult } from './putSoul';
 import { validateAttackAction } from './attack';
 
-export function validateActions(data: GameActionDispatchInput, grantedGame: GameEntity, userId: string) {
+export type ValidationResult = PutSoulValidationResult | void;
+
+export function validateActions(data: GameActionDispatchInput, grantedGame: GameEntity, userId: string): ValidationResult {
   switch (data.type) {
     case ActionType.START_DRAW_TIME:
       return validateStartDrawTimeAction(grantedGame, userId);
