@@ -1,9 +1,20 @@
 import { GameActionDispatchInput, Zone, StateType } from '../../../graphql/index';
 import { ActionType } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
+import { GameCardEntity } from '../../../entities/game.card.entity';
+import { GameUserEntity } from '../../../entities/game.user.entity';
 import { BadRequestException } from '@nestjs/common';
 
-export function validateAttackAction(data: GameActionDispatchInput, game: GameEntity, userId: string) {
+export interface AttackValidationResult {
+  gameCard: GameCardEntity;
+  gameCardId: number;
+  opponentGameUser: GameUserEntity;
+  attackTarget: 
+    | { type: 'direct'; targetUserId: string }
+    | { type: 'monster'; targetGameCard: GameCardEntity; targetGameCardId: number };
+}
+
+export function validateAttackAction(data: GameActionDispatchInput, game: GameEntity, userId: string): AttackValidationResult {
   // check payload
   const { targetGameCardIds, targetGameUserIds, gameCardId } = data.payload;
 
@@ -59,4 +70,21 @@ export function validateAttackAction(data: GameActionDispatchInput, game: GameEn
   if (gameState) {
     throw new BadRequestException('既にこのターン中に攻撃済みです');
   }
+
+  const opponentGameUser = game.gameUsers.find(value => value.userId !== userId)!;
+  
+  let attackTarget: AttackValidationResult['attackTarget'];
+  
+  if (hasTargetGameUserId) {
+    attackTarget = { type: 'direct', targetUserId: opponentGameUser.userId };
+  } else {
+    const targetGameCard = game.gameCards.find(value => value.id === targetGameCardIds![0])!;
+    attackTarget = { 
+      type: 'monster', 
+      targetGameCard, 
+      targetGameCardId: targetGameCardIds![0] 
+    };
+  }
+  
+  return { gameCard, gameCardId, opponentGameUser, attackTarget };
 }

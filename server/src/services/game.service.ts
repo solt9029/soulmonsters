@@ -42,11 +42,15 @@ export class GameService {
       const statusReflectedGameEntity = reflectStates(grantedGameEntity, userId);
 
       // そのアクションが可能かどうかをチェックする
-      validateActions(data, statusReflectedGameEntity, userId);
+      const validationResult = validateActions(data, statusReflectedGameEntity, userId);
 
       // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
-      return await handleAction(data, manager, userId, statusReflectedGameEntity);
+      if (validationResult) {
+        return await handleAction(manager, userId, validationResult, statusReflectedGameEntity);
+      } else {
+        return await handleAction(data, manager, userId, statusReflectedGameEntity);
+      }
     });
   }
 

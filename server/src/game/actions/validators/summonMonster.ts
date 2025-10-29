@@ -5,13 +5,13 @@ import { GameCardEntity } from '../../../entities/game.card.entity';
 import { GameUserEntity } from '../../../entities/game.user.entity';
 import { BadRequestException } from '@nestjs/common';
 
-export interface PutSoulValidationResult {
+export interface SummonMonsterValidationResult {
   gameCard: GameCardEntity;
   gameUser: GameUserEntity;
   gameCardId: number;
 }
 
-export function validatePutSoulAction(data: GameActionDispatchInput, game: GameEntity, userId: string): PutSoulValidationResult {
+export function validateSummonMonsterAction(data: GameActionDispatchInput, game: GameEntity, userId: string): SummonMonsterValidationResult {
   const gameCardId = data.payload.gameCardId;
   if (gameCardId === undefined) {
     throw new BadRequestException('Game card ID is required');
@@ -20,8 +20,12 @@ export function validatePutSoulAction(data: GameActionDispatchInput, game: GameE
   const gameCard = game.gameCards.find(value => value.id === gameCardId);
   const gameUser = game.gameUsers.find(value => value.userId === userId);
 
-  if (!gameCard?.actionTypes?.includes(ActionType.PUT_SOUL) || game.turnUserId !== userId || !gameUser) {
+  if (!gameCard?.actionTypes?.includes(ActionType.SUMMON_MONSTER) || game.turnUserId !== userId || !gameUser) {
     throw new BadRequestException();
+  }
+
+  if (gameUser.energy < gameCard.card.cost) {
+    throw new BadRequestException('Insufficient energy to summon monster');
   }
 
   return { gameCard, gameUser, gameCardId };

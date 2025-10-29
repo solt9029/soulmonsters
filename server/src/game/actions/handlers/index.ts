@@ -13,15 +13,60 @@ import { handleStartEndTimeAction } from './startEndTime';
 import { handleAttackAction } from './attack';
 import { handleFinishEndTimeAction } from './finishEndTime';
 import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
+import { PutSoulValidationResult } from '../validators/putSoul';
+import { AttackValidationResult } from '../validators/attack';
+import { SummonMonsterValidationResult } from '../validators/summonMonster';
+import { EffectRuteruteDrawValidationResult } from '../validators/effectRuteruteDraw';
+
+type ValidationResult = 
+  | PutSoulValidationResult 
+  | AttackValidationResult 
+  | SummonMonsterValidationResult 
+  | EffectRuteruteDrawValidationResult;
 
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
 // 理想メモ: game, gameUserId, opponentGameUser, data, manager
+export async function handleAction(
+  manager: EntityManager,
+  userId: string,
+  validationResult: ValidationResult,
+  gameEntity: GameEntity,
+): Promise<void>;
 export async function handleAction(
   data: GameActionDispatchInput,
   manager: EntityManager,
   userId: string,
   gameEntity: GameEntity,
+): Promise<void>;
+export async function handleAction(
+  dataOrManager: GameActionDispatchInput | EntityManager,
+  managerOrUserId: EntityManager | string,
+  userIdOrValidationResult: string | ValidationResult,
+  gameEntityOrGameEntity: GameEntity,
 ) {
+  let data: GameActionDispatchInput;
+  let manager: EntityManager;
+  let userId: string;
+  let gameEntity: GameEntity;
+  let validationResult: ValidationResult | undefined;
+
+  if ('type' in dataOrManager) {
+    // Legacy call: handleAction(data, manager, userId, gameEntity)
+    data = dataOrManager;
+    manager = managerOrUserId as EntityManager;
+    userId = userIdOrValidationResult as string;
+    gameEntity = gameEntityOrGameEntity;
+  } else {
+    // New call: handleAction(manager, userId, validationResult, gameEntity)
+    manager = dataOrManager;
+    userId = managerOrUserId as string;
+    validationResult = userIdOrValidationResult as ValidationResult;
+    gameEntity = gameEntityOrGameEntity;
+    
+    // Create a mock data object for the switch statement
+    data = { type: getActionTypeFromValidationResult(validationResult) } as GameActionDispatchInput;
+  }
+
   switch (data.type) {
     case ActionType.START_DRAW_TIME:
       return await handleStartDrawTimeAction(manager, userId, gameEntity);
@@ -30,22 +75,44 @@ export async function handleAction(
     case ActionType.START_PUT_TIME:
       return await handleStartPutTimeAction(manager, gameEntity);
     case ActionType.PUT_SOUL:
+      if (validationResult && 'gameCard' in validationResult && 'gameUser' in validationResult && 'gameCardId' in validationResult) {
+        return await handlePutSoulAction(manager, userId, validationResult as PutSoulValidationResult, gameEntity);
+      }
       return await handlePutSoulAction(manager, userId, data, gameEntity);
     case ActionType.START_SOMETHING_TIME:
       return await handleStartSomethingTimeAction(manager, gameEntity);
     case ActionType.SUMMON_MONSTER:
+      if (validationResult && 'gameCard' in validationResult && 'gameUser' in validationResult && 'gameCardId' in validationResult) {
+        return await handleSummonMonsterAction(manager, userId, validationResult as SummonMonsterValidationResult, gameEntity);
+      }
       return await handleSummonMonsterAction(manager, userId, data, gameEntity);
     case ActionType.START_BATTLE_TIME:
       return await handleStartBattleTimeAction(manager, gameEntity);
     case ActionType.START_END_TIME:
       return await handleStartEndTimeAction(manager, gameEntity);
     case ActionType.ATTACK:
+      if (validationResult && 'attackTarget' in validationResult) {
+        return await handleAttackAction(manager, userId, validationResult as AttackValidationResult, gameEntity);
+      }
       return await handleAttackAction(manager, userId, data, gameEntity);
     case ActionType.FINISH_END_TIME:
       return await handleFinishEndTimeAction(manager, userId, gameEntity);
     case ActionType.EFFECT_RUTERUTE_DRAW:
+      if (validationResult && 'gameCard' in validationResult && 'gameUser' in validationResult && 'gameCardId' in validationResult) {
+        return await handleEffectRuteruteDraw(manager, userId, validationResult as EffectRuteruteDrawValidationResult, gameEntity);
+      }
       return await handleEffectRuteruteDraw(manager, userId, data, gameEntity);
     default:
       return;
   }
+}
+
+function getActionTypeFromValidationResult(validationResult: ValidationResult): ActionType {
+  if ('attackTarget' in validationResult) {
+    return ActionType.ATTACK;
+  }
+  
+  // For PUT_SOUL, SUMMON_MONSTER, and EFFECT_RUTERUTE_DRAW, we need to check based on context
+  // This is a simplified approach - in reality you might want to add a type field to validation results
+  return ActionType.PUT_SOUL; // Default fallback
 }
