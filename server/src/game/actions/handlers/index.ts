@@ -16,6 +16,7 @@ import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
 import { PutSoulValidationResult } from '../validators/putSoul';
 import { AttackValidationResult } from '../validators/attack';
 import { SummonMonsterValidationResult } from '../validators/summonMonster';
+import { EffectRuteruteDrawValidationResult } from '../validators/effectRuteruteDraw';
 
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
 // 理想メモ: game, gameUserId, opponentGameUser, data, manager
@@ -24,7 +25,7 @@ export async function handleAction(
   manager: EntityManager,
   userId: string,
   gameEntity: GameEntity,
-  validationResult?: PutSoulValidationResult | AttackValidationResult | SummonMonsterValidationResult,
+  validationResult?: PutSoulValidationResult | AttackValidationResult | SummonMonsterValidationResult | EffectRuteruteDrawValidationResult,
 ) {
   switch (data.type) {
     case ActionType.START_DRAW_TIME:
@@ -57,6 +58,9 @@ export async function handleAction(
     case ActionType.FINISH_END_TIME:
       return await handleFinishEndTimeAction(manager, userId, gameEntity);
     case ActionType.EFFECT_RUTERUTE_DRAW:
+      if (validationResult && 'gameCard' in validationResult && 'gameUser' in validationResult && 'gameCardId' in validationResult && !('attackTarget' in validationResult)) {
+        return await handleEffectRuteruteDraw(manager, userId, validationResult as EffectRuteruteDrawValidationResult, gameEntity);
+      }
       return await handleEffectRuteruteDraw(manager, userId, data, gameEntity);
     default:
       return;
