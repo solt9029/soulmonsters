@@ -49,6 +49,12 @@ Automatically generates migration files based on the defined entities while runn
 yarn typeorm migration:create -n FileName
 ```
 
+## GraphQLの型生成
+
+- このプロジェクトはスキーマファースト開発を採用しています（コードファーストではありません）
+- GraphQLのスキーマは、ルートディレクトリのschemaディレクトリに集約管理されています（clientもこのスキーマを参照します）
+- GraphQLのスキーマを更新した後に、NestJSが利用するtypescriptの型ファイルを生成するためには、serverディレクトリで`yarn generate-graphql-types`コマンドを利用するか、開発サーバーを起動すれば良いです。
+
 ## デバッグコンソール
 
 Rails consoleのようなインタラクティブなデバッグ環境を提供します。

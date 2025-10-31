@@ -32,7 +32,8 @@
     "test:db:migrate": "NODE_ENV=test yarn typeorm migration:run -d src/dataSource.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     "ts-node": "ts-node",
-    "console": "ts-node -r tsconfig-paths/register -r dotenv/config scripts/console.ts"
+    "console": "ts-node -r tsconfig-paths/register -r dotenv/config scripts/console.ts",
+    "generate-graphql-types": "ts-node -r tsconfig-paths/register scripts/generate-types.ts"
   },
   "dependencies": {
     "@apollo/gateway": "^2.11.2",
