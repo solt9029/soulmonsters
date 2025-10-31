@@ -1,30 +1,30 @@
 # Actions Handlers
 
-## 概要
+## Overview
 
-`actions/handlers` ディレクトリは、ゲームアクションの処理ロジックを格納しています。各ハンドラーは特定のゲームアクションに対応し、データベースエンティティの状態を更新します。
+The `actions/handlers` directory contains the processing logic for game actions. Each handler corresponds to a specific game action and updates the state of database entities.
 
-## データ操作方針
+## Data Manipulation Policy
 
-### GameEntity の操作
+### GameEntity Operations
 
-**GameEntity 自体には mutable な操作を行います。**
+**GameEntity itself is manipulated mutably.**
 
 - ✅ `gameEntity.phase = Phase.ENERGY`
 - ✅ `gameEntity.gameCards = newGameCards`
 - ✅ `gameEntity.gameUsers = newGameUsers`
 
-### Association Entity の操作
+### Associated Entity Operations
 
-**GameEntity に紐づく association の entity（gameCards、gameUsers等）には immutable な操作を行います。**
+**Associated entities linked to GameEntity (gameCards, gameUsers, etc.) are manipulated immutably.**
 
-#### gameCards の操作例
+#### gameCards Operation Example
 
 ```typescript
-// ❌ 直接変更
+// ❌ Direct modification
 gameEntity.gameCards[0].zone = Zone.SOUL;
 
-// ✅ immutable に新規作成して代入
+// ✅ Immutably create new instance and assign
 gameEntity.gameCards = gameEntity.gameCards.map(gameCard =>
   gameCard.id === targetId
     ? new GameCardEntity({
@@ -36,37 +36,37 @@ gameEntity.gameCards = gameEntity.gameCards.map(gameCard =>
 );
 ```
 
-#### gameUsers の操作例
+#### gameUsers Operation Example
 
 ```typescript
-// ❌ 直接変更
+// ❌ Direct modification
 const gameUser = gameEntity.gameUsers.find(u => u.userId === userId);
 gameUser.energy = newEnergy;
 
-// ✅ immutable に新規作成して代入
+// ✅ Immutably create new instance and assign
 gameEntity.gameUsers = gameEntity.gameUsers.map(gameUser =>
-  gameUser.userId === userId 
-    ? new GameUserEntity({ ...gameUser, energy: newEnergy }) 
+  gameUser.userId === userId
+    ? new GameUserEntity({ ...gameUser, energy: newEnergy })
     : gameUser,
 );
 ```
 
-## ハンドラーパターン
+## Handler Pattern
 
-### メインハンドラー
-- エントリーポイントとして機能
-- 必要なサブ処理を呼び出し
-- 最終的にエンティティを保存
+### Main Handler
+- Functions as the entry point
+- Calls necessary sub-processes
+- Finally saves the entity
 
-### サブ処理
-- 単一責任の原則に従った小さな関数
-- GameEntity を受け取り、更新されたGameEntity を返却
-- 純粋関数として設計（副作用なし）
+### Sub-processes
+- Small functions following the single responsibility principle
+- Receives GameEntity and returns the updated GameEntity
+- Designed as pure functions (no side effects)
 
-## 実装例
+## Implementation Example
 
 ```typescript
-// メインハンドラーの例
+// Main handler example
 export async function handleExampleAction(
   manager: EntityManager,
   userId: string,
@@ -74,22 +74,22 @@ export async function handleExampleAction(
 ) {
   gameEntity = updateSomeProperty(gameEntity, userId);
   gameEntity = updatePhase(gameEntity);
-  
+
   await manager.save(GameEntity, gameEntity);
 }
 
-// サブ処理の例
+// Sub-process example
 const updateSomeProperty = (gameEntity: GameEntity, userId: string): GameEntity => {
-  // immutable な操作でassociation entityを更新
+  // Update associated entities immutably
   gameEntity.gameCards = gameEntity.gameCards.map(card =>
     card.currentUserId === userId
       ? new GameCardEntity({ ...card, someProperty: newValue })
       : card,
   );
-  
-  // mutable な操作でGameEntity自体を更新
+
+  // Update GameEntity itself mutably
   gameEntity.phase = Phase.NEXT;
-  
+
   return gameEntity;
 };
 ```

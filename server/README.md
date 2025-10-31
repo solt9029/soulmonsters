@@ -1,11 +1,11 @@
 # soulmonsters-server
 
-## environment
+## Environment
 
 - prisma: 1.34.6
 - nvm: 0.40.2
 
-## setup
+## Setup
 
 ```sh
 git clone git@github.com:solt9029/soulmonsters.git
@@ -23,7 +23,7 @@ yarn db:migrate
 yarn start:dev
 ```
 
-## testing
+## Testing
 
 ```sh
 yarn test:db:up
@@ -32,9 +32,9 @@ yarn test:db:migrate
 yarn test
 ```
 
-## migration
+## Migration
 
-Automatically generates migration files based on the defined entities while running the application on the local machine thanks to the synchronize option.
+Migration files are automatically generated based on the defined entities when running the application on the local machine, thanks to the synchronize option.
 
 ```ts
     TypeOrmModule.forRoot({
@@ -43,47 +43,42 @@ Automatically generates migration files based on the defined entities while runn
     }),
 ```
 
-- If you would like to create a custom migration file, you can generate a file through the command.
+- If you would like to create a custom migration file, you can generate it using the following command:
 
 ```sh
 yarn typeorm migration:create -n FileName
 ```
 
-## GraphQLの型生成
+## GraphQL Type Generation
 
-- このプロジェクトはスキーマファースト開発を採用しています（コードファーストではありません）
-- GraphQLのスキーマは、ルートディレクトリのschemaディレクトリに集約管理されています（clientもこのスキーマを参照します）
-- GraphQLのスキーマを更新した後に、NestJSが利用するtypescriptの型ファイルを生成するためには、serverディレクトリで`yarn generate-graphql-types`コマンドを利用するか、開発サーバーを起動すれば良いです。
+- This project adopts a schema-first development approach (not code-first)
+- GraphQL schemas are centrally managed in the schema directory at the root of the project (the client also references this schema)
+- After updating the GraphQL schema, to generate TypeScript type files for NestJS, run the `yarn generate-graphql-types` command in the server directory, or start the development server.
 
-## デバッグコンソール
+## Debug Console
 
-Rails consoleのようなインタラクティブなデバッグ環境を提供します。
+Provides an interactive debugging environment similar to Rails console.
 
-### 使い方
+### Usage
 
 ```sh
 yarn console
 ```
 
-### 使用例
+### Examples
 
-#### サービスの実行
+#### Executing Services
 
 ```javascript
 await cardService.findAll();
 ```
 
-#### SQL実行
+#### Executing SQL
 
-`sql()` ヘルパー関数を使って直接SQLを実行できます。
+You can execute SQL directly using the `sql()` helper function.
 
 ```javascript
-// SELECTクエリ
 await sql('SELECT * FROM users LIMIT 10');
-
-// パラメータ付きクエリ
 await sql('SELECT * FROM games WHERE id = ?', [1]);
-
-// UPDATEクエリ
 await sql('UPDATE games SET status = ? WHERE id = ?', ['finished', 1]);
 ```

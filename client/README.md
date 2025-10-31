@@ -1,10 +1,10 @@
-# soulmonsters-server
+# soulmonsters-client
 
-## environment
+## Environment
 
 - nvm: 0.40.2
 
-## setup
+## Setup
 
 ```sh
 git clone git@github.com:solt9029/soulmonsters.git
@@ -19,7 +19,7 @@ vi .env
 yarn dev
 ```
 
-## graphql
+## GraphQL
 
 ```sh
 npx graphql-codegen --config codegen.yml # generates src/graphql/generated/*
