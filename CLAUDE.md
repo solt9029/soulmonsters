@@ -1,11 +1,11 @@
 # 概要
 - 変数名やメソッド名から自明な内容はコードコメントとして残さないでください。
 - `.env`などの機密情報が書かれたファイルは絶対に読み込まないでください。
-- 大きい作業内容がある場合、分割してAIタスク実行したいです。適宜memory-bankディレクトリの中にmarkdownファイルを作成して、次のAIタスクが途中経過を把握できるようにしてください。
+- 大きい作業内容がある場合、分割してAIタスク実行したいです。適宜memory-bankディレクトリの中に設計や実装タスクをまとめたmarkdownファイルを作成して、次のAIタスクが途中経過を把握できるようにしてください。
 - 指定がない限りnpmではなくyarnを使用してください。
 - Specの実装をする時は、必ずSpecを実行して成功することを確認してください。
 - 実装作業を完了する前に、`yarn format`などのコードフォーマットを必ず実行してください。
-- コマンドを実行する時は、各ディレクトリ(client, server)にある`README.md`を確認したり、`package.json`を事前に確認してください。
+- コマンドを実行する時は、各ディレクトリ(client, server)にある`README.md`を確認したり、`package.json`を事前に確認してください。憶測でコマンドを実行しないでください。
 
 # Spec実装方針ガイドライン
 
@@ -16,25 +16,6 @@
 - ファイル名: `{関数名}.spec.ts`
 - 配置場所: テスト対象ファイルと同じディレクトリ
 - 例: `/server/src/game/actions/handlers/putSoul/savePutCountGameState.spec.ts`
-
-## 基本構造パターン
-
-### インポート構成
-```typescript
-import { GameEntity } from 'src/entities/game.entity';
-import { GameStateEntity } from 'src/entities/game.state.entity';
-import { StateType } from 'src/graphql';
-import { savePutCountGameState } from './savePutCountGameState';
-```
-
-### テストケース構成
-```typescript
-describe('関数名', () => {
-  it('should [期待される動作の説明]', () => {
-    // テスト実装
-  });
-});
-```
 
 ## テストケース設計方針
 
