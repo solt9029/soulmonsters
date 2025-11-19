@@ -1,6 +1,5 @@
 import { MIN_DECK_CARD_COUNT } from './../constants/rule';
 import { handleAction } from '../game/actions/handlers/index';
-import { validateActions } from '../game/actions/validators/index';
 import { GameActionDispatchInput } from './../graphql/index';
 import { GameEntity } from './../entities/game.entity';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
@@ -12,7 +11,6 @@ import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 import { grantActions } from 'src/game/actions/grantors/index';
 import { initializeGameCards } from 'src/game/initializers';
 import { reflectStates } from 'src/game/states/reflectors';
-import { AppDataSource } from '../dataSource';
 
 @Injectable()
 export class GameService {
@@ -40,9 +38,6 @@ export class GameService {
 
       // GameState 状態を GameCard に反映する（攻撃力の減少など）
       const statusReflectedGameEntity = reflectStates(grantedGameEntity, userId);
-
-      // そのアクションが可能かどうかをチェックする
-      validateActions(data, statusReflectedGameEntity, userId);
 
       // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
