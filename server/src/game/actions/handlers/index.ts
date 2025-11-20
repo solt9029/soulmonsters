@@ -35,9 +35,10 @@ export async function handleAction(
       return await handleStartEnergyTimeAction(manager, userId, gameEntity);
     case ActionType.START_PUT_TIME:
       return await handleStartPutTimeAction(manager, gameEntity);
-    case ActionType.PUT_SOUL:
+    case ActionType.PUT_SOUL: {
       const payload = validatePutSoulAction(data, gameEntity, userId);
       return await handlePutSoulAction(manager, userId, payload, gameEntity);
+    }
     case ActionType.START_SOMETHING_TIME:
       return await handleStartSomethingTimeAction(manager, gameEntity);
     case ActionType.SUMMON_MONSTER:
@@ -46,9 +47,10 @@ export async function handleAction(
       return await handleStartBattleTimeAction(manager, gameEntity);
     case ActionType.START_END_TIME:
       return await handleStartEndTimeAction(manager, gameEntity);
-    case ActionType.ATTACK:
-      validateAttackAction(data, gameEntity, userId);
-      return await handleAttackAction(manager, userId, data, gameEntity);
+    case ActionType.ATTACK: {
+      const payload = validateAttackAction(data, gameEntity, userId);
+      return await handleAttackAction(manager, userId, payload, gameEntity);
+    }
     case ActionType.FINISH_END_TIME:
       return await handleFinishEndTimeAction(manager, userId, gameEntity);
     case ActionType.EFFECT_RUTERUTE_DRAW:
