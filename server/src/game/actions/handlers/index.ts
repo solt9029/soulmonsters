@@ -36,8 +36,8 @@ export async function handleAction(
     case ActionType.START_PUT_TIME:
       return await handleStartPutTimeAction(manager, gameEntity);
     case ActionType.PUT_SOUL:
-      validatePutSoulAction(data, gameEntity, userId);
-      return await handlePutSoulAction(manager, userId, data, gameEntity);
+      const payload = validatePutSoulAction(data, gameEntity, userId);
+      return await handlePutSoulAction(manager, userId, payload, gameEntity);
     case ActionType.START_SOMETHING_TIME:
       return await handleStartSomethingTimeAction(manager, gameEntity);
     case ActionType.SUMMON_MONSTER:
