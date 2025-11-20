@@ -1,4 +1,5 @@
 import { GameEntity } from 'src/entities/game.entity';
+import { GameUserEntity } from 'src/entities/game.user.entity';
 import { StateType } from 'src/graphql';
 
 const isAttackCountState = (gameState: any, userId: string): boolean => {
@@ -13,17 +14,11 @@ const isEffectRuteruteDrawCountState = (gameState: any): boolean => {
   return gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT;
 };
 
-export const cleanGameStates = (gameEntity: GameEntity, userId: string): GameEntity => {
-  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId);
-
-  if (!gameUser) {
-    throw new Error('Game user not found');
-  }
-
+export const cleanGameStates = (gameEntity: GameEntity, gameUser: GameUserEntity): GameEntity => {
   gameEntity.gameStates = gameEntity.gameStates.filter(
     gameState =>
       !(
-        isAttackCountState(gameState, userId) ||
+        isAttackCountState(gameState, gameUser.userId) ||
         isPutSoulCountState(gameState, gameUser.id) ||
         isEffectRuteruteDrawCountState(gameState)
       ),

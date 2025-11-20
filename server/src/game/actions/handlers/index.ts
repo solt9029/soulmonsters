@@ -66,8 +66,8 @@ export async function handleAction(
       return await handleAttackAction(manager, userId, payload, gameEntity);
     }
     case ActionType.FINISH_END_TIME: {
-      validateFinishEndTimeAction(gameEntity, userId);
-      return await handleFinishEndTimeAction(manager, userId, gameEntity);
+      const payload = validateFinishEndTimeAction(gameEntity, userId);
+      return await handleFinishEndTimeAction(manager, payload, gameEntity);
     }
     case ActionType.EFFECT_RUTERUTE_DRAW: {
       return await handleEffectRuteruteDraw(manager, userId, data, gameEntity);

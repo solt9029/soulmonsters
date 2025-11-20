@@ -1,12 +1,7 @@
 import { GameEntity } from 'src/entities/game.entity';
+import { GameUserEntity } from 'src/entities/game.user.entity';
 
-export const switchToOpponentTurn = (gameEntity: GameEntity, userId: string): GameEntity => {
-  const opponentGameUser = gameEntity.gameUsers.find(value => value.userId !== userId);
-
-  if (!opponentGameUser) {
-    throw new Error('Opponent game user not found');
-  }
-
+export const switchToOpponentTurn = (gameEntity: GameEntity, opponentGameUser: GameUserEntity): GameEntity => {
   gameEntity.phase = null;
   gameEntity.turnUserId = opponentGameUser.userId;
 
