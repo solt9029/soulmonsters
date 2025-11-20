@@ -15,6 +15,7 @@ import { handleFinishEndTimeAction } from './finishEndTime';
 import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
 import { validateStartDrawTimeAction } from '../validators/startDrawTime';
 import { validateStartEnergyTimeAction } from '../validators/startEnergyTime';
+import { validateStartPutTimeAction } from '../validators/startPutTime';
 import { validatePutSoulAction } from '../validators/putSoul';
 import { validateAttackAction } from '../validators/attack';
 
@@ -34,6 +35,7 @@ export async function handleAction(
       validateStartEnergyTimeAction(gameEntity, userId);
       return await handleStartEnergyTimeAction(manager, userId, gameEntity);
     case ActionType.START_PUT_TIME:
+      validateStartPutTimeAction(gameEntity, userId);
       return await handleStartPutTimeAction(manager, gameEntity);
     case ActionType.PUT_SOUL: {
       const payload = validatePutSoulAction(data, gameEntity, userId);
