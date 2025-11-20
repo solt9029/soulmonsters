@@ -19,6 +19,7 @@ import { validateStartPutTimeAction } from '../validators/startPutTime';
 import { validatePutSoulAction } from '../validators/putSoul';
 import { validateAttackAction } from '../validators/attack';
 import { validateStartEndTimeAction } from '../validators/startEndTime';
+import { validateStartSomethingTimeAction } from '../validators/startSomethingTime';
 
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
 // 理想メモ: game, gameUserId, opponentGameUser, data, manager
@@ -46,6 +47,7 @@ export async function handleAction(
       return await handlePutSoulAction(manager, userId, payload, gameEntity);
     }
     case ActionType.START_SOMETHING_TIME: {
+      validateStartSomethingTimeAction(gameEntity, userId);
       return await handleStartSomethingTimeAction(manager, gameEntity);
     }
     case ActionType.SUMMON_MONSTER: {
