@@ -5,6 +5,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
+import { DeckPresenter } from '../presenters/deck.presenter';
 
 @Resolver()
 @UseGuards(AuthGuard)
@@ -13,11 +14,13 @@ export class DeckResolver {
 
   @Query()
   async decks(@User() user: auth.DecodedIdToken) {
-    return await this.deckService.findByUserId(user.uid);
+    const deckEntities = await this.deckService.findByUserId(user.uid);
+    return deckEntities.map(DeckPresenter.present);
   }
 
   @Mutation()
   async createDeck(@User() user: auth.DecodedIdToken, @Args('data') data: ValidatedDeckCreateInput) {
-    return await this.deckService.create(user.uid, data.name);
+    const deckEntity = await this.deckService.create(user.uid, data.name);
+    return DeckPresenter.present(deckEntity);
   }
 }

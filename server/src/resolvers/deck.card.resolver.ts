@@ -6,6 +6,7 @@ import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { UseGuards, HttpStatus, HttpException, BadRequestException, NotFoundException } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
+import { DeckCardPresenter } from '../presenters/deck.card.presenter';
 
 @Resolver()
 @UseGuards(AuthGuard)
@@ -27,7 +28,7 @@ export class DeckCardResolver {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
 
-    return deckCardEntities;
+    return deckCardEntities.map(DeckCardPresenter.present);
   }
 
   @Mutation()
@@ -43,7 +44,8 @@ export class DeckCardResolver {
       if (deckCardEntity.count >= DeckCardResolver.MAX_COUNT) {
         throw new BadRequestException('Max Count');
       }
-      return await this.deckCardService.updateCountById(deckCardEntity.id, deckCardEntity.count + 1);
+      const updatedEntity = await this.deckCardService.updateCountById(deckCardEntity.id, deckCardEntity.count + 1);
+      return DeckCardPresenter.present(updatedEntity);
     }
 
     const deckEntity = await this.deckService.findById(deckId);
@@ -53,7 +55,8 @@ export class DeckCardResolver {
     if (deckEntity.userId !== user.uid) {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
-    return await this.deckCardService.create(deckId, cardId);
+    const createdEntity = await this.deckCardService.create(deckId, cardId);
+    return DeckCardPresenter.present(createdEntity);
   }
 
   @Mutation()
@@ -71,9 +74,11 @@ export class DeckCardResolver {
     }
 
     if (deckCardEntity.count > DeckCardResolver.MIN_COUNT) {
-      return await this.deckCardService.updateCountById(deckCardEntity.id, deckCardEntity.count - 1);
+      const updatedEntity = await this.deckCardService.updateCountById(deckCardEntity.id, deckCardEntity.count - 1);
+      return DeckCardPresenter.present(updatedEntity);
     }
 
-    return await this.deckCardService.delete(deckCardEntity.id);
+    const deletedEntity = await this.deckCardService.delete(deckCardEntity.id);
+    return DeckCardPresenter.present(deletedEntity);
   }
 }
