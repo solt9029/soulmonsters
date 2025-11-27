@@ -138,7 +138,6 @@ export type GameUser = Node & {
   actionTypes: Array<ActionType>;
   deck: Deck;
   energy?: Maybe<Scalars['Int']['output']>;
-  game: Game;
   id: Scalars['Int']['output'];
   lastViewedAt?: Maybe<Scalars['DateTime']['output']>;
   lifePoint: Scalars['Int']['output'];

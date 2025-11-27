@@ -6,6 +6,5 @@ type GameUser implements Node {
   lifePoint: Int!
   lastViewedAt: DateTime
   deck: Deck!
-  game: Game!
   actionTypes: [ActionType!]!
 }

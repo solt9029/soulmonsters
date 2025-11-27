@@ -11,7 +11,6 @@ export class GameUserPresenter {
       lifePoint: entity.lifePoint,
       lastViewedAt: entity.lastViewedAt,
       deck: entity.deck,
-      game: entity.game,
       actionTypes: entity.actionTypes,
     };
   }

@@ -169,7 +169,6 @@ export interface GameUser extends Node {
     lifePoint: number;
     lastViewedAt?: Nullable<DateTime>;
     deck: Deck;
-    game: Game;
     actionTypes: ActionType[];
 }
 
