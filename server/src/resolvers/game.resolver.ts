@@ -8,6 +8,7 @@ import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { grantActions } from 'src/game/actions/grantors/index';
 import { reflectStates } from 'src/game/states/reflectors';
+import { GamePresenter } from '../presenters/game.presenter';
 
 @Resolver()
 @UseGuards(AuthGuard)
@@ -33,7 +34,7 @@ export class GameResolver {
     gameEntity = reflectStates(gameEntity, user.uid);
     gameEntity = grantActions(gameEntity, user.uid);
 
-    return gameEntity;
+    return GamePresenter.present(gameEntity);
   }
 
   @Query()
@@ -44,7 +45,13 @@ export class GameResolver {
 
   @Mutation()
   async startGame(@User() user: auth.DecodedIdToken, @Args('deckId') deckId: number) {
-    return await this.gameService.start(user.uid, deckId);
+    const gameEntity = await this.gameService.start(user.uid, deckId);
+
+    if (!gameEntity) {
+      throw new Error('Failed to start game');
+    }
+
+    return await this.game(user, gameEntity.id);
   }
 
   @Mutation()
