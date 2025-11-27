@@ -1,12 +1,11 @@
 import { DeckEntity } from './deck.entity';
 import { CardEntity } from './card.entity';
-import { DeckCard } from './../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { AppEntity } from './app.entity';
 
 @Entity({ name: 'deckCards' })
 @Unique(['card', 'deck'])
-export class DeckCardEntity extends AppEntity<DeckCardEntity> implements DeckCard {
+export class DeckCardEntity extends AppEntity<DeckCardEntity> {
   @PrimaryGeneratedColumn()
   id: number;
 

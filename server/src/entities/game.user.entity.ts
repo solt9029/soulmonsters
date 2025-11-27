@@ -4,12 +4,10 @@ import { DeckEntity } from './deck.entity';
 import { GameEntity } from './game.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-type EntityType = Omit<GameUser, 'user'>;
-
 @Entity({ name: 'gameUsers' })
 @Unique(['userId', 'game'])
 @Unique(['deck', 'game'])
-export class GameUserEntity extends AppEntity<GameUserEntity> implements EntityType {
+export class GameUserEntity extends AppEntity<GameUserEntity> {
   constructor(partial?: Partial<GameUserEntity>) {
     super(partial);
     this.actionTypes = this.actionTypes || [];

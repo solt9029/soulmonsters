@@ -1,7 +1,7 @@
 import { GameStateEntity } from './game.state.entity';
 import { GameEntity } from './game.entity';
 import { CardEntity } from './card.entity';
-import { Zone, BattlePosition, GameCard, ActionType, Kind, Type, Attribute } from './../graphql/index';
+import { Zone, BattlePosition, ActionType, Kind, Type, Attribute } from './../graphql/index';
 import {
   Entity,
   Column,
@@ -16,7 +16,7 @@ import { AppEntity } from './app.entity';
 
 @Entity({ name: 'gameCards' })
 @Unique(['position', 'zone', 'currentUserId'])
-export class GameCardEntity extends AppEntity<GameCardEntity> implements GameCard {
+export class GameCardEntity extends AppEntity<GameCardEntity> {
   constructor(partial?: Partial<GameCardEntity>) {
     super(partial);
     this.actionTypes = this.actionTypes || [];

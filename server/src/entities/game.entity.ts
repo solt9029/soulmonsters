@@ -1,16 +1,12 @@
 import { GameStateEntity } from './game.state.entity';
 import { GameCardEntity } from './game.card.entity';
 import { GameUserEntity } from './game.user.entity';
-import { Game, Phase } from './../graphql/index';
+import { Phase } from './../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { AppEntity } from './app.entity';
 
-type EntityType = Omit<Game, 'gameUsers'> & {
-  gameUsers: GameUserEntity[];
-};
-
 @Entity({ name: 'games' })
-export class GameEntity extends AppEntity<GameEntity> implements EntityType {
+export class GameEntity extends AppEntity<GameEntity> {
   @PrimaryGeneratedColumn()
   id: number;
 
