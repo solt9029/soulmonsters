@@ -20,6 +20,7 @@ import { validatePutSoulAction } from '../validators/putSoul';
 import { validateAttackAction } from '../validators/attack';
 import { validateStartEndTimeAction } from '../validators/startEndTime';
 import { validateStartSomethingTimeAction } from '../validators/startSomethingTime';
+import { validateStartBattleTimeAction } from '../validators/startBattleTime';
 import { validateFinishEndTimeAction } from '../validators/finishEndTime';
 
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
@@ -55,6 +56,7 @@ export async function handleAction(
       return await handleSummonMonsterAction(manager, userId, data, gameEntity);
     }
     case ActionType.START_BATTLE_TIME: {
+      validateStartBattleTimeAction(gameEntity, userId);
       return await handleStartBattleTimeAction(manager, gameEntity);
     }
     case ActionType.START_END_TIME: {
