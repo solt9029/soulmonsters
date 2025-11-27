@@ -6,15 +6,6 @@ import { StateType } from 'src/graphql';
 import { cleanGameStates } from './cleanGameStates';
 
 describe('cleanGameStates', () => {
-  it('should throw error when game user not found', () => {
-    const gameEntity = new GameEntity({
-      gameUsers: [],
-      gameStates: [],
-    });
-
-    expect(() => cleanGameStates(gameEntity, 'user1')).toThrow('Game user not found');
-  });
-
   it('should remove ATTACK_COUNT and PUT_SOUL_COUNT states for specified user', () => {
     const gameUser = new GameUserEntity({
       id: 1,
@@ -50,7 +41,7 @@ describe('cleanGameStates', () => {
       ],
     });
 
-    const result = cleanGameStates(gameEntity, 'user1');
+    const result = cleanGameStates(gameEntity, gameUser);
 
     expect(result.gameStates).toHaveLength(1);
     expect(result.gameStates[0]?.state.type).toBe(StateType.SELF_POWER_CHANGE);
@@ -90,7 +81,7 @@ describe('cleanGameStates', () => {
       ],
     });
 
-    const result = cleanGameStates(gameEntity, 'user1');
+    const result = cleanGameStates(gameEntity, gameUser1);
 
     expect(result.gameStates).toHaveLength(2);
   });

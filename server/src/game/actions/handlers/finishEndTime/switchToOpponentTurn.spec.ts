@@ -12,7 +12,7 @@ describe('switchToOpponentTurn', () => {
       gameUsers: [new GameUserEntity({ userId: 'user1' }), new GameUserEntity({ userId: 'user2' })],
     });
 
-    const result = switchToOpponentTurn(gameEntity, 'user1');
+    const result = switchToOpponentTurn(gameEntity, new GameUserEntity({ userId: 'user2' }));
 
     expect(result.turnUserId).toBe('user2');
     expect(result.phase).toBeNull();
