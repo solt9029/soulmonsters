@@ -11,7 +11,7 @@ import { GameUserRepository } from '../src/repositories/game.user.repository';
 import { GameCardRepository } from '../src/repositories/game.card.repository';
 import { GameStateRepository } from '../src/repositories/game.state.repository';
 import { DeckCardRepository } from '../src/repositories/deck.card.repository';
-import { DataSource } from 'typeorm';
+import { DataSource, IsNull } from 'typeorm';
 import * as repl from 'repl';
 import { CardEntity } from 'src/entities/card.entity';
 import { GameCardEntity } from 'src/entities/game.card.entity';
@@ -48,6 +48,21 @@ async function bootstrap() {
     return await dataSource.query(query, parameters);
   };
 
+  const deleteActiveGames = async () => {
+    const gameRepository = dataSource.getRepository(GameEntity);
+
+    const activeGames = await gameRepository.find({
+      where: { endedAt: IsNull() },
+      relations: ['gameUsers', 'gameCards', 'gameStates'],
+    });
+
+    for (const game of activeGames) {
+      const gameId = game.id;
+      await gameRepository.remove(game);
+      console.log(`Deleted Game ID: ${gameId}`);
+    }
+  };
+
   replServer.context.app = app;
   replServer.context.dataSource = dataSource;
 
@@ -70,6 +85,7 @@ async function bootstrap() {
 
   replServer.context.createDebugDeck = createDebugDeck;
   replServer.context.sql = sql;
+  replServer.context.deleteActiveGames = deleteActiveGames;
 
   // Handle REPL exit
   replServer.on('exit', async () => {
