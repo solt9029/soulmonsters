@@ -4,9 +4,7 @@ import { DeckEntity } from './deck.entity';
 import { GameEntity } from './game.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-type EntityType = Omit<GameUser, 'game'> & {
-  game: GameEntity;
-};
+type EntityType = Omit<GameUser, 'user'>;
 
 @Entity({ name: 'gameUsers' })
 @Unique(['userId', 'game'])
@@ -51,6 +49,5 @@ export class GameUserEntity extends AppEntity<GameUserEntity> implements EntityT
   )
   game: GameEntity;
 
-  user: User;
   actionTypes: ActionType[];
 }

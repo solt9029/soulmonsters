@@ -1,12 +1,13 @@
-import { GameUser } from '../graphql';
+import { GamePresenter } from './game.presenter';
+import { GameUser, User } from '../graphql';
 import { GameUserEntity } from '../entities/game.user.entity';
 
 export class GameUserPresenter {
-  static present(entity: GameUserEntity): GameUser {
+  static present(entity: GameUserEntity, user: User): GameUser {
     return {
       id: entity.id,
       userId: entity.userId,
-      user: entity.user,
+      user,
       energy: entity.energy,
       lifePoint: entity.lifePoint,
       lastViewedAt: entity.lastViewedAt,

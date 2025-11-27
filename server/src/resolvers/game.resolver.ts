@@ -23,18 +23,17 @@ export class GameResolver {
       throw new Error('Game not found');
     }
 
-    gameEntity.gameUsers = await Promise.all(
+    const users = await Promise.all(
       gameEntity.gameUsers.map(async gameUser => {
         const { uid, displayName, photoURL } = await this.userService.findById(gameUser.userId);
-        gameUser.user = { id: uid, displayName, photoURL };
-        return gameUser;
+        return { id: uid, displayName, photoURL };
       }),
     );
 
     gameEntity = reflectStates(gameEntity, user.uid);
     gameEntity = grantActions(gameEntity, user.uid);
 
-    return GamePresenter.present(gameEntity);
+    return GamePresenter.present(gameEntity, users);
   }
 
   @Query()
