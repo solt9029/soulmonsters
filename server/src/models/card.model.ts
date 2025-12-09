@@ -1,6 +1,3 @@
-import { DeckCardEntity } from '../entities/deck.card.entity';
-import { GameCardEntity } from '../entities/game.card.entity';
-
 enum Kind {
   MONSTER = 'MONSTER',
   CIRCLE_MONSTER = 'CIRCLE_MONSTER',
