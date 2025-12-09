@@ -1,15 +1,15 @@
 import { DeckCard } from '../graphql';
-import { DeckCardEntity } from '../entities/deck.card.entity';
+import { DeckCardModel } from '../models/deck.card.model';
 import { DeckPresenter } from './deck.presenter';
 import { CardPresenter } from './card.presenter';
 
 export class DeckCardPresenter {
-  static present(entity: DeckCardEntity): DeckCard {
+  static present(model: DeckCardModel): DeckCard {
     return {
-      id: entity.id,
-      count: entity.count,
-      deck: DeckPresenter.present(entity.deck),
-      card: CardPresenter.present(entity.card),
+      id: model.id,
+      count: model.count,
+      deck: DeckPresenter.present(model.deck),
+      card: CardPresenter.present(model.card),
     };
   }
 }

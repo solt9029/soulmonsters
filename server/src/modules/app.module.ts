@@ -22,6 +22,7 @@ import { AppDataSource } from 'src/dataSource';
 import { ApolloDriver } from '@nestjs/apollo';
 import { CardRepository } from 'src/repositories/card.repository';
 import { DeckRepository } from 'src/repositories/deck.repository';
+import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 
 @Module({
   imports: [
@@ -58,6 +59,10 @@ import { DeckRepository } from 'src/repositories/deck.repository';
     {
       provide: 'DeckRepository',
       useValue: DeckRepository,
+    },
+    {
+      provide: 'DeckCardRepository',
+      useValue: DeckCardRepository,
     },
     UserService,
     DeckService,
