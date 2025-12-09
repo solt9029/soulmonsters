@@ -1,9 +1,7 @@
+import { CardRepository } from './../src/repositories/card.repository';
 import { GameEntity } from 'src/entities/game.entity';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../src/modules/app.module';
-import { CardService } from '../src/services/card.service';
-import { DeckService } from '../src/services/deck.service';
-import { DeckCardService } from '../src/services/deck.card.service';
 import { GameService } from '../src/services/game.service';
 import { UserService } from '../src/services/user.service';
 import { GameRepository } from '../src/repositories/game.repository';
@@ -15,6 +13,7 @@ import { DataSource, IsNull } from 'typeorm';
 import * as repl from 'repl';
 import { CardEntity } from 'src/entities/card.entity';
 import { GameCardEntity } from 'src/entities/game.card.entity';
+import { DeckRepository } from 'src/repositories/deck.repository';
 
 async function bootstrap() {
   console.log('Starting Nest.js Console...');
@@ -26,19 +25,19 @@ async function bootstrap() {
 
   const app = await NestFactory.createApplicationContext(AppModule);
   const dataSource = app.get(DataSource);
-  const cardService = app.get(CardService);
-  const deckService = app.get(DeckService);
-  const deckCardService = app.get(DeckCardService);
+  const cardRepository: typeof CardRepository = app.get('CardRepository');
+  const deckRepository: typeof DeckRepository = app.get('DeckRepository');
+  const deckCardRepository: typeof DeckCardRepository = app.get('DeckCardRepository');
   const gameService = app.get(GameService);
   const userService = app.get(UserService);
 
   const createDebugDeck = async (userId: string) => {
     const deckName = `${new Date().toISOString()}`;
-    const deck = await deckService.create(userId, deckName);
+    const deck = await deckRepository.createDeck(userId, deckName);
 
     for (let cardId = 1; cardId <= 14; cardId++) {
-      const deckCard = await deckCardService.create(deck.id, cardId);
-      await deckCardService.updateCountById(deckCard.id, 3);
+      const deckCard = await deckCardRepository.createDeckCard(deck.id, cardId);
+      await deckCardRepository.updateCountById(deckCard.id, 3);
     }
 
     return deck;
@@ -66,9 +65,9 @@ async function bootstrap() {
   replServer.context.app = app;
   replServer.context.dataSource = dataSource;
 
-  replServer.context.cardService = cardService;
-  replServer.context.deckService = deckService;
-  replServer.context.deckCardService = deckCardService;
+  replServer.context.cardRepository = cardRepository;
+  replServer.context.deckRepository = deckRepository;
+  replServer.context.deckCardRepository = deckCardRepository;
   replServer.context.gameService = gameService;
   replServer.context.userService = userService;
 
