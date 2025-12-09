@@ -1,14 +1,14 @@
 import { Deck } from '../graphql';
-import { DeckEntity } from '../entities/deck.entity';
+import { DeckModel } from '../models/deck.model';
 
 export class DeckPresenter {
-  static present(entity: DeckEntity): Deck {
+  static present(model: DeckModel): Deck {
     return {
-      id: entity.id,
-      userId: entity.userId,
-      name: entity.name,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
+      id: model.id,
+      userId: model.userId,
+      name: model.name,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
     };
   }
 }

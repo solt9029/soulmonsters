@@ -14,13 +14,13 @@ export class DeckResolver {
 
   @Query()
   async decks(@User() user: auth.DecodedIdToken) {
-    const deckEntities = await this.deckService.findByUserId(user.uid);
-    return deckEntities.map(DeckPresenter.present);
+    const deckModels = await this.deckService.findByUserId(user.uid);
+    return deckModels.map(DeckPresenter.present);
   }
 
   @Mutation()
   async createDeck(@User() user: auth.DecodedIdToken, @Args('data') data: ValidatedDeckCreateInput) {
-    const deckEntity = await this.deckService.create(user.uid, data.name);
-    return DeckPresenter.present(deckEntity);
+    const deckModel = await this.deckService.create(user.uid, data.name);
+    return DeckPresenter.present(deckModel);
   }
 }

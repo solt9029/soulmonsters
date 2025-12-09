@@ -21,6 +21,7 @@ import { GameUserEntity } from 'src/entities/game.user.entity';
 import { AppDataSource } from 'src/dataSource';
 import { ApolloDriver } from '@nestjs/apollo';
 import { CardRepository } from 'src/repositories/card.repository';
+import { DeckRepository } from 'src/repositories/deck.repository';
 
 @Module({
   imports: [
@@ -53,6 +54,10 @@ import { CardRepository } from 'src/repositories/card.repository';
     {
       provide: 'CardRepository',
       useValue: CardRepository,
+    },
+    {
+      provide: 'DeckRepository',
+      useValue: DeckRepository,
     },
     UserService,
     DeckService,
