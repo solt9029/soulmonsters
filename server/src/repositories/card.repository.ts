@@ -7,18 +7,18 @@ export const CardRepository = AppDataSource.getRepository(CardEntity).extend({
     const cardEntities = await this.find();
 
     return cardEntities.map(entity => {
-      const model = new CardModel();
-      model.id = entity.id;
-      model.name = entity.name;
-      model.kind = entity.kind;
-      model.type = entity.type;
-      model.attribute = entity.attribute;
-      model.attack = entity.attack;
-      model.defence = entity.defence;
-      model.cost = entity.cost;
-      model.detail = entity.detail;
-      model.picture = entity.picture;
-      return model;
+      return new CardModel({
+        id: entity.id,
+        name: entity.name,
+        kind: entity.kind,
+        type: entity.type,
+        attribute: entity.attribute,
+        attack: entity.attack,
+        defence: entity.defence,
+        cost: entity.cost,
+        detail: entity.detail,
+        picture: entity.picture,
+      });
     });
   },
 });

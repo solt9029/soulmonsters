@@ -23,6 +23,10 @@ enum Attribute {
 }
 
 export class CardModel {
+  constructor(partial?: Partial<CardModel>) {
+    Object.assign(this, partial);
+  }
+
   id: number;
   name: string;
   kind: Kind;
