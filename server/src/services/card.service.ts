@@ -1,16 +1,15 @@
-import { CardEntity } from './../entities/card.entity';
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Inject, Injectable } from '@nestjs/common';
+import { CardRepository } from 'src/repositories/card.repository';
+import { CardModel } from 'src/models/card.model';
 
 @Injectable()
 export class CardService {
   constructor(
-    @InjectRepository(CardEntity)
-    private readonly cardRepository: Repository<CardEntity>,
+    @Inject('CardRepository')
+    private readonly cardRepository: typeof CardRepository,
   ) {}
 
-  async findAll(): Promise<CardEntity[]> {
-    return await this.cardRepository.find();
+  async findAll(): Promise<CardModel[]> {
+    return await this.cardRepository.findAll();
   }
 }

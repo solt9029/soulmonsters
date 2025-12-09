@@ -20,6 +20,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameUserEntity } from 'src/entities/game.user.entity';
 import { AppDataSource } from 'src/dataSource';
 import { ApolloDriver } from '@nestjs/apollo';
+import { CardRepository } from 'src/repositories/card.repository';
 
 @Module({
   imports: [
@@ -49,6 +50,10 @@ import { ApolloDriver } from '@nestjs/apollo';
   ],
   controllers: [AppController],
   providers: [
+    {
+      provide: 'CardRepository',
+      useValue: CardRepository,
+    },
     UserService,
     DeckService,
     DeckResolver,
