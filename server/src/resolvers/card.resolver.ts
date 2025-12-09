@@ -8,7 +8,7 @@ export class CardResolver {
 
   @Query()
   async cards() {
-    const cardEntities = await this.cardService.findAll();
-    return cardEntities.map(CardPresenter.present);
+    const cardModels = await this.cardService.findAll();
+    return cardModels.map(CardPresenter.present);
   }
 }
