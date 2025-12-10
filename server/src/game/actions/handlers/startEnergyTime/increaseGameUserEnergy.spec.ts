@@ -1,5 +1,5 @@
 import { GameEntity } from 'src/entities/game.entity';
-import { GameUserEntity } from 'src/entities/game.user.entity';
+import { GameUserEntity } from 'src/entities/game-user.entity';
 import { increaseGameUserEnergy } from './increaseGameUserEnergy';
 
 describe('increaseGameUserEnergy', () => {

@@ -1,4 +1,4 @@
-import { DeckCreateInput } from './../graphql';
+import { DeckCreateInput } from '../graphql';
 import { IsNotEmpty, MaxLength } from 'class-validator';
 import { InputType, Field } from '@nestjs/graphql';
 

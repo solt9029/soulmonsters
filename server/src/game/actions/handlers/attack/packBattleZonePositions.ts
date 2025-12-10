@@ -1,5 +1,5 @@
 import { EntityManager } from 'typeorm';
-import { GameCardRepository } from '../../../../repositories/game.card.repository';
+import { GameCardRepository } from '../../../../repositories/game-card.repository';
 
 export const packBattleZonePositions = async (
   manager: EntityManager,

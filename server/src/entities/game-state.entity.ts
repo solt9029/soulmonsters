@@ -1,5 +1,5 @@
 import { GameEntity } from './game.entity';
-import { GameCardEntity } from './game.card.entity';
+import { GameCardEntity } from './game-card.entity';
 import { StateType } from '../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { AppEntity } from './app.entity';

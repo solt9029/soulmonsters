@@ -1,4 +1,4 @@
-import { GameUserEntity } from 'src/entities/game.user.entity';
+import { GameUserEntity } from 'src/entities/game-user.entity';
 import { GameEntity } from '../../../../entities/game.entity';
 
 export const dealDamageToPlayer = (gameEntity: GameEntity, userId: string, damage: number): GameEntity => {

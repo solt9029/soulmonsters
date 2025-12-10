@@ -1,7 +1,7 @@
 import { GameEntity } from '../../../entities/game.entity';
 import { Zone, StateType } from 'src/graphql';
 import { Phase, BattlePosition, ActionType } from '../../../graphql/index';
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 
 export function grantAttackAction(gameEntity: GameEntity, userId: string) {
   if (gameEntity.phase !== Phase.BATTLE || gameEntity.turnUserId !== userId) {

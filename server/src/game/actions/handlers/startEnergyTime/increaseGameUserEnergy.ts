@@ -1,5 +1,5 @@
 import { GameEntity } from 'src/entities/game.entity';
-import { GameUserEntity } from 'src/entities/game.user.entity';
+import { GameUserEntity } from 'src/entities/game-user.entity';
 
 const calcNewEnergy = (gameEntity: GameEntity, userId: string): number => {
   const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;

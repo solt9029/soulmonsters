@@ -1,7 +1,7 @@
 import { Zone } from 'src/graphql';
 import { Phase, Kind, ActionType } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 
 export function grantSummonMonsterAction(gameEntity: GameEntity, userId: string) {
   if (gameEntity.phase !== Phase.SOMETHING || gameEntity.turnUserId !== userId) {

@@ -1,5 +1,5 @@
-import { GameUserEntity } from './game.user.entity';
-import { DeckCardEntity } from './deck.card.entity';
+import { GameUserEntity } from './game-user.entity';
+import { DeckCardEntity } from './deck-card.entity';
 import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
 import { AppEntity } from './app.entity';
 

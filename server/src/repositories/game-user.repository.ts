@@ -1,5 +1,5 @@
 import { AppDataSource } from '../dataSource';
-import { GameUserEntity } from '../entities/game.user.entity';
+import { GameUserEntity } from '../entities/game-user.entity';
 
 export const GameUserRepository = AppDataSource.getRepository(GameUserEntity).extend({
   async findWaitingGameId(): Promise<number | undefined> {

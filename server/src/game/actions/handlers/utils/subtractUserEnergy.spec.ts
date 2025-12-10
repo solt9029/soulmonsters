@@ -1,5 +1,5 @@
 import { GameEntity } from '../../../../entities/game.entity';
-import { GameUserEntity } from '../../../../entities/game.user.entity';
+import { GameUserEntity } from '../../../../entities/game-user.entity';
 import { subtractUserEnergy } from './subtractUserEnergy';
 
 describe('subtractUserEnergy', () => {

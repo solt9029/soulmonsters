@@ -1,7 +1,7 @@
 import { CardEntity } from '../../../../entities/card.entity';
-import { GameCardEntity } from '../../../../entities/game.card.entity';
+import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameEntity } from '../../../../entities/game.entity';
-import { GameUserEntity } from '../../../../entities/game.user.entity';
+import { GameUserEntity } from '../../../../entities/game-user.entity';
 import { Zone } from '../../../../graphql';
 import { directAttack } from './directAttack';
 

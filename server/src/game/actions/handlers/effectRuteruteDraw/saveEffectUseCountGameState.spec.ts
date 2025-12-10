@@ -1,7 +1,7 @@
 import { GameEntity } from 'src/entities/game.entity';
-import { GameStateEntity } from 'src/entities/game.state.entity';
-import { GameCardEntity } from 'src/entities/game.card.entity';
-import { GameUserEntity } from 'src/entities/game.user.entity';
+import { GameStateEntity } from 'src/entities/game-state.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameUserEntity } from 'src/entities/game-user.entity';
 import { CardEntity } from 'src/entities/card.entity';
 import { StateType, Zone } from 'src/graphql';
 import { saveEffectUseCountGameState } from './saveEffectUseCountGameState';

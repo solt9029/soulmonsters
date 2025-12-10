@@ -1,6 +1,6 @@
 import { GameEntity } from '../../../entities/game.entity';
 import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
-import { GameCardEntity } from '../../../entities/game.card.entity';
+import { GameCardEntity } from '../../../entities/game-card.entity';
 
 export function grantEffectRuteRuteDrawAction(gameEntity: GameEntity, userId: string) {
   if (gameEntity.phase !== Phase.SOMETHING || gameEntity.turnUserId !== userId) {

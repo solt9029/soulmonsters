@@ -1,5 +1,5 @@
 import { GameUser, User } from '../graphql';
-import { GameUserEntity } from '../entities/game.user.entity';
+import { GameUserEntity } from '../entities/game-user.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

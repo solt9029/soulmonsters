@@ -2,7 +2,7 @@ import { GameEntity } from '../../../../entities/game.entity';
 import { destroyMonster } from './destroyMonster';
 import { increaseEnergyToPlayer } from './increaseEnergyToPlayer';
 import { dealDamageToPlayer } from './dealDamageToPlayer';
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 
 interface BattleResult {
   winner: 'attacker' | 'defender' | 'draw';

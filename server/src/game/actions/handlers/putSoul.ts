@@ -1,10 +1,10 @@
-import { GameCardRepository } from '../../../repositories/game.card.repository';
+import { GameCardRepository } from '../../../repositories/game-card.repository';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
 import { putSoulGameCard } from './putSoul/putSoulGameCard';
 import { savePutCountGameState } from './putSoul/savePutCountGameState';
-import { GameCardEntity } from 'src/entities/game.card.entity';
-import { GameUserEntity } from 'src/entities/game.user.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameUserEntity } from 'src/entities/game-user.entity';
 
 export type PutSoulActionPayload = {
   gameCard: GameCardEntity;

@@ -1,6 +1,6 @@
 import { GameEntity } from 'src/entities/game.entity';
-import { GameStateEntity } from 'src/entities/game.state.entity';
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameStateEntity } from 'src/entities/game-state.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 import { StateType, Zone } from 'src/graphql';
 
 const initEffectUseCountGameState = (gameEntity: GameEntity, gameCard: GameCardEntity): GameStateEntity => {

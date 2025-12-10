@@ -5,14 +5,14 @@ import { AppModule } from '../src/modules/app.module';
 import { GameService } from '../src/services/game.service';
 import { UserService } from '../src/services/user.service';
 import { GameRepository } from '../src/repositories/game.repository';
-import { GameUserRepository } from '../src/repositories/game.user.repository';
-import { GameCardRepository } from '../src/repositories/game.card.repository';
-import { GameStateRepository } from '../src/repositories/game.state.repository';
-import { DeckCardRepository } from '../src/repositories/deck.card.repository';
+import { GameUserRepository } from '../src/repositories/game-user.repository';
+import { GameCardRepository } from '../src/repositories/game-card.repository';
+import { GameStateRepository } from '../src/repositories/game-state.repository';
+import { DeckCardRepository } from '../src/repositories/deck-card.repository';
 import { DataSource, IsNull } from 'typeorm';
 import * as repl from 'repl';
 import { CardEntity } from 'src/entities/card.entity';
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 import { DeckRepository } from 'src/repositories/deck.repository';
 
 async function bootstrap() {

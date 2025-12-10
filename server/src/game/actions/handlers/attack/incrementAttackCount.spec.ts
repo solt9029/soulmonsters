@@ -1,6 +1,6 @@
-import { GameCardEntity } from '../../../../entities/game.card.entity';
+import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameEntity } from '../../../../entities/game.entity';
-import { GameStateEntity } from '../../../../entities/game.state.entity';
+import { GameStateEntity } from '../../../../entities/game-state.entity';
 import { Zone, StateType } from '../../../../graphql';
 import { incrementAttackCount } from './incrementAttackCount';
 

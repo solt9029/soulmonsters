@@ -1,4 +1,4 @@
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 import { GameEntity } from 'src/entities/game.entity';
 import { BattlePosition, Zone } from 'src/graphql';
 

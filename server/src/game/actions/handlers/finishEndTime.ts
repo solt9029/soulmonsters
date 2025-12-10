@@ -2,7 +2,7 @@ import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';
 import { switchToOpponentTurn } from './finishEndTime/switchToOpponentTurn';
 import { cleanGameStates } from './finishEndTime/cleanGameStates';
-import { GameUserEntity } from '../../../entities/game.user.entity';
+import { GameUserEntity } from '../../../entities/game-user.entity';
 
 export type FinishEndTimeActionPayload = {
   gameUser: GameUserEntity;

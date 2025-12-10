@@ -1,6 +1,6 @@
 import { CardEntity } from 'src/entities/card.entity';
-import { DeckCardEntity } from 'src/entities/deck.card.entity';
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { DeckCardEntity } from 'src/entities/deck-card.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 import { GameEntity } from 'src/entities/game.entity';
 import { Zone } from 'src/graphql';
 

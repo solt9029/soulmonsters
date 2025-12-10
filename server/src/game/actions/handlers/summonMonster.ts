@@ -1,4 +1,4 @@
-import { GameCardRepository } from '../../../repositories/game.card.repository';
+import { GameCardRepository } from '../../../repositories/game-card.repository';
 import { GameActionDispatchInput } from '../../../graphql/index';
 import { GameEntity } from '../../../entities/game.entity';
 import { EntityManager } from 'typeorm';

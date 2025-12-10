@@ -1,7 +1,7 @@
 import { Game, User } from '../graphql';
 import { GameEntity } from '../entities/game.entity';
-import { GameUserPresenter } from './game.user.presenter';
-import { GameCardPresenter } from './game.card.presenter';
+import { GameUserPresenter } from './game-user.presenter';
+import { GameCardPresenter } from './game-card.presenter';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

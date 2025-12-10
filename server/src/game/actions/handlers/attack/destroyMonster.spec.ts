@@ -1,4 +1,4 @@
-import { GameCardEntity } from '../../../../entities/game.card.entity';
+import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameEntity } from '../../../../entities/game.entity';
 import { Zone } from '../../../../graphql';
 import { destroyMonster } from './destroyMonster';

@@ -1,5 +1,5 @@
 import { GameEntity } from 'src/entities/game.entity';
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 import { Zone } from 'src/graphql';
 import { drawCardFromDeck } from './drawCardFromDeck';
 

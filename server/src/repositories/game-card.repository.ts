@@ -1,5 +1,5 @@
 import { AppDataSource } from '../dataSource';
-import { GameCardEntity } from '../entities/game.card.entity';
+import { GameCardEntity } from '../entities/game-card.entity';
 
 export const GameCardRepository = AppDataSource.getRepository(GameCardEntity).extend({
   // removedPosition以降を1つずつ詰める

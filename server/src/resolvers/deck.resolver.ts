@@ -1,4 +1,4 @@
-import { ValidatedDeckCreateInput } from 'src/inputs/validated.deck.create.input';
+import { ValidatedDeckCreateInput } from 'src/inputs/validated-deck-create.input';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UseGuards, Inject } from '@nestjs/common';

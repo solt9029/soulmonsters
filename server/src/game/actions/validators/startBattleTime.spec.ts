@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { GameEntity } from '../../../entities/game.entity';
-import { GameUserEntity } from '../../../entities/game.user.entity';
+import { GameUserEntity } from '../../../entities/game-user.entity';
 import { ActionType } from '../../../graphql/index';
 import { validateStartBattleTimeAction } from './startBattleTime';
 

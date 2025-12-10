@@ -5,7 +5,7 @@ import { UseGuards, HttpStatus, HttpException, BadRequestException, NotFoundExce
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { DeckCardPresenter } from 'src/presenters/deck-card.presenter';
-import { DeckCardRepository } from 'src/repositories/deck.card.repository';
+import { DeckCardRepository } from 'src/repositories/deck-card.repository';
 import { DeckRepository } from 'src/repositories/deck.repository';
 
 @Resolver()

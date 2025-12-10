@@ -1,5 +1,5 @@
 import { GameEntity } from '../../../../entities/game.entity';
-import { GameStateEntity } from '../../../../entities/game.state.entity';
+import { GameStateEntity } from '../../../../entities/game-state.entity';
 import { Zone, StateType } from '../../../../graphql';
 
 export const incrementAttackCount = (gameEntity: GameEntity, gameCardId: number): GameEntity => {

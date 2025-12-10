@@ -1,7 +1,7 @@
 import { GameEntity } from 'src/entities/game.entity';
-import { GameStateEntity } from 'src/entities/game.state.entity';
-import { GameUserEntity } from 'src/entities/game.user.entity';
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameStateEntity } from 'src/entities/game-state.entity';
+import { GameUserEntity } from 'src/entities/game-user.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 import { StateType } from 'src/graphql';
 import { cleanGameStates } from './cleanGameStates';
 

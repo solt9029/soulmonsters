@@ -1,7 +1,7 @@
-import { DeckCardEntity } from './deck.card.entity';
+import { DeckCardEntity } from './deck-card.entity';
 import { Kind, Type, Attribute } from './../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { GameCardEntity } from './game.card.entity';
+import { GameCardEntity } from './game-card.entity';
 import { AppEntity } from './app.entity';
 
 @Entity({ name: 'cards' })

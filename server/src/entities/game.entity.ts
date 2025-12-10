@@ -1,6 +1,6 @@
-import { GameStateEntity } from './game.state.entity';
-import { GameCardEntity } from './game.card.entity';
-import { GameUserEntity } from './game.user.entity';
+import { GameStateEntity } from './game-state.entity';
+import { GameCardEntity } from './game-card.entity';
+import { GameUserEntity } from './game-user.entity';
 import { Phase } from './../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { AppEntity } from './app.entity';

@@ -1,6 +1,6 @@
 import { AppDataSource } from '../dataSource';
-import { DeckCardEntity } from '../entities/deck.card.entity';
-import { DeckCardModel } from '../models/deck.card.model';
+import { DeckCardEntity } from '../entities/deck-card.entity';
+import { DeckCardModel } from '../models/deck-card.model';
 import { CardModel } from '../models/card.model';
 import { DeckModel } from '../models/deck.model';
 

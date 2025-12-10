@@ -1,5 +1,5 @@
 import { GameEntity } from 'src/entities/game.entity';
-import { GameStateEntity } from 'src/entities/game.state.entity';
+import { GameStateEntity } from 'src/entities/game-state.entity';
 import { StateType } from 'src/graphql';
 import { savePutCountGameState } from './savePutCountGameState';
 

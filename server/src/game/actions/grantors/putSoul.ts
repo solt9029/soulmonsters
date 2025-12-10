@@ -1,7 +1,7 @@
 import { GameEntity } from '../../../entities/game.entity';
 import { Zone, StateType } from 'src/graphql';
 import { Phase, ActionType } from '../../../graphql/index';
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 
 export function grantPutSoulAction(gameEntity: GameEntity, userId: string) {
   if (gameEntity.phase !== Phase.PUT || gameEntity.turnUserId !== userId) {

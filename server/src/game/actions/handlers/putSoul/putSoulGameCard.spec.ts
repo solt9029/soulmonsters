@@ -1,4 +1,4 @@
-import { GameCardEntity } from 'src/entities/game.card.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 import { Zone } from 'src/graphql';
 import { putSoulGameCard } from './putSoulGameCard';
 import { GameEntity } from 'src/entities/game.entity';

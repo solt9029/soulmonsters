@@ -1,5 +1,5 @@
 import { GameEntity } from 'src/entities/game.entity';
-import { GameUserEntity } from 'src/entities/game.user.entity';
+import { GameUserEntity } from 'src/entities/game-user.entity';
 import { StateType } from 'src/graphql';
 
 const isAttackCountState = (gameState: any, userId: string): boolean => {

@@ -1,4 +1,4 @@
-import { GameUser, ActionType, User } from './../graphql/index';
+import { GameUser, ActionType, User } from '../graphql/index';
 import { AppEntity } from './app.entity';
 import { DeckEntity } from './deck.entity';
 import { GameEntity } from './game.entity';

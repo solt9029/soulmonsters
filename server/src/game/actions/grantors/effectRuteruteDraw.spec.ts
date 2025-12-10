@@ -1,7 +1,7 @@
 import { GameEntity } from '../../../entities/game.entity';
-import { GameStateEntity } from '../../../entities/game.state.entity';
-import { GameCardEntity } from '../../../entities/game.card.entity';
-import { GameUserEntity } from '../../../entities/game.user.entity';
+import { GameStateEntity } from '../../../entities/game-state.entity';
+import { GameCardEntity } from '../../../entities/game-card.entity';
+import { GameUserEntity } from '../../../entities/game-user.entity';
 import { CardEntity } from '../../../entities/card.entity';
 import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
 import { grantEffectRuteRuteDrawAction } from './effectRuteruteDraw';

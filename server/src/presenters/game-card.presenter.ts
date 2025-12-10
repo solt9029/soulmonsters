@@ -1,5 +1,5 @@
 import { GameCard } from '../graphql';
-import { GameCardEntity } from '../entities/game.card.entity';
+import { GameCardEntity } from '../entities/game-card.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

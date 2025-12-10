@@ -4,8 +4,8 @@ import { directAttack } from './attack/directAttack';
 import { monsterBattle } from './attack/monsterBattle';
 import { incrementAttackCount } from './attack/incrementAttackCount';
 import { packBattleZonePositions } from './attack/packBattleZonePositions';
-import { GameCardEntity } from 'src/entities/game.card.entity';
-import { GameUserEntity } from 'src/entities/game.user.entity';
+import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameUserEntity } from 'src/entities/game-user.entity';
 
 export type AttackActionPayload =
   | {
