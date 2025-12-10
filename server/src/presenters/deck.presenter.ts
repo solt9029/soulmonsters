@@ -4,7 +4,7 @@ import { DeckModel } from '../models/deck.model';
 
 @Injectable()
 export class DeckPresenter {
-  static present(model: DeckModel): Deck {
+  present(model: DeckModel): Deck {
     return {
       id: model.id,
       userId: model.userId,

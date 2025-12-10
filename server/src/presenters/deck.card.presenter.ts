@@ -6,12 +6,14 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class DeckCardPresenter {
-  static present(model: DeckCardModel): DeckCard {
+  constructor(private readonly deckPresenter: DeckPresenter, private readonly cardPresenter: CardPresenter) {}
+
+  present(model: DeckCardModel): DeckCard {
     return {
       id: model.id,
       count: model.count,
-      deck: DeckPresenter.present(model.deck),
-      card: CardPresenter.present(model.card),
+      deck: this.deckPresenter.present(model.deck),
+      card: this.cardPresenter.present(model.card),
     };
   }
 }

@@ -8,11 +8,12 @@ export class CardResolver {
   constructor(
     @Inject('CardRepository')
     private readonly cardRepository: typeof CardRepository,
+    private readonly cardPresenter: CardPresenter,
   ) {}
 
   @Query()
   async cards() {
     const cardModels = await this.cardRepository.findAll();
-    return cardModels.map(CardPresenter.present);
+    return cardModels.map(cardModel => this.cardPresenter.present(cardModel));
   }
 }

@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GameUserPresenter {
-  static present(entity: GameUserEntity, user: User): GameUser {
+  present(entity: GameUserEntity, user: User): GameUser {
     return {
       id: entity.id,
       userId: entity.userId,

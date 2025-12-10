@@ -23,6 +23,7 @@ export class DeckCardResolver {
     private readonly deckCardRepository: typeof DeckCardRepository,
     @Inject('DeckRepository')
     private readonly deckRepository: typeof DeckRepository,
+    private readonly deckCardPresenter: DeckCardPresenter,
   ) {}
 
   @Query()
@@ -33,7 +34,7 @@ export class DeckCardResolver {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
 
-    return deckCardEntities.map(DeckCardPresenter.present);
+    return deckCardEntities.map(deckCardEntity => this.deckCardPresenter.present(deckCardEntity));
   }
 
   @Mutation()
@@ -50,7 +51,7 @@ export class DeckCardResolver {
         throw new BadRequestException('Max Count');
       }
       const updatedEntity = await this.deckCardRepository.updateCountById(deckCardEntity.id, deckCardEntity.count + 1);
-      return DeckCardPresenter.present(updatedEntity);
+      return this.deckCardPresenter.present(updatedEntity);
     }
 
     const deckEntity = await this.deckRepository.findById(deckId);
@@ -61,7 +62,7 @@ export class DeckCardResolver {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
     const createdEntity = await this.deckCardRepository.createDeckCard(deckId, cardId);
-    return DeckCardPresenter.present(createdEntity);
+    return this.deckCardPresenter.present(createdEntity);
   }
 
   @Mutation()
@@ -80,10 +81,10 @@ export class DeckCardResolver {
 
     if (deckCardEntity.count > DeckCardResolver.MIN_COUNT) {
       const updatedEntity = await this.deckCardRepository.updateCountById(deckCardEntity.id, deckCardEntity.count - 1);
-      return DeckCardPresenter.present(updatedEntity);
+      return this.deckCardPresenter.present(updatedEntity);
     }
 
     const deletedEntity = await this.deckCardRepository.deleteDeckCard(deckCardEntity.id);
-    return DeckCardPresenter.present(deletedEntity);
+    return this.deckCardPresenter.present(deletedEntity);
   }
 }

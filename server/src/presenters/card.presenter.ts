@@ -4,7 +4,7 @@ import { CardModel } from '../models/card.model';
 
 @Injectable()
 export class CardPresenter {
-  static present(entity: CardModel): Card {
+  present(entity: CardModel): Card {
     return {
       id: entity.id,
       name: entity.name,

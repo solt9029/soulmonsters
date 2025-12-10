@@ -13,7 +13,11 @@ import { GamePresenter } from 'src/presenters/game.presenter';
 @Resolver()
 @UseGuards(AuthGuard)
 export class GameResolver {
-  constructor(private readonly gameService: GameService, private readonly userService: UserService) {}
+  constructor(
+    private readonly gameService: GameService,
+    private readonly userService: UserService,
+    private readonly gamePresenter: GamePresenter,
+  ) {}
 
   @Query()
   async game(@User() user: auth.DecodedIdToken, @Args('id') id: number) {
@@ -33,7 +37,7 @@ export class GameResolver {
     gameEntity = reflectStates(gameEntity, user.uid);
     gameEntity = grantActions(gameEntity, user.uid);
 
-    return GamePresenter.present(gameEntity, users);
+    return this.gamePresenter.present(gameEntity, users);
   }
 
   @Query()

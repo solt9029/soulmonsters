@@ -13,17 +13,18 @@ export class DeckResolver {
   constructor(
     @Inject('DeckRepository')
     private readonly deckRepository: typeof DeckRepository,
+    private readonly deckPresenter: DeckPresenter,
   ) {}
 
   @Query()
   async decks(@User() user: auth.DecodedIdToken) {
     const deckModels = await this.deckRepository.findByUserId(user.uid);
-    return deckModels.map(DeckPresenter.present);
+    return deckModels.map(deckModel => this.deckPresenter.present(deckModel));
   }
 
   @Mutation()
   async createDeck(@User() user: auth.DecodedIdToken, @Args('data') data: ValidatedDeckCreateInput) {
     const deckModel = await this.deckRepository.createDeck(user.uid, data.name);
-    return DeckPresenter.present(deckModel);
+    return this.deckPresenter.present(deckModel);
   }
 }

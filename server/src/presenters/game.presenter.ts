@@ -6,7 +6,12 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GamePresenter {
-  static present(entity: GameEntity, users: User[]): Game {
+  constructor(
+    private readonly gameUserPresenter: GameUserPresenter,
+    private readonly gameCardPresenter: GameCardPresenter,
+  ) {}
+
+  present(entity: GameEntity, users: User[]): Game {
     const gameUsers = entity.gameUsers.map(gameUser => {
       const user = users.find(u => u.id === gameUser.userId);
 
@@ -14,7 +19,7 @@ export class GamePresenter {
         throw new Error(`User not found for userId: ${gameUser.userId}`);
       }
 
-      return GameUserPresenter.present(gameUser, user);
+      return this.gameUserPresenter.present(gameUser, user);
     });
 
     return {
@@ -25,7 +30,7 @@ export class GamePresenter {
       startedAt: entity.startedAt,
       endedAt: entity.endedAt,
       gameUsers,
-      gameCards: entity.gameCards.map(GameCardPresenter.present),
+      gameCards: entity.gameCards.map(gameCard => this.gameCardPresenter.present(gameCard)),
     };
   }
 }
