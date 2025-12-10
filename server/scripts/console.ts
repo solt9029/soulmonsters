@@ -25,8 +25,8 @@ async function bootstrap() {
 
   const app = await NestFactory.createApplicationContext(AppModule);
   const dataSource = app.get(DataSource);
-  const cardRepository: typeof CardRepository = app.get('CardRepository');
-  const deckRepository: typeof DeckRepository = app.get('DeckRepository');
+  const cardRepository = app.get(CardRepository);
+  const deckRepository = app.get(DeckRepository);
   const deckCardRepository: typeof DeckCardRepository = app.get('DeckCardRepository');
   const gameService = app.get(GameService);
   const userService = app.get(UserService);
