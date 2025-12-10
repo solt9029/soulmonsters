@@ -2,7 +2,6 @@ import { CardModel } from 'src/models/card.model';
 import { AppDataSource } from '../dataSource';
 import { CardEntity } from '../entities/card.entity';
 
-// TODO: 普通にカスタムでRepositoryを自前で定義したい（extendではなくて）
 export const CardRepository = AppDataSource.getRepository(CardEntity).extend({
   async findAll(): Promise<CardModel[]> {
     const cardEntities = await this.find();
