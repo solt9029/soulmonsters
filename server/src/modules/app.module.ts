@@ -50,10 +50,7 @@ import { DeckCardRepository } from 'src/repositories/deck.card.repository';
   controllers: [AppController],
   providers: [
     DeckRepository,
-    {
-      provide: 'DeckCardRepository',
-      useValue: DeckCardRepository,
-    },
+    DeckCardRepository,
     CardRepository,
     UserService,
     DeckResolver,

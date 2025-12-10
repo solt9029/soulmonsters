@@ -1,7 +1,7 @@
 import { DeckCardUpdateInput } from './../graphql/index';
 import { AuthGuard } from './../guards/auth.guard';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { UseGuards, HttpStatus, HttpException, BadRequestException, NotFoundException, Inject } from '@nestjs/common';
+import { UseGuards, HttpStatus, HttpException, BadRequestException, NotFoundException } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { DeckCardPresenter } from '../presenters/deck.card.presenter';
@@ -19,8 +19,7 @@ export class DeckCardResolver {
   }
 
   constructor(
-    @Inject('DeckCardRepository')
-    private readonly deckCardRepository: typeof DeckCardRepository,
+    private readonly deckCardRepository: DeckCardRepository,
     private readonly deckRepository: DeckRepository,
   ) {}
 
