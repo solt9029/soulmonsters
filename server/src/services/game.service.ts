@@ -1,7 +1,7 @@
-import { MIN_DECK_CARD_COUNT } from './../constants/rule';
-import { handleAction } from '../game/actions/handlers/index';
-import { GameActionDispatchInput } from './../graphql/index';
-import { GameEntity } from './../entities/game.entity';
+import { MIN_DECK_CARD_COUNT } from 'src/constants/rule';
+import { handleAction } from 'src/game/actions/handlers/index';
+import { GameActionDispatchInput } from 'src/graphql/index';
+import { GameEntity } from 'src/entities/game.entity';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { GameCardRepository } from 'src/repositories/game.card.repository';

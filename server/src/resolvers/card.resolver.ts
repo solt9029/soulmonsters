@@ -1,7 +1,7 @@
 import { Resolver, Query } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
-import { CardPresenter } from '../presenters/card.presenter';
-import { CardRepository } from '../repositories/card.repository';
+import { CardPresenter } from 'src/presenters/card.presenter';
+import { CardRepository } from 'src/repositories/card.repository';
 
 @Resolver()
 export class CardResolver {

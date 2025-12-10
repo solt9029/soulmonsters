@@ -1,12 +1,12 @@
-import { DeckCardUpdateInput } from './../graphql/index';
-import { AuthGuard } from './../guards/auth.guard';
+import { DeckCardUpdateInput } from 'src/graphql/index';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { UseGuards, HttpStatus, HttpException, BadRequestException, NotFoundException, Inject } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
-import { DeckCardPresenter } from '../presenters/deck.card.presenter';
-import { DeckCardRepository } from '../repositories/deck.card.repository';
-import { DeckRepository } from '../repositories/deck.repository';
+import { DeckCardPresenter } from 'src/presenters/deck.card.presenter';
+import { DeckCardRepository } from 'src/repositories/deck.card.repository';
+import { DeckRepository } from 'src/repositories/deck.repository';
 
 @Resolver()
 @UseGuards(AuthGuard)

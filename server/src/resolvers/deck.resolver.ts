@@ -1,11 +1,11 @@
-import { ValidatedDeckCreateInput } from './../inputs/validated.deck.create.input';
-import { AuthGuard } from './../guards/auth.guard';
+import { ValidatedDeckCreateInput } from 'src/inputs/validated.deck.create.input';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UseGuards, Inject } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
-import { DeckPresenter } from '../presenters/deck.presenter';
-import { DeckRepository } from '../repositories/deck.repository';
+import { DeckPresenter } from 'src/presenters/deck.presenter';
+import { DeckRepository } from 'src/repositories/deck.repository';
 
 @Resolver()
 @UseGuards(AuthGuard)

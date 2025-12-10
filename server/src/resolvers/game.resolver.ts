@@ -1,14 +1,14 @@
-import { UserService } from './../services/user.service';
-import { GameActionDispatchInput } from './../graphql/index';
-import { GameService } from './../services/game.service';
-import { AuthGuard } from './../guards/auth.guard';
+import { UserService } from 'src/services/user.service';
+import { GameActionDispatchInput } from 'src/graphql/index';
+import { GameService } from 'src/services/game.service';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { grantActions } from 'src/game/actions/grantors/index';
 import { reflectStates } from 'src/game/states/reflectors';
-import { GamePresenter } from '../presenters/game.presenter';
+import { GamePresenter } from 'src/presenters/game.presenter';
 
 @Resolver()
 @UseGuards(AuthGuard)
