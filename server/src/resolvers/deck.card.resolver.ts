@@ -4,7 +4,7 @@ import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { UseGuards, HttpStatus, HttpException, BadRequestException, NotFoundException, Inject } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
-import { DeckCardPresenter } from 'src/presenters/deck.card.presenter';
+import { DeckCardPresenter } from 'src/presenters/deck-card.presenter';
 import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 import { DeckRepository } from 'src/repositories/deck.repository';
 

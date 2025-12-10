@@ -21,7 +21,7 @@ import { CardRepository } from 'src/repositories/card.repository';
 import { DeckRepository } from 'src/repositories/deck.repository';
 import { DeckCardRepository } from 'src/repositories/deck.card.repository';
 import { CardPresenter } from 'src/presenters/card.presenter';
-import { DeckCardPresenter } from 'src/presenters/deck.card.presenter';
+import { DeckCardPresenter } from 'src/presenters/deck-card.presenter';
 import { DeckPresenter } from 'src/presenters/deck.presenter';
 import { GameCardPresenter } from 'src/presenters/game.card.presenter';
 import { GamePresenter } from 'src/presenters/game.presenter';
