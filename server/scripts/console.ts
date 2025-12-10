@@ -27,7 +27,7 @@ async function bootstrap() {
   const dataSource = app.get(DataSource);
   const cardRepository = app.get(CardRepository);
   const deckRepository = app.get(DeckRepository);
-  const deckCardRepository: typeof DeckCardRepository = app.get('DeckCardRepository');
+  const deckCardRepository = app.get(DeckCardRepository);
   const gameService = app.get(GameService);
   const userService = app.get(UserService);
 
