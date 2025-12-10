@@ -1,7 +1,8 @@
-import { GamePresenter } from './game.presenter';
 import { GameUser, User } from '../graphql';
 import { GameUserEntity } from '../entities/game.user.entity';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class GameUserPresenter {
   static present(entity: GameUserEntity, user: User): GameUser {
     return {

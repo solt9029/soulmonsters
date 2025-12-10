@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { Card } from '../graphql';
 import { CardModel } from '../models/card.model';
 
+@Injectable()
 export class CardPresenter {
   static present(entity: CardModel): Card {
     return {
