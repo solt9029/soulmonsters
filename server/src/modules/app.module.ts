@@ -50,6 +50,10 @@ import { DeckCardRepository } from 'src/repositories/deck.card.repository';
   controllers: [AppController],
   providers: [
     {
+      provide: 'CardRepository',
+      useValue: CardRepository,
+    },
+    {
       provide: 'DeckRepository',
       useValue: DeckRepository,
     },
@@ -57,7 +61,6 @@ import { DeckCardRepository } from 'src/repositories/deck.card.repository';
       provide: 'DeckCardRepository',
       useValue: DeckCardRepository,
     },
-    CardRepository,
     UserService,
     DeckResolver,
     CardResolver,
