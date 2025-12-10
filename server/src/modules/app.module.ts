@@ -4,13 +4,10 @@ import { GameResolver } from './../resolvers/game.resolver';
 import { GameService } from './../services/game.service';
 import { GameEntity } from './../entities/game.entity';
 import { DeckCardResolver } from './../resolvers/deck.card.resolver';
-import { DeckCardService } from './../services/deck.card.service';
 import { DeckCardEntity } from './../entities/deck.card.entity';
 import { CardEntity } from './../entities/card.entity';
 import { CardResolver } from './../resolvers/card.resolver';
-import { CardService } from './../services/card.service';
 import { DeckResolver } from './../resolvers/deck.resolver';
-import { DeckService } from './../services/deck.service';
 import { DeckEntity } from './../entities/deck.entity';
 import { UserService } from './../services/user.service';
 import { Module } from '@nestjs/common';
@@ -65,11 +62,8 @@ import { DeckCardRepository } from 'src/repositories/deck.card.repository';
       useValue: DeckCardRepository,
     },
     UserService,
-    DeckService,
     DeckResolver,
-    CardService,
     CardResolver,
-    DeckCardService,
     DeckCardResolver,
     GameService,
     GameResolver,
