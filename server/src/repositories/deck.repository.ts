@@ -1,18 +1,10 @@
 import { DeckModel } from 'src/models/deck.model';
+import { AppDataSource } from '../dataSource';
 import { DeckEntity } from '../entities/deck.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
 
-@Injectable()
-export class DeckRepository {
-  constructor(
-    @InjectRepository(DeckEntity)
-    private readonly repository: Repository<DeckEntity>,
-  ) {}
-
+export const DeckRepository = AppDataSource.getRepository(DeckEntity).extend({
   async findById(id: number): Promise<DeckModel | null> {
-    const entity = await this.repository.findOne({ where: { id } });
+    const entity = await this.findOne({ where: { id } });
     if (!entity) {
       return null;
     }
@@ -24,10 +16,10 @@ export class DeckRepository {
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });
-  }
+  },
 
   async findByUserId(userId: string): Promise<DeckModel[]> {
-    const entities = await this.repository.find({ where: { userId } });
+    const entities = await this.find({ where: { userId } });
 
     return entities.map(entity => {
       return new DeckModel({
@@ -38,11 +30,11 @@ export class DeckRepository {
         updatedAt: entity.updatedAt,
       });
     });
-  }
+  },
 
   async createDeck(userId: string, name: string): Promise<DeckModel> {
-    const insertResult = await this.repository.insert({ userId, name });
-    const entity = await this.repository.findOne({
+    const insertResult = await this.insert({ userId, name });
+    const entity = await this.findOne({
       where: {
         id: insertResult.identifiers[0]?.id,
       },
@@ -58,5 +50,5 @@ export class DeckRepository {
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });
-  }
-}
+  },
+});

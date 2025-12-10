@@ -21,7 +21,8 @@ export class DeckCardResolver {
   constructor(
     @Inject('DeckCardRepository')
     private readonly deckCardRepository: typeof DeckCardRepository,
-    private readonly deckRepository: DeckRepository,
+    @Inject('DeckRepository')
+    private readonly deckRepository: typeof DeckRepository,
   ) {}
 
   @Query()
