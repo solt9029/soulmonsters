@@ -21,7 +21,7 @@ export async function handlePutSoulAction(
 
   putSoulGameCard(gameModel, userId, payload.gameCard.id);
   savePutCountGameState(gameModel, payload.gameUser.id);
-  await manager.save( gameModel);
+  await manager.save(gameModel);
 
   const gameCardRepository = manager.withRepository(GameCardRepository);
   await gameCardRepository.packHandPositions(gameModel.id, userId, originalPosition);

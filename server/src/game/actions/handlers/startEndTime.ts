@@ -4,5 +4,5 @@ import { GameModel } from 'src/models/game.model';
 
 export async function handleStartEndTimeAction(manager: EntityManager, gameModel: GameModel) {
   gameModel.phase = Phase.END;
-  await manager.save( gameModel);
+  await manager.save(gameModel);
 }

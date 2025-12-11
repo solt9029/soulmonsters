@@ -31,7 +31,7 @@ export const incrementAttackCount = (gameModel: GameModel, gameCardId: number): 
     );
   } else {
     const newGameState = new GameStateEntity({
-      game: gameEntity,
+      game: gameModel.toEntity(),
       gameCard,
       state: { type: StateType.ATTACK_COUNT, data: { value: 1 } },
     });

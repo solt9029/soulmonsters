@@ -17,5 +17,5 @@ export async function handleFinishEndTimeAction(
   switchToOpponentTurn(gameModel, payload.opponentGameUser);
   cleanGameStates(gameModel, payload.gameUser);
 
-  await manager.save( gameModel);
+  await manager.save(gameModel);
 }
