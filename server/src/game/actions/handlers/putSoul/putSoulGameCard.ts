@@ -1,25 +1,25 @@
 import { GameCardEntity } from 'src/entities/game-card.entity';
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
 
-const calcNewSoulGameCardPosition = (gameEntity: GameEntity, userId: string): number => {
-  const soulGameCards = gameEntity.gameCards
+const calcNewSoulGameCardPosition = (gameModel: GameModel, userId: string): number => {
+  const soulGameCards = gameModel.gameCards
     .filter(gameCard => gameCard.zone === Zone.SOUL && gameCard.currentUserId === userId)
     .sort((a, b) => b.position - a.position);
 
   return soulGameCards[0] ? soulGameCards[0].position + 1 : 0;
 };
 
-export const putSoulGameCard = (gameEntity: GameEntity, userId: string, gameCardId: number): GameEntity => {
-  gameEntity.gameCards = gameEntity.gameCards.map(gameCard =>
+export const putSoulGameCard = (gameModel: GameModel, userId: string, gameCardId: number): GameModel => {
+  gameModel.gameCards = gameModel.gameCards.map(gameCard =>
     gameCard.id === gameCardId
       ? new GameCardEntity({
           ...gameCard,
           zone: Zone.SOUL,
-          position: calcNewSoulGameCardPosition(gameEntity, userId),
+          position: calcNewSoulGameCardPosition(gameModel, userId),
         })
       : gameCard,
   );
 
-  return gameEntity;
+  return gameModel;
 };

@@ -1,5 +1,5 @@
 import { GameCardRepository } from '../../../repositories/game-card.repository';
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { EntityManager } from 'typeorm';
 import { putSoulGameCard } from './putSoul/putSoulGameCard';
 import { savePutCountGameState } from './putSoul/savePutCountGameState';
@@ -15,14 +15,14 @@ export async function handlePutSoulAction(
   manager: EntityManager,
   userId: string,
   payload: PutSoulActionPayload,
-  gameEntity: GameEntity,
+  gameModel: GameModel,
 ) {
   const originalPosition = payload.gameCard.position;
 
-  putSoulGameCard(gameEntity, userId, payload.gameCard.id);
-  savePutCountGameState(gameEntity, payload.gameUser.id);
-  await manager.save(GameEntity, gameEntity);
+  putSoulGameCard(gameModel, userId, payload.gameCard.id);
+  savePutCountGameState(gameModel, payload.gameUser.id);
+  await manager.save( gameModel);
 
   const gameCardRepository = manager.withRepository(GameCardRepository);
-  await gameCardRepository.packHandPositions(gameEntity.id, userId, originalPosition);
+  await gameCardRepository.packHandPositions(gameModel.id, userId, originalPosition);
 }

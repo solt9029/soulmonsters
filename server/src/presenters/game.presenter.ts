@@ -1,5 +1,5 @@
 import { Game, User } from '../graphql';
-import { GameEntity } from '../entities/game.entity';
+import { GameModel } from '../models/game.model';
 import { GameUserPresenter } from './game-user.presenter';
 import { GameCardPresenter } from './game-card.presenter';
 import { Injectable } from '@nestjs/common';
@@ -11,8 +11,8 @@ export class GamePresenter {
     private readonly gameCardPresenter: GameCardPresenter,
   ) {}
 
-  present(entity: GameEntity, users: User[]): Game {
-    const gameUsers = entity.gameUsers.map(gameUser => {
+  present(model: GameModel, users: User[]): Game {
+    const gameUsers = model.gameUsers.map(gameUser => {
       const user = users.find(u => u.id === gameUser.userId);
 
       if (!user) {
@@ -23,14 +23,14 @@ export class GamePresenter {
     });
 
     return {
-      id: entity.id,
-      phase: entity.phase,
-      turnUserId: entity.turnUserId,
-      winnerUserId: entity.winnerUserId,
-      startedAt: entity.startedAt,
-      endedAt: entity.endedAt,
+      id: model.id,
+      phase: model.phase,
+      turnUserId: model.turnUserId,
+      winnerUserId: model.winnerUserId,
+      startedAt: model.startedAt,
+      endedAt: model.endedAt,
       gameUsers,
-      gameCards: entity.gameCards.map(gameCard => this.gameCardPresenter.present(gameCard)),
+      gameCards: model.gameCards.map(gameCard => this.gameCardPresenter.present(gameCard)),
     };
   }
 }

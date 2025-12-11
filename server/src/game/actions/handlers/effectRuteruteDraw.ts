@@ -1,4 +1,4 @@
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { GameActionDispatchInput } from '../../../graphql/index';
 import { EntityManager } from 'typeorm';
 import { drawCardFromDeck } from './effectRuteruteDraw/drawCardFromDeck';
@@ -9,11 +9,11 @@ export async function handleEffectRuteruteDraw(
   manager: EntityManager,
   userId: string,
   data: GameActionDispatchInput,
-  gameEntity: GameEntity,
+  gameModel: GameModel,
 ) {
-  subtractUserEnergy(gameEntity, userId, 1);
-  drawCardFromDeck(gameEntity, userId);
-  saveEffectUseCountGameState(gameEntity, data.payload.gameCardId!);
+  subtractUserEnergy(gameModel, userId, 1);
+  drawCardFromDeck(gameModel, userId);
+  saveEffectUseCountGameState(gameModel, data.payload.gameCardId!);
 
-  await manager.save(GameEntity, gameEntity);
+  await manager.save( gameModel);
 }

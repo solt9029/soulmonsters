@@ -1,11 +1,11 @@
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { EntityManager } from 'typeorm';
 import { drawCardFromDeck } from './startDrawTime/drawCardFromDeck';
 import { updateGamePhaseAndTurn } from './startDrawTime/updateGamePhaseAndTurn';
 
-export async function handleStartDrawTimeAction(manager: EntityManager, userId: string, gameEntity: GameEntity) {
-  gameEntity = updateGamePhaseAndTurn(gameEntity);
-  gameEntity = drawCardFromDeck(gameEntity, userId);
+export async function handleStartDrawTimeAction(manager: EntityManager, userId: string, gameModel: GameModel) {
+  updateGamePhaseAndTurn(gameModel);
+  drawCardFromDeck(gameModel, userId);
 
-  await manager.save(GameEntity, gameEntity);
+  await manager.save(gameModel);
 }

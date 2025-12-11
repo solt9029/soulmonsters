@@ -1,14 +1,14 @@
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { destroyMonster } from './destroyMonster';
 import { dealDamageToPlayer } from './dealDamageToPlayer';
 
 export const handleAttackVsDefense = (
-  gameEntity: GameEntity,
+  gameModel: GameModel,
   attackerCardId: number,
   defenderCardId: number,
-): GameEntity => {
-  const attackerCard = gameEntity.gameCards.find(card => card.id === attackerCardId);
-  const defenderCard = gameEntity.gameCards.find(card => card.id === defenderCardId);
+): GameModel => {
+  const attackerCard = gameModel.gameCards.find(card => card.id === attackerCardId);
+  const defenderCard = gameModel.gameCards.find(card => card.id === defenderCardId);
 
   if (!attackerCard || !defenderCard) {
     throw new Error();
@@ -19,11 +19,11 @@ export const handleAttackVsDefense = (
   }
 
   if (attackerCard.attack > defenderCard.defence) {
-    destroyMonster(gameEntity, defenderCardId);
+    destroyMonster(gameModel, defenderCardId);
   } else if (attackerCard.attack < defenderCard.defence) {
     const damagePoint = defenderCard.defence - attackerCard.attack;
-    dealDamageToPlayer(gameEntity, attackerCard.currentUserId, damagePoint);
+    dealDamageToPlayer(gameModel, attackerCard.currentUserId, damagePoint);
   }
 
-  return gameEntity;
+  return gameModel;
 };

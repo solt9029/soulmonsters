@@ -1,12 +1,12 @@
 import { GameActionDispatchInput, Zone, StateType } from '../../../graphql/index';
 import { ActionType } from '../../../graphql/index';
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { BadRequestException } from '@nestjs/common';
 import { AttackActionPayload } from '../handlers/attack';
 
 export function validateAttackAction(
   data: GameActionDispatchInput,
-  game: GameEntity,
+  game: GameModel,
   userId: string,
 ): AttackActionPayload {
   const { targetGameCardIds, targetGameUserIds, gameCardId } = data.payload;

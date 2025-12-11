@@ -1,5 +1,5 @@
 import { GameCardEntity } from 'src/entities/game-card.entity';
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
 
 function isVisibleForAll(zone: Zone) {
@@ -41,13 +41,13 @@ function filterByUserId(gameCardEntity: GameCardEntity, userId: string): GameCar
 }
 
 // TODO: この算出ロジックは、多分Gameのactionをhandleする前にも実行しておくべき。
-export const reflectStates = (gameEntity: GameEntity, userId: string): GameEntity => {
-  gameEntity.gameCards = gameEntity.gameCards
+export const reflectStates = (gameModel: GameModel, userId: string): GameModel => {
+  gameModel.gameCards = gameModel.gameCards
     .map(gameCard => addInfo(gameCard))
     .map(gameCard => filterByUserId(gameCard, userId));
 
   // TODO: GameStateに応じてGameCardの情報を適宜書き換える
   //   例: 「このカードが存在する限り相手モンスターの攻撃力が100下がる」などがあれば、その情報をgameCardに反映する。
 
-  return gameEntity;
+  return gameModel;
 };

@@ -1,9 +1,9 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameUserEntity } from 'src/entities/game-user.entity';
 
-export const switchToOpponentTurn = (gameEntity: GameEntity, opponentGameUser: GameUserEntity): GameEntity => {
-  gameEntity.phase = null;
-  gameEntity.turnUserId = opponentGameUser.userId;
+export const switchToOpponentTurn = (gameModel: GameModel, opponentGameUser: GameUserEntity): GameModel => {
+  gameModel.phase = null;
+  gameModel.turnUserId = opponentGameUser.userId;
 
-  return gameEntity;
+  return gameModel;
 };
