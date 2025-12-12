@@ -1,5 +1,5 @@
 import { GameModel } from 'src/models/game.model';
-import { GameStateEntity } from 'src/entities/game-state.entity';
+import { GameStateModel } from 'src/models/game-state.model';
 import { GameUserModel } from 'src/models/game-user.model';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 import { StateType } from 'src/graphql';
@@ -19,20 +19,20 @@ describe('cleanGameStates', () => {
     const gameEntity = new GameModel({
       gameUsers: [gameUser],
       gameStates: [
-        new GameStateEntity({
+        new GameStateModel({
           state: {
             type: StateType.ATTACK_COUNT,
             data: { value: 1 },
           },
           gameCard: gameCard,
         }),
-        new GameStateEntity({
+        new GameStateModel({
           state: {
             type: StateType.PUT_SOUL_COUNT,
             data: { gameUserId: 1, value: 2 },
           },
         }),
-        new GameStateEntity({
+        new GameStateModel({
           state: {
             type: StateType.SELF_POWER_CHANGE,
             data: { attack: 100, defence: 200 },
@@ -65,14 +65,14 @@ describe('cleanGameStates', () => {
     const gameEntity = new GameModel({
       gameUsers: [gameUser1, gameUser2],
       gameStates: [
-        new GameStateEntity({
+        new GameStateModel({
           state: {
             type: StateType.ATTACK_COUNT,
             data: { value: 1 },
           },
           gameCard: gameCard,
         }),
-        new GameStateEntity({
+        new GameStateModel({
           state: {
             type: StateType.PUT_SOUL_COUNT,
             data: { gameUserId: 2, value: 2 },

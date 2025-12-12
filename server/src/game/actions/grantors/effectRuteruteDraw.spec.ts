@@ -1,5 +1,5 @@
 import { GameModel } from '../../../models/game.model';
-import { GameStateEntity } from '../../../entities/game-state.entity';
+import { GameStateModel } from '../../../models/game-state.model';
 import { GameCardEntity } from '../../../entities/game-card.entity';
 import { GameUserModel } from '../../../models/game-user.model';
 import { CardEntity } from '../../../entities/card.entity';
@@ -49,7 +49,7 @@ describe('grantEffectRuteRuteDrawAction', () => {
     ruteruteCard.card = card;
     ruteruteCard.actionTypes = [];
 
-    const existingState = new GameStateEntity();
+    const existingState = new GameStateModel();
     existingState.gameCard = ruteruteCard;
     existingState.state = { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } };
 

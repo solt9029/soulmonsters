@@ -1,5 +1,5 @@
 import { GameModel } from 'src/models/game.model';
-import { GameStateEntity } from 'src/entities/game-state.entity';
+import { GameStateModel } from 'src/models/game-state.model';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 import { GameUserModel } from 'src/models/game-user.model';
 import { CardEntity } from 'src/entities/card.entity';
@@ -52,7 +52,7 @@ describe('saveEffectUseCountGameState', () => {
     ruteruteCard.zone = Zone.BATTLE;
     ruteruteCard.card = card;
 
-    const existingState = new GameStateEntity();
+    const existingState = new GameStateModel();
     existingState.gameCard = ruteruteCard;
     existingState.state = { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } };
 

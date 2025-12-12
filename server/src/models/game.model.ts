@@ -1,8 +1,8 @@
-import { GameStateEntity } from '../entities/game-state.entity';
 import { GameCardEntity } from '../entities/game-card.entity';
 import { GameEntity } from '../entities/game.entity';
 import { Phase } from '../graphql/index';
 import { GameUserModel } from './game-user.model';
+import { GameStateModel } from './game-state.model';
 
 export class GameModel {
   constructor(partial?: Partial<GameModel>) {
@@ -20,7 +20,7 @@ export class GameModel {
   updatedAt: Date;
   gameUsers: GameUserModel[] = [];
   gameCards: GameCardEntity[] = [];
-  gameStates: GameStateEntity[] = [];
+  gameStates: GameStateModel[] = [];
 
   // TODO: 一時的なメソッド。今後、GameEntityへの依存を完全に削除する際にこのメソッドも削除する
   toEntity(): GameEntity {
@@ -36,7 +36,7 @@ export class GameModel {
       updatedAt: this.updatedAt,
       gameUsers: this.gameUsers.map(model => model.toEntity()),
       gameCards: this.gameCards,
-      gameStates: this.gameStates,
+      gameStates: this.gameStates.map(model => model.toEntity()),
     });
   }
 }

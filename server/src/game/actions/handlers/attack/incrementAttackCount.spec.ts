@@ -1,6 +1,6 @@
 import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameModel } from '../../../../models/game.model';
-import { GameStateEntity } from '../../../../entities/game-state.entity';
+import { GameStateModel } from '../../../../models/game-state.model';
 import { Zone, StateType } from '../../../../graphql';
 import { incrementAttackCount } from './incrementAttackCount';
 
@@ -38,7 +38,7 @@ describe('incrementAttackCount', () => {
       id: 1,
       gameCards: [gameCard],
       gameStates: [
-        new GameStateEntity({
+        new GameStateModel({
           gameCard,
           state: {
             type: StateType.ATTACK_COUNT,

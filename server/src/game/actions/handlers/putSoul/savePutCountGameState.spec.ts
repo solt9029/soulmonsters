@@ -1,5 +1,5 @@
 import { GameModel } from 'src/models/game.model';
-import { GameStateEntity } from 'src/entities/game-state.entity';
+import { GameStateModel } from 'src/models/game-state.model';
 import { StateType } from 'src/graphql';
 import { savePutCountGameState } from './savePutCountGameState';
 
@@ -26,7 +26,7 @@ describe('savePutCountGameState', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameStates: [
-        new GameStateEntity({
+        new GameStateModel({
           state: {
             type: StateType.PUT_SOUL_COUNT,
             data: { gameUserId: 1, value: 2 },

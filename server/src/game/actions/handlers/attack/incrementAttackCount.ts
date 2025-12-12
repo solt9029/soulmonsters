@@ -1,5 +1,5 @@
 import { GameModel } from '../../../../models/game.model';
-import { GameStateEntity } from '../../../../entities/game-state.entity';
+import { GameStateModel } from '../../../../models/game-state.model';
 import { Zone, StateType } from '../../../../graphql';
 
 export const incrementAttackCount = (gameModel: GameModel, gameCardId: number): GameModel => {
@@ -20,7 +20,7 @@ export const incrementAttackCount = (gameModel: GameModel, gameCardId: number): 
   if (existingAttackCountStateIndex >= 0) {
     gameModel.gameStates = gameModel.gameStates.map(gameState =>
       gameState.state.type === StateType.ATTACK_COUNT && gameState.gameCard.id === gameCardId
-        ? new GameStateEntity({
+        ? new GameStateModel({
             ...gameState,
             state: {
               type: StateType.ATTACK_COUNT,
@@ -30,7 +30,7 @@ export const incrementAttackCount = (gameModel: GameModel, gameCardId: number): 
         : gameState,
     );
   } else {
-    const newGameState = new GameStateEntity({
+    const newGameState = new GameStateModel({
       game: gameModel.toEntity(),
       gameCard,
       state: { type: StateType.ATTACK_COUNT, data: { value: 1 } },

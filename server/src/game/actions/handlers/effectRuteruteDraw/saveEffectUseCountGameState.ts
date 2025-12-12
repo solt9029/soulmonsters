@@ -1,10 +1,10 @@
 import { GameModel } from 'src/models/game.model';
-import { GameStateEntity } from 'src/entities/game-state.entity';
+import { GameStateModel } from 'src/models/game-state.model';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 import { StateType } from 'src/graphql';
 
-const initEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardEntity): GameStateEntity => {
-  return new GameStateEntity({
+const initEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardEntity): GameStateModel => {
+  return new GameStateModel({
     game: gameModel.toEntity(),
     gameCard: gameCard,
     state: { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } },
@@ -21,7 +21,7 @@ export const saveEffectUseCountGameState = (gameModel: GameModel, gameCard: Game
   if (existsState) {
     gameModel.gameStates = gameModel.gameStates.map(gameState =>
       gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCard?.id === gameCard.id
-        ? new GameStateEntity({
+        ? new GameStateModel({
             ...gameState,
             state: {
               type: StateType.EFFECT_RUTERUTE_DRAW_COUNT,
