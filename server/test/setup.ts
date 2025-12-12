@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import { createConnection, getConnection, Connection } from 'typeorm';
+import { createConnection, Connection } from 'typeorm';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env.test') });
 

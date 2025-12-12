@@ -213,7 +213,7 @@ export class SeedCards1750237434357 implements MigrationInterface {
     `);
   }
 
-  public async down(queryRunner: QueryRunner): Promise<any> {
+  public async down(): Promise<any> {
     // do nothing
   }
 }
