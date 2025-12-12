@@ -1,19 +1,19 @@
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { Zone, StateType } from 'src/graphql';
 import { Phase, ActionType } from '../../../graphql/index';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 
-export function grantPutSoulAction(gameEntity: GameEntity, userId: string) {
-  if (gameEntity.phase !== Phase.PUT || gameEntity.turnUserId !== userId) {
+export function grantPutSoulAction(gameModel: GameModel, userId: string) {
+  if (gameModel.phase !== Phase.PUT || gameModel.turnUserId !== userId) {
     return;
   }
 
-  const yourGameUser = gameEntity.gameUsers.find(value => value.userId === userId);
+  const yourGameUser = gameModel.gameUsers.find(value => value.userId === userId);
   if (!yourGameUser) {
     return;
   }
 
-  const putSoulGameState = gameEntity.gameStates.find(
+  const putSoulGameState = gameModel.gameStates.find(
     gameState =>
       gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === yourGameUser.id,
   );
@@ -22,7 +22,7 @@ export function grantPutSoulAction(gameEntity: GameEntity, userId: string) {
     return;
   }
 
-  gameEntity.gameCards = gameEntity.gameCards.map(gameCard => {
+  gameModel.gameCards = gameModel.gameCards.map(gameCard => {
     const canPutSoul = gameCard && gameCard.zone === Zone.HAND && gameCard.currentUserId === userId;
 
     return canPutSoul

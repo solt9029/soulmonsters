@@ -1,11 +1,11 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameUserEntity } from 'src/entities/game-user.entity';
 import { Phase } from 'src/graphql';
 import { switchToOpponentTurn } from './switchToOpponentTurn';
 
 describe('switchToOpponentTurn', () => {
   it('should switch turn to opponent user and reset phase', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       phase: Phase.END,
       turnUserId: 'user1',

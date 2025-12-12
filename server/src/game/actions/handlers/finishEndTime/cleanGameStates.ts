@@ -1,4 +1,4 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameUserEntity } from 'src/entities/game-user.entity';
 import { StateType } from 'src/graphql';
 
@@ -14,8 +14,8 @@ const isEffectRuteruteDrawCountState = (gameState: any): boolean => {
   return gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT;
 };
 
-export const cleanGameStates = (gameEntity: GameEntity, gameUser: GameUserEntity): GameEntity => {
-  gameEntity.gameStates = gameEntity.gameStates.filter(
+export const cleanGameStates = (gameModel: GameModel, gameUser: GameUserEntity): GameModel => {
+  gameModel.gameStates = gameModel.gameStates.filter(
     gameState =>
       !(
         isAttackCountState(gameState, gameUser.userId) ||
@@ -24,5 +24,5 @@ export const cleanGameStates = (gameEntity: GameEntity, gameUser: GameUserEntity
       ),
   );
 
-  return gameEntity;
+  return gameModel;
 };

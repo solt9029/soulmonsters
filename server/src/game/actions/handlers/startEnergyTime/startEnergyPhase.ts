@@ -1,7 +1,7 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { Phase } from 'src/graphql';
 
-export const startEnergyPhase = (gameEntity: GameEntity): GameEntity => {
-  gameEntity.phase = Phase.ENERGY;
-  return gameEntity;
+export const startEnergyPhase = (gameModel: GameModel): GameModel => {
+  gameModel.phase = Phase.ENERGY;
+  return gameModel;
 };

@@ -1,8 +1,8 @@
 import { Phase } from '../../../graphql/index';
 import { EntityManager } from 'typeorm';
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 
-export async function handleStartPutTimeAction(manager: EntityManager, gameEntity: GameEntity) {
-  gameEntity.phase = Phase.PUT;
-  await manager.save(GameEntity, gameEntity);
+export async function handleStartPutTimeAction(manager: EntityManager, gameModel: GameModel) {
+  gameModel.phase = Phase.PUT;
+  await manager.save(gameModel.toEntity());
 }

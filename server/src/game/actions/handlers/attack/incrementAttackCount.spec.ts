@@ -1,5 +1,5 @@
 import { GameCardEntity } from '../../../../entities/game-card.entity';
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { GameStateEntity } from '../../../../entities/game-state.entity';
 import { Zone, StateType } from '../../../../graphql';
 import { incrementAttackCount } from './incrementAttackCount';
@@ -11,7 +11,7 @@ describe('incrementAttackCount', () => {
       zone: Zone.BATTLE,
     });
 
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameCards: [gameCard],
       gameStates: [],
@@ -34,7 +34,7 @@ describe('incrementAttackCount', () => {
       zone: Zone.BATTLE,
     });
 
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameCards: [gameCard],
       gameStates: [

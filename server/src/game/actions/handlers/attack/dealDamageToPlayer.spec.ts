@@ -1,10 +1,10 @@
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { GameUserEntity } from '../../../../entities/game-user.entity';
 import { dealDamageToPlayer } from './dealDamageToPlayer';
 
 describe('dealDamageToPlayer', () => {
   it('should deal damage to specified player', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
         new GameUserEntity({
@@ -26,7 +26,7 @@ describe('dealDamageToPlayer', () => {
   });
 
   it('should handle damage that reduces life to zero or below', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
         new GameUserEntity({

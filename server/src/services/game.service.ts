@@ -1,7 +1,7 @@
 import { MIN_DECK_CARD_COUNT } from 'src/constants/rule';
 import { handleAction } from 'src/game/actions/handlers/index';
 import { GameActionDispatchInput } from 'src/graphql/index';
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { GameCardRepository } from 'src/repositories/game-card.repository';
@@ -16,11 +16,11 @@ import { reflectStates } from 'src/game/states/reflectors';
 export class GameService {
   constructor(private dataSource: DataSource) {}
 
-  async findActiveGameByUserId(userId: string): Promise<GameEntity | null> {
+  async findActiveGameByUserId(userId: string): Promise<GameModel | null> {
     return await GameRepository.findActiveGameByUserId(userId);
   }
 
-  async findById(id: number): Promise<GameEntity | null> {
+  async findById(id: number): Promise<GameModel | null> {
     return await GameRepository.findByIdWithRelations(id);
   }
 

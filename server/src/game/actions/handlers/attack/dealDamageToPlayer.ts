@@ -1,10 +1,10 @@
 import { GameUserEntity } from 'src/entities/game-user.entity';
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 
-export const dealDamageToPlayer = (gameEntity: GameEntity, userId: string, damage: number): GameEntity => {
-  gameEntity.gameUsers = gameEntity.gameUsers.map(gameUser =>
+export const dealDamageToPlayer = (gameModel: GameModel, userId: string, damage: number): GameModel => {
+  gameModel.gameUsers = gameModel.gameUsers.map(gameUser =>
     gameUser.userId === userId ? new GameUserEntity({ ...gameUser, lifePoint: gameUser.lifePoint - damage }) : gameUser,
   );
 
-  return gameEntity;
+  return gameModel;
 };

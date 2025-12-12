@@ -1,12 +1,12 @@
 import { BadRequestException } from '@nestjs/common';
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { GameUserEntity } from '../../../entities/game-user.entity';
 import { ActionType } from '../../../graphql/index';
 import { validateStartBattleTimeAction } from './startBattleTime';
 
 describe('validateStartBattleTimeAction', () => {
   it('should not throw when user has START_BATTLE_TIME action type', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
         new GameUserEntity({
@@ -20,7 +20,7 @@ describe('validateStartBattleTimeAction', () => {
   });
 
   it('should throw BadRequestException when user does not have START_BATTLE_TIME action type', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
         new GameUserEntity({
@@ -34,7 +34,7 @@ describe('validateStartBattleTimeAction', () => {
   });
 
   it('should throw BadRequestException when user is not found', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [],
     });

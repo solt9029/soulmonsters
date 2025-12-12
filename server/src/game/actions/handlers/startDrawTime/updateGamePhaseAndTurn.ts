@@ -1,13 +1,13 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { Phase } from 'src/graphql';
 
-const calcNextGameTurnCount = (gameEntity: GameEntity): number => {
-  return gameEntity.turnCount + 1;
+const calcNextGameTurnCount = (gameModel: GameModel): number => {
+  return gameModel.turnCount + 1;
 };
 
-export const updateGamePhaseAndTurn = (gameEntity: GameEntity): GameEntity => {
-  gameEntity.phase = Phase.DRAW;
-  gameEntity.turnCount = calcNextGameTurnCount(gameEntity);
+export const updateGamePhaseAndTurn = (gameModel: GameModel): GameModel => {
+  gameModel.phase = Phase.DRAW;
+  gameModel.turnCount = calcNextGameTurnCount(gameModel);
 
-  return gameEntity;
+  return gameModel;
 };

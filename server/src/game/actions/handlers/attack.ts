@@ -1,4 +1,4 @@
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { EntityManager } from 'typeorm';
 import { directAttack } from './attack/directAttack';
 import { monsterBattle } from './attack/monsterBattle';
@@ -26,30 +26,30 @@ export async function handleAttackAction(
   manager: EntityManager,
   userId: string,
   payload: AttackActionPayload,
-  gameEntity: GameEntity,
+  gameModel: GameModel,
 ) {
   if (payload.type === 'DIRECT_ATTACK') {
-    directAttack(gameEntity, payload.attackerCard.id, payload.opponentGameUser.userId);
-    incrementAttackCount(gameEntity, payload.attackerCard.id);
-    await manager.save(GameEntity, gameEntity);
+    directAttack(gameModel, payload.attackerCard.id, payload.opponentGameUser.userId);
+    incrementAttackCount(gameModel, payload.attackerCard.id);
+    await manager.save(gameModel.toEntity());
     return;
   }
 
   const originalGameCardPosition = payload.attackerCard.position;
   const originalTargetGameCardPosition = payload.targetCard.position;
 
-  monsterBattle(gameEntity, payload.attackerCard.id, payload.targetCard.id);
-  incrementAttackCount(gameEntity, payload.attackerCard.id);
-  await manager.save(GameEntity, gameEntity);
+  monsterBattle(gameModel, payload.attackerCard.id, payload.targetCard.id);
+  incrementAttackCount(gameModel, payload.attackerCard.id);
+  await manager.save(gameModel.toEntity());
 
-  const updatedGameCardZone = gameEntity.gameCards.find(card => card.id === payload.attackerCard.id)?.zone;
-  const updatedTargetGameCardZone = gameEntity.gameCards.find(card => card.id === payload.targetCard.id)?.zone;
+  const updatedGameCardZone = gameModel.gameCards.find(card => card.id === payload.attackerCard.id)?.zone;
+  const updatedTargetGameCardZone = gameModel.gameCards.find(card => card.id === payload.targetCard.id)?.zone;
 
   if (updatedGameCardZone !== 'BATTLE' && originalGameCardPosition) {
-    await packBattleZonePositions(manager, gameEntity.id, userId, originalGameCardPosition);
+    await packBattleZonePositions(manager, gameModel.id, userId, originalGameCardPosition);
   }
 
   if (updatedTargetGameCardZone !== 'BATTLE' && originalTargetGameCardPosition) {
-    await packBattleZonePositions(manager, gameEntity.id, payload.opponentUserId, originalTargetGameCardPosition);
+    await packBattleZonePositions(manager, gameModel.id, payload.opponentUserId, originalTargetGameCardPosition);
   }
 }

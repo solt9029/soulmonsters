@@ -1,11 +1,11 @@
 import { GameCardEntity } from 'src/entities/game-card.entity';
 import { Zone } from 'src/graphql';
 import { putSoulGameCard } from './putSoulGameCard';
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 
 describe('putSoulGameCard', () => {
   it('should move a game card to soul zone with correct position', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameCards: [
         new GameCardEntity({

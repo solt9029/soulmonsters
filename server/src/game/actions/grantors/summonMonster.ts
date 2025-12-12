@@ -1,14 +1,14 @@
 import { Zone } from 'src/graphql';
 import { Phase, Kind, ActionType } from '../../../graphql/index';
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 
-export function grantSummonMonsterAction(gameEntity: GameEntity, userId: string) {
-  if (gameEntity.phase !== Phase.SOMETHING || gameEntity.turnUserId !== userId) {
+export function grantSummonMonsterAction(gameModel: GameModel, userId: string) {
+  if (gameModel.phase !== Phase.SOMETHING || gameModel.turnUserId !== userId) {
     return;
   }
 
-  gameEntity.gameCards = gameEntity.gameCards.map(gameCard => {
+  gameModel.gameCards = gameModel.gameCards.map(gameCard => {
     const canSummon =
       gameCard && gameCard.zone === Zone.HAND && gameCard.currentUserId === userId && gameCard.kind === Kind.MONSTER;
 

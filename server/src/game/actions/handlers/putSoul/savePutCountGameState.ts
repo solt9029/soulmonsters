@@ -1,21 +1,21 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameStateEntity } from 'src/entities/game-state.entity';
 import { StateType } from 'src/graphql';
 
-const initPutSoulCountGameState = (gameEntity: GameEntity, gameUserId: number): GameStateEntity => {
+const initPutSoulCountGameState = (gameModel: GameModel, gameUserId: number): GameStateEntity => {
   return new GameStateEntity({
-    game: gameEntity,
+    game: gameModel.toEntity(),
     state: { type: StateType.PUT_SOUL_COUNT, data: { value: 1, gameUserId } },
   });
 };
 
-export const savePutCountGameState = (gameEntity: GameEntity, gameUserId: number): GameEntity => {
-  const index = gameEntity.gameStates.findIndex(
+export const savePutCountGameState = (gameModel: GameModel, gameUserId: number): GameModel => {
+  const index = gameModel.gameStates.findIndex(
     gameState => gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId,
   );
 
   if (index >= 0) {
-    gameEntity.gameStates = gameEntity.gameStates.map(gameState =>
+    gameModel.gameStates = gameModel.gameStates.map(gameState =>
       gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId
         ? new GameStateEntity({
             ...gameState,
@@ -27,9 +27,9 @@ export const savePutCountGameState = (gameEntity: GameEntity, gameUserId: number
         : gameState,
     );
 
-    return gameEntity;
+    return gameModel;
   }
 
-  gameEntity.gameStates.push(initPutSoulCountGameState(gameEntity, gameUserId));
-  return gameEntity;
+  gameModel.gameStates.push(initPutSoulCountGameState(gameModel, gameUserId));
+  return gameModel;
 };

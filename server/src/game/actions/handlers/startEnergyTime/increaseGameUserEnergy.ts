@@ -1,17 +1,17 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameUserEntity } from 'src/entities/game-user.entity';
 
-const calcNewEnergy = (gameEntity: GameEntity, userId: string): number => {
-  const gameUser = gameEntity.gameUsers.find(value => value.userId === userId)!;
+const calcNewEnergy = (gameModel: GameModel, userId: string): number => {
+  const gameUser = gameModel.gameUsers.find(value => value.userId === userId)!;
   return Math.min(gameUser.energy + 2, 8);
 };
 
-export const increaseGameUserEnergy = (gameEntity: GameEntity, userId: string): GameEntity => {
-  const newEnergy = calcNewEnergy(gameEntity, userId);
+export const increaseGameUserEnergy = (gameModel: GameModel, userId: string): GameModel => {
+  const newEnergy = calcNewEnergy(gameModel, userId);
 
-  gameEntity.gameUsers = gameEntity.gameUsers.map(gameUser =>
+  gameModel.gameUsers = gameModel.gameUsers.map(gameUser =>
     gameUser.userId === userId ? new GameUserEntity({ ...gameUser, energy: newEnergy }) : gameUser,
   );
 
-  return gameEntity;
+  return gameModel;
 };

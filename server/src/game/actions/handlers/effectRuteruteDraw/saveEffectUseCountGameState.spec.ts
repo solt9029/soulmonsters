@@ -1,4 +1,4 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameStateEntity } from 'src/entities/game-state.entity';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 import { GameUserEntity } from 'src/entities/game-user.entity';
@@ -21,7 +21,7 @@ describe('saveEffectUseCountGameState', () => {
     ruteruteCard.zone = Zone.BATTLE;
     ruteruteCard.card = card;
 
-    const gameEntity = new GameEntity();
+    const gameEntity = new GameModel();
     gameEntity.gameUsers = [gameUser];
     gameEntity.gameCards = [ruteruteCard];
     gameEntity.gameStates = [];
@@ -56,7 +56,7 @@ describe('saveEffectUseCountGameState', () => {
     existingState.gameCard = ruteruteCard;
     existingState.state = { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } };
 
-    const gameEntity = new GameEntity();
+    const gameEntity = new GameModel();
     gameEntity.gameUsers = [gameUser];
     gameEntity.gameCards = [ruteruteCard];
     gameEntity.gameStates = [existingState];

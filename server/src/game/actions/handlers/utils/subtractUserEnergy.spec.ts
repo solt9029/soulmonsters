@@ -1,10 +1,10 @@
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { GameUserEntity } from '../../../../entities/game-user.entity';
 import { subtractUserEnergy } from './subtractUserEnergy';
 
 describe('subtractUserEnergy', () => {
   it('should subtract energy from specified user', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
         new GameUserEntity({

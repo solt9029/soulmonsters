@@ -1,24 +1,24 @@
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { dealDamageToPlayer } from './dealDamageToPlayer';
 import { drawCardFromDeck } from '../startDrawTime/drawCardFromDeck';
 
-export const directAttack = (gameEntity: GameEntity, attackerCardId: number, opponentUserId: string): GameEntity => {
-  const attackerCard = gameEntity.gameCards.find(card => card.id === attackerCardId);
+export const directAttack = (gameModel: GameModel, attackerCardId: number, opponentUserId: string): GameModel => {
+  const attackerCard = gameModel.gameCards.find(card => card.id === attackerCardId);
 
   if (!attackerCard?.attack) {
     throw new Error();
   }
 
-  dealDamageToPlayer(gameEntity, opponentUserId, attackerCard.attack);
+  dealDamageToPlayer(gameModel, opponentUserId, attackerCard.attack);
 
   // カード固有の効果処理（カードID 11の冷徹な鳥の2枚ドロー）
   if (attackerCard.card.id === 11) {
     const attackerUserId = attackerCard.currentUserId;
-    drawCardFromDeck(gameEntity, attackerUserId);
-    drawCardFromDeck(gameEntity, attackerUserId);
+    drawCardFromDeck(gameModel, attackerUserId);
+    drawCardFromDeck(gameModel, attackerUserId);
   }
 
   // TODO: タキビーの直接攻撃の場合、1000ポイントダメージを追加で与える
 
-  return gameEntity;
+  return gameModel;
 };

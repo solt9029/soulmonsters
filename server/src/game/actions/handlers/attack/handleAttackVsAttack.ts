@@ -1,4 +1,4 @@
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { destroyMonster } from './destroyMonster';
 import { increaseEnergyToPlayer } from './increaseEnergyToPlayer';
 import { dealDamageToPlayer } from './dealDamageToPlayer';
@@ -45,12 +45,12 @@ const determineBattleOutcome = (attackerCard: GameCardEntity, defenderCard: Game
 };
 
 export const handleAttackVsAttack = (
-  gameEntity: GameEntity,
+  gameModel: GameModel,
   attackerCardId: number,
   defenderCardId: number,
-): GameEntity => {
-  const attackerCard = gameEntity.gameCards.find(card => card.id === attackerCardId);
-  const defenderCard = gameEntity.gameCards.find(card => card.id === defenderCardId);
+): GameModel => {
+  const attackerCard = gameModel.gameCards.find(card => card.id === attackerCardId);
+  const defenderCard = gameModel.gameCards.find(card => card.id === defenderCardId);
 
   if (!attackerCard || !defenderCard) {
     throw new Error();
@@ -59,22 +59,22 @@ export const handleAttackVsAttack = (
   const battleResult = determineBattleOutcome(attackerCard, defenderCard);
 
   if (battleResult.attackerDestroyed) {
-    destroyMonster(gameEntity, attackerCardId);
-    increaseEnergyToPlayer(gameEntity, attackerCard.currentUserId);
+    destroyMonster(gameModel, attackerCardId);
+    increaseEnergyToPlayer(gameModel, attackerCard.currentUserId);
   }
 
   if (battleResult.defenderDestroyed) {
-    destroyMonster(gameEntity, defenderCardId);
-    increaseEnergyToPlayer(gameEntity, defenderCard.currentUserId);
+    destroyMonster(gameModel, defenderCardId);
+    increaseEnergyToPlayer(gameModel, defenderCard.currentUserId);
   }
 
   if (battleResult.damageToAttacker > 0) {
-    dealDamageToPlayer(gameEntity, attackerCard.currentUserId, battleResult.damageToAttacker);
+    dealDamageToPlayer(gameModel, attackerCard.currentUserId, battleResult.damageToAttacker);
   }
 
   if (battleResult.damageToDefender > 0) {
-    dealDamageToPlayer(gameEntity, defenderCard.currentUserId, battleResult.damageToDefender);
+    dealDamageToPlayer(gameModel, defenderCard.currentUserId, battleResult.damageToDefender);
   }
 
-  return gameEntity;
+  return gameModel;
 };

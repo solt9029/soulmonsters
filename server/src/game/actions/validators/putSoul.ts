@@ -1,12 +1,12 @@
 import { GameActionDispatchInput } from '../../../graphql/index';
 import { ActionType } from '../../../graphql/index';
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { BadRequestException } from '@nestjs/common';
 import { PutSoulActionPayload } from '../handlers/putSoul';
 
 export function validatePutSoulAction(
   data: GameActionDispatchInput,
-  game: GameEntity,
+  game: GameModel,
   userId: string,
 ): PutSoulActionPayload {
   const gameCard = game.gameCards.find(value => value.id === data.payload.gameCardId);

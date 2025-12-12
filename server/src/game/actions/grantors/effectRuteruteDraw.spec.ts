@@ -1,4 +1,4 @@
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 import { GameStateEntity } from '../../../entities/game-state.entity';
 import { GameCardEntity } from '../../../entities/game-card.entity';
 import { GameUserEntity } from '../../../entities/game-user.entity';
@@ -22,7 +22,7 @@ describe('grantEffectRuteRuteDrawAction', () => {
     ruteruteCard.card = card;
     ruteruteCard.actionTypes = [];
 
-    const gameEntity = new GameEntity();
+    const gameEntity = new GameModel();
     gameEntity.phase = Phase.SOMETHING;
     gameEntity.turnUserId = 'user1';
     gameEntity.gameUsers = [gameUser];
@@ -53,7 +53,7 @@ describe('grantEffectRuteRuteDrawAction', () => {
     existingState.gameCard = ruteruteCard;
     existingState.state = { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } };
 
-    const gameEntity = new GameEntity();
+    const gameEntity = new GameModel();
     gameEntity.phase = Phase.SOMETHING;
     gameEntity.turnUserId = 'user1';
     gameEntity.gameUsers = [gameUser];

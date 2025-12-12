@@ -1,7 +1,7 @@
 import { ActionType, GameActionDispatchInput } from '../../../graphql/index';
-import { GameEntity } from '../../../entities/game.entity';
+import { GameModel } from '../../../models/game.model';
 
-export function validateEffectRuteruteDrawAction(data: GameActionDispatchInput, game: GameEntity, userId: string) {
+export function validateEffectRuteruteDrawAction(data: GameActionDispatchInput, game: GameModel, userId: string) {
   // check payload
   const { gameCardId } = data.payload;
   const gameCard = game.gameCards.find(gameCard => gameCard.id === gameCardId);

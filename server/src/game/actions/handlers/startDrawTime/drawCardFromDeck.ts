@@ -1,34 +1,34 @@
 import { GameCardEntity } from 'src/entities/game-card.entity';
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
 
-const calcTopDeckGameCardId = (gameEntity: GameEntity, userId: string): number | undefined => {
-  const deckGameCards = gameEntity.gameCards
+const calcTopDeckGameCardId = (gameModel: GameModel, userId: string): number | undefined => {
+  const deckGameCards = gameModel.gameCards
     .filter(value => value.zone === Zone.DECK && value.currentUserId === userId)
     .sort((a, b) => b.position - a.position);
 
   return deckGameCards[0]?.id;
 };
 
-const calcNewHandGameCardPosition = (gameEntity: GameEntity, userId: string): number => {
-  const handGameCards = gameEntity.gameCards
+const calcNewHandGameCardPosition = (gameModel: GameModel, userId: string): number => {
+  const handGameCards = gameModel.gameCards
     .filter(value => value.zone === Zone.HAND && value.currentUserId === userId)
     .sort((a, b) => b.position - a.position);
 
   return handGameCards[0] ? handGameCards[0].position + 1 : 0;
 };
 
-export const drawCardFromDeck = (gameEntity: GameEntity, userId: string): GameEntity => {
-  const topDeckGameCardId = calcTopDeckGameCardId(gameEntity, userId);
+export const drawCardFromDeck = (gameModel: GameModel, userId: string): GameModel => {
+  const topDeckGameCardId = calcTopDeckGameCardId(gameModel, userId);
 
   if (topDeckGameCardId === undefined) {
     // TODO: the opponent user wins
-    return gameEntity;
+    return gameModel;
   }
 
-  const newPosition = calcNewHandGameCardPosition(gameEntity, userId);
+  const newPosition = calcNewHandGameCardPosition(gameModel, userId);
 
-  gameEntity.gameCards = gameEntity.gameCards.map(gameCard =>
+  gameModel.gameCards = gameModel.gameCards.map(gameCard =>
     gameCard.id === topDeckGameCardId
       ? new GameCardEntity({
           ...gameCard,
@@ -38,5 +38,5 @@ export const drawCardFromDeck = (gameEntity: GameEntity, userId: string): GameEn
       : gameCard,
   );
 
-  return gameEntity;
+  return gameModel;
 };

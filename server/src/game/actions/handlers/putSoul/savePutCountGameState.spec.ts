@@ -1,11 +1,11 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameStateEntity } from 'src/entities/game-state.entity';
 import { StateType } from 'src/graphql';
 import { savePutCountGameState } from './savePutCountGameState';
 
 describe('savePutCountGameState', () => {
   it('should create new PUT_SOUL_COUNT state when none exists', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameStates: [],
     });
@@ -23,7 +23,7 @@ describe('savePutCountGameState', () => {
   });
 
   it('should increment existing PUT_SOUL_COUNT state value', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameStates: [
         new GameStateEntity({
