@@ -1,7 +1,6 @@
 import { GameModel } from 'src/models/game.model';
 import { GameStateModel } from 'src/models/game-state.model';
 import { GameUserModel } from 'src/models/game-user.model';
-import { GameCardEntity } from 'src/entities/game-card.entity';
 import { StateType } from 'src/graphql';
 import { cleanGameStates } from './cleanGameStates';
 import { GameCardModel } from 'src/models/game-card.model';
