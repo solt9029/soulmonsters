@@ -1,10 +1,10 @@
 import { GameModel } from 'src/models/game.model';
-import { GameUserEntity } from 'src/entities/game-user.entity';
+import { GameUserModel } from 'src/models/game-user.model';
 import { increaseGameUserEnergy } from './increaseGameUserEnergy';
 
 describe('increaseGameUserEnergy', () => {
   it('should increase user energy by 2', () => {
-    const gameUser = new GameUserEntity();
+    const gameUser = new GameUserModel();
     gameUser.userId = 'user1';
     gameUser.energy = 4;
 
@@ -17,7 +17,7 @@ describe('increaseGameUserEnergy', () => {
   });
 
   it('should cap energy at 8', () => {
-    const gameUser = new GameUserEntity();
+    const gameUser = new GameUserModel();
     gameUser.userId = 'user1';
     gameUser.energy = 7;
 

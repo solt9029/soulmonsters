@@ -18,9 +18,9 @@ export class GameModel {
   endedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
-  gameUsers: GameUserModel[];
-  gameCards: GameCardEntity[];
-  gameStates: GameStateEntity[];
+  gameUsers: GameUserModel[] = [];
+  gameCards: GameCardEntity[] = [];
+  gameStates: GameStateEntity[] = [];
 
   // TODO: 一時的なメソッド。今後、GameEntityへの依存を完全に削除する際にこのメソッドも削除する
   toEntity(): GameEntity {

@@ -1,13 +1,13 @@
 import { GameModel } from 'src/models/game.model';
 import { GameStateEntity } from 'src/entities/game-state.entity';
-import { GameUserEntity } from 'src/entities/game-user.entity';
+import { GameUserModel } from 'src/models/game-user.model';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 import { StateType } from 'src/graphql';
 import { cleanGameStates } from './cleanGameStates';
 
 describe('cleanGameStates', () => {
   it('should remove ATTACK_COUNT and PUT_SOUL_COUNT states for specified user', () => {
-    const gameUser = new GameUserEntity({
+    const gameUser = new GameUserModel({
       id: 1,
       userId: 'user1',
     });
@@ -48,12 +48,12 @@ describe('cleanGameStates', () => {
   });
 
   it('should keep states that do not match filter conditions', () => {
-    const gameUser1 = new GameUserEntity({
+    const gameUser1 = new GameUserModel({
       id: 1,
       userId: 'user1',
     });
 
-    const gameUser2 = new GameUserEntity({
+    const gameUser2 = new GameUserModel({
       id: 2,
       userId: 'user2',
     });

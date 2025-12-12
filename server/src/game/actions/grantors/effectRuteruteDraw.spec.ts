@@ -1,14 +1,14 @@
 import { GameModel } from '../../../models/game.model';
 import { GameStateEntity } from '../../../entities/game-state.entity';
 import { GameCardEntity } from '../../../entities/game-card.entity';
-import { GameUserEntity } from '../../../entities/game-user.entity';
+import { GameUserModel } from '../../../models/game-user.model';
 import { CardEntity } from '../../../entities/card.entity';
 import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
 import { grantEffectRuteRuteDrawAction } from './effectRuteruteDraw';
 
 describe('grantEffectRuteRuteDrawAction', () => {
   it('should grant action when ruterute card is in battle zone and effect not used', () => {
-    const gameUser = new GameUserEntity();
+    const gameUser = new GameUserModel();
     gameUser.id = 1;
     gameUser.userId = 'user1';
 
@@ -35,7 +35,7 @@ describe('grantEffectRuteRuteDrawAction', () => {
   });
 
   it('should not grant action when effect already used for specific card', () => {
-    const gameUser = new GameUserEntity();
+    const gameUser = new GameUserModel();
     gameUser.id = 1;
     gameUser.userId = 'user1';
 

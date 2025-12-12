@@ -1,14 +1,14 @@
 import { GameModel } from 'src/models/game.model';
 import { GameStateEntity } from 'src/entities/game-state.entity';
 import { GameCardEntity } from 'src/entities/game-card.entity';
-import { GameUserEntity } from 'src/entities/game-user.entity';
+import { GameUserModel } from 'src/models/game-user.model';
 import { CardEntity } from 'src/entities/card.entity';
 import { StateType, Zone } from 'src/graphql';
 import { saveEffectUseCountGameState } from './saveEffectUseCountGameState';
 
 describe('saveEffectUseCountGameState', () => {
   it('should create new effect use count state when none exists', () => {
-    const gameUser = new GameUserEntity();
+    const gameUser = new GameUserModel();
     gameUser.id = 1;
     gameUser.userId = 'user1';
 
@@ -26,7 +26,7 @@ describe('saveEffectUseCountGameState', () => {
     gameEntity.gameCards = [ruteruteCard];
     gameEntity.gameStates = [];
 
-    const result = saveEffectUseCountGameState(gameEntity, 1);
+    const result = saveEffectUseCountGameState(gameEntity, ruteruteCard);
 
     expect(result.gameStates).toHaveLength(1);
     expect(result.gameStates[0]?.state.type).toBe(StateType.EFFECT_RUTERUTE_DRAW_COUNT);
@@ -39,7 +39,7 @@ describe('saveEffectUseCountGameState', () => {
   });
 
   it('should increment existing effect use count state', () => {
-    const gameUser = new GameUserEntity();
+    const gameUser = new GameUserModel();
     gameUser.id = 1;
     gameUser.userId = 'user1';
 
@@ -61,7 +61,7 @@ describe('saveEffectUseCountGameState', () => {
     gameEntity.gameCards = [ruteruteCard];
     gameEntity.gameStates = [existingState];
 
-    const result = saveEffectUseCountGameState(gameEntity, 1);
+    const result = saveEffectUseCountGameState(gameEntity, ruteruteCard);
 
     expect(result.gameStates).toHaveLength(1);
     expect(result.gameStates[0]?.state.type).toBe(StateType.EFFECT_RUTERUTE_DRAW_COUNT);

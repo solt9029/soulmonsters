@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { GameModel } from '../../../models/game.model';
-import { GameUserEntity } from '../../../entities/game-user.entity';
+import { GameUserModel } from '../../../models/game-user.model';
 import { ActionType } from '../../../graphql/index';
 import { validateStartBattleTimeAction } from './startBattleTime';
 
@@ -9,7 +9,7 @@ describe('validateStartBattleTimeAction', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
-        new GameUserEntity({
+        new GameUserModel({
           userId: 'user1',
           actionTypes: [ActionType.START_BATTLE_TIME],
         }),
@@ -23,7 +23,7 @@ describe('validateStartBattleTimeAction', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
-        new GameUserEntity({
+        new GameUserModel({
           userId: 'user1',
           actionTypes: [],
         }),

@@ -1,6 +1,6 @@
 import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameModel } from '../../../../models/game.model';
-import { GameUserEntity } from '../../../../entities/game-user.entity';
+import { GameUserModel } from '../../../../models/game-user.model';
 import { Zone } from '../../../../graphql';
 import { handleAttackVsDefense } from './handleAttackVsDefense';
 
@@ -33,7 +33,7 @@ describe('handleAttackVsDefense', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
-        new GameUserEntity({
+        new GameUserModel({
           userId: 'user1',
           lifePoint: 8000,
         }),
