@@ -1,5 +1,5 @@
 import { GameModel } from 'src/models/game.model';
-import { GameUserEntity } from 'src/entities/game-user.entity';
+import { GameUserModel } from 'src/models/game-user.model';
 
 const calcNewEnergy = (gameModel: GameModel, userId: string): number => {
   const gameUser = gameModel.gameUsers.find(value => value.userId === userId)!;
@@ -10,7 +10,7 @@ export const increaseGameUserEnergy = (gameModel: GameModel, userId: string): Ga
   const newEnergy = calcNewEnergy(gameModel, userId);
 
   gameModel.gameUsers = gameModel.gameUsers.map(gameUser =>
-    gameUser.userId === userId ? new GameUserEntity({ ...gameUser, energy: newEnergy }) : gameUser,
+    gameUser.userId === userId ? new GameUserModel({ ...gameUser, energy: newEnergy }) : gameUser,
   );
 
   return gameModel;

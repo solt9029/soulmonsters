@@ -1,7 +1,7 @@
 import { GameModel } from 'src/models/game.model';
-import { GameUserEntity } from 'src/entities/game-user.entity';
+import { GameUserModel } from 'src/models/game-user.model';
 
-export const switchToOpponentTurn = (gameModel: GameModel, opponentGameUser: GameUserEntity): GameModel => {
+export const switchToOpponentTurn = (gameModel: GameModel, opponentGameUser: GameUserModel): GameModel => {
   gameModel.phase = null;
   gameModel.turnUserId = opponentGameUser.userId;
 

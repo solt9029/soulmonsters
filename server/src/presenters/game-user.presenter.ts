@@ -1,19 +1,19 @@
 import { GameUser, User } from '../graphql';
-import { GameUserEntity } from '../entities/game-user.entity';
+import { GameUserModel } from '../models/game-user.model';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GameUserPresenter {
-  present(entity: GameUserEntity, user: User): GameUser {
+  present(model: GameUserModel, user: User): GameUser {
     return {
-      id: entity.id,
-      userId: entity.userId,
+      id: model.id,
+      userId: model.userId,
       user,
-      energy: entity.energy,
-      lifePoint: entity.lifePoint,
-      lastViewedAt: entity.lastViewedAt,
-      deck: entity.deck,
-      actionTypes: entity.actionTypes,
+      energy: model.energy,
+      lifePoint: model.lifePoint,
+      lastViewedAt: model.lastViewedAt,
+      deck: model.deck,
+      actionTypes: model.actionTypes,
     };
   }
 }

@@ -1,8 +1,8 @@
 import { GameStateEntity } from '../entities/game-state.entity';
 import { GameCardEntity } from '../entities/game-card.entity';
-import { GameUserEntity } from '../entities/game-user.entity';
 import { GameEntity } from '../entities/game.entity';
 import { Phase } from '../graphql/index';
+import { GameUserModel } from './game-user.model';
 
 export class GameModel {
   constructor(partial?: Partial<GameModel>) {
@@ -18,7 +18,7 @@ export class GameModel {
   endedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
-  gameUsers: GameUserEntity[];
+  gameUsers: GameUserModel[];
   gameCards: GameCardEntity[];
   gameStates: GameStateEntity[];
 
@@ -34,7 +34,7 @@ export class GameModel {
       endedAt: this.endedAt ?? undefined,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      gameUsers: this.gameUsers,
+      gameUsers: this.gameUsers.map(model => model.toEntity()),
       gameCards: this.gameCards,
       gameStates: this.gameStates,
     });

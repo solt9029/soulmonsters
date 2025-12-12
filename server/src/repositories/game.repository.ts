@@ -1,6 +1,7 @@
 import { AppDataSource } from '../dataSource';
 import { GameEntity } from '../entities/game.entity';
 import { GameModel } from '../models/game.model';
+import { toGameUserModel } from './game-user.repository';
 
 const toModel = (entity: GameEntity | null): GameModel | null => {
   if (!entity) return null;
@@ -14,7 +15,7 @@ const toModel = (entity: GameEntity | null): GameModel | null => {
     endedAt: entity.endedAt,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
-    gameUsers: entity.gameUsers,
+    gameUsers: entity.gameUsers.map(entity => toGameUserModel(entity)!),
     gameCards: entity.gameCards,
     gameStates: entity.gameStates,
   });

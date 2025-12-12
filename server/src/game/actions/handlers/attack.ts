@@ -5,13 +5,13 @@ import { monsterBattle } from './attack/monsterBattle';
 import { incrementAttackCount } from './attack/incrementAttackCount';
 import { packBattleZonePositions } from './attack/packBattleZonePositions';
 import { GameCardEntity } from 'src/entities/game-card.entity';
-import { GameUserEntity } from 'src/entities/game-user.entity';
+import { GameUserModel } from 'src/models/game-user.model';
 
 export type AttackActionPayload =
   | {
       type: 'DIRECT_ATTACK';
       attackerCard: GameCardEntity;
-      opponentGameUser: GameUserEntity;
+      opponentGameUser: GameUserModel;
       attackerUserId: string;
     }
   | {

@@ -2,11 +2,11 @@ import { GameModel } from '../../../models/game.model';
 import { EntityManager } from 'typeorm';
 import { switchToOpponentTurn } from './finishEndTime/switchToOpponentTurn';
 import { cleanGameStates } from './finishEndTime/cleanGameStates';
-import { GameUserEntity } from '../../../entities/game-user.entity';
+import { GameUserModel } from '../../../models/game-user.model';
 
 export type FinishEndTimeActionPayload = {
-  gameUser: GameUserEntity;
-  opponentGameUser: GameUserEntity;
+  gameUser: GameUserModel;
+  opponentGameUser: GameUserModel;
 };
 
 export async function handleFinishEndTimeAction(

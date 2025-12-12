@@ -1,6 +1,6 @@
 import { ActionType } from '../../../graphql/index';
 import { GameModel } from '../../../models/game.model';
-import { GameUserEntity } from 'src/entities/game-user.entity';
+import { GameUserModel } from 'src/models/game-user.model';
 
 export function grantStartDrawTimeAction(gameModel: GameModel, userId: string) {
   if (gameModel.phase !== null || gameModel.turnUserId !== userId) {
@@ -9,7 +9,7 @@ export function grantStartDrawTimeAction(gameModel: GameModel, userId: string) {
 
   gameModel.gameUsers = gameModel.gameUsers.map(gameUser =>
     gameUser.userId === userId
-      ? new GameUserEntity({
+      ? new GameUserModel({
           ...gameUser,
           actionTypes: [ActionType.START_DRAW_TIME],
         })
