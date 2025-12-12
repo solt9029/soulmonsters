@@ -1,21 +1,5 @@
 import { AppDataSource } from '../dataSource';
 import { GameUserEntity } from '../entities/game-user.entity';
-import { GameUserModel } from '../models/game-user.model';
-
-export const toGameUserModel = (entity: GameUserEntity | null): GameUserModel | null => {
-  if (!entity) return null;
-  return new GameUserModel({
-    id: entity.id,
-    userId: entity.userId,
-    energy: entity.energy,
-    lifePoint: entity.lifePoint,
-    lastViewedAt: entity.lastViewedAt,
-    createdAt: entity.createdAt,
-    updatedAt: entity.updatedAt,
-    deck: entity.deck,
-    actionTypes: entity.actionTypes,
-  });
-};
 
 export const GameUserRepository = AppDataSource.getRepository(GameUserEntity).extend({
   async findWaitingGameId(): Promise<number | undefined> {

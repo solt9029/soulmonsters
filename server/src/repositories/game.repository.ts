@@ -3,7 +3,23 @@ import { GameEntity } from '../entities/game.entity';
 import { GameModel } from '../models/game.model';
 import { GameStateModel } from '../models/game-state.model';
 import { GameStateEntity } from '../entities/game-state.entity';
-import { toGameUserModel } from './game-user.repository';
+import { GameUserEntity } from 'src/entities/game-user.entity';
+import { GameUserModel } from 'src/models/game-user.model';
+
+const toGameUserModel = (entity: GameUserEntity | null): GameUserModel | null => {
+  if (!entity) return null;
+  return new GameUserModel({
+    id: entity.id,
+    userId: entity.userId,
+    energy: entity.energy,
+    lifePoint: entity.lifePoint,
+    lastViewedAt: entity.lastViewedAt,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+    deck: entity.deck,
+    actionTypes: entity.actionTypes,
+  });
+};
 
 const toGameStateModel = (entity: GameStateEntity): GameStateModel => {
   return new GameStateModel({
