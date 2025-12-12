@@ -29,7 +29,7 @@ const toGameUserModel = (entity: GameUserEntity): GameUserModel => {
     lastViewedAt: entity.lastViewedAt,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
-    deck: toDeckModel(entity.deck),
+    deck: entity.deck ? toDeckModel(entity.deck) : undefined,
     actionTypes: [], // Databaseで保持していないのでEntity => Model化する際には常に空配列がセットされる
   });
 };
@@ -70,8 +70,7 @@ const toGameStateModel = (entity: GameStateEntity): GameStateModel => {
   });
 };
 
-const toModel = (entity: GameEntity | null): GameModel | null => {
-  if (!entity) return null;
+const toModel = (entity: GameEntity): GameModel => {
   return new GameModel({
     id: entity.id,
     turnUserId: entity.turnUserId,
@@ -95,7 +94,8 @@ export const GameRepository = AppDataSource.getRepository(GameEntity).extend({
       .where('games.winnerUserId IS NULL')
       .andWhere('gameUsers.userId = :userId', { userId })
       .getOne();
-    return toModel(entity);
+
+    return entity ? toModel(entity) : null;
   },
 
   async findByIdWithRelations(id: number): Promise<GameModel | null> {
@@ -103,7 +103,8 @@ export const GameRepository = AppDataSource.getRepository(GameEntity).extend({
       where: { id },
       relations: ['gameUsers', 'gameUsers.deck', 'gameCards', 'gameCards.card', 'gameStates', 'gameStates.gameCard'],
     });
-    return toModel(entity);
+
+    return entity ? toModel(entity) : null;
   },
 
   async findByIdWithRelationsAndLock(id: number): Promise<GameModel | null> {
@@ -116,7 +117,8 @@ export const GameRepository = AppDataSource.getRepository(GameEntity).extend({
       .leftJoinAndSelect('gameStates.gameCard', 'gameCard')
       .where('games.id = :id', { id })
       .getOne();
-    return toModel(entity);
+
+    return entity ? toModel(entity) : null;
   },
 
   async findByIdWithGameUsersAndDeck(id: number): Promise<GameModel | null> {
@@ -124,6 +126,7 @@ export const GameRepository = AppDataSource.getRepository(GameEntity).extend({
       where: { id },
       relations: ['gameUsers', 'gameUsers.deck'],
     });
-    return toModel(entity);
+
+    return entity ? toModel(entity) : null;
   },
 });
