@@ -1,6 +1,5 @@
 import { GameCardEntity } from '../entities/game-card.entity';
 import { GameStateEntity } from '../entities/game-state.entity';
-import { GameEntity } from '../entities/game.entity';
 import { CardEntity } from '../entities/card.entity';
 import { Zone, BattlePosition, ActionType, Kind, Type, Attribute } from '../graphql/index';
 
@@ -19,7 +18,6 @@ export class GameCardModel {
   createdAt: Date;
   updatedAt: Date;
   card: CardEntity;
-  game: GameEntity;
   gameStates: GameStateEntity[];
   actionTypes: ActionType[];
   name?: string | null;
@@ -42,7 +40,6 @@ export class GameCardModel {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       card: this.card,
-      game: this.game,
       gameStates: this.gameStates,
       name: this.name,
       kind: this.kind,

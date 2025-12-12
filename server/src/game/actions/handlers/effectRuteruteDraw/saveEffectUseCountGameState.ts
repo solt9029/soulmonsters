@@ -5,7 +5,6 @@ import { StateType } from 'src/graphql';
 
 const initEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardModel): GameStateModel => {
   return new GameStateModel({
-    game: gameModel.toEntity(),
     gameCard: gameCard,
     state: { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } },
   });

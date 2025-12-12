@@ -4,7 +4,6 @@ import { StateType } from 'src/graphql';
 
 const initPutSoulCountGameState = (gameModel: GameModel, gameUserId: number): GameStateModel => {
   return new GameStateModel({
-    game: gameModel.toEntity(),
     state: { type: StateType.PUT_SOUL_COUNT, data: { value: 1, gameUserId } },
   });
 };
