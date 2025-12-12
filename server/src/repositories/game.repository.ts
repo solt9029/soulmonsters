@@ -6,8 +6,7 @@ import { GameStateEntity } from '../entities/game-state.entity';
 import { GameUserEntity } from 'src/entities/game-user.entity';
 import { GameUserModel } from 'src/models/game-user.model';
 
-const toGameUserModel = (entity: GameUserEntity | null): GameUserModel | null => {
-  if (!entity) return null;
+const toGameUserModel = (entity: GameUserEntity): GameUserModel => {
   return new GameUserModel({
     id: entity.id,
     userId: entity.userId,
@@ -44,9 +43,9 @@ const toModel = (entity: GameEntity | null): GameModel | null => {
     endedAt: entity.endedAt,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
-    gameUsers: entity.gameUsers.map(entity => toGameUserModel(entity)!),
+    gameUsers: (entity.gameUsers ?? []).map(entity => toGameUserModel(entity)),
     gameCards: entity.gameCards,
-    gameStates: entity.gameStates.map(entity => toGameStateModel(entity)),
+    gameStates: (entity.gameStates ?? []).map(entity => toGameStateModel(entity)),
   });
 };
 
