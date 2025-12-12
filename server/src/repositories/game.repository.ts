@@ -1,7 +1,20 @@
 import { AppDataSource } from '../dataSource';
 import { GameEntity } from '../entities/game.entity';
 import { GameModel } from '../models/game.model';
+import { GameStateModel } from '../models/game-state.model';
+import { GameStateEntity } from '../entities/game-state.entity';
 import { toGameUserModel } from './game-user.repository';
+
+const toGameStateModel = (entity: GameStateEntity): GameStateModel => {
+  return new GameStateModel({
+    id: entity.id,
+    game: entity.game,
+    gameCard: entity.gameCard,
+    state: entity.state,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+  });
+};
 
 const toModel = (entity: GameEntity | null): GameModel | null => {
   if (!entity) return null;
@@ -17,7 +30,7 @@ const toModel = (entity: GameEntity | null): GameModel | null => {
     updatedAt: entity.updatedAt,
     gameUsers: entity.gameUsers.map(entity => toGameUserModel(entity)!),
     gameCards: entity.gameCards,
-    gameStates: entity.gameStates,
+    gameStates: entity.gameStates.map(entity => toGameStateModel(entity)),
   });
 };
 
