@@ -1,10 +1,10 @@
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { GameUserEntity } from '../../../../entities/game-user.entity';
 import { increaseEnergyToPlayer } from './increaseEnergyToPlayer';
 
 describe('increaseEnergyToPlayer', () => {
   it('should increase player energy by 1', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
         new GameUserEntity({
@@ -25,7 +25,7 @@ describe('increaseEnergyToPlayer', () => {
   });
 
   it('should not increase energy beyond MAX_ENERGY (8)', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
         new GameUserEntity({

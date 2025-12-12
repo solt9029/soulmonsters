@@ -1,4 +1,4 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameStateEntity } from 'src/entities/game-state.entity';
 import { GameUserEntity } from 'src/entities/game-user.entity';
 import { GameCardEntity } from 'src/entities/game-card.entity';
@@ -16,7 +16,7 @@ describe('cleanGameStates', () => {
       currentUserId: 'user1',
     });
 
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       gameUsers: [gameUser],
       gameStates: [
         new GameStateEntity({
@@ -62,7 +62,7 @@ describe('cleanGameStates', () => {
       currentUserId: 'user2',
     });
 
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       gameUsers: [gameUser1, gameUser2],
       gameStates: [
         new GameStateEntity({

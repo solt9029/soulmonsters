@@ -1,13 +1,13 @@
 import { CardEntity } from '../../../../entities/card.entity';
 import { GameCardEntity } from '../../../../entities/game-card.entity';
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { GameUserEntity } from '../../../../entities/game-user.entity';
 import { Zone } from '../../../../graphql';
 import { directAttack } from './directAttack';
 
 describe('directAttack', () => {
   it('should deal damage to opponent player based on attacker card attack', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
         new GameUserEntity({
@@ -36,7 +36,7 @@ describe('directAttack', () => {
   });
 
   it('should draw 2 cards when card ID 11 (冷徹な鳥) performs direct attack', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
         new GameUserEntity({

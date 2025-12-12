@@ -1,4 +1,4 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameUserEntity } from 'src/entities/game-user.entity';
 import { increaseGameUserEnergy } from './increaseGameUserEnergy';
 
@@ -8,7 +8,7 @@ describe('increaseGameUserEnergy', () => {
     gameUser.userId = 'user1';
     gameUser.energy = 4;
 
-    const gameEntity = new GameEntity();
+    const gameEntity = new GameModel();
     gameEntity.gameUsers = [gameUser];
 
     const result = increaseGameUserEnergy(gameEntity, 'user1');
@@ -21,7 +21,7 @@ describe('increaseGameUserEnergy', () => {
     gameUser.userId = 'user1';
     gameUser.energy = 7;
 
-    const gameEntity = new GameEntity();
+    const gameEntity = new GameModel();
     gameEntity.gameUsers = [gameUser];
 
     const result = increaseGameUserEnergy(gameEntity, 'user1');

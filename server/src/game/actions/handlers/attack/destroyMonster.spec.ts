@@ -1,11 +1,11 @@
 import { GameCardEntity } from '../../../../entities/game-card.entity';
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { Zone } from '../../../../graphql';
 import { destroyMonster } from './destroyMonster';
 
 describe('destroyMonster', () => {
   it('should move monster from battle zone to soul zone', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameCards: [
         new GameCardEntity({
@@ -33,7 +33,7 @@ describe('destroyMonster', () => {
   });
 
   it('should set position to 0 when no soul cards exist', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameCards: [
         new GameCardEntity({

@@ -1,11 +1,11 @@
-import { GameEntity } from 'src/entities/game.entity';
+import { GameModel } from 'src/models/game.model';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 import { Zone } from 'src/graphql';
 import { drawCardFromDeck } from './drawCardFromDeck';
 
 describe('drawCardFromDeck', () => {
   it('should move top deck card to hand', () => {
-    const gameEntity = new GameEntity();
+    const gameEntity = new GameModel();
     gameEntity.gameCards = [
       new GameCardEntity({
         id: 1,
@@ -33,7 +33,7 @@ describe('drawCardFromDeck', () => {
   });
 
   it('should return unchanged game when deck is empty', () => {
-    const gameEntity = new GameEntity();
+    const gameEntity = new GameModel();
     gameEntity.gameCards = [
       new GameCardEntity({
         id: 1,

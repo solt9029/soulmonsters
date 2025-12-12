@@ -1,11 +1,11 @@
 import { GameCardEntity } from '../../../../entities/game-card.entity';
-import { GameEntity } from '../../../../entities/game.entity';
+import { GameModel } from '../../../../models/game.model';
 import { BattlePosition, Zone } from '../../../../graphql';
 import { summonGameCard } from './summonGameCard';
 
 describe('summonGameCard', () => {
   it('should move card from hand to battle zone in attack position', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameCards: [
         new GameCardEntity({
@@ -25,7 +25,7 @@ describe('summonGameCard', () => {
   });
 
   it('should calculate correct position when other battle cards exist', () => {
-    const gameEntity = new GameEntity({
+    const gameEntity = new GameModel({
       id: 1,
       gameCards: [
         new GameCardEntity({
