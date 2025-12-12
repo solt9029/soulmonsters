@@ -1,9 +1,10 @@
 import { ActionType, GameActionDispatchInput } from '../../../graphql/index';
 import { GameModel } from '../../../models/game.model';
 import { BadRequestException } from '@nestjs/common';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 
 export type EffectRuteruteDrawActionPayload = {
-  gameCardId: number;
+  gameCard: GameCardEntity;
 };
 
 export function validateEffectRuteruteDrawAction(
@@ -26,5 +27,5 @@ export function validateEffectRuteruteDrawAction(
     throw new BadRequestException('The specified game card does not have the EFFECT_RUTERUTE_DRAW action type');
   }
 
-  return { gameCardId };
+  return { gameCard };
 }

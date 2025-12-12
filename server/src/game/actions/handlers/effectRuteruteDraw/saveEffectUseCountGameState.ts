@@ -11,13 +11,7 @@ const initEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardEnt
   });
 };
 
-export const saveEffectUseCountGameState = (gameModel: GameModel, gameCardId: number): GameModel => {
-  const gameCard = gameModel.gameCards.find(gameCard => gameCard.id === gameCardId);
-
-  if (!gameCard) {
-    throw new Error();
-  }
-
+export const saveEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardEntity): GameModel => {
   const existsState =
     gameModel.gameStates.findIndex(
       gameState =>

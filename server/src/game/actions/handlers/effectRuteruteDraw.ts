@@ -13,7 +13,7 @@ export async function handleEffectRuteruteDraw(
 ) {
   subtractUserEnergy(gameModel, userId, 1);
   drawCardFromDeck(gameModel, userId);
-  saveEffectUseCountGameState(gameModel, payload.gameCardId);
+  saveEffectUseCountGameState(gameModel, payload.gameCard);
 
   await manager.save(gameModel.toEntity());
 }
