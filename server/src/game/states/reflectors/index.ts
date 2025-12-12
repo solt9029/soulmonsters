@@ -1,4 +1,4 @@
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
 
@@ -10,34 +10,34 @@ function isVisibleForCurrentUser(zone: Zone) {
   return zone === Zone.HAND;
 }
 
-function addInfo(gameCardEntity: GameCardEntity) {
-  gameCardEntity.name = gameCardEntity.card.name;
-  gameCardEntity.kind = gameCardEntity.card.kind;
-  gameCardEntity.type = gameCardEntity.card.type;
-  gameCardEntity.attribute = gameCardEntity.card.attribute;
-  gameCardEntity.attack = gameCardEntity.card.attack;
-  gameCardEntity.defence = gameCardEntity.card.defence;
-  gameCardEntity.cost = gameCardEntity.card.cost;
-  gameCardEntity.detail = gameCardEntity.card.detail;
-  return gameCardEntity;
+function addInfo(gameCardModel: GameCardModel) {
+  gameCardModel.name = gameCardModel.card.name;
+  gameCardModel.kind = gameCardModel.card.kind;
+  gameCardModel.type = gameCardModel.card.type;
+  gameCardModel.attribute = gameCardModel.card.attribute;
+  gameCardModel.attack = gameCardModel.card.attack;
+  gameCardModel.defence = gameCardModel.card.defence;
+  gameCardModel.cost = gameCardModel.card.cost;
+  gameCardModel.detail = gameCardModel.card.detail;
+  return gameCardModel;
 }
 
-function filterByUserId(gameCardEntity: GameCardEntity, userId: string): GameCardEntity {
+function filterByUserId(gameCardModel: GameCardModel, userId: string): GameCardModel {
   if (
-    isVisibleForAll(gameCardEntity.zone) ||
-    (gameCardEntity.currentUserId === userId && isVisibleForCurrentUser(gameCardEntity.zone))
+    isVisibleForAll(gameCardModel.zone) ||
+    (gameCardModel.currentUserId === userId && isVisibleForCurrentUser(gameCardModel.zone))
   ) {
-    return gameCardEntity;
+    return gameCardModel;
   }
 
-  const filteredGameCardEntity = new GameCardEntity();
-  filteredGameCardEntity.id = gameCardEntity.id;
-  filteredGameCardEntity.currentUserId = gameCardEntity.currentUserId;
-  filteredGameCardEntity.originalUserId = gameCardEntity.originalUserId;
-  filteredGameCardEntity.zone = gameCardEntity.zone;
-  filteredGameCardEntity.position = gameCardEntity.position;
+  const filteredGameCardModel = new GameCardModel();
+  filteredGameCardModel.id = gameCardModel.id;
+  filteredGameCardModel.currentUserId = gameCardModel.currentUserId;
+  filteredGameCardModel.originalUserId = gameCardModel.originalUserId;
+  filteredGameCardModel.zone = gameCardModel.zone;
+  filteredGameCardModel.position = gameCardModel.position;
 
-  return filteredGameCardEntity;
+  return filteredGameCardModel;
 }
 
 // TODO: この算出ロジックは、多分Gameのactionをhandleする前にも実行しておくべき。

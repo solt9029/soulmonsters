@@ -1,6 +1,6 @@
 import { GameModel } from '../../../models/game.model';
 import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
-import { GameCardEntity } from '../../../entities/game-card.entity';
+import { GameCardModel } from '../../../models/game-card.model';
 
 export function grantEffectRuteRuteDrawAction(gameModel: GameModel, userId: string) {
   if (gameModel.phase !== Phase.SOMETHING || gameModel.turnUserId !== userId) {
@@ -27,7 +27,7 @@ export function grantEffectRuteRuteDrawAction(gameModel: GameModel, userId: stri
       return gameCard;
     }
 
-    return new GameCardEntity({
+    return new GameCardModel({
       ...gameCard,
       actionTypes: [...gameCard.actionTypes, ActionType.EFFECT_RUTERUTE_DRAW],
     });

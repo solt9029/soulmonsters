@@ -1,9 +1,9 @@
 import { GameModel } from 'src/models/game.model';
 import { GameStateModel } from 'src/models/game-state.model';
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 import { StateType } from 'src/graphql';
 
-const initEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardEntity): GameStateModel => {
+const initEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardModel): GameStateModel => {
   return new GameStateModel({
     game: gameModel.toEntity(),
     gameCard: gameCard,
@@ -11,7 +11,7 @@ const initEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardEnt
   });
 };
 
-export const saveEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardEntity): GameModel => {
+export const saveEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardModel): GameModel => {
   const existsState =
     gameModel.gameStates.findIndex(
       gameState =>

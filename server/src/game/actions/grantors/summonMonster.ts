@@ -1,7 +1,7 @@
 import { Zone } from 'src/graphql';
 import { Phase, Kind, ActionType } from '../../../graphql/index';
 import { GameModel } from '../../../models/game.model';
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 
 export function grantSummonMonsterAction(gameModel: GameModel, userId: string) {
   if (gameModel.phase !== Phase.SOMETHING || gameModel.turnUserId !== userId) {
@@ -13,7 +13,7 @@ export function grantSummonMonsterAction(gameModel: GameModel, userId: string) {
       gameCard && gameCard.zone === Zone.HAND && gameCard.currentUserId === userId && gameCard.kind === Kind.MONSTER;
 
     return canSummon
-      ? new GameCardEntity({
+      ? new GameCardModel({
           ...gameCard,
           actionTypes: [...gameCard.actionTypes, ActionType.SUMMON_MONSTER],
         })

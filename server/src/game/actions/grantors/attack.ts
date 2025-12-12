@@ -1,7 +1,7 @@
 import { GameModel } from '../../../models/game.model';
 import { Zone, StateType } from 'src/graphql';
 import { Phase, BattlePosition, ActionType } from '../../../graphql/index';
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 
 export function grantAttackAction(gameModel: GameModel, userId: string) {
   if (gameModel.phase !== Phase.BATTLE || gameModel.turnUserId !== userId) {
@@ -26,7 +26,7 @@ export function grantAttackAction(gameModel: GameModel, userId: string) {
       return gameCard;
     }
 
-    return new GameCardEntity({
+    return new GameCardModel({
       ...gameCard,
       actionTypes: [...gameCard.actionTypes, ActionType.ATTACK],
     });

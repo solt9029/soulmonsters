@@ -5,6 +5,8 @@ import { GameStateModel } from '../models/game-state.model';
 import { GameStateEntity } from '../entities/game-state.entity';
 import { GameUserEntity } from 'src/entities/game-user.entity';
 import { GameUserModel } from 'src/models/game-user.model';
+import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 
 const toGameUserModel = (entity: GameUserEntity): GameUserModel => {
   return new GameUserModel({
@@ -20,11 +22,36 @@ const toGameUserModel = (entity: GameUserEntity): GameUserModel => {
   });
 };
 
+const toGameCardModel = (entity: GameCardEntity): GameCardModel => {
+  return new GameCardModel({
+    id: entity.id,
+    originalUserId: entity.originalUserId,
+    currentUserId: entity.currentUserId,
+    zone: entity.zone,
+    position: entity.position,
+    battlePosition: entity.battlePosition,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+    card: entity.card,
+    game: entity.game,
+    gameStates: entity.gameStates,
+    actionTypes: entity.actionTypes,
+    name: entity.name,
+    kind: entity.kind,
+    type: entity.type,
+    attribute: entity.attribute,
+    attack: entity.attack,
+    defence: entity.defence,
+    cost: entity.cost,
+    detail: entity.detail,
+  });
+};
+
 const toGameStateModel = (entity: GameStateEntity): GameStateModel => {
   return new GameStateModel({
     id: entity.id,
     game: entity.game,
-    gameCard: entity.gameCard,
+    gameCard: entity.gameCard ? toGameCardModel(entity.gameCard) : null,
     state: entity.state,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
@@ -44,7 +71,7 @@ const toModel = (entity: GameEntity | null): GameModel | null => {
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
     gameUsers: (entity.gameUsers ?? []).map(entity => toGameUserModel(entity)),
-    gameCards: entity.gameCards,
+    gameCards: (entity.gameCards ?? []).map(entity => toGameCardModel(entity)),
     gameStates: (entity.gameStates ?? []).map(entity => toGameStateModel(entity)),
   });
 };

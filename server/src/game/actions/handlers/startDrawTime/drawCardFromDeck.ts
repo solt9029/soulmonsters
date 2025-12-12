@@ -1,4 +1,4 @@
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
 
@@ -30,7 +30,7 @@ export const drawCardFromDeck = (gameModel: GameModel, userId: string): GameMode
 
   gameModel.gameCards = gameModel.gameCards.map(gameCard =>
     gameCard.id === topDeckGameCardId
-      ? new GameCardEntity({
+      ? new GameCardModel({
           ...gameCard,
           zone: Zone.HAND,
           position: newPosition,

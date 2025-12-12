@@ -3,11 +3,11 @@ import { GameModel } from '../../../models/game.model';
 import { EntityManager } from 'typeorm';
 import { putSoulGameCard } from './putSoul/putSoulGameCard';
 import { savePutCountGameState } from './putSoul/savePutCountGameState';
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
 
 export type PutSoulActionPayload = {
-  gameCard: GameCardEntity;
+  gameCard: GameCardModel;
   gameUser: GameUserModel;
 };
 

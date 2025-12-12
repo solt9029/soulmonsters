@@ -1,4 +1,4 @@
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
 
@@ -13,7 +13,7 @@ const calcNewSoulGameCardPosition = (gameModel: GameModel, userId: string): numb
 export const destroyMonster = (gameModel: GameModel, gameCardId: number): GameModel => {
   gameModel.gameCards = gameModel.gameCards.map(gameCard =>
     gameCard.id === gameCardId
-      ? new GameCardEntity({
+      ? new GameCardModel({
           ...gameCard,
           zone: Zone.SOUL,
           position: calcNewSoulGameCardPosition(gameModel, gameCard.currentUserId),

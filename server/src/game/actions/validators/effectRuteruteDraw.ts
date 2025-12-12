@@ -1,10 +1,10 @@
 import { ActionType, GameActionDispatchInput } from '../../../graphql/index';
 import { GameModel } from '../../../models/game.model';
 import { BadRequestException } from '@nestjs/common';
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 
 export type EffectRuteruteDrawActionPayload = {
-  gameCard: GameCardEntity;
+  gameCard: GameCardModel;
 };
 
 export function validateEffectRuteruteDrawAction(

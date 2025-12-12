@@ -2,7 +2,7 @@ import { GameModel } from '../../../../models/game.model';
 import { destroyMonster } from './destroyMonster';
 import { increaseEnergyToPlayer } from './increaseEnergyToPlayer';
 import { dealDamageToPlayer } from './dealDamageToPlayer';
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 
 interface BattleResult {
   winner: 'attacker' | 'defender' | 'draw';
@@ -12,7 +12,7 @@ interface BattleResult {
   damageToDefender: number;
 }
 
-const determineBattleOutcome = (attackerCard: GameCardEntity, defenderCard: GameCardEntity): BattleResult => {
+const determineBattleOutcome = (attackerCard: GameCardModel, defenderCard: GameCardModel): BattleResult => {
   if (attackerCard.attack == null || defenderCard.attack == null) {
     throw new Error('Attack values are null');
   }

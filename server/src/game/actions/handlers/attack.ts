@@ -4,20 +4,20 @@ import { directAttack } from './attack/directAttack';
 import { monsterBattle } from './attack/monsterBattle';
 import { incrementAttackCount } from './attack/incrementAttackCount';
 import { packBattleZonePositions } from './attack/packBattleZonePositions';
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
 
 export type AttackActionPayload =
   | {
       type: 'DIRECT_ATTACK';
-      attackerCard: GameCardEntity;
+      attackerCard: GameCardModel;
       opponentGameUser: GameUserModel;
       attackerUserId: string;
     }
   | {
       type: 'MONSTER_BATTLE';
-      attackerCard: GameCardEntity;
-      targetCard: GameCardEntity;
+      attackerCard: GameCardModel;
+      targetCard: GameCardModel;
       attackerUserId: string;
       opponentUserId: string;
     };

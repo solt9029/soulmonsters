@@ -1,7 +1,7 @@
 import { GameStateEntity } from '../entities/game-state.entity';
-import { GameCardEntity } from '../entities/game-card.entity';
 import { GameEntity } from '../entities/game.entity';
 import { StateType } from '../graphql/index';
+import { GameCardModel } from './game-card.model';
 
 type State =
   | {
@@ -28,7 +28,7 @@ export class GameStateModel {
 
   id: number;
   game: GameEntity;
-  gameCard: GameCardEntity;
+  gameCard: GameCardModel | null;
   state: State;
   createdAt: Date;
   updatedAt: Date;
@@ -37,7 +37,7 @@ export class GameStateModel {
     return new GameStateEntity({
       id: this.id,
       game: this.game,
-      gameCard: this.gameCard,
+      gameCard: this.gameCard ? this.gameCard.toEntity() : undefined,
       state: this.state,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

@@ -1,7 +1,7 @@
 import { GameModel } from '../../../models/game.model';
 import { Zone, StateType } from 'src/graphql';
 import { Phase, ActionType } from '../../../graphql/index';
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
 
 export function grantPutSoulAction(gameModel: GameModel, userId: string) {
   if (gameModel.phase !== Phase.PUT || gameModel.turnUserId !== userId) {
@@ -26,7 +26,7 @@ export function grantPutSoulAction(gameModel: GameModel, userId: string) {
     const canPutSoul = gameCard && gameCard.zone === Zone.HAND && gameCard.currentUserId === userId;
 
     return canPutSoul
-      ? new GameCardEntity({
+      ? new GameCardModel({
           ...gameCard,
           actionTypes: [...gameCard.actionTypes, ActionType.PUT_SOUL],
         })

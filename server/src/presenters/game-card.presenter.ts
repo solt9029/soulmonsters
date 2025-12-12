@@ -1,27 +1,27 @@
 import { GameCard } from '../graphql';
-import { GameCardEntity } from '../entities/game-card.entity';
+import { GameCardModel } from '../models/game-card.model';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GameCardPresenter {
-  present(entity: GameCardEntity): GameCard {
+  present(model: GameCardModel): GameCard {
     return {
-      id: entity.id,
-      originalUserId: entity.originalUserId,
-      currentUserId: entity.currentUserId,
-      zone: entity.zone,
-      position: entity.position,
-      battlePosition: entity.battlePosition,
-      name: entity.name,
-      kind: entity.kind,
-      type: entity.type,
-      attribute: entity.attribute,
-      attack: entity.attack,
-      defence: entity.defence,
-      cost: entity.cost,
-      detail: entity.detail,
-      card: entity.card,
-      actionTypes: entity.actionTypes,
+      id: model.id,
+      originalUserId: model.originalUserId,
+      currentUserId: model.currentUserId,
+      zone: model.zone,
+      position: model.position,
+      battlePosition: model.battlePosition,
+      name: model.name,
+      kind: model.kind,
+      type: model.type,
+      attribute: model.attribute,
+      attack: model.attack,
+      defence: model.defence,
+      cost: model.cost,
+      detail: model.detail,
+      card: model.card,
+      actionTypes: model.actionTypes,
     };
   }
 }
