@@ -1,7 +1,7 @@
 import { GameStateEntity } from './game-state.entity';
 import { GameEntity } from './game.entity';
 import { CardEntity } from './card.entity';
-import { Zone, BattlePosition, ActionType, Kind, Type, Attribute } from '../graphql/index';
+import { Zone, BattlePosition, Kind, Type, Attribute } from '../graphql/index';
 import {
   Entity,
   Column,

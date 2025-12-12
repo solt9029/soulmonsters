@@ -1,4 +1,3 @@
-import { ActionType } from '../graphql/index';
 import { AppEntity } from './app.entity';
 import { DeckEntity } from './deck.entity';
 import { GameEntity } from './game.entity';
