@@ -1,5 +1,4 @@
 import { ActionType } from '../graphql/index';
-import { DeckEntity } from '../entities/deck.entity';
 import { GameUserEntity } from '../entities/game-user.entity';
 import { DeckModel } from './deck.model';
 
