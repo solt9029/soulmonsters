@@ -1,26 +1,26 @@
-import { GameCardEntity } from 'src/entities/game-card.entity';
 import { Zone } from 'src/graphql';
 import { putSoulGameCard } from './putSoulGameCard';
 import { GameModel } from 'src/models/game.model';
+import { GameCardModel } from 'src/models/game-card.model';
 
 describe('putSoulGameCard', () => {
   it('should move a game card to soul zone with correct position', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameCards: [
-        new GameCardEntity({
+        new GameCardModel({
           id: 1,
           zone: Zone.SOUL,
           currentUserId: 'user1',
           position: 0,
         }),
-        new GameCardEntity({
+        new GameCardModel({
           id: 2,
           zone: Zone.SOUL,
           currentUserId: 'user1',
           position: 1,
         }),
-        new GameCardEntity({
+        new GameCardModel({
           id: 3,
           zone: Zone.HAND,
           currentUserId: 'user1',

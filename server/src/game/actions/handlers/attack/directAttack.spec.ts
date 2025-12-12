@@ -1,9 +1,9 @@
 import { CardEntity } from '../../../../entities/card.entity';
-import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameModel } from '../../../../models/game.model';
 import { GameUserModel } from '../../../../models/game-user.model';
 import { Zone } from '../../../../graphql';
 import { directAttack } from './directAttack';
+import { GameCardModel } from 'src/models/game-card.model';
 
 describe('directAttack', () => {
   it('should deal damage to opponent player based on attacker card attack', () => {
@@ -20,7 +20,7 @@ describe('directAttack', () => {
         }),
       ],
       gameCards: [
-        new GameCardEntity({
+        new GameCardModel({
           id: 1,
           attack: 1500,
           card: new CardEntity({
@@ -49,7 +49,7 @@ describe('directAttack', () => {
         }),
       ],
       gameCards: [
-        new GameCardEntity({
+        new GameCardModel({
           id: 1,
           attack: 600,
           currentUserId: 'user1',
@@ -57,7 +57,7 @@ describe('directAttack', () => {
             id: 11,
           }),
         }),
-        new GameCardEntity({
+        new GameCardModel({
           id: 2,
           zone: Zone.DECK,
           position: 1,
@@ -66,7 +66,7 @@ describe('directAttack', () => {
             id: 2,
           }),
         }),
-        new GameCardEntity({
+        new GameCardModel({
           id: 3,
           zone: Zone.DECK,
           position: 0,

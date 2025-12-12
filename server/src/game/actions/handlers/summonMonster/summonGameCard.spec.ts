@@ -1,14 +1,14 @@
-import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameModel } from '../../../../models/game.model';
 import { BattlePosition, Zone } from '../../../../graphql';
 import { summonGameCard } from './summonGameCard';
+import { GameCardModel } from 'src/models/game-card.model';
 
 describe('summonGameCard', () => {
   it('should move card from hand to battle zone in attack position', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameCards: [
-        new GameCardEntity({
+        new GameCardModel({
           id: 1,
           currentUserId: 'user1',
           zone: Zone.HAND,
@@ -28,19 +28,19 @@ describe('summonGameCard', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameCards: [
-        new GameCardEntity({
+        new GameCardModel({
           id: 1,
           currentUserId: 'user1',
           zone: Zone.BATTLE,
           position: 0,
         }),
-        new GameCardEntity({
+        new GameCardModel({
           id: 2,
           currentUserId: 'user1',
           zone: Zone.BATTLE,
           position: 1,
         }),
-        new GameCardEntity({
+        new GameCardModel({
           id: 3,
           currentUserId: 'user1',
           zone: Zone.HAND,

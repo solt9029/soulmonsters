@@ -1,20 +1,20 @@
-import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameModel } from '../../../../models/game.model';
 import { Zone } from '../../../../graphql';
 import { destroyMonster } from './destroyMonster';
+import { GameCardModel } from 'src/models/game-card.model';
 
 describe('destroyMonster', () => {
   it('should move monster from battle zone to soul zone', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameCards: [
-        new GameCardEntity({
+        new GameCardModel({
           id: 1,
           currentUserId: 'user1',
           zone: Zone.BATTLE,
           position: 0,
         }),
-        new GameCardEntity({
+        new GameCardModel({
           id: 2,
           currentUserId: 'user1',
           zone: Zone.SOUL,
@@ -36,7 +36,7 @@ describe('destroyMonster', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameCards: [
-        new GameCardEntity({
+        new GameCardModel({
           id: 1,
           currentUserId: 'user1',
           zone: Zone.BATTLE,

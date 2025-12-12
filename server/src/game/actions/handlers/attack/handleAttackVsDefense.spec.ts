@@ -1,21 +1,21 @@
-import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameModel } from '../../../../models/game.model';
 import { GameUserModel } from '../../../../models/game-user.model';
 import { Zone } from '../../../../graphql';
 import { handleAttackVsDefense } from './handleAttackVsDefense';
+import { GameCardModel } from 'src/models/game-card.model';
 
 describe('handleAttackVsDefense', () => {
   it('should destroy defender when attacker attack is higher than defender defence', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameCards: [
-        new GameCardEntity({
+        new GameCardModel({
           id: 1,
           currentUserId: 'user1',
           attack: 2000,
           zone: Zone.BATTLE,
         }),
-        new GameCardEntity({
+        new GameCardModel({
           id: 2,
           currentUserId: 'user2',
           defence: 1500,
@@ -39,13 +39,13 @@ describe('handleAttackVsDefense', () => {
         }),
       ],
       gameCards: [
-        new GameCardEntity({
+        new GameCardModel({
           id: 1,
           currentUserId: 'user1',
           attack: 1500,
           zone: Zone.BATTLE,
         }),
-        new GameCardEntity({
+        new GameCardModel({
           id: 2,
           currentUserId: 'user2',
           defence: 2000,

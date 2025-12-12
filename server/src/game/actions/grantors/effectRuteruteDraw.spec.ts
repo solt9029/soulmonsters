@@ -1,10 +1,10 @@
 import { GameModel } from '../../../models/game.model';
 import { GameStateModel } from '../../../models/game-state.model';
-import { GameCardEntity } from '../../../entities/game-card.entity';
 import { GameUserModel } from '../../../models/game-user.model';
 import { CardEntity } from '../../../entities/card.entity';
 import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
 import { grantEffectRuteRuteDrawAction } from './effectRuteruteDraw';
+import { GameCardModel } from 'src/models/game-card.model';
 
 describe('grantEffectRuteRuteDrawAction', () => {
   it('should grant action when ruterute card is in battle zone and effect not used', () => {
@@ -15,7 +15,7 @@ describe('grantEffectRuteRuteDrawAction', () => {
     const card = new CardEntity();
     card.id = 1;
 
-    const ruteruteCard = new GameCardEntity();
+    const ruteruteCard = new GameCardModel();
     ruteruteCard.id = 1;
     ruteruteCard.currentUserId = 'user1';
     ruteruteCard.zone = Zone.BATTLE;
@@ -42,7 +42,7 @@ describe('grantEffectRuteRuteDrawAction', () => {
     const card = new CardEntity();
     card.id = 1;
 
-    const ruteruteCard = new GameCardEntity();
+    const ruteruteCard = new GameCardModel();
     ruteruteCard.id = 1;
     ruteruteCard.currentUserId = 'user1';
     ruteruteCard.zone = Zone.BATTLE;

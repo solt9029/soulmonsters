@@ -4,6 +4,7 @@ import { GameUserModel } from 'src/models/game-user.model';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 import { StateType } from 'src/graphql';
 import { cleanGameStates } from './cleanGameStates';
+import { GameCardModel } from 'src/models/game-card.model';
 
 describe('cleanGameStates', () => {
   it('should remove ATTACK_COUNT and PUT_SOUL_COUNT states for specified user', () => {
@@ -12,7 +13,7 @@ describe('cleanGameStates', () => {
       userId: 'user1',
     });
 
-    const gameCard = new GameCardEntity({
+    const gameCard = new GameCardModel({
       currentUserId: 'user1',
     });
 
@@ -58,7 +59,7 @@ describe('cleanGameStates', () => {
       userId: 'user2',
     });
 
-    const gameCard = new GameCardEntity({
+    const gameCard = new GameCardModel({
       currentUserId: 'user2',
     });
 

@@ -1,12 +1,12 @@
-import { GameCardEntity } from '../../../../entities/game-card.entity';
 import { GameModel } from '../../../../models/game.model';
 import { GameStateModel } from '../../../../models/game-state.model';
 import { Zone, StateType } from '../../../../graphql';
 import { incrementAttackCount } from './incrementAttackCount';
+import { GameCardModel } from 'src/models/game-card.model';
 
 describe('incrementAttackCount', () => {
   it('should create new ATTACK_COUNT state when none exists', () => {
-    const gameCard = new GameCardEntity({
+    const gameCard = new GameCardModel({
       id: 1,
       zone: Zone.BATTLE,
     });
@@ -29,7 +29,7 @@ describe('incrementAttackCount', () => {
   });
 
   it('should increment existing ATTACK_COUNT state value', () => {
-    const gameCard = new GameCardEntity({
+    const gameCard = new GameCardModel({
       id: 1,
       zone: Zone.BATTLE,
     });
