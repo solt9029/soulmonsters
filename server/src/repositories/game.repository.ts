@@ -35,7 +35,7 @@ const toGameCardModel = (entity: GameCardEntity): GameCardModel => {
     card: entity.card,
     game: entity.game,
     gameStates: entity.gameStates,
-    actionTypes: entity.actionTypes,
+    actionTypes: [], // Databaseで保持していないのでEntity => Model化する際には常に空配列がセットされる
     name: entity.name,
     kind: entity.kind,
     type: entity.type,

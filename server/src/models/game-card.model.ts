@@ -44,7 +44,6 @@ export class GameCardModel {
       card: this.card,
       game: this.game,
       gameStates: this.gameStates,
-      actionTypes: this.actionTypes,
       name: this.name,
       kind: this.kind,
       type: this.type,

@@ -19,7 +19,6 @@ import { AppEntity } from './app.entity';
 export class GameCardEntity extends AppEntity<GameCardEntity> {
   constructor(partial?: Partial<GameCardEntity>) {
     super(partial);
-    this.actionTypes = this.actionTypes || [];
   }
 
   @PrimaryGeneratedColumn()
@@ -67,7 +66,6 @@ export class GameCardEntity extends AppEntity<GameCardEntity> {
   )
   gameStates: GameStateEntity[];
 
-  actionTypes: ActionType[];
   name?: string | null;
   kind?: Kind | null;
   type?: Type | null;
