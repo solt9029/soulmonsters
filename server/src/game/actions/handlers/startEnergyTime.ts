@@ -7,5 +7,5 @@ export async function handleStartEnergyTimeAction(manager: EntityManager, userId
   increaseGameUserEnergy(gameModel, userId);
   startEnergyPhase(gameModel);
 
-  await manager.save(gameModel);
+  await manager.save(gameModel.toEntity());
 }

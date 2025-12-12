@@ -4,5 +4,5 @@ import { GameModel } from 'src/models/game.model';
 
 export async function handleStartSomethingTimeAction(manager: EntityManager, gameModel: GameModel) {
   gameModel.phase = Phase.SOMETHING;
-  await manager.save(gameModel);
+  await manager.save(gameModel.toEntity());
 }

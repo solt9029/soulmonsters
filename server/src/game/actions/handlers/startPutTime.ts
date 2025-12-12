@@ -4,5 +4,5 @@ import { GameModel } from '../../../models/game.model';
 
 export async function handleStartPutTimeAction(manager: EntityManager, gameModel: GameModel) {
   gameModel.phase = Phase.PUT;
-  await manager.save(gameModel);
+  await manager.save(gameModel.toEntity());
 }

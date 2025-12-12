@@ -19,7 +19,7 @@ export async function handleSummonMonsterAction(
 
   // TODO: シマシマジュニアの場合、相手のエナジーを1減らし、自分のエナジーを1増やす
 
-  await manager.save(gameModel);
+  await manager.save(gameModel.toEntity());
 
   const gameCardRepository = manager.withRepository(GameCardRepository);
   await gameCardRepository.packHandPositions(gameModel.id, userId, originalPosition);

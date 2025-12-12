@@ -7,5 +7,5 @@ export async function handleStartDrawTimeAction(manager: EntityManager, userId: 
   updateGamePhaseAndTurn(gameModel);
   drawCardFromDeck(gameModel, userId);
 
-  await manager.save(gameModel);
+  await manager.save(gameModel.toEntity());
 }

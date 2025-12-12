@@ -31,7 +31,7 @@ export async function handleAttackAction(
   if (payload.type === 'DIRECT_ATTACK') {
     directAttack(gameModel, payload.attackerCard.id, payload.opponentGameUser.userId);
     incrementAttackCount(gameModel, payload.attackerCard.id);
-    await manager.save(gameModel);
+    await manager.save(gameModel.toEntity());
     return;
   }
 
@@ -40,7 +40,7 @@ export async function handleAttackAction(
 
   monsterBattle(gameModel, payload.attackerCard.id, payload.targetCard.id);
   incrementAttackCount(gameModel, payload.attackerCard.id);
-  await manager.save(gameModel);
+  await manager.save(gameModel.toEntity());
 
   const updatedGameCardZone = gameModel.gameCards.find(card => card.id === payload.attackerCard.id)?.zone;
   const updatedTargetGameCardZone = gameModel.gameCards.find(card => card.id === payload.targetCard.id)?.zone;
