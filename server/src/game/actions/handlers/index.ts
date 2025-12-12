@@ -22,6 +22,7 @@ import { validateStartEndTimeAction } from '../validators/startEndTime';
 import { validateStartSomethingTimeAction } from '../validators/startSomethingTime';
 import { validateStartBattleTimeAction } from '../validators/startBattleTime';
 import { validateFinishEndTimeAction } from '../validators/finishEndTime';
+import { validateEffectRuteruteDrawAction } from '../validators/effectRuteruteDraw';
 
 // TODO: userIdよりもgameUserIdを受け取った方が便利かも？だけど、現状はgameCardがuserIdしか持っていないっぽいのでやや不便か？
 // 理想メモ: game, gameUserId, opponentGameUser, data, manager
@@ -72,7 +73,8 @@ export async function handleAction(
       return await handleFinishEndTimeAction(manager, payload, gameModel);
     }
     case ActionType.EFFECT_RUTERUTE_DRAW: {
-      return await handleEffectRuteruteDraw(manager, userId, data, gameModel);
+      const payload = validateEffectRuteruteDrawAction(data, gameModel);
+      return await handleEffectRuteruteDraw(manager, userId, payload, gameModel);
     }
     default: {
       return;
