@@ -27,7 +27,6 @@ export class GameUserModel {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       deck: this.deck,
-      actionTypes: this.actionTypes,
     });
   }
 }

@@ -10,7 +10,6 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Unique, CreateDateCo
 export class GameUserEntity extends AppEntity<GameUserEntity> {
   constructor(partial?: Partial<GameUserEntity>) {
     super(partial);
-    this.actionTypes = this.actionTypes || [];
   }
 
   @PrimaryGeneratedColumn()
@@ -46,6 +45,4 @@ export class GameUserEntity extends AppEntity<GameUserEntity> {
     { onDelete: 'CASCADE' },
   )
   game: GameEntity;
-
-  actionTypes: ActionType[];
 }

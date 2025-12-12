@@ -18,7 +18,7 @@ const toGameUserModel = (entity: GameUserEntity): GameUserModel => {
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
     deck: entity.deck,
-    actionTypes: entity.actionTypes,
+    actionTypes: [], // Databaseで保持していないのでEntity => Model化する際には常に空配列がセットされる
   });
 };
 
