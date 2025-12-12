@@ -1,6 +1,6 @@
 import { GameStateEntity } from '../entities/game-state.entity';
 import { StateType } from '../graphql/index';
-import { GameCardModel } from './game-card.model';
+import type { GameCardModel } from './game-card.model';
 
 type State =
   | {
