@@ -7,6 +7,18 @@ import { GameUserEntity } from 'src/entities/game-user.entity';
 import { GameUserModel } from 'src/models/game-user.model';
 import { GameCardEntity } from 'src/entities/game-card.entity';
 import { GameCardModel } from 'src/models/game-card.model';
+import { DeckModel } from 'src/models/deck.model';
+import { DeckEntity } from 'src/entities/deck.entity';
+
+const toDeckModel = (entity: DeckEntity): DeckModel => {
+  return new DeckModel({
+    id: entity.id,
+    userId: entity.userId,
+    name: entity.name,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+  });
+};
 
 const toGameUserModel = (entity: GameUserEntity): GameUserModel => {
   return new GameUserModel({
@@ -17,7 +29,7 @@ const toGameUserModel = (entity: GameUserEntity): GameUserModel => {
     lastViewedAt: entity.lastViewedAt,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
-    deck: entity.deck,
+    deck: toDeckModel(entity.deck),
     actionTypes: [], // Databaseで保持していないのでEntity => Model化する際には常に空配列がセットされる
   });
 };

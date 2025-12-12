@@ -1,6 +1,7 @@
 import { ActionType } from '../graphql/index';
 import { DeckEntity } from '../entities/deck.entity';
 import { GameUserEntity } from '../entities/game-user.entity';
+import { DeckModel } from './deck.model';
 
 export class GameUserModel {
   constructor(partial?: Partial<GameUserModel>) {
@@ -14,7 +15,7 @@ export class GameUserModel {
   lastViewedAt: Date;
   createdAt: Date;
   updatedAt: Date;
-  deck: DeckEntity;
+  deck: DeckModel;
   actionTypes: ActionType[];
 
   toEntity(): GameUserEntity {
@@ -26,7 +27,7 @@ export class GameUserModel {
       lastViewedAt: this.lastViewedAt,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      deck: this.deck,
+      deck: this.deck?.toEntity(),
     });
   }
 }
