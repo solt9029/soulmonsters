@@ -20,6 +20,7 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { CardRepository } from 'src/repositories/card.repository';
 import { DeckRepository } from 'src/repositories/deck.repository';
 import { DeckCardRepository } from 'src/repositories/deck-card.repository';
+import { GameRepository } from 'src/repositories/game.repository';
 import { GameCardRepository } from 'src/repositories/game-card.repository';
 import { GameUserRepository } from 'src/repositories/game-user.repository';
 import { CardPresenter } from 'src/presenters/card.presenter';
@@ -68,6 +69,7 @@ import { GameStateRepository } from 'src/repositories/game-state.repository';
     CardRepository,
     DeckRepository,
     DeckCardRepository,
+    GameRepository,
     GameCardRepository,
     GameUserRepository,
     GameStateRepository,

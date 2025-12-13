@@ -3,7 +3,7 @@ import { handleAction } from 'src/game/actions/handlers/index';
 import { GameActionDispatchInput } from 'src/graphql/index';
 import { GameModel } from 'src/models/game.model';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { GameCardRepository } from 'src/repositories/game-card.repository';
 import { GameUserRepository } from 'src/repositories/game-user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
@@ -18,20 +18,20 @@ export class GameService {
     private dataSource: DataSource,
     private gameCardRepository: GameCardRepository,
     private gameUserRepository: GameUserRepository,
+    private gameRepository: GameRepository,
   ) {}
 
   async findActiveGameByUserId(userId: string): Promise<GameModel | null> {
-    return await GameRepository.findActiveGameByUserId(userId);
+    return await this.gameRepository.findActiveGameByUserId(userId);
   }
 
   async findById(id: number): Promise<GameModel | null> {
-    return await GameRepository.findByIdWithRelations(id);
+    return await this.gameRepository.findByIdWithRelations(id);
   }
 
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
     return this.dataSource.transaction(async manager => {
-      const gameRepository = manager.withRepository(GameRepository);
-      const gameEntity = await gameRepository.findByIdWithRelationsAndLock(id);
+      const gameEntity = await this.gameRepository.findByIdWithRelationsAndLock(id, manager);
 
       if (!gameEntity) {
         throw new Error('Game not found');
@@ -51,9 +51,7 @@ export class GameService {
 
   async start(userId: string, deckId: number) {
     return this.dataSource.transaction(async manager => {
-      const gameRepository = manager.withRepository(GameRepository);
-
-      const userActiveGameEntity = await gameRepository.findActiveGameByUserId(userId);
+      const userActiveGameEntity = await this.gameRepository.findActiveGameByUserId(userId, manager);
 
       if (userActiveGameEntity !== null) {
         throw new BadRequestException('User Active');
@@ -81,7 +79,7 @@ export class GameService {
 
       // If waiting game does not exist, create new game
       if (waitingGameId === undefined) {
-        const gameInsertResult = await gameRepository.insert({});
+        const gameInsertResult = await this.gameRepository.insert({}, manager);
 
         if (!gameInsertResult.identifiers[0]) {
           throw new Error('Failed to create game');
@@ -101,11 +99,11 @@ export class GameService {
           manager,
         );
 
-        return await gameRepository.findByIdWithGameUsersAndDeck(gameId);
+        return await this.gameRepository.findByIdWithGameUsersAndDeck(gameId, manager);
       }
 
       // join the waiting game
-      const waitingGameEntity = await gameRepository.findByIdWithRelationsAndLock(waitingGameId);
+      const waitingGameEntity = await this.gameRepository.findByIdWithRelationsAndLock(waitingGameId, manager);
 
       if (!waitingGameEntity) {
         throw new Error('Waiting game not found');
@@ -139,9 +137,9 @@ export class GameService {
         manager,
       );
 
-      await gameRepository.update({ id: waitingGameEntity.id }, { startedAt: new Date(), turnUserId });
+      await this.gameRepository.update({ id: waitingGameEntity.id }, { startedAt: new Date(), turnUserId }, manager);
 
-      return await gameRepository.findByIdWithGameUsersAndDeck(waitingGameEntity.id);
+      return await this.gameRepository.findByIdWithGameUsersAndDeck(waitingGameEntity.id, manager);
     });
   }
 }

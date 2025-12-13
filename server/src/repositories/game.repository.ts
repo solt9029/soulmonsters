@@ -1,44 +1,41 @@
-import { AppDataSource } from '../dataSource';
 import { GameEntity } from '../entities/game.entity';
 import { GameModel } from '../models/game.model';
 import { GameToModelMapper } from '../mappers/to-model/game.to-model.mapper';
-import { GameUserToModelMapper } from '../mappers/to-model/game-user.to-model.mapper';
-import { GameCardToModelMapper } from '../mappers/to-model/game-card.to-model.mapper';
-import { GameStateToModelMapper } from '../mappers/to-model/game-state.to-model.mapper';
-import { DeckToModelMapper } from '../mappers/to-model/deck.to-model.mapper';
-import { CardToModelMapper } from '../mappers/to-model/card.to-model.mapper';
+import { DataSource, EntityManager, InsertResult, FindOptionsWhere } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 
-const cardToModelMapper = new CardToModelMapper();
-const deckToModelMapper = new DeckToModelMapper();
-const gameStateToModelMapper = new GameStateToModelMapper();
-const gameUserToModelMapper = new GameUserToModelMapper(deckToModelMapper);
-const gameCardToModelMapper = new GameCardToModelMapper(cardToModelMapper);
-const gameToModelMapper = new GameToModelMapper(gameUserToModelMapper, gameCardToModelMapper, gameStateToModelMapper);
+@Injectable()
+export class GameRepository {
+  constructor(private readonly dataSource: DataSource, private readonly gameToModelMapper: GameToModelMapper) {}
 
-// TODO: CardRepositoryやDeckRepositoryと同様に@Injectable()化する
-// TODO: 各メソッドで同様にEntityManagerを受け取れるようにする
-export const GameRepository = AppDataSource.getRepository(GameEntity).extend({
-  async findActiveGameByUserId(userId: string): Promise<GameModel | null> {
-    const entity = await this.createQueryBuilder('games')
+  private getEntityRepository(manager?: EntityManager) {
+    const entityManager = manager ?? this.dataSource.manager;
+    return entityManager.getRepository(GameEntity);
+  }
+
+  async findActiveGameByUserId(userId: string, manager?: EntityManager): Promise<GameModel | null> {
+    const entity = await this.getEntityRepository(manager)
+      .createQueryBuilder('games')
       .leftJoinAndSelect('games.gameUsers', 'gameUsers')
       .where('games.winnerUserId IS NULL')
       .andWhere('gameUsers.userId = :userId', { userId })
       .getOne();
 
-    return entity ? gameToModelMapper.toModel(entity) : null;
-  },
+    return entity ? this.gameToModelMapper.toModel(entity) : null;
+  }
 
-  async findByIdWithRelations(id: number): Promise<GameModel | null> {
-    const entity = await this.findOne({
+  async findByIdWithRelations(id: number, manager?: EntityManager): Promise<GameModel | null> {
+    const entity = await this.getEntityRepository(manager).findOne({
       where: { id },
       relations: ['gameUsers', 'gameUsers.deck', 'gameCards', 'gameCards.card', 'gameStates', 'gameStates.gameCard'],
     });
 
-    return entity ? gameToModelMapper.toModel(entity) : null;
-  },
+    return entity ? this.gameToModelMapper.toModel(entity) : null;
+  }
 
-  async findByIdWithRelationsAndLock(id: number): Promise<GameModel | null> {
-    const entity = await this.createQueryBuilder('games')
+  async findByIdWithRelationsAndLock(id: number, manager?: EntityManager): Promise<GameModel | null> {
+    const entity = await this.getEntityRepository(manager)
+      .createQueryBuilder('games')
       .setLock('pessimistic_read')
       .leftJoinAndSelect('games.gameUsers', 'gameUsers')
       .leftJoinAndSelect('games.gameCards', 'gameCards')
@@ -48,15 +45,27 @@ export const GameRepository = AppDataSource.getRepository(GameEntity).extend({
       .where('games.id = :id', { id })
       .getOne();
 
-    return entity ? gameToModelMapper.toModel(entity) : null;
-  },
+    return entity ? this.gameToModelMapper.toModel(entity) : null;
+  }
 
-  async findByIdWithGameUsersAndDeck(id: number): Promise<GameModel | null> {
-    const entity = await this.findOne({
+  async findByIdWithGameUsersAndDeck(id: number, manager?: EntityManager): Promise<GameModel | null> {
+    const entity = await this.getEntityRepository(manager).findOne({
       where: { id },
       relations: ['gameUsers', 'gameUsers.deck'],
     });
 
-    return entity ? gameToModelMapper.toModel(entity) : null;
-  },
-});
+    return entity ? this.gameToModelMapper.toModel(entity) : null;
+  }
+
+  async insert(data: Partial<GameEntity>, manager?: EntityManager): Promise<InsertResult> {
+    return await this.getEntityRepository(manager).insert(data);
+  }
+
+  async update(
+    criteria: FindOptionsWhere<GameEntity>,
+    data: Partial<GameEntity>,
+    manager?: EntityManager,
+  ): Promise<void> {
+    await this.getEntityRepository(manager).update(criteria, data);
+  }
+}
