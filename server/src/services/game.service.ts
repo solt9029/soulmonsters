@@ -11,11 +11,14 @@ import { DeckCardEntity } from 'src/entities/deck-card.entity';
 import { grantActions } from 'src/game/actions/grantors/index';
 import { initializeGameCards } from 'src/game/initializers';
 import { reflectStates } from 'src/game/states/reflectors';
-import { GameCardEntity } from 'src/entities/game-card.entity';
 
 @Injectable()
 export class GameService {
-  constructor(private dataSource: DataSource) {}
+  constructor(
+    private dataSource: DataSource,
+    private gameCardRepository: GameCardRepository,
+    private gameUserRepository: GameUserRepository,
+  ) {}
 
   async findActiveGameByUserId(userId: string): Promise<GameModel | null> {
     return await GameRepository.findActiveGameByUserId(userId);
@@ -49,8 +52,6 @@ export class GameService {
   async start(userId: string, deckId: number) {
     return this.dataSource.transaction(async manager => {
       const gameRepository = manager.withRepository(GameRepository);
-      const gameUserRepository = manager.withRepository(GameUserRepository);
-      const gameCardRepository = manager.getRepository(GameCardEntity);
 
       const userActiveGameEntity = await gameRepository.findActiveGameByUserId(userId);
 
@@ -76,7 +77,7 @@ export class GameService {
         throw new BadRequestException('Min Count');
       }
 
-      const waitingGameId = await gameUserRepository.findWaitingGameId();
+      const waitingGameId = await this.gameUserRepository.findWaitingGameId(manager);
 
       // If waiting game does not exist, create new game
       if (waitingGameId === undefined) {
@@ -89,13 +90,16 @@ export class GameService {
         const gameId = gameInsertResult.identifiers[0].id;
         const gameCardEntities = initializeGameCards(deckCardEntities, gameId);
 
-        await gameCardRepository.insert(gameCardEntities);
-        await gameUserRepository.insert({
-          userId,
-          deck: { id: deckId },
-          lastViewedAt: new Date(),
-          game: { id: gameId },
-        });
+        await this.gameCardRepository.insert(gameCardEntities, manager);
+        await this.gameUserRepository.insert(
+          {
+            userId,
+            deck: { id: deckId },
+            lastViewedAt: new Date(),
+            game: { id: gameId },
+          },
+          manager,
+        );
 
         return await gameRepository.findByIdWithGameUsersAndDeck(gameId);
       }
@@ -108,7 +112,7 @@ export class GameService {
       }
 
       const gameCardEntities = initializeGameCards(deckCardEntities, waitingGameEntity.id);
-      await gameCardRepository.insert(gameCardEntities);
+      await this.gameCardRepository.insert(gameCardEntities, manager);
 
       const existingGameUser = waitingGameEntity.gameUsers[0];
 
@@ -118,15 +122,22 @@ export class GameService {
 
       const turnUserId = Math.floor(Math.random() * 2) === 1 ? existingGameUser.userId : userId;
 
-      await gameUserRepository.insert({
-        userId,
-        deck: { id: deckId },
-        energy: turnUserId === userId ? 0 : 1,
-        lastViewedAt: new Date(),
-        game: { id: waitingGameEntity.id },
-      });
+      await this.gameUserRepository.insert(
+        {
+          userId,
+          deck: { id: deckId },
+          energy: turnUserId === userId ? 0 : 1,
+          lastViewedAt: new Date(),
+          game: { id: waitingGameEntity.id },
+        },
+        manager,
+      );
 
-      await gameUserRepository.update({ userId: existingGameUser.userId }, { energy: turnUserId === userId ? 1 : 0 });
+      await this.gameUserRepository.update(
+        { userId: existingGameUser.userId },
+        { energy: turnUserId === userId ? 1 : 0 },
+        manager,
+      );
 
       await gameRepository.update({ id: waitingGameEntity.id }, { startedAt: new Date(), turnUserId });
 
