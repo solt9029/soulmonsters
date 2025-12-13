@@ -1,6 +1,9 @@
 import { DeckModel } from 'src/models/deck.model';
 import { AppDataSource } from '../dataSource';
 import { DeckEntity } from '../entities/deck.entity';
+import { DeckToModelMapper } from '../mappers/to-model/deck.to-model.mapper';
+
+const deckToModelMapper = new DeckToModelMapper();
 
 export const DeckRepository = AppDataSource.getRepository(DeckEntity).extend({
   async findById(id: number): Promise<DeckModel | null> {
@@ -9,27 +12,13 @@ export const DeckRepository = AppDataSource.getRepository(DeckEntity).extend({
       return null;
     }
 
-    return new DeckModel({
-      id: entity.id,
-      userId: entity.userId,
-      name: entity.name,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-    });
+    return deckToModelMapper.toModel(entity);
   },
 
   async findByUserId(userId: string): Promise<DeckModel[]> {
     const entities = await this.find({ where: { userId } });
 
-    return entities.map(entity => {
-      return new DeckModel({
-        id: entity.id,
-        userId: entity.userId,
-        name: entity.name,
-        createdAt: entity.createdAt,
-        updatedAt: entity.updatedAt,
-      });
-    });
+    return entities.map(entity => deckToModelMapper.toModel(entity));
   },
 
   async createDeck(userId: string, name: string): Promise<DeckModel> {
@@ -43,12 +32,6 @@ export const DeckRepository = AppDataSource.getRepository(DeckEntity).extend({
       throw new Error('Deck not found after creation');
     }
 
-    return new DeckModel({
-      id: entity.id,
-      userId: entity.userId,
-      name: entity.name,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-    });
+    return deckToModelMapper.toModel(entity);
   },
 });

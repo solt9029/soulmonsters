@@ -1,36 +1,13 @@
 import { AppDataSource } from '../dataSource';
 import { DeckCardEntity } from '../entities/deck-card.entity';
 import { DeckCardModel } from '../models/deck-card.model';
-import { CardModel } from '../models/card.model';
-import { DeckModel } from '../models/deck.model';
+import { DeckCardToModelMapper } from '../mappers/to-model/deck-card.to-model.mapper';
+import { CardToModelMapper } from '../mappers/to-model/card.to-model.mapper';
+import { DeckToModelMapper } from '../mappers/to-model/deck.to-model.mapper';
 
-const entityToModel = (entity: DeckCardEntity): DeckCardModel => {
-  return new DeckCardModel({
-    id: entity.id,
-    count: entity.count,
-    createdAt: entity.createdAt,
-    updatedAt: entity.updatedAt,
-    card: new CardModel({
-      id: entity.card.id,
-      name: entity.card.name,
-      kind: entity.card.kind,
-      type: entity.card.type,
-      attribute: entity.card.attribute,
-      attack: entity.card.attack,
-      defence: entity.card.defence,
-      cost: entity.card.cost,
-      detail: entity.card.detail,
-      picture: entity.card.picture,
-    }),
-    deck: new DeckModel({
-      id: entity.deck.id,
-      userId: entity.deck.userId,
-      name: entity.deck.name,
-      createdAt: entity.deck.createdAt,
-      updatedAt: entity.deck.updatedAt,
-    }),
-  });
-};
+const cardToModelMapper = new CardToModelMapper();
+const deckToModelMapper = new DeckToModelMapper();
+const deckCardToModelMapper = new DeckCardToModelMapper(cardToModelMapper, deckToModelMapper);
 
 export const DeckCardRepository = AppDataSource.getRepository(DeckCardEntity).extend({
   async findByDeckId(deckId: number): Promise<DeckCardModel[]> {
@@ -39,7 +16,7 @@ export const DeckCardRepository = AppDataSource.getRepository(DeckCardEntity).ex
       relations: ['card', 'deck'],
     });
 
-    return entities.map(entityToModel);
+    return entities.map(entity => deckCardToModelMapper.toModel(entity));
   },
 
   async findByDeckIdAndCardId(deckId: number, cardId: number): Promise<DeckCardModel | null> {
@@ -52,7 +29,7 @@ export const DeckCardRepository = AppDataSource.getRepository(DeckCardEntity).ex
       return null;
     }
 
-    return entityToModel(entity);
+    return deckCardToModelMapper.toModel(entity);
   },
 
   async updateCountById(id: number, count: number): Promise<DeckCardModel> {
@@ -65,7 +42,7 @@ export const DeckCardRepository = AppDataSource.getRepository(DeckCardEntity).ex
       throw new Error('Deck card not found after update');
     }
 
-    return entityToModel(entity);
+    return deckCardToModelMapper.toModel(entity);
   },
 
   async createDeckCard(deckId: number, cardId: number): Promise<DeckCardModel> {
@@ -82,7 +59,7 @@ export const DeckCardRepository = AppDataSource.getRepository(DeckCardEntity).ex
       throw new Error('Deck card not found after creation');
     }
 
-    return entityToModel(entity);
+    return deckCardToModelMapper.toModel(entity);
   },
 
   async deleteDeckCard(id: number): Promise<DeckCardModel> {
@@ -95,6 +72,6 @@ export const DeckCardRepository = AppDataSource.getRepository(DeckCardEntity).ex
     }
     await this.delete({ id });
 
-    return entityToModel(entity);
+    return deckCardToModelMapper.toModel(entity);
   },
 });
