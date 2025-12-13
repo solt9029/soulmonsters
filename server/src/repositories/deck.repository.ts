@@ -1,29 +1,40 @@
 import { DeckModel } from 'src/models/deck.model';
-import { AppDataSource } from '../dataSource';
 import { DeckEntity } from '../entities/deck.entity';
 import { DeckToModelMapper } from '../mappers/to-model/deck.to-model.mapper';
+import { DataSource, EntityManager } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 
-const deckToModelMapper = new DeckToModelMapper();
+@Injectable()
+export class DeckRepository {
+  constructor(private readonly dataSource: DataSource, private readonly deckToModelMapper: DeckToModelMapper) {}
 
-export const DeckRepository = AppDataSource.getRepository(DeckEntity).extend({
-  async findById(id: number): Promise<DeckModel | null> {
-    const entity = await this.findOne({ where: { id } });
+  async findById(id: number, manager?: EntityManager): Promise<DeckModel | null> {
+    const entityManager = manager ?? this.dataSource.manager;
+    const entityRepository = entityManager.getRepository(DeckEntity);
+
+    const entity = await entityRepository.findOne({ where: { id } });
     if (!entity) {
       return null;
     }
 
-    return deckToModelMapper.toModel(entity);
-  },
+    return this.deckToModelMapper.toModel(entity);
+  }
 
-  async findByUserId(userId: string): Promise<DeckModel[]> {
-    const entities = await this.find({ where: { userId } });
+  async findByUserId(userId: string, manager?: EntityManager): Promise<DeckModel[]> {
+    const entityManager = manager ?? this.dataSource.manager;
+    const entityRepository = entityManager.getRepository(DeckEntity);
 
-    return entities.map(entity => deckToModelMapper.toModel(entity));
-  },
+    const entities = await entityRepository.find({ where: { userId } });
 
-  async createDeck(userId: string, name: string): Promise<DeckModel> {
-    const insertResult = await this.insert({ userId, name });
-    const entity = await this.findOne({
+    return entities.map(entity => this.deckToModelMapper.toModel(entity));
+  }
+
+  async createDeck(userId: string, name: string, manager?: EntityManager): Promise<DeckModel> {
+    const entityManager = manager ?? this.dataSource.manager;
+    const entityRepository = entityManager.getRepository(DeckEntity);
+
+    const insertResult = await entityRepository.insert({ userId, name });
+    const entity = await entityRepository.findOne({
       where: {
         id: insertResult.identifiers[0]?.id,
       },
@@ -32,6 +43,6 @@ export const DeckRepository = AppDataSource.getRepository(DeckEntity).extend({
       throw new Error('Deck not found after creation');
     }
 
-    return deckToModelMapper.toModel(entity);
-  },
-});
+    return this.deckToModelMapper.toModel(entity);
+  }
+}

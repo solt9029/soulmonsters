@@ -1,7 +1,7 @@
 import { ValidatedDeckCreateInput } from 'src/inputs/validated-deck-create.input';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { UseGuards, Inject } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { DeckPresenter } from 'src/presenters/deck.presenter';
@@ -11,8 +11,7 @@ import { DeckRepository } from 'src/repositories/deck.repository';
 @UseGuards(AuthGuard)
 export class DeckResolver {
   constructor(
-    @Inject('DeckRepository')
-    private readonly deckRepository: typeof DeckRepository,
+    private readonly deckRepository: DeckRepository,
     private readonly deckPresenter: DeckPresenter,
   ) {}
 
