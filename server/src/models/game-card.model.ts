@@ -17,7 +17,7 @@ export class GameCardModel {
   battlePosition: BattlePosition;
   createdAt: Date;
   updatedAt: Date;
-  card: CardEntity;
+  card: CardEntity; // TODO: CardModel
   gameStates: GameStateEntity[];
   actionTypes: ActionType[];
   name?: string | null;
