@@ -7,7 +7,7 @@ import { GameCardRepository } from 'src/repositories/game-card.repository';
 import { GameUserRepository } from 'src/repositories/game-user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
 import { DeckCardEntity } from 'src/entities/deck-card.entity';
-import { grantActions } from 'src/game/actions/grantors/index';
+import { GameActionGrantor } from 'src/game/actions/grantors/game.action.grantor';
 import { initializeGameCards } from 'src/game/initializers';
 import { reflectStates } from 'src/game/states/reflectors';
 
@@ -18,6 +18,7 @@ export class GameService {
     private gameCardRepository: GameCardRepository,
     private gameUserRepository: GameUserRepository,
     private gameRepository: GameRepository,
+    private gameActionGrantor: GameActionGrantor,
   ) {}
 
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
@@ -29,7 +30,7 @@ export class GameService {
       }
 
       // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
-      const grantedGameModel = grantActions(gameModel, userId);
+      const grantedGameModel = this.gameActionGrantor.grantActions(gameModel, userId);
 
       // GameState 状態を GameCard に反映する（攻撃力の減少など）
       const statusReflectedGameModel = reflectStates(grantedGameModel, userId);

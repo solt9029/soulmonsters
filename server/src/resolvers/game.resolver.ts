@@ -7,7 +7,7 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
-import { grantActions } from 'src/game/actions/grantors/index';
+import { GameActionGrantor } from 'src/game/actions/grantors/game.action.grantor';
 import { reflectStates } from 'src/game/states/reflectors';
 import { GamePresenter } from 'src/presenters/game.presenter';
 
@@ -19,6 +19,7 @@ export class GameResolver {
     private readonly gameRepository: GameRepository,
     private readonly userService: UserService,
     private readonly gamePresenter: GamePresenter,
+    private readonly gameActionGrantor: GameActionGrantor,
   ) {}
 
   @Query()
@@ -37,7 +38,7 @@ export class GameResolver {
     );
 
     gameEntity = reflectStates(gameEntity, user.uid);
-    gameEntity = grantActions(gameEntity, user.uid);
+    gameEntity = this.gameActionGrantor.grantActions(gameEntity, user.uid);
 
     return this.gamePresenter.present(gameEntity, users);
   }
