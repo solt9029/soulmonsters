@@ -1,7 +1,7 @@
 import { CardToModelMapper } from './../mappers/to-model/card.to-model.mapper';
 import { CardModel } from 'src/models/card.model';
 import { CardEntity } from '../entities/card.entity';
-import { DataSource, EntityManager, In } from 'typeorm';
+import { DataSource, EntityManager } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
