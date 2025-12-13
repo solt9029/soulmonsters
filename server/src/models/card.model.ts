@@ -1,6 +1,3 @@
-import { CardEntity } from 'src/entities/card.entity';
-import { CardToEntityMapper } from '../mappers/to-entity/card.to-entity.mapper';
-
 enum Kind {
   MONSTER = 'MONSTER',
   CIRCLE_MONSTER = 'CIRCLE_MONSTER',
