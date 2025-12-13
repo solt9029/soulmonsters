@@ -11,6 +11,7 @@ export class GameCardRepository {
     return entityManager.getRepository(GameCardEntity);
   }
 
+  // TODO: インターフェースをModelベースに変更する（EntityをRepositoryの外部に露出させない）
   async insert(entities: Partial<GameCardEntity>[], manager?: EntityManager): Promise<InsertResult> {
     return await this.getEntityRepository(manager).insert(entities);
   }
