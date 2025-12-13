@@ -53,6 +53,9 @@ export class GameCardEntity extends AppEntity<GameCardEntity> {
   )
   card: CardEntity;
 
+  @Column()
+  cardId: number;
+
   @ManyToOne(
     () => GameEntity,
     gameEntity => gameEntity.gameCards,

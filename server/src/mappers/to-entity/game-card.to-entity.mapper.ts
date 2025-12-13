@@ -17,7 +17,7 @@ export class GameCardToEntityMapper {
       battlePosition: model.battlePosition,
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
-      card: model.card ? this.cardToEntityMapper.toEntity(model.card) : undefined,
+      cardId: model.card?.id, // カードの中身が書き変わってしまわないようにIDだけをセットしている
       name: model.name,
       kind: model.kind,
       type: model.type,
