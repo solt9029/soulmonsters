@@ -18,20 +18,20 @@ export class CardEntity extends AppEntity<CardEntity> {
   @Column()
   type: Type;
 
-  @Column({ nullable: true })
-  attribute: Attribute;
+  @Column('varchar', { nullable: true })
+  attribute: Attribute | null;
 
-  @Column({ nullable: true })
-  attack: number;
+  @Column('int', { nullable: true })
+  attack: number | null;
 
-  @Column({ nullable: true })
-  defence: number;
+  @Column('int', { nullable: true })
+  defence: number | null;
 
-  @Column({ nullable: true })
-  cost: number;
+  @Column('int', { nullable: true })
+  cost: number | null;
 
   @Column('text', { nullable: true })
-  detail: string;
+  detail: string | null;
 
   @Column('text')
   picture: string;

@@ -10,23 +10,23 @@ export class GameEntity extends AppEntity<GameEntity> {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column('varchar', { nullable: true })
   turnUserId: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column('varchar', { nullable: true })
   phase: Phase | null;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column('varchar', { nullable: true })
   winnerUserId: string | null;
 
   @Column({ default: 0 })
   turnCount: number;
 
-  @Column({ nullable: true })
-  startedAt: Date;
+  @Column('datetime', { nullable: true })
+  startedAt: Date | null;
 
-  @Column({ nullable: true })
-  endedAt: Date;
+  @Column('datetime', { nullable: true })
+  endedAt: Date | null;
 
   @CreateDateColumn()
   createdAt: Date;

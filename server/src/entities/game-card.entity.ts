@@ -38,8 +38,8 @@ export class GameCardEntity extends AppEntity<GameCardEntity> {
   @Column()
   position: number;
 
-  @Column({ nullable: true })
-  battlePosition: BattlePosition;
+  @Column('varchar', { nullable: true })
+  battlePosition: BattlePosition | null;
 
   @CreateDateColumn()
   createdAt: Date;

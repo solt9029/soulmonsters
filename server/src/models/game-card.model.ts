@@ -12,7 +12,7 @@ export class GameCardModel {
   currentUserId: string;
   zone: Zone;
   position: number;
-  battlePosition: BattlePosition;
+  battlePosition: BattlePosition | null;
   createdAt: Date;
   updatedAt: Date;
   card: CardModel;
