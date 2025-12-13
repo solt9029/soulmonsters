@@ -26,6 +26,7 @@ import { DeckPresenter } from 'src/presenters/deck.presenter';
 import { GameCardPresenter } from 'src/presenters/game-card.presenter';
 import { GamePresenter } from 'src/presenters/game.presenter';
 import { GameUserPresenter } from 'src/presenters/game-user.presenter';
+import { CardToModelMapper } from 'src/mappers/to-model/card.to-model.mapper';
 
 @Module({
   imports: [
@@ -56,10 +57,6 @@ import { GameUserPresenter } from 'src/presenters/game-user.presenter';
   controllers: [AppController],
   providers: [
     {
-      provide: 'CardRepository',
-      useValue: CardRepository,
-    },
-    {
       provide: 'DeckRepository',
       useValue: DeckRepository,
     },
@@ -67,6 +64,7 @@ import { GameUserPresenter } from 'src/presenters/game-user.presenter';
       provide: 'DeckCardRepository',
       useValue: DeckCardRepository,
     },
+    CardRepository,
     UserService,
     DeckResolver,
     CardResolver,
@@ -79,6 +77,7 @@ import { GameUserPresenter } from 'src/presenters/game-user.presenter';
     GameCardPresenter,
     GamePresenter,
     GameUserPresenter,
+    CardToModelMapper,
   ],
 })
 export class AppModule {}

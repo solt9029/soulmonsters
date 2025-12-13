@@ -1,15 +1,10 @@
 import { Resolver, Query } from '@nestjs/graphql';
-import { Inject } from '@nestjs/common';
 import { CardPresenter } from 'src/presenters/card.presenter';
 import { CardRepository } from 'src/repositories/card.repository';
 
 @Resolver()
 export class CardResolver {
-  constructor(
-    @Inject('CardRepository')
-    private readonly cardRepository: typeof CardRepository,
-    private readonly cardPresenter: CardPresenter,
-  ) {}
+  constructor(private readonly cardRepository: CardRepository, private readonly cardPresenter: CardPresenter) {}
 
   @Query()
   async cards() {

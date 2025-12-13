@@ -1,14 +1,18 @@
+import { CardToModelMapper } from './../mappers/to-model/card.to-model.mapper';
 import { CardModel } from 'src/models/card.model';
-import { AppDataSource } from '../dataSource';
 import { CardEntity } from '../entities/card.entity';
-import { CardToModelMapper } from '../mappers/to-model/card.to-model.mapper';
+import { DataSource, EntityManager, In } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 
-const cardToModelMapper = new CardToModelMapper();
+@Injectable()
+export class CardRepository {
+  constructor(private readonly dataSource: DataSource, private readonly cardToModelMapper: CardToModelMapper) {}
 
-export const CardRepository = AppDataSource.getRepository(CardEntity).extend({
-  async findAll(): Promise<CardModel[]> {
-    const cardEntities = await this.find();
+  async findAll(manager?: EntityManager): Promise<CardModel[]> {
+    const entityManager = manager ?? this.dataSource.manager;
+    const entityRepository = await entityManager.getRepository(CardEntity);
 
-    return cardEntities.map(entity => cardToModelMapper.toModel(entity));
-  },
-});
+    const entities = await entityRepository.find();
+    return entities.map(entity => this.cardToModelMapper.toModel(entity));
+  }
+}
