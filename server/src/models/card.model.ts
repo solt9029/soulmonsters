@@ -31,10 +31,10 @@ export class CardModel {
   name: string;
   kind: Kind;
   type: Type;
-  attribute: Attribute | null;
-  attack: number | null;
-  defence: number | null;
-  cost: number | null;
-  detail: string | null;
+  attribute: Attribute;
+  attack: number;
+  defence: number;
+  cost: number;
+  detail: string;
   picture: string;
 }

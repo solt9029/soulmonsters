@@ -2,6 +2,7 @@ import { GameCardEntity } from '../entities/game-card.entity';
 import { GameStateEntity } from '../entities/game-state.entity';
 import { CardEntity } from '../entities/card.entity';
 import { Zone, BattlePosition, ActionType, Kind, Type, Attribute } from '../graphql/index';
+import { CardModel } from './card.model';
 
 export class GameCardModel {
   constructor(partial?: Partial<GameCardModel>) {
@@ -17,7 +18,7 @@ export class GameCardModel {
   battlePosition: BattlePosition;
   createdAt: Date;
   updatedAt: Date;
-  card: CardEntity; // TODO: CardModel
+  card: CardModel;
   gameStates: GameStateEntity[];
   actionTypes: ActionType[];
   name?: string | null;
@@ -39,7 +40,17 @@ export class GameCardModel {
       battlePosition: this.battlePosition,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      card: this.card,
+      card: new CardEntity({
+        id: this.card.id,
+        name: this.card.name,
+        kind: this.card.kind,
+        type: this.card.type,
+        attribute: this.card.attribute,
+        attack: this.card.attack,
+        defence: this.card.defence,
+        cost: this.card.cost,
+        detail: this.card.detail,
+      }),
       gameStates: this.gameStates,
       name: this.name,
       kind: this.kind,

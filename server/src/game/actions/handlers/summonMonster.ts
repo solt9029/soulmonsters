@@ -14,7 +14,7 @@ export async function handleSummonMonsterAction(
   const gameCard = gameModel.gameCards.find(value => value.id === data.payload.gameCardId)!;
   const originalPosition = gameCard.position;
 
-  subtractUserEnergy(gameModel, userId, gameCard.card.cost);
+  subtractUserEnergy(gameModel, userId, gameCard.card.cost!);
   summonGameCard(gameModel, userId, data.payload.gameCardId!);
 
   // TODO: シマシマジュニアの場合、相手のエナジーを1減らし、自分のエナジーを1増やす
