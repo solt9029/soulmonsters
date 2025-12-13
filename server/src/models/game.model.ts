@@ -3,6 +3,12 @@ import { Phase } from '../graphql/index';
 import { GameUserModel } from './game-user.model';
 import { GameStateModel } from './game-state.model';
 import { GameCardModel } from './game-card.model';
+import { GameToEntityMapper } from '../mappers/to-entity/game.to-entity.mapper';
+import { GameUserToEntityMapper } from '../mappers/to-entity/game-user.to-entity.mapper';
+import { GameCardToEntityMapper } from '../mappers/to-entity/game-card.to-entity.mapper';
+import { GameStateToEntityMapper } from '../mappers/to-entity/game-state.to-entity.mapper';
+import { DeckToEntityMapper } from '../mappers/to-entity/deck.to-entity.mapper';
+import { CardToEntityMapper } from '../mappers/to-entity/card.to-entity.mapper';
 
 export class GameModel {
   constructor(partial?: Partial<GameModel>) {
@@ -22,21 +28,12 @@ export class GameModel {
   gameCards: GameCardModel[] = [];
   gameStates: GameStateModel[] = [];
 
-  // TODO: 一時的なメソッド。今後、GameEntityへの依存を完全に削除する際にこのメソッドも削除する
   toEntity(): GameEntity {
-    return new GameEntity({
-      id: this.id,
-      turnUserId: this.turnUserId,
-      phase: this.phase,
-      winnerUserId: this.winnerUserId,
-      turnCount: this.turnCount,
-      startedAt: this.startedAt ?? undefined,
-      endedAt: this.endedAt ?? undefined,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-      gameUsers: this.gameUsers.map(model => model.toEntity()),
-      gameCards: this.gameCards.map(model => model.toEntity()),
-      gameStates: this.gameStates.map(model => model.toEntity()),
-    });
+    const mapper = new GameToEntityMapper(
+      new GameUserToEntityMapper(new DeckToEntityMapper()),
+      new GameCardToEntityMapper(new CardToEntityMapper()),
+      new GameStateToEntityMapper(),
+    );
+    return mapper.toEntity(this);
   }
 }

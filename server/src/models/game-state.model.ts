@@ -1,6 +1,7 @@
 import { GameStateEntity } from '../entities/game-state.entity';
 import { StateType } from '../graphql/index';
 import { GameCardModel } from './game-card.model';
+import { GameStateToEntityMapper } from '../mappers/to-entity/game-state.to-entity.mapper';
 
 type State =
   | {
@@ -30,14 +31,4 @@ export class GameStateModel {
   state: State;
   createdAt: Date;
   updatedAt: Date;
-
-  toEntity(): GameStateEntity {
-    return new GameStateEntity({
-      id: this.id,
-      gameCardId: this.gameCardId,
-      state: this.state,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-    });
-  }
 }

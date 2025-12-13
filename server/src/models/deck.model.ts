@@ -1,4 +1,5 @@
 import { DeckEntity } from 'src/entities/deck.entity';
+import { DeckToEntityMapper } from '../mappers/to-entity/deck.to-entity.mapper';
 
 export class DeckModel {
   constructor(partial?: Partial<DeckModel>) {
@@ -10,14 +11,4 @@ export class DeckModel {
   name: string;
   createdAt: Date;
   updatedAt: Date;
-
-  toEntity(): DeckEntity {
-    return new DeckEntity({
-      id: this.id,
-      userId: this.userId,
-      name: this.name,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-    });
-  }
 }

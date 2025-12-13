@@ -1,4 +1,5 @@
 import { CardEntity } from 'src/entities/card.entity';
+import { CardToEntityMapper } from '../mappers/to-entity/card.to-entity.mapper';
 
 enum Kind {
   MONSTER = 'MONSTER',
@@ -39,18 +40,4 @@ export class CardModel {
   cost: number;
   detail: string;
   picture: string;
-
-  toEntity(): CardEntity {
-    return new CardEntity({
-      id: this.id,
-      name: this.name,
-      kind: this.kind,
-      type: this.type,
-      attribute: this.attribute,
-      attack: this.attack,
-      defence: this.defence,
-      cost: this.cost,
-      detail: this.detail,
-    });
-  }
 }
