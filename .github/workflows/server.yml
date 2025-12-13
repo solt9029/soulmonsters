@@ -5,17 +5,40 @@ on:
     branches: [ main, develop ]
     paths:
       - 'server/**'
-      - '.github/workflows/server-test.yml'
+      - '.github/workflows/server.yml'
   pull_request:
     branches: [ main, develop ]
     paths:
       - 'server/**'
-      - '.github/workflows/server-test.yml'
+      - '.github/workflows/server.yml'
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./server
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.14.0'
+        cache: 'yarn'
+        cache-dependency-path: server/yarn.lock
+
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+
+    - name: Build
+      run: yarn build
+
   test:
     runs-on: ubuntu-latest
-    
+
     defaults:
       run:
         working-directory: ./server
@@ -53,7 +76,7 @@ jobs:
 
     - name: Install dependencies
       run: yarn install --frozen-lockfile
-    
+
     - name: Run database migrations
       run: yarn db:migrate
       env:
