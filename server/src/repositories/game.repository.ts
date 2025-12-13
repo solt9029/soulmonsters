@@ -9,6 +9,8 @@ import { GameCardEntity } from 'src/entities/game-card.entity';
 import { GameCardModel } from 'src/models/game-card.model';
 import { DeckModel } from 'src/models/deck.model';
 import { DeckEntity } from 'src/entities/deck.entity';
+import { CardModel } from 'src/models/card.model';
+import { CardEntity } from 'src/entities/card.entity';
 
 const toDeckModel = (entity: DeckEntity): DeckModel => {
   return new DeckModel({
@@ -34,6 +36,21 @@ const toGameUserModel = (entity: GameUserEntity): GameUserModel => {
   });
 };
 
+const toCardModel = (entity: CardEntity): CardModel => {
+  return new CardModel({
+    id: entity.id,
+    name: entity.name,
+    kind: entity.kind,
+    type: entity.type,
+    attribute: entity.attribute,
+    attack: entity.attack,
+    defence: entity.defence,
+    cost: entity.cost,
+    detail: entity.detail,
+    picture: entity.picture,
+  });
+};
+
 const toGameCardModel = (entity: GameCardEntity): GameCardModel => {
   return new GameCardModel({
     id: entity.id,
@@ -44,7 +61,7 @@ const toGameCardModel = (entity: GameCardEntity): GameCardModel => {
     battlePosition: entity.battlePosition,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
-    card: entity.card,
+    card: entity.card ? toCardModel(entity.card) : undefined,
     actionTypes: [], // Databaseで保持していないのでEntity => Model化する際には常に空配列がセットされる
     name: entity.name,
     kind: entity.kind,

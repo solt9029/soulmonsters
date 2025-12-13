@@ -34,7 +34,7 @@ export class GameStateModel {
   toEntity(): GameStateEntity {
     return new GameStateEntity({
       id: this.id,
-      gameCard: this.gameCard ? this.gameCard.toEntity() : undefined,
+      gameCard: this.gameCard?.toEntity(),
       state: this.state,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

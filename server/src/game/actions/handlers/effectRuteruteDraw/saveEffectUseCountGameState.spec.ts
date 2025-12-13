@@ -5,6 +5,7 @@ import { CardEntity } from 'src/entities/card.entity';
 import { StateType, Zone } from 'src/graphql';
 import { saveEffectUseCountGameState } from './saveEffectUseCountGameState';
 import { GameCardModel } from 'src/models/game-card.model';
+import { CardModel } from 'src/models/card.model';
 
 describe('saveEffectUseCountGameState', () => {
   it('should create new effect use count state when none exists', () => {
@@ -12,7 +13,7 @@ describe('saveEffectUseCountGameState', () => {
     gameUser.id = 1;
     gameUser.userId = 'user1';
 
-    const card = new CardEntity();
+    const card = new CardModel();
     card.id = 1;
 
     const ruteruteCard = new GameCardModel();
@@ -43,7 +44,7 @@ describe('saveEffectUseCountGameState', () => {
     gameUser.id = 1;
     gameUser.userId = 'user1';
 
-    const card = new CardEntity();
+    const card = new CardModel();
     card.id = 1;
 
     const ruteruteCard = new GameCardModel();
