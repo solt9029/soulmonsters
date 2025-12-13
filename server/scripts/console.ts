@@ -25,7 +25,8 @@ async function bootstrap() {
 
   const app = await NestFactory.createApplicationContext(AppModule);
   const dataSource = app.get(DataSource);
-  const cardRepository: typeof CardRepository = app.get('CardRepository');
+  const cardRepository = app.get(CardRepository);
+  const gameStateRepository = app.get(GameStateRepository);
   const deckRepository: typeof DeckRepository = app.get('DeckRepository');
   const deckCardRepository: typeof DeckCardRepository = app.get('DeckCardRepository');
   const gameService = app.get(GameService);
@@ -74,7 +75,7 @@ async function bootstrap() {
   replServer.context.gameRepository = GameRepository;
   replServer.context.gameUserRepository = GameUserRepository;
   replServer.context.gameCardRepository = GameCardRepository;
-  replServer.context.gameStateRepository = GameStateRepository;
+  replServer.context.gameStateRepository = gameStateRepository;
   replServer.context.deckCardRepository = DeckCardRepository;
 
   // TODO: 全部のEntityをここに登録する

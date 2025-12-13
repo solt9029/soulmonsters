@@ -33,6 +33,7 @@ import { GameToModelMapper } from 'src/mappers/to-model/game.to-model.mapper';
 import { GameCardToModelMapper } from 'src/mappers/to-model/game-card.to-model.mapper';
 import { GameUserToModelMapper } from 'src/mappers/to-model/game-user.to-model.mapper';
 import { GameStateToModelMapper } from 'src/mappers/to-model/game-state.to-model.mapper';
+import { GameStateRepository } from 'src/repositories/game-state.repository';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { GameStateToModelMapper } from 'src/mappers/to-model/game-state.to-model
       useValue: DeckCardRepository,
     },
     CardRepository,
+    GameStateRepository,
     UserService,
     DeckResolver,
     CardResolver,
