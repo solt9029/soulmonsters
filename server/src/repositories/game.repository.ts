@@ -15,6 +15,8 @@ const gameUserToModelMapper = new GameUserToModelMapper(deckToModelMapper);
 const gameCardToModelMapper = new GameCardToModelMapper(cardToModelMapper);
 const gameToModelMapper = new GameToModelMapper(gameUserToModelMapper, gameCardToModelMapper, gameStateToModelMapper);
 
+// TODO: CardRepositoryやDeckRepositoryと同様に@Injectable()化する
+// TODO: 各メソッドで同様にEntityManagerを受け取れるようにする
 export const GameRepository = AppDataSource.getRepository(GameEntity).extend({
   async findActiveGameByUserId(userId: string): Promise<GameModel | null> {
     const entity = await this.createQueryBuilder('games')

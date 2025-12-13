@@ -1,6 +1,8 @@
 import { AppDataSource } from '../dataSource';
 import { GameUserEntity } from '../entities/game-user.entity';
 
+// TODO: CardRepositoryやDeckRepositoryと同様に@Injectable()化する
+// TODO: 各メソッドで同様にEntityManagerを受け取れるようにする
 export const GameUserRepository = AppDataSource.getRepository(GameUserEntity).extend({
   async findWaitingGameId(): Promise<number | undefined> {
     const result = await this.query(

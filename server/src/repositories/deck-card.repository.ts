@@ -9,6 +9,8 @@ const cardToModelMapper = new CardToModelMapper();
 const deckToModelMapper = new DeckToModelMapper();
 const deckCardToModelMapper = new DeckCardToModelMapper(cardToModelMapper, deckToModelMapper);
 
+// TODO: CardRepositoryやDeckRepositoryと同様に@Injectable()化する
+// TODO: 各メソッドで同様にEntityManagerを受け取れるようにする
 export const DeckCardRepository = AppDataSource.getRepository(DeckCardEntity).extend({
   async findByDeckId(deckId: number): Promise<DeckCardModel[]> {
     const entities = await this.find({
