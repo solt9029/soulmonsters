@@ -1,5 +1,4 @@
 import { GameCardEntity } from '../entities/game-card.entity';
-import { GameStateEntity } from '../entities/game-state.entity';
 import { CardEntity } from '../entities/card.entity';
 import { Zone, BattlePosition, ActionType, Kind, Type, Attribute } from '../graphql/index';
 import { CardModel } from './card.model';
