@@ -27,6 +27,12 @@ import { GameCardPresenter } from 'src/presenters/game-card.presenter';
 import { GamePresenter } from 'src/presenters/game.presenter';
 import { GameUserPresenter } from 'src/presenters/game-user.presenter';
 import { CardToModelMapper } from 'src/mappers/to-model/card.to-model.mapper';
+import { DeckToModelMapper } from 'src/mappers/to-model/deck.to-model.mapper';
+import { DeckCardToModelMapper } from 'src/mappers/to-model/deck-card.to-model.mapper';
+import { GameToModelMapper } from 'src/mappers/to-model/game.to-model.mapper';
+import { GameCardToModelMapper } from 'src/mappers/to-model/game-card.to-model.mapper';
+import { GameUserToModelMapper } from 'src/mappers/to-model/game-user.to-model.mapper';
+import { GameStateToModelMapper } from 'src/mappers/to-model/game-state.to-model.mapper';
 
 @Module({
   imports: [
@@ -78,6 +84,12 @@ import { CardToModelMapper } from 'src/mappers/to-model/card.to-model.mapper';
     GamePresenter,
     GameUserPresenter,
     CardToModelMapper,
+    DeckToModelMapper,
+    DeckCardToModelMapper,
+    GameToModelMapper,
+    GameCardToModelMapper,
+    GameUserToModelMapper,
+    GameStateToModelMapper,
   ],
 })
 export class AppModule {}
