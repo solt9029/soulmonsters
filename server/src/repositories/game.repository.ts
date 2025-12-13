@@ -57,10 +57,12 @@ export class GameRepository {
     return entity ? this.gameToModelMapper.toModel(entity) : null;
   }
 
+  // TODO: インターフェースをModelベースに変更する（EntityをRepositoryの外部に露出させない）
   async insert(data: Partial<GameEntity>, manager?: EntityManager): Promise<InsertResult> {
     return await this.getEntityRepository(manager).insert(data);
   }
 
+  // TODO: インターフェースをModelベースに変更する（EntityをRepositoryの外部に露出させない）
   async update(
     criteria: FindOptionsWhere<GameEntity>,
     data: Partial<GameEntity>,
