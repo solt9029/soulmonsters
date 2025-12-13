@@ -63,12 +63,9 @@ import { GameStateRepository } from 'src/repositories/game-state.repository';
   ],
   controllers: [AppController],
   providers: [
-    {
-      provide: 'DeckCardRepository',
-      useValue: DeckCardRepository,
-    },
     CardRepository,
     DeckRepository,
+    DeckCardRepository,
     GameStateRepository,
     UserService,
     DeckResolver,

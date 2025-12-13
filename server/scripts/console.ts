@@ -28,7 +28,7 @@ async function bootstrap() {
   const cardRepository = app.get(CardRepository);
   const gameStateRepository = app.get(GameStateRepository);
   const deckRepository = app.get(DeckRepository);
-  const deckCardRepository: typeof DeckCardRepository = app.get('DeckCardRepository');
+  const deckCardRepository = app.get(DeckCardRepository);
   const gameService = app.get(GameService);
   const userService = app.get(UserService);
 
@@ -76,7 +76,6 @@ async function bootstrap() {
   replServer.context.gameUserRepository = GameUserRepository;
   replServer.context.gameCardRepository = GameCardRepository;
   replServer.context.gameStateRepository = gameStateRepository;
-  replServer.context.deckCardRepository = DeckCardRepository;
 
   // TODO: 全部のEntityをここに登録する
   replServer.context.GameEntity = GameEntity;

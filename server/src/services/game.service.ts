@@ -7,7 +7,7 @@ import { DataSource } from 'typeorm';
 import { GameCardRepository } from 'src/repositories/game-card.repository';
 import { GameUserRepository } from 'src/repositories/game-user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
-import { DeckCardRepository } from 'src/repositories/deck-card.repository';
+import { DeckCardEntity } from 'src/entities/deck-card.entity';
 import { grantActions } from 'src/game/actions/grantors/index';
 import { initializeGameCards } from 'src/game/initializers';
 import { reflectStates } from 'src/game/states/reflectors';
@@ -47,7 +47,6 @@ export class GameService {
 
   async start(userId: string, deckId: number) {
     return this.dataSource.transaction(async manager => {
-      const deckCardRepository = manager.withRepository(DeckCardRepository);
       const gameRepository = manager.withRepository(GameRepository);
       const gameUserRepository = manager.withRepository(GameUserRepository);
       const gameCardRepository = manager.withRepository(GameCardRepository);
@@ -58,7 +57,8 @@ export class GameService {
         throw new BadRequestException('User Active');
       }
 
-      const deckCardEntities = await deckCardRepository
+      const deckCardEntities = await manager
+        .getRepository(DeckCardEntity)
         .createQueryBuilder('deckCards')
         .setLock('pessimistic_read')
         .leftJoinAndSelect('deckCards.card', 'card')

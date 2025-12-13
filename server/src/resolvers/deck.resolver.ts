@@ -10,10 +10,7 @@ import { DeckRepository } from 'src/repositories/deck.repository';
 @Resolver()
 @UseGuards(AuthGuard)
 export class DeckResolver {
-  constructor(
-    private readonly deckRepository: DeckRepository,
-    private readonly deckPresenter: DeckPresenter,
-  ) {}
+  constructor(private readonly deckRepository: DeckRepository, private readonly deckPresenter: DeckPresenter) {}
 
   @Query()
   async decks(@User() user: auth.DecodedIdToken) {
