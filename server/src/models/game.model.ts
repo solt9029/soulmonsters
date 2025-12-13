@@ -8,7 +8,6 @@ import { GameUserToEntityMapper } from '../mappers/to-entity/game-user.to-entity
 import { GameCardToEntityMapper } from '../mappers/to-entity/game-card.to-entity.mapper';
 import { GameStateToEntityMapper } from '../mappers/to-entity/game-state.to-entity.mapper';
 import { DeckToEntityMapper } from '../mappers/to-entity/deck.to-entity.mapper';
-import { CardToEntityMapper } from '../mappers/to-entity/card.to-entity.mapper';
 
 export class GameModel {
   constructor(partial?: Partial<GameModel>) {
@@ -31,7 +30,7 @@ export class GameModel {
   toEntity(): GameEntity {
     const mapper = new GameToEntityMapper(
       new GameUserToEntityMapper(new DeckToEntityMapper()),
-      new GameCardToEntityMapper(new CardToEntityMapper()),
+      new GameCardToEntityMapper(),
       new GameStateToEntityMapper(),
     );
     return mapper.toEntity(this);

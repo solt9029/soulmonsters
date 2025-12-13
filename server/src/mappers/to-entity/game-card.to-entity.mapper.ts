@@ -1,12 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { GameCardEntity } from '../../entities/game-card.entity';
 import { GameCardModel } from '../../models/game-card.model';
-import { CardToEntityMapper } from './card.to-entity.mapper';
 
 @Injectable()
 export class GameCardToEntityMapper {
-  constructor(private readonly cardToEntityMapper: CardToEntityMapper) {}
-
   toEntity(model: GameCardModel): GameCardEntity {
     return new GameCardEntity({
       id: model.id,
