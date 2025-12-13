@@ -38,6 +38,7 @@ import { GameUserToModelMapper } from 'src/mappers/to-model/game-user.to-model.m
 import { GameStateToModelMapper } from 'src/mappers/to-model/game-state.to-model.mapper';
 import { GameStateRepository } from 'src/repositories/game-state.repository';
 import { GameActionGrantor } from 'src/game/actions/grantors/game.action.grantor';
+import { GameActionHandler } from 'src/game/actions/handlers/game.action.handler';
 
 @Module({
   imports: [
@@ -94,6 +95,7 @@ import { GameActionGrantor } from 'src/game/actions/grantors/game.action.grantor
     GameUserToModelMapper,
     GameStateToModelMapper,
     GameActionGrantor,
+    GameActionHandler,
   ],
 })
 export class AppModule {}

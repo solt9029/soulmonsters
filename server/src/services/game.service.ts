@@ -1,5 +1,5 @@
 import { MIN_DECK_CARD_COUNT } from 'src/constants/rule';
-import { handleAction } from 'src/game/actions/handlers/index';
+import { GameActionHandler } from 'src/game/actions/handlers/game.action.handler';
 import { GameActionDispatchInput } from 'src/graphql/index';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
@@ -19,6 +19,7 @@ export class GameService {
     private gameUserRepository: GameUserRepository,
     private gameRepository: GameRepository,
     private gameActionGrantor: GameActionGrantor,
+    private gameActionHandler: GameActionHandler,
   ) {}
 
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
@@ -37,7 +38,7 @@ export class GameService {
 
       // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
-      return await handleAction(data, manager, userId, statusReflectedGameModel);
+      return await this.gameActionHandler.handleAction(data, manager, userId, statusReflectedGameModel);
     });
   }
 
