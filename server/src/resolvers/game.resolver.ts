@@ -1,6 +1,7 @@
 import { UserService } from 'src/services/user.service';
 import { GameActionDispatchInput } from 'src/graphql/index';
 import { GameService } from 'src/services/game.service';
+import { GameRepository } from 'src/repositories/game.repository';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
@@ -15,13 +16,14 @@ import { GamePresenter } from 'src/presenters/game.presenter';
 export class GameResolver {
   constructor(
     private readonly gameService: GameService,
+    private readonly gameRepository: GameRepository,
     private readonly userService: UserService,
     private readonly gamePresenter: GamePresenter,
   ) {}
 
   @Query()
   async game(@User() user: auth.DecodedIdToken, @Args('id') id: number) {
-    let gameEntity = await this.gameService.findById(id);
+    let gameEntity = await this.gameRepository.findByIdWithRelations(id);
 
     if (!gameEntity) {
       throw new Error('Game not found');
@@ -42,7 +44,7 @@ export class GameResolver {
 
   @Query()
   async activeGameId(@User() user: auth.DecodedIdToken) {
-    const activeGame = await this.gameService.findActiveGameByUserId(user.uid);
+    const activeGame = await this.gameRepository.findActiveGameByUserId(user.uid);
     return activeGame?.id;
   }
 

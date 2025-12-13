@@ -1,7 +1,6 @@
 import { MIN_DECK_CARD_COUNT } from 'src/constants/rule';
 import { handleAction } from 'src/game/actions/handlers/index';
 import { GameActionDispatchInput } from 'src/graphql/index';
-import { GameModel } from 'src/models/game.model';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { GameCardRepository } from 'src/repositories/game-card.repository';
@@ -21,31 +20,23 @@ export class GameService {
     private gameRepository: GameRepository,
   ) {}
 
-  async findActiveGameByUserId(userId: string): Promise<GameModel | null> {
-    return await this.gameRepository.findActiveGameByUserId(userId);
-  }
-
-  async findById(id: number): Promise<GameModel | null> {
-    return await this.gameRepository.findByIdWithRelations(id);
-  }
-
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
     return this.dataSource.transaction(async manager => {
-      const gameEntity = await this.gameRepository.findByIdWithRelationsAndLock(id, manager);
+      const gameModel = await this.gameRepository.findByIdWithRelationsAndLock(id, manager);
 
-      if (!gameEntity) {
+      if (!gameModel) {
         throw new Error('Game not found');
       }
 
       // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
-      const grantedGameEntity = grantActions(gameEntity, userId);
+      const grantedGameModel = grantActions(gameModel, userId);
 
       // GameState 状態を GameCard に反映する（攻撃力の減少など）
-      const statusReflectedGameEntity = reflectStates(grantedGameEntity, userId);
+      const statusReflectedGameModel = reflectStates(grantedGameModel, userId);
 
       // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
-      return await handleAction(data, manager, userId, statusReflectedGameEntity);
+      return await handleAction(data, manager, userId, statusReflectedGameModel);
     });
   }
 
