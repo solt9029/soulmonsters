@@ -8,11 +8,13 @@ import { Injectable } from '@nestjs/common';
 export class DeckCardRepository {
   constructor(private readonly dataSource: DataSource, private readonly deckCardToModelMapper: DeckCardToModelMapper) {}
 
-  async findByDeckId(deckId: number, manager?: EntityManager): Promise<DeckCardModel[]> {
+  getEntityRepository(manager?: EntityManager) {
     const entityManager = manager ?? this.dataSource.manager;
-    const entityRepository = entityManager.getRepository(DeckCardEntity);
+    return entityManager.getRepository(DeckCardEntity);
+  }
 
-    const entities = await entityRepository.find({
+  async findByDeckId(deckId: number, manager?: EntityManager): Promise<DeckCardModel[]> {
+    const entities = await this.getEntityRepository(manager).find({
       where: { deck: { id: deckId } },
       relations: ['card', 'deck'],
     });
@@ -21,10 +23,7 @@ export class DeckCardRepository {
   }
 
   async findByDeckIdAndCardId(deckId: number, cardId: number, manager?: EntityManager): Promise<DeckCardModel | null> {
-    const entityManager = manager ?? this.dataSource.manager;
-    const entityRepository = entityManager.getRepository(DeckCardEntity);
-
-    const entity = await entityRepository.findOne({
+    const entity = await this.getEntityRepository(manager).findOne({
       where: { deck: { id: deckId }, card: { id: cardId } },
       relations: ['card', 'deck'],
     });
@@ -37,14 +36,15 @@ export class DeckCardRepository {
   }
 
   async updateCountById(id: number, count: number, manager?: EntityManager): Promise<DeckCardModel> {
-    const entityManager = manager ?? this.dataSource.manager;
-    const entityRepository = entityManager.getRepository(DeckCardEntity);
+    const entityRepository = this.getEntityRepository(manager);
 
     await entityRepository.update({ id }, { count });
+
     const entity = await entityRepository.findOne({
       where: { id },
       relations: ['card', 'deck'],
     });
+
     if (!entity) {
       throw new Error('Deck card not found after update');
     }
@@ -53,18 +53,19 @@ export class DeckCardRepository {
   }
 
   async createDeckCard(deckId: number, cardId: number, manager?: EntityManager): Promise<DeckCardModel> {
-    const entityManager = manager ?? this.dataSource.manager;
-    const entityRepository = entityManager.getRepository(DeckCardEntity);
+    const entityRepository = this.getEntityRepository(manager);
 
     const insertResult = await entityRepository.insert({
       deck: { id: deckId },
       card: { id: cardId },
       count: 1,
     });
+
     const entity = await entityRepository.findOne({
       where: { id: insertResult.identifiers[0]?.id },
       relations: ['card', 'deck'],
     });
+
     if (!entity) {
       throw new Error('Deck card not found after creation');
     }
@@ -73,16 +74,17 @@ export class DeckCardRepository {
   }
 
   async deleteDeckCard(id: number, manager?: EntityManager): Promise<DeckCardModel> {
-    const entityManager = manager ?? this.dataSource.manager;
-    const entityRepository = entityManager.getRepository(DeckCardEntity);
+    const entityRepository = this.getEntityRepository(manager);
 
     const entity = await entityRepository.findOne({
       where: { id },
       relations: ['card', 'deck'],
     });
+
     if (!entity) {
       throw new Error('Deck card not found');
     }
+
     await entityRepository.delete({ id });
 
     return this.deckCardToModelMapper.toModel(entity);

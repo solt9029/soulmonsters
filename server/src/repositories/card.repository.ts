@@ -8,11 +8,13 @@ import { Injectable } from '@nestjs/common';
 export class CardRepository {
   constructor(private readonly dataSource: DataSource, private readonly cardToModelMapper: CardToModelMapper) {}
 
-  async findAll(manager?: EntityManager): Promise<CardModel[]> {
+  getEntityRepository(manager?: EntityManager) {
     const entityManager = manager ?? this.dataSource.manager;
-    const entityRepository = await entityManager.getRepository(CardEntity);
+    return entityManager.getRepository(CardEntity);
+  }
 
-    const entities = await entityRepository.find();
+  async findAll(manager?: EntityManager): Promise<CardModel[]> {
+    const entities = await this.getEntityRepository(manager).find();
     return entities.map(entity => this.cardToModelMapper.toModel(entity));
   }
 }

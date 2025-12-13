@@ -11,11 +11,13 @@ export class GameStateRepository {
     private readonly gameStateToModelMapper: GameStateToModelMapper,
   ) {}
 
-  async findAll(manager?: EntityManager): Promise<GameStateModel[]> {
+  getEntityRepository(manager?: EntityManager) {
     const entityManager = manager ?? this.dataSource.manager;
-    const entityRepository = entityManager.getRepository(GameStateEntity);
+    return entityManager.getRepository(GameStateEntity);
+  }
 
-    const entities = await entityRepository.find();
+  async findAll(manager?: EntityManager): Promise<GameStateModel[]> {
+    const entities = await this.getEntityRepository(manager).find();
     return entities.map(entity => this.gameStateToModelMapper.toModel(entity));
   }
 }
