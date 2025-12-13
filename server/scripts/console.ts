@@ -29,6 +29,7 @@ async function bootstrap() {
   const gameStateRepository = app.get(GameStateRepository);
   const gameCardRepository = app.get(GameCardRepository);
   const gameUserRepository = app.get(GameUserRepository);
+  const gameRepository = app.get(GameRepository);
   const deckRepository = app.get(DeckRepository);
   const deckCardRepository = app.get(DeckCardRepository);
   const gameService = app.get(GameService);
@@ -51,16 +52,16 @@ async function bootstrap() {
   };
 
   const deleteActiveGames = async () => {
-    const gameRepository = dataSource.getRepository(GameEntity);
+    const gameEntityRepository = dataSource.getRepository(GameEntity);
 
-    const activeGames = await gameRepository.find({
+    const activeGames = await gameEntityRepository.find({
       where: { endedAt: IsNull() },
       relations: ['gameUsers', 'gameCards', 'gameStates'],
     });
 
     for (const game of activeGames) {
       const gameId = game.id;
-      await gameRepository.remove(game);
+      await gameEntityRepository.remove(game);
       console.log(`Deleted Game ID: ${gameId}`);
     }
   };
@@ -71,13 +72,13 @@ async function bootstrap() {
   replServer.context.cardRepository = cardRepository;
   replServer.context.deckRepository = deckRepository;
   replServer.context.deckCardRepository = deckCardRepository;
-  replServer.context.gameService = gameService;
-  replServer.context.userService = userService;
-
-  replServer.context.gameRepository = GameRepository;
+  replServer.context.gameRepository = gameRepository;
   replServer.context.gameUserRepository = gameUserRepository;
   replServer.context.gameCardRepository = gameCardRepository;
   replServer.context.gameStateRepository = gameStateRepository;
+
+  replServer.context.gameService = gameService;
+  replServer.context.userService = userService;
 
   // TODO: 全部のEntityをここに登録する
   replServer.context.GameEntity = GameEntity;
