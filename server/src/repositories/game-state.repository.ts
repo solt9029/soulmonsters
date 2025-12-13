@@ -11,7 +11,7 @@ export class GameStateRepository {
     private readonly gameStateToModelMapper: GameStateToModelMapper,
   ) {}
 
-  getEntityRepository(manager?: EntityManager) {
+  private getEntityRepository(manager?: EntityManager) {
     const entityManager = manager ?? this.dataSource.manager;
     return entityManager.getRepository(GameStateEntity);
   }

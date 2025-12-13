@@ -8,7 +8,7 @@ import { Injectable } from '@nestjs/common';
 export class CardRepository {
   constructor(private readonly dataSource: DataSource, private readonly cardToModelMapper: CardToModelMapper) {}
 
-  getEntityRepository(manager?: EntityManager) {
+  private getEntityRepository(manager?: EntityManager) {
     const entityManager = manager ?? this.dataSource.manager;
     return entityManager.getRepository(CardEntity);
   }
