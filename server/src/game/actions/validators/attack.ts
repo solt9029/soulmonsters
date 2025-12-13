@@ -26,7 +26,7 @@ export function validateAttackAction(
 
   const gameState = game.gameStates.find(
     value =>
-      value.state.type === StateType.ATTACK_COUNT && value.gameCard?.id === gameCard.id && value.state.data.value > 0,
+      value.state.type === StateType.ATTACK_COUNT && value.gameCardId === gameCard.id && value.state.data.value > 0,
   );
 
   if (gameState) {

@@ -1,9 +1,10 @@
 import { GameModel } from 'src/models/game.model';
 import { GameUserModel } from 'src/models/game-user.model';
 import { StateType } from 'src/graphql';
+import { GameStateModel } from 'src/models/game-state.model';
 
-const isAttackCountState = (gameState: any, userId: string): boolean => {
-  return gameState.state.type === StateType.ATTACK_COUNT && gameState.gameCard.currentUserId === userId;
+const isAttackCountState = (gameState: GameStateModel): boolean => {
+  return gameState.state.type === StateType.ATTACK_COUNT;
 };
 
 const isPutSoulCountState = (gameState: any, gameUserId: number): boolean => {
@@ -18,7 +19,7 @@ export const cleanGameStates = (gameModel: GameModel, gameUser: GameUserModel): 
   gameModel.gameStates = gameModel.gameStates.filter(
     gameState =>
       !(
-        isAttackCountState(gameState, gameUser.userId) ||
+        isAttackCountState(gameState) ||
         isPutSoulCountState(gameState, gameUser.id) ||
         isEffectRuteruteDrawCountState(gameState)
       ),

@@ -77,7 +77,7 @@ const toGameCardModel = (entity: GameCardEntity): GameCardModel => {
 const toGameStateModel = (entity: GameStateEntity): GameStateModel => {
   return new GameStateModel({
     id: entity.id,
-    gameCard: entity.gameCard ? toGameCardModel(entity.gameCard) : null,
+    gameCardId: entity.gameCardId,
     state: entity.state,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,

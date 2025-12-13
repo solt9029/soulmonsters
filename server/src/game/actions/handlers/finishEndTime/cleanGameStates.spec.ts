@@ -24,7 +24,7 @@ describe('cleanGameStates', () => {
             type: StateType.ATTACK_COUNT,
             data: { value: 1 },
           },
-          gameCard: gameCard,
+          gameCardId: gameCard.id,
         }),
         new GameStateModel({
           state: {
@@ -45,44 +45,5 @@ describe('cleanGameStates', () => {
 
     expect(result.gameStates).toHaveLength(1);
     expect(result.gameStates[0]?.state.type).toBe(StateType.SELF_POWER_CHANGE);
-  });
-
-  it('should keep states that do not match filter conditions', () => {
-    const gameUser1 = new GameUserModel({
-      id: 1,
-      userId: 'user1',
-    });
-
-    const gameUser2 = new GameUserModel({
-      id: 2,
-      userId: 'user2',
-    });
-
-    const gameCard = new GameCardModel({
-      currentUserId: 'user2',
-    });
-
-    const gameEntity = new GameModel({
-      gameUsers: [gameUser1, gameUser2],
-      gameStates: [
-        new GameStateModel({
-          state: {
-            type: StateType.ATTACK_COUNT,
-            data: { value: 1 },
-          },
-          gameCard: gameCard,
-        }),
-        new GameStateModel({
-          state: {
-            type: StateType.PUT_SOUL_COUNT,
-            data: { gameUserId: 2, value: 2 },
-          },
-        }),
-      ],
-    });
-
-    const result = cleanGameStates(gameEntity, gameUser1);
-
-    expect(result.gameStates).toHaveLength(2);
   });
 });

@@ -26,7 +26,7 @@ export class GameStateModel {
   }
 
   id: number;
-  gameCard: GameCardModel | null;
+  gameCardId: number;
   state: State;
   createdAt: Date;
   updatedAt: Date;
@@ -34,7 +34,7 @@ export class GameStateModel {
   toEntity(): GameStateEntity {
     return new GameStateEntity({
       id: this.id,
-      gameCard: this.gameCard?.toEntity(),
+      gameCardId: this.gameCardId,
       state: this.state,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

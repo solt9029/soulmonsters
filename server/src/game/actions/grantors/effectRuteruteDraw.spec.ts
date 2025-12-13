@@ -51,7 +51,7 @@ describe('grantEffectRuteRuteDrawAction', () => {
     ruteruteCard.actionTypes = [];
 
     const existingState = new GameStateModel();
-    existingState.gameCard = ruteruteCard;
+    existingState.gameCardId = ruteruteCard.id;
     existingState.state = { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } };
 
     const gameEntity = new GameModel();

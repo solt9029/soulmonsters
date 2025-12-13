@@ -5,7 +5,7 @@ import { StateType } from 'src/graphql';
 
 const initEffectUseCountGameState = (gameModel: GameModel, gameCard: GameCardModel): GameStateModel => {
   return new GameStateModel({
-    gameCard: gameCard,
+    gameCardId: gameCard.id,
     state: { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } },
   });
 };
@@ -14,12 +14,12 @@ export const saveEffectUseCountGameState = (gameModel: GameModel, gameCard: Game
   const existsState =
     gameModel.gameStates.findIndex(
       gameState =>
-        gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCard?.id === gameCard.id,
+        gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCardId === gameCard.id,
     ) >= 0;
 
   if (existsState) {
     gameModel.gameStates = gameModel.gameStates.map(gameState =>
-      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCard?.id === gameCard.id
+      gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gameState.gameCardId === gameCard.id
         ? new GameStateModel({
             ...gameState,
             state: {

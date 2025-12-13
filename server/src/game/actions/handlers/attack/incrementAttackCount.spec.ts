@@ -39,7 +39,7 @@ describe('incrementAttackCount', () => {
       gameCards: [gameCard],
       gameStates: [
         new GameStateModel({
-          gameCard,
+          gameCardId: gameCard.id,
           state: {
             type: StateType.ATTACK_COUNT,
             data: { value: 2 },

@@ -14,12 +14,12 @@ export const incrementAttackCount = (gameModel: GameModel, gameCardId: number): 
   }
 
   const existingAttackCountStateIndex = gameModel.gameStates.findIndex(
-    state => state.state.type === StateType.ATTACK_COUNT && state.gameCard?.id === gameCardId,
+    state => state.state.type === StateType.ATTACK_COUNT && state.gameCardId === gameCardId,
   );
 
   if (existingAttackCountStateIndex >= 0) {
     gameModel.gameStates = gameModel.gameStates.map(gameState =>
-      gameState.state.type === StateType.ATTACK_COUNT && gameState.gameCard?.id === gameCardId
+      gameState.state.type === StateType.ATTACK_COUNT && gameState.gameCardId === gameCardId
         ? new GameStateModel({
             ...gameState,
             state: {
@@ -31,7 +31,7 @@ export const incrementAttackCount = (gameModel: GameModel, gameCardId: number): 
     );
   } else {
     const newGameState = new GameStateModel({
-      gameCard,
+      gameCardId: gameCard.id,
       state: { type: StateType.ATTACK_COUNT, data: { value: 1 } },
     });
 
