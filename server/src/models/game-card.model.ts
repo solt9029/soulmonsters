@@ -19,7 +19,6 @@ export class GameCardModel {
   createdAt: Date;
   updatedAt: Date;
   card: CardModel;
-  gameStates: GameStateEntity[];
   actionTypes: ActionType[];
   name?: string | null;
   kind?: Kind | null;
