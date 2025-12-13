@@ -23,6 +23,7 @@ export async function handlePutSoulAction(
   savePutCountGameState(gameModel, payload.gameUser.id);
   await manager.save(gameModel.toEntity());
 
-  const gameCardRepository = manager.withRepository(GameCardRepository);
-  await gameCardRepository.packHandPositions(gameModel.id, userId, originalPosition);
+  // 本当は new GameCardRepository のタイミングで connection を渡す必要は実際はない（packHandPositionsで別途managerを渡すから）。ただし、渡さないといけないから仕方なく渡している。仕方なく渡しているmanager.connectionが使われてしまうとまずいので（別のentityManagerが生成されてしまう）、必ずpackHandPositionsではmanagerを渡すように！！
+  const gameCardRepository = new GameCardRepository(manager.connection);
+  await gameCardRepository.packHandPositions(gameModel.id, userId, originalPosition, manager);
 }

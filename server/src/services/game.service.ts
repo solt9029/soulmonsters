@@ -3,7 +3,7 @@ import { handleAction } from 'src/game/actions/handlers/index';
 import { GameActionDispatchInput } from 'src/graphql/index';
 import { GameModel } from 'src/models/game.model';
 import { Injectable, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { GameCardRepository } from 'src/repositories/game-card.repository';
 import { GameUserRepository } from 'src/repositories/game-user.repository';
 import { GameRepository } from 'src/repositories/game.repository';
@@ -11,6 +11,7 @@ import { DeckCardEntity } from 'src/entities/deck-card.entity';
 import { grantActions } from 'src/game/actions/grantors/index';
 import { initializeGameCards } from 'src/game/initializers';
 import { reflectStates } from 'src/game/states/reflectors';
+import { GameCardEntity } from 'src/entities/game-card.entity';
 
 @Injectable()
 export class GameService {
@@ -49,7 +50,7 @@ export class GameService {
     return this.dataSource.transaction(async manager => {
       const gameRepository = manager.withRepository(GameRepository);
       const gameUserRepository = manager.withRepository(GameUserRepository);
-      const gameCardRepository = manager.withRepository(GameCardRepository);
+      const gameCardRepository = manager.getRepository(GameCardEntity);
 
       const userActiveGameEntity = await gameRepository.findActiveGameByUserId(userId);
 
