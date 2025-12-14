@@ -3,7 +3,7 @@ import { EntityManager } from 'typeorm';
 import { directAttack } from './attack/directAttack';
 import { monsterBattle } from './attack/monsterBattle';
 import { incrementAttackCount } from './attack/incrementAttackCount';
-import { packBattleZonePositions } from './attack/packBattleZonePositions';
+import { packBattlePositions } from './utils/packBattlePositions';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
 
@@ -45,11 +45,11 @@ export async function handleAttackAction(
   const updatedTargetGameCardZone = gameModel.gameCards.find(card => card.id === payload.targetCard.id)?.zone;
 
   if (updatedGameCardZone !== 'BATTLE' && originalGameCardPosition) {
-    gameModel = packBattleZonePositions(gameModel, userId, originalGameCardPosition);
+    gameModel = packBattlePositions(gameModel, userId, originalGameCardPosition);
   }
 
   if (updatedTargetGameCardZone !== 'BATTLE' && originalTargetGameCardPosition) {
-    gameModel = packBattleZonePositions(gameModel, payload.opponentUserId, originalTargetGameCardPosition);
+    gameModel = packBattlePositions(gameModel, payload.opponentUserId, originalTargetGameCardPosition);
   }
 
   await manager.save(gameModel.toEntity());
