@@ -27,7 +27,6 @@ import { validateEffectRuteruteDrawAction } from '../validators/effectRuteruteDr
 
 @Injectable()
 export class GameActionHandler {
-
   async handleAction(data: GameActionDispatchInput, manager: EntityManager, userId: string, gameModel: GameModel) {
     switch (data.type) {
       case ActionType.START_DRAW_TIME: {
