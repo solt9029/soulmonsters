@@ -19,8 +19,8 @@ export async function handlePutSoulAction(
 ) {
   const originalPosition = payload.gameCard.position;
 
-  putSoulGameCard(gameModel, userId, payload.gameCard.id);
-  packHandPositions(gameModel, userId, originalPosition);
-  savePutCountGameState(gameModel, payload.gameUser.id);
+  gameModel = putSoulGameCard(gameModel, userId, payload.gameCard.id);
+  gameModel = packHandPositions(gameModel, userId, originalPosition);
+  gameModel = savePutCountGameState(gameModel, payload.gameUser.id);
   await manager.save(gameModel.toEntity());
 }
