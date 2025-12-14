@@ -38,18 +38,19 @@ export async function handleAttackAction(
   const originalGameCardPosition = payload.attackerCard.position;
   const originalTargetGameCardPosition = payload.targetCard.position;
 
-  monsterBattle(gameModel, payload.attackerCard.id, payload.targetCard.id);
-  incrementAttackCount(gameModel, payload.attackerCard.id);
-  await manager.save(gameModel.toEntity());
+  gameModel = monsterBattle(gameModel, payload.attackerCard.id, payload.targetCard.id);
+  gameModel = incrementAttackCount(gameModel, payload.attackerCard.id);
 
   const updatedGameCardZone = gameModel.gameCards.find(card => card.id === payload.attackerCard.id)?.zone;
   const updatedTargetGameCardZone = gameModel.gameCards.find(card => card.id === payload.targetCard.id)?.zone;
 
   if (updatedGameCardZone !== 'BATTLE' && originalGameCardPosition) {
-    await packBattleZonePositions(manager, gameModel.id, userId, originalGameCardPosition);
+    gameModel = packBattleZonePositions(gameModel, userId, originalGameCardPosition);
   }
 
   if (updatedTargetGameCardZone !== 'BATTLE' && originalTargetGameCardPosition) {
-    await packBattleZonePositions(manager, gameModel.id, payload.opponentUserId, originalTargetGameCardPosition);
+    gameModel = packBattleZonePositions(gameModel, payload.opponentUserId, originalTargetGameCardPosition);
   }
+
+  await manager.save(gameModel.toEntity());
 }

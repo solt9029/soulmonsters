@@ -1,15 +1,16 @@
-import { EntityManager } from 'typeorm';
-import { GameCardEntity } from 'src/entities/game-card.entity';
+import { GameCardModel } from 'src/models/game-card.model';
+import { GameModel } from 'src/models/game.model';
+import { Zone } from 'src/graphql/index';
 
-export const packBattleZonePositions = async (
-  manager: EntityManager,
-  gameId: number,
-  userId: string,
-  removedPosition: number,
-): Promise<void> => {
-  await manager
-    .getRepository(GameCardEntity)
-    .query(
-      `UPDATE gameCards SET position = position - 1 WHERE gameId = ${gameId} AND zone = "BATTLE" AND currentUserId = "${userId}" AND position > ${removedPosition} ORDER BY position`,
-    );
-};
+export function packBattleZonePositions(gameModel: GameModel, userId: string, removedPosition: number): GameModel {
+  gameModel.gameCards = gameModel.gameCards.map(gameCard =>
+    gameCard.zone === Zone.BATTLE && gameCard.currentUserId === userId && gameCard.position > removedPosition
+      ? new GameCardModel({
+          ...gameCard,
+          position: gameCard.position - 1,
+        })
+      : gameCard,
+  );
+
+  return gameModel;
+}
