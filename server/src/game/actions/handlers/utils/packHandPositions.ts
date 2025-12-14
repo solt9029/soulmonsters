@@ -1,6 +1,6 @@
-import { GameCardModel } from '../../../../models/game-card.model';
-import { GameModel } from '../../../../models/game.model';
-import { Zone } from '../../../../graphql/index';
+import { GameCardModel } from 'src/models/game-card.model';
+import { GameModel } from 'src/models/game.model';
+import { Zone } from 'src/graphql/index';
 
 export function packHandPositions(gameModel: GameModel, userId: string, removedPosition: number): GameModel {
   gameModel.gameCards = gameModel.gameCards.map(gameCard =>

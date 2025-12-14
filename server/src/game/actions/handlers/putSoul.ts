@@ -2,7 +2,7 @@ import { GameModel } from '../../../models/game.model';
 import { EntityManager } from 'typeorm';
 import { putSoulGameCard } from './putSoul/putSoulGameCard';
 import { savePutCountGameState } from './putSoul/savePutCountGameState';
-import { packHandPositions } from './putSoul/packHandPositions';
+import { packHandPositions } from './utils/packHandPositions';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
 
