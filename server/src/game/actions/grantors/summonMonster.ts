@@ -1,6 +1,6 @@
 import { Zone } from 'src/graphql';
-import { Phase, Kind, ActionType } from '../../../graphql/index';
-import { GameModel } from '../../../models/game.model';
+import { Phase, Kind, ActionType } from 'src/graphql/index';
+import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
 
 export function grantSummonMonsterAction(gameModel: GameModel, userId: string): GameModel {
