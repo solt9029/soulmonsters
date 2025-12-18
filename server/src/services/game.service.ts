@@ -9,7 +9,7 @@ import { GameRepository } from 'src/repositories/game.repository';
 import { DeckCardEntity } from 'src/entities/deck-card.entity';
 import { GameActionGrantor } from 'src/game/actions/grantors/game.action.grantor';
 import { initializeGameCards } from 'src/game/initializers';
-import { reflectStates } from 'src/game/states/reflectors/game.state.reflector';
+import { GameStateReflector } from 'src/game/states/reflectors/game.state.reflector';
 
 @Injectable()
 export class GameService {
@@ -20,6 +20,7 @@ export class GameService {
     private gameRepository: GameRepository,
     private gameActionGrantor: GameActionGrantor,
     private gameActionHandler: GameActionHandler,
+    private gameStateReflector: GameStateReflector,
   ) {}
 
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
@@ -34,7 +35,7 @@ export class GameService {
       const grantedGameModel = this.gameActionGrantor.grantActions(gameModel, userId);
 
       // GameState 状態を GameCard に反映する（攻撃力の減少など）
-      const statusReflectedGameModel = reflectStates(grantedGameModel, userId);
+      const statusReflectedGameModel = this.gameStateReflector.reflectStates(grantedGameModel, userId);
 
       // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ

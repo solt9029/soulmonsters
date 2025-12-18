@@ -8,7 +8,7 @@ import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { GameActionGrantor } from 'src/game/actions/grantors/game.action.grantor';
-import { reflectStates } from 'src/game/states/reflectors/game.state.reflector';
+import { GameStateReflector } from 'src/game/states/reflectors/game.state.reflector';
 import { GamePresenter } from 'src/presenters/game.presenter';
 
 @Resolver()
@@ -20,6 +20,7 @@ export class GameResolver {
     private readonly userService: UserService,
     private readonly gamePresenter: GamePresenter,
     private readonly gameActionGrantor: GameActionGrantor,
+    private readonly gameStateReflector: GameStateReflector,
   ) {}
 
   @Query()
@@ -37,7 +38,7 @@ export class GameResolver {
       }),
     );
 
-    gameEntity = reflectStates(gameEntity, user.uid);
+    gameEntity = this.gameStateReflector.reflectStates(gameEntity, user.uid);
     gameEntity = this.gameActionGrantor.grantActions(gameEntity, user.uid);
 
     return this.gamePresenter.present(gameEntity, users);
