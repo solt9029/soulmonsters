@@ -11,7 +11,7 @@ import { handleSummonMonsterAction } from './summonMonster';
 import { handleStartBattleTimeAction } from './startBattleTime';
 import { handleStartEndTimeAction } from './startEndTime';
 import { handleAttackAction } from './attack';
-import { handleFinishEndTimeAction, FinishEndTimeActionPayload } from './finishEndTime';
+import { handleFinishEndTimeAction } from './finishEndTime';
 import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
 import { validateStartDrawTimeAction } from '../validators/startDrawTime';
 import { validateStartEnergyTimeAction } from '../validators/startEnergyTime';
