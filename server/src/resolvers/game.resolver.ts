@@ -8,7 +8,7 @@ import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { GameActionGrantor } from 'src/game/actions/grantors/game.action.grantor';
-import { reflectStates } from 'src/game/states/reflectors';
+import { reflectStates } from 'src/game/states/reflectors/game.state.reflector';
 import { GamePresenter } from 'src/presenters/game.presenter';
 
 @Resolver()

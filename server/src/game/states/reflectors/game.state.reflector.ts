@@ -1,6 +1,7 @@
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
+import { Injectable } from '@nestjs/common';
 
 function isVisibleForAll(zone: Zone) {
   return zone === Zone.BATTLE || zone === Zone.SOUL || zone === Zone.MORGUE;
@@ -40,8 +41,7 @@ function filterByUserId(gameCardModel: GameCardModel, userId: string): GameCardM
   return filteredGameCardModel;
 }
 
-// TODO: この算出ロジックは、多分Gameのactionをhandleする前にも実行しておくべき。
-export const reflectStates = (gameModel: GameModel, userId: string): GameModel => {
+export function reflectStates(gameModel: GameModel, userId: string): GameModel {
   gameModel.gameCards = gameModel.gameCards
     .map(gameCard => addInfo(gameCard))
     .map(gameCard => filterByUserId(gameCard, userId));
@@ -50,4 +50,11 @@ export const reflectStates = (gameModel: GameModel, userId: string): GameModel =
   //   例: 「このカードが存在する限り相手モンスターの攻撃力が100下がる」などがあれば、その情報をgameCardに反映する。
 
   return gameModel;
-};
+}
+
+@Injectable()
+export class GameStateReflector {
+  reflectStates(gameModel: GameModel, userId: string): GameModel {
+    return reflectStates(gameModel, userId);
+  }
+}
