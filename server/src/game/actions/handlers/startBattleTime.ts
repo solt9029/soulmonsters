@@ -1,8 +1,7 @@
 import { Phase } from '../../../graphql/index';
-import { EntityManager } from 'typeorm';
 import { GameModel } from 'src/models/game.model';
 
-export async function handleStartBattleTimeAction(manager: EntityManager, gameModel: GameModel) {
+export function handleStartBattleTimeAction(gameModel: GameModel): GameModel {
   gameModel.phase = Phase.BATTLE;
-  await manager.save(gameModel.toEntity());
+  return gameModel;
 }

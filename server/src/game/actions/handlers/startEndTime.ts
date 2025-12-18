@@ -1,8 +1,7 @@
 import { Phase } from '../../../graphql/index';
-import { EntityManager } from 'typeorm';
 import { GameModel } from 'src/models/game.model';
 
-export async function handleStartEndTimeAction(manager: EntityManager, gameModel: GameModel) {
+export function handleStartEndTimeAction(gameModel: GameModel): GameModel {
   gameModel.phase = Phase.END;
-  await manager.save(gameModel.toEntity());
+  return gameModel;
 }

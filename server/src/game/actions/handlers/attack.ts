@@ -1,5 +1,4 @@
 import { GameModel } from '../../../models/game.model';
-import { EntityManager } from 'typeorm';
 import { directAttack } from './attack/directAttack';
 import { monsterBattle } from './attack/monsterBattle';
 import { incrementAttackCount } from './attack/incrementAttackCount';
@@ -22,17 +21,15 @@ export type AttackActionPayload =
       opponentUserId: string;
     };
 
-export async function handleAttackAction(
-  manager: EntityManager,
+export function handleAttackAction(
   userId: string,
   payload: AttackActionPayload,
   gameModel: GameModel,
-) {
+): GameModel {
   if (payload.type === 'DIRECT_ATTACK') {
     directAttack(gameModel, payload.attackerCard.id, payload.opponentGameUser.userId);
     incrementAttackCount(gameModel, payload.attackerCard.id);
-    await manager.save(gameModel.toEntity());
-    return;
+    return gameModel;
   }
 
   const originalGameCardPosition = payload.attackerCard.position;
@@ -52,5 +49,5 @@ export async function handleAttackAction(
     gameModel = packBattlePositions(gameModel, payload.opponentUserId, originalTargetGameCardPosition);
   }
 
-  await manager.save(gameModel.toEntity());
+  return gameModel;
 }

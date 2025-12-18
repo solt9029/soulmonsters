@@ -1,5 +1,4 @@
 import { GameModel } from '../../../models/game.model';
-import { EntityManager } from 'typeorm';
 import { putSoulGameCard } from './putSoul/putSoulGameCard';
 import { savePutCountGameState } from './putSoul/savePutCountGameState';
 import { packHandPositions } from './utils/packHandPositions';
@@ -11,16 +10,15 @@ export type PutSoulActionPayload = {
   gameUser: GameUserModel;
 };
 
-export async function handlePutSoulAction(
-  manager: EntityManager,
+export function handlePutSoulAction(
   userId: string,
   payload: PutSoulActionPayload,
   gameModel: GameModel,
-) {
+): GameModel {
   const originalPosition = payload.gameCard.position;
 
   gameModel = putSoulGameCard(gameModel, userId, payload.gameCard.id);
   gameModel = packHandPositions(gameModel, userId, originalPosition);
   gameModel = savePutCountGameState(gameModel, payload.gameUser.id);
-  await manager.save(gameModel.toEntity());
+  return gameModel;
 }

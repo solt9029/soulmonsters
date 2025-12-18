@@ -38,7 +38,8 @@ export class GameService {
 
       // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
-      return await this.gameActionHandler.handleAction(data, manager, userId, statusReflectedGameModel);
+      const handledGameModel = this.gameActionHandler.handleAction(data, userId, statusReflectedGameModel);
+      return await manager.save(handledGameModel.toEntity());
     });
   }
 

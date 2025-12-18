@@ -27,53 +27,53 @@ import { validateEffectRuteruteDrawAction } from '../validators/effectRuteruteDr
 
 @Injectable()
 export class GameActionHandler {
-  async handleAction(data: GameActionDispatchInput, manager: EntityManager, userId: string, gameModel: GameModel) {
+  handleAction(data: GameActionDispatchInput, userId: string, gameModel: GameModel) {
     switch (data.type) {
       case ActionType.START_DRAW_TIME: {
         validateStartDrawTimeAction(gameModel, userId);
-        return await handleStartDrawTimeAction(manager, userId, gameModel);
+        return handleStartDrawTimeAction(userId, gameModel);
       }
       case ActionType.START_ENERGY_TIME: {
         validateStartEnergyTimeAction(gameModel, userId);
-        return await handleStartEnergyTimeAction(manager, userId, gameModel);
+        return handleStartEnergyTimeAction(userId, gameModel);
       }
       case ActionType.START_PUT_TIME: {
         validateStartPutTimeAction(gameModel, userId);
-        return await handleStartPutTimeAction(manager, gameModel);
+        return handleStartPutTimeAction(gameModel);
       }
       case ActionType.PUT_SOUL: {
         const payload: PutSoulActionPayload = validatePutSoulAction(data, gameModel, userId);
-        return await handlePutSoulAction(manager, userId, payload, gameModel);
+        return handlePutSoulAction(userId, payload, gameModel);
       }
       case ActionType.START_SOMETHING_TIME: {
         validateStartSomethingTimeAction(gameModel, userId);
-        return await handleStartSomethingTimeAction(manager, gameModel);
+        return handleStartSomethingTimeAction(gameModel);
       }
       case ActionType.SUMMON_MONSTER: {
-        return await handleSummonMonsterAction(manager, userId, data, gameModel);
+        return handleSummonMonsterAction(userId, data, gameModel);
       }
       case ActionType.START_BATTLE_TIME: {
         validateStartBattleTimeAction(gameModel, userId);
-        return await handleStartBattleTimeAction(manager, gameModel);
+        return handleStartBattleTimeAction(gameModel);
       }
       case ActionType.START_END_TIME: {
         validateStartEndTimeAction(gameModel, userId);
-        return await handleStartEndTimeAction(manager, gameModel);
+        return handleStartEndTimeAction(gameModel);
       }
       case ActionType.ATTACK: {
         const payload = validateAttackAction(data, gameModel, userId);
-        return await handleAttackAction(manager, userId, payload, gameModel);
+        return handleAttackAction(userId, payload, gameModel);
       }
       case ActionType.FINISH_END_TIME: {
         const payload: FinishEndTimeActionPayload = validateFinishEndTimeAction(gameModel, userId);
-        return await handleFinishEndTimeAction(manager, payload, gameModel);
+        return handleFinishEndTimeAction(payload, gameModel);
       }
       case ActionType.EFFECT_RUTERUTE_DRAW: {
         const payload = validateEffectRuteruteDrawAction(data, gameModel);
-        return await handleEffectRuteruteDraw(manager, userId, payload, gameModel);
+        return handleEffectRuteruteDraw(userId, payload, gameModel);
       }
       default: {
-        return;
+        return gameModel;
       }
     }
   }
