@@ -1,7 +1,6 @@
 import { GameModel } from '../../../models/game.model';
 import { GameStateModel } from '../../../models/game-state.model';
 import { GameUserModel } from '../../../models/game-user.model';
-import { CardEntity } from '../../../entities/card.entity';
 import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
 import { grantEffectRuteRuteDrawAction } from './effectRuteruteDraw';
 import { GameCardModel } from 'src/models/game-card.model';
@@ -23,14 +22,14 @@ describe('grantEffectRuteRuteDrawAction', () => {
     ruteruteCard.card = card;
     ruteruteCard.actionTypes = [];
 
-    const gameEntity = new GameModel();
-    gameEntity.phase = Phase.SOMETHING;
-    gameEntity.turnUserId = 'user1';
-    gameEntity.gameUsers = [gameUser];
-    gameEntity.gameCards = [ruteruteCard];
-    gameEntity.gameStates = [];
+    const gameModel = new GameModel();
+    gameModel.phase = Phase.SOMETHING;
+    gameModel.turnUserId = 'user1';
+    gameModel.gameUsers = [gameUser];
+    gameModel.gameCards = [ruteruteCard];
+    gameModel.gameStates = [];
 
-    const result = grantEffectRuteRuteDrawAction(gameEntity, 'user1');
+    const result = grantEffectRuteRuteDrawAction(gameModel, 'user1');
 
     expect(result.gameCards[0]?.actionTypes).toContain(ActionType.EFFECT_RUTERUTE_DRAW);
   });
@@ -54,14 +53,14 @@ describe('grantEffectRuteRuteDrawAction', () => {
     existingState.gameCardId = ruteruteCard.id;
     existingState.state = { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } };
 
-    const gameEntity = new GameModel();
-    gameEntity.phase = Phase.SOMETHING;
-    gameEntity.turnUserId = 'user1';
-    gameEntity.gameUsers = [gameUser];
-    gameEntity.gameCards = [ruteruteCard];
-    gameEntity.gameStates = [existingState];
+    const gameModel = new GameModel();
+    gameModel.phase = Phase.SOMETHING;
+    gameModel.turnUserId = 'user1';
+    gameModel.gameUsers = [gameUser];
+    gameModel.gameCards = [ruteruteCard];
+    gameModel.gameStates = [existingState];
 
-    const result = grantEffectRuteRuteDrawAction(gameEntity, 'user1');
+    const result = grantEffectRuteRuteDrawAction(gameModel, 'user1');
 
     expect(result.gameCards[0]?.actionTypes).not.toContain(ActionType.EFFECT_RUTERUTE_DRAW);
   });
