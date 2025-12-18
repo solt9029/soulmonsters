@@ -8,26 +8,24 @@ import { CardModel } from 'src/models/card.model';
 
 describe('grantEffectRuteRuteDrawAction', () => {
   it('should grant action when ruterute card is in battle zone and effect not used', () => {
-    const gameUser = new GameUserModel();
-    gameUser.id = 1;
-    gameUser.userId = 'user1';
+    const gameUser = new GameUserModel({ id: 1, userId: 'user1' });
+    const card = new CardModel({ id: 1 });
 
-    const card = new CardModel();
-    card.id = 1;
+    const ruteruteCard = new GameCardModel({
+      id: 1,
+      currentUserId: 'user1',
+      zone: Zone.BATTLE,
+      card: card,
+      actionTypes: [],
+    });
 
-    const ruteruteCard = new GameCardModel();
-    ruteruteCard.id = 1;
-    ruteruteCard.currentUserId = 'user1';
-    ruteruteCard.zone = Zone.BATTLE;
-    ruteruteCard.card = card;
-    ruteruteCard.actionTypes = [];
-
-    const gameModel = new GameModel();
-    gameModel.phase = Phase.SOMETHING;
-    gameModel.turnUserId = 'user1';
-    gameModel.gameUsers = [gameUser];
-    gameModel.gameCards = [ruteruteCard];
-    gameModel.gameStates = [];
+    const gameModel = new GameModel({
+      phase: Phase.SOMETHING,
+      turnUserId: 'user1',
+      gameUsers: [gameUser],
+      gameCards: [ruteruteCard],
+      gameStates: [],
+    });
 
     const result = grantEffectRuteRuteDrawAction(gameModel, 'user1');
 
@@ -35,30 +33,29 @@ describe('grantEffectRuteRuteDrawAction', () => {
   });
 
   it('should not grant action when effect already used for specific card', () => {
-    const gameUser = new GameUserModel();
-    gameUser.id = 1;
-    gameUser.userId = 'user1';
+    const gameUser = new GameUserModel({ id: 1, userId: 'user1' });
+    const card = new CardModel({ id: 1 });
 
-    const card = new CardModel();
-    card.id = 1;
+    const ruteruteCard = new GameCardModel({
+      id: 1,
+      currentUserId: 'user1',
+      zone: Zone.BATTLE,
+      card: card,
+      actionTypes: [],
+    });
 
-    const ruteruteCard = new GameCardModel();
-    ruteruteCard.id = 1;
-    ruteruteCard.currentUserId = 'user1';
-    ruteruteCard.zone = Zone.BATTLE;
-    ruteruteCard.card = card;
-    ruteruteCard.actionTypes = [];
+    const existingState = new GameStateModel({
+      gameCardId: ruteruteCard.id,
+      state: { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } },
+    });
 
-    const existingState = new GameStateModel();
-    existingState.gameCardId = ruteruteCard.id;
-    existingState.state = { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } };
-
-    const gameModel = new GameModel();
-    gameModel.phase = Phase.SOMETHING;
-    gameModel.turnUserId = 'user1';
-    gameModel.gameUsers = [gameUser];
-    gameModel.gameCards = [ruteruteCard];
-    gameModel.gameStates = [existingState];
+    const gameModel = new GameModel({
+      phase: Phase.SOMETHING,
+      turnUserId: 'user1',
+      gameUsers: [gameUser],
+      gameCards: [ruteruteCard],
+      gameStates: [existingState],
+    });
 
     const result = grantEffectRuteRuteDrawAction(gameModel, 'user1');
 
