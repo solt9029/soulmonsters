@@ -3,7 +3,6 @@ import { GameModel } from '../../../models/game.model';
 import { GameActionDispatchInput } from '../../../graphql/index';
 import { ActionType } from '../../../graphql/index';
 import { handleStartDrawTimeAction } from './startDrawTime';
-import { EntityManager } from 'typeorm';
 import { handleStartEnergyTimeAction } from './startEnergyTime';
 import { handleStartPutTimeAction } from './startPutTime';
 import { handlePutSoulAction, PutSoulActionPayload } from './putSoul';
