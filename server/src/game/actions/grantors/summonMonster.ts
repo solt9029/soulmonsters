@@ -3,9 +3,9 @@ import { Phase, Kind, ActionType } from '../../../graphql/index';
 import { GameModel } from '../../../models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
 
-export function grantSummonMonsterAction(gameModel: GameModel, userId: string) {
+export function grantSummonMonsterAction(gameModel: GameModel, userId: string): GameModel {
   if (gameModel.phase !== Phase.SOMETHING || gameModel.turnUserId !== userId) {
-    return;
+    return gameModel;
   }
 
   gameModel.gameCards = gameModel.gameCards.map(gameCard => {

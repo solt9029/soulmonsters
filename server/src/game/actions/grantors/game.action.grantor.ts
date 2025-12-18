@@ -12,21 +12,26 @@ import { grantStartEndTimeAction } from './startEndTime';
 import { grantFinishEndTimeAction } from './finishEndTime';
 import { grantEffectRuteRuteDrawAction } from './effectRuteruteDraw';
 
+function pipe<T>(initialValue: T, ...fns: Array<(arg: T) => T>): T {
+  return fns.reduce((acc, fn) => fn(acc), initialValue);
+}
+
 @Injectable()
 export class GameActionGrantor {
   grantActions(gameModel: GameModel, userId: string): GameModel {
-    grantStartDrawTimeAction(gameModel, userId);
-    grantStartEnergyTimeAction(gameModel, userId);
-    grantStartPutTimeAction(gameModel, userId);
-    grantStartSomethingTimeAction(gameModel, userId);
-    grantPutSoulAction(gameModel, userId);
-    grantStartBattleTimeAction(gameModel, userId);
-    grantSummonMonsterAction(gameModel, userId);
-    grantAttackAction(gameModel, userId);
-    grantStartEndTimeAction(gameModel, userId);
-    grantFinishEndTimeAction(gameModel, userId);
-    grantEffectRuteRuteDrawAction(gameModel, userId);
-
-    return gameModel;
+    return pipe(
+      gameModel,
+      model => grantStartDrawTimeAction(model, userId),
+      model => grantStartEnergyTimeAction(model, userId),
+      model => grantStartPutTimeAction(model, userId),
+      model => grantStartSomethingTimeAction(model, userId),
+      model => grantPutSoulAction(model, userId),
+      model => grantStartBattleTimeAction(model, userId),
+      model => grantSummonMonsterAction(model, userId),
+      model => grantAttackAction(model, userId),
+      model => grantStartEndTimeAction(model, userId),
+      model => grantFinishEndTimeAction(model, userId),
+      model => grantEffectRuteRuteDrawAction(model, userId),
+    );
   }
 }

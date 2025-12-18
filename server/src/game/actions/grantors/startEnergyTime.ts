@@ -2,9 +2,9 @@ import { GameModel } from '../../../models/game.model';
 import { Phase, ActionType } from '../../../graphql/index';
 import { GameUserModel } from 'src/models/game-user.model';
 
-export function grantStartEnergyTimeAction(gameModel: GameModel, userId: string) {
+export function grantStartEnergyTimeAction(gameModel: GameModel, userId: string): GameModel {
   if (gameModel.phase !== Phase.DRAW || gameModel.turnUserId !== userId) {
-    return;
+    return gameModel;
   }
 
   gameModel.gameUsers = gameModel.gameUsers.map(gameUser =>

@@ -3,14 +3,14 @@ import { Zone, StateType } from 'src/graphql';
 import { Phase, ActionType } from '../../../graphql/index';
 import { GameCardModel } from 'src/models/game-card.model';
 
-export function grantPutSoulAction(gameModel: GameModel, userId: string) {
+export function grantPutSoulAction(gameModel: GameModel, userId: string): GameModel {
   if (gameModel.phase !== Phase.PUT || gameModel.turnUserId !== userId) {
-    return;
+    return gameModel;
   }
 
   const yourGameUser = gameModel.gameUsers.find(value => value.userId === userId);
   if (!yourGameUser) {
-    return;
+    return gameModel;
   }
 
   const putSoulGameState = gameModel.gameStates.find(
@@ -19,7 +19,7 @@ export function grantPutSoulAction(gameModel: GameModel, userId: string) {
   );
 
   if (putSoulGameState?.state.data['value'] || 0 > 0) {
-    return;
+    return gameModel;
   }
 
   gameModel.gameCards = gameModel.gameCards.map(gameCard => {
