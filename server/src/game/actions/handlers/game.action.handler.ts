@@ -64,7 +64,7 @@ export class GameActionHandler {
         return handleAttackAction(userId, payload, gameModel);
       }
       case ActionType.FINISH_END_TIME: {
-        const payload: FinishEndTimeActionPayload = validateFinishEndTimeAction(gameModel, userId);
+        const payload = validateFinishEndTimeAction(gameModel, userId);
         return handleFinishEndTimeAction(payload, gameModel);
       }
       case ActionType.EFFECT_RUTERUTE_DRAW: {
