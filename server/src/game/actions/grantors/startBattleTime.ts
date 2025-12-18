@@ -15,4 +15,6 @@ export function grantStartBattleTimeAction(gameModel: GameModel, userId: string)
         })
       : gameUser,
   );
+
+  return gameModel;
 }

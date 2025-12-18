@@ -30,9 +30,9 @@ describe('grantEffectRuteRuteDrawAction', () => {
     gameEntity.gameCards = [ruteruteCard];
     gameEntity.gameStates = [];
 
-    grantEffectRuteRuteDrawAction(gameEntity, 'user1');
+    const result = grantEffectRuteRuteDrawAction(gameEntity, 'user1');
 
-    expect(gameEntity.gameCards[0]?.actionTypes).toContain(ActionType.EFFECT_RUTERUTE_DRAW);
+    expect(result.gameCards[0]?.actionTypes).toContain(ActionType.EFFECT_RUTERUTE_DRAW);
   });
 
   it('should not grant action when effect already used for specific card', () => {
@@ -61,8 +61,8 @@ describe('grantEffectRuteRuteDrawAction', () => {
     gameEntity.gameCards = [ruteruteCard];
     gameEntity.gameStates = [existingState];
 
-    grantEffectRuteRuteDrawAction(gameEntity, 'user1');
+    const result = grantEffectRuteRuteDrawAction(gameEntity, 'user1');
 
-    expect(gameEntity.gameCards[0]?.actionTypes).not.toContain(ActionType.EFFECT_RUTERUTE_DRAW);
+    expect(result.gameCards[0]?.actionTypes).not.toContain(ActionType.EFFECT_RUTERUTE_DRAW);
   });
 });

@@ -19,4 +19,6 @@ export function grantSummonMonsterAction(gameModel: GameModel, userId: string) {
         })
       : gameCard;
   });
+
+  return gameModel;
 }

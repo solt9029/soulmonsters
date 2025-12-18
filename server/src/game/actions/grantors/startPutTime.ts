@@ -15,4 +15,6 @@ export function grantStartPutTimeAction(gameModel: GameModel, userId: string) {
         })
       : gameUser,
   );
+
+  return gameModel;
 }

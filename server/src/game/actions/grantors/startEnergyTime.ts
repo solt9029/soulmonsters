@@ -15,4 +15,6 @@ export function grantStartEnergyTimeAction(gameModel: GameModel, userId: string)
         })
       : gameUser,
   );
+
+  return gameModel;
 }

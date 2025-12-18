@@ -15,4 +15,6 @@ export function grantStartEndTimeAction(gameModel: GameModel, userId: string) {
         })
       : gameUser,
   );
+
+  return gameModel;
 }

@@ -10,11 +10,7 @@ export type PutSoulActionPayload = {
   gameUser: GameUserModel;
 };
 
-export function handlePutSoulAction(
-  userId: string,
-  payload: PutSoulActionPayload,
-  gameModel: GameModel,
-): GameModel {
+export function handlePutSoulAction(userId: string, payload: PutSoulActionPayload, gameModel: GameModel): GameModel {
   const originalPosition = payload.gameCard.position;
 
   gameModel = putSoulGameCard(gameModel, userId, payload.gameCard.id);

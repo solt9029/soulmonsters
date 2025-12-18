@@ -15,4 +15,6 @@ export function grantStartDrawTimeAction(gameModel: GameModel, userId: string) {
         })
       : gameUser,
   );
+
+  return gameModel;
 }

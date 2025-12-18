@@ -21,11 +21,7 @@ export type AttackActionPayload =
       opponentUserId: string;
     };
 
-export function handleAttackAction(
-  userId: string,
-  payload: AttackActionPayload,
-  gameModel: GameModel,
-): GameModel {
+export function handleAttackAction(userId: string, payload: AttackActionPayload, gameModel: GameModel): GameModel {
   if (payload.type === 'DIRECT_ATTACK') {
     directAttack(gameModel, payload.attackerCard.id, payload.opponentGameUser.userId);
     incrementAttackCount(gameModel, payload.attackerCard.id);

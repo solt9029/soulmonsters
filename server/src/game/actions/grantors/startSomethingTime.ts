@@ -15,4 +15,6 @@ export function grantStartSomethingTimeAction(gameModel: GameModel, userId: stri
         })
       : gameUser,
   );
+
+  return gameModel;
 }

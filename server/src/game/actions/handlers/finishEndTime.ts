@@ -8,10 +8,7 @@ export type FinishEndTimeActionPayload = {
   opponentGameUser: GameUserModel;
 };
 
-export function handleFinishEndTimeAction(
-  payload: FinishEndTimeActionPayload,
-  gameModel: GameModel,
-): GameModel {
+export function handleFinishEndTimeAction(payload: FinishEndTimeActionPayload, gameModel: GameModel): GameModel {
   switchToOpponentTurn(gameModel, payload.opponentGameUser);
   cleanGameStates(gameModel, payload.gameUser);
   return gameModel;

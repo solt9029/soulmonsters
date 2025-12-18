@@ -4,7 +4,7 @@ import { GameCardModel } from '../../../models/game-card.model';
 
 export function grantEffectRuteRuteDrawAction(gameModel: GameModel, userId: string) {
   if (gameModel.phase !== Phase.SOMETHING || gameModel.turnUserId !== userId) {
-    return;
+    return gameModel;
   }
 
   gameModel.gameCards = gameModel.gameCards.map(gameCard => {
@@ -32,4 +32,6 @@ export function grantEffectRuteRuteDrawAction(gameModel: GameModel, userId: stri
       actionTypes: [...gameCard.actionTypes, ActionType.EFFECT_RUTERUTE_DRAW],
     });
   });
+
+  return gameModel;
 }

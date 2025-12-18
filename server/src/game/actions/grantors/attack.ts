@@ -31,4 +31,6 @@ export function grantAttackAction(gameModel: GameModel, userId: string) {
       actionTypes: [...gameCard.actionTypes, ActionType.ATTACK],
     });
   });
+
+  return gameModel;
 }

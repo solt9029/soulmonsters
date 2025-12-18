@@ -32,4 +32,6 @@ export function grantPutSoulAction(gameModel: GameModel, userId: string) {
         })
       : gameCard;
   });
+
+  return gameModel;
 }
