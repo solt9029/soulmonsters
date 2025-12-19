@@ -16,7 +16,5 @@ export function handleSummonMonsterAction(
   gameModel = summonGameCard(gameModel, userId, data.payload.gameCardId!);
   gameModel = packHandPositions(gameModel, userId, originalPosition);
 
-  // TODO: シマシマジュニアの場合、相手のエナジーを1減らし、自分のエナジーを1増やす
-
   return gameModel;
 }
