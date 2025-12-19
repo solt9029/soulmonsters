@@ -1,4 +1,4 @@
-import { GameEvent, GameEventType, ZoneChangedEvent } from '../../events';
+import { GameEvent, GameEventType, ZoneChangedEvent } from '..';
 import { GameModel } from '../../../models/game.model';
 import { Zone } from '../../../graphql';
 import { addUserEnergy } from './addUserEnergy';
