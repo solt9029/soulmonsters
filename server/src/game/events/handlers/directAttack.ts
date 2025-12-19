@@ -4,7 +4,7 @@ import { dealDamageToPlayer } from '../../actions/handlers/attack/dealDamageToPl
 import { drawCardFromDeck } from '../../actions/handlers/startDrawTime/drawCardFromDeck';
 
 export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameModel): GameModel {
-  const attackerCard = gameModel.gameCards.find(card => card.id === event.attackerCardId);
+  const attackerCard = gameModel.gameCards.find(gameCard => gameCard.id === event.attackerCardId);
 
   if (!attackerCard) {
     return gameModel;
