@@ -1,8 +1,12 @@
+import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from '../../../models/game.model';
 import { drawCardFromDeck } from './effectRuteruteDraw/drawCardFromDeck';
 import { saveEffectUseCountGameState } from './effectRuteruteDraw/saveEffectUseCountGameState';
 import { subtractUserEnergy } from './utils/subtractUserEnergy';
-import { EffectRuteruteDrawActionPayload } from '../validators/effectRuteruteDraw';
+
+export type EffectRuteruteDrawActionPayload = {
+  gameCard: GameCardModel;
+};
 
 export function handleEffectRuteruteDraw(
   userId: string,
