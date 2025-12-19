@@ -2,6 +2,8 @@ import { GameModel } from '../../../../models/game.model';
 import { Zone } from '../../../../graphql';
 import { destroyMonster } from './destroyMonster';
 import { GameCardModel } from 'src/models/game-card.model';
+import { GameUserModel } from 'src/models/game-user.model';
+import { CardModel } from 'src/models/card.model';
 
 describe('destroyMonster', () => {
   it('should move monster from battle zone to soul zone', () => {
@@ -49,5 +51,63 @@ describe('destroyMonster', () => {
 
     expect(result.gameCards[0]?.zone).toBe(Zone.SOUL);
     expect(result.gameCards[0]?.position).toBe(0);
+  });
+
+  it('should trigger ニセキサンチョウ effect when moved from battle to soul zone', () => {
+    const gameEntity = new GameModel({
+      id: 1,
+      gameUsers: [
+        new GameUserModel({
+          id: 1,
+          userId: 'user1',
+          energy: 3,
+        }),
+      ],
+      gameCards: [
+        new GameCardModel({
+          id: 1,
+          currentUserId: 'user1',
+          zone: Zone.BATTLE,
+          position: 0,
+          card: new CardModel({
+            id: 14,
+          }),
+        }),
+      ],
+    });
+
+    const result = destroyMonster(gameEntity, 1);
+
+    expect(result.gameCards[0]?.zone).toBe(Zone.SOUL);
+    expect(result.gameUsers[0]?.energy).toBe(5);
+  });
+
+  it('should not trigger effect for non-ニセキサンチョウ cards', () => {
+    const gameEntity = new GameModel({
+      id: 1,
+      gameUsers: [
+        new GameUserModel({
+          id: 1,
+          userId: 'user1',
+          energy: 3,
+        }),
+      ],
+      gameCards: [
+        new GameCardModel({
+          id: 1,
+          currentUserId: 'user1',
+          zone: Zone.BATTLE,
+          position: 0,
+          card: new CardModel({
+            id: 1,
+          }),
+        }),
+      ],
+    });
+
+    const result = destroyMonster(gameEntity, 1);
+
+    expect(result.gameCards[0]?.zone).toBe(Zone.SOUL);
+    expect(result.gameUsers[0]?.energy).toBe(3);
   });
 });
