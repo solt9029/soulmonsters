@@ -13,22 +13,22 @@ const calcNewSoulGameCardPosition = (gameModel: GameModel, userId: string): numb
 };
 
 export const destroyMonster = (gameModel: GameModel, gameCardId: number): GameModel => {
-  const gameCard = gameModel.gameCards.find(card => card.id === gameCardId);
+  const gameCard = gameModel.gameCards.find(gameCard => gameCard.id === gameCardId);
   if (!gameCard) {
     throw new Error('Card not found');
   }
 
   const previousZone = gameCard.zone;
 
-  gameModel.gameCards = gameModel.gameCards.map(card =>
-    card.id === gameCardId
+  gameModel.gameCards = gameModel.gameCards.map(gameCard =>
+    gameCard.id === gameCardId
       ? new GameCardModel({
-          ...card,
+          ...gameCard,
           zone: Zone.SOUL,
-          position: calcNewSoulGameCardPosition(gameModel, card.currentUserId),
+          position: calcNewSoulGameCardPosition(gameModel, gameCard.currentUserId),
           battlePosition: null,
         })
-      : card,
+      : gameCard,
   );
 
   gameModel = handleEvent(

@@ -31,7 +31,7 @@ describe('drawCardFromDeck', () => {
 
     const result = drawCardFromDeck(gameModel, 'user1');
 
-    const drawnCard = result.gameCards.find(card => card.id === 1);
+    const drawnCard = result.gameCards.find(gameCard => gameCard.id === 1);
     expect(drawnCard?.zone).toBe(Zone.HAND);
     expect(drawnCard?.position).toBe(1);
   });

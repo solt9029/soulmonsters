@@ -34,8 +34,8 @@ export function handleAttackAction(userId: string, payload: AttackActionPayload,
   gameModel = monsterBattle(gameModel, payload.attackerCard.id, payload.targetCard.id);
   gameModel = incrementAttackCount(gameModel, payload.attackerCard.id);
 
-  const updatedGameCardZone = gameModel.gameCards.find(card => card.id === payload.attackerCard.id)?.zone;
-  const updatedTargetGameCardZone = gameModel.gameCards.find(card => card.id === payload.targetCard.id)?.zone;
+  const updatedGameCardZone = gameModel.gameCards.find(gameCard => gameCard.id === payload.attackerCard.id)?.zone;
+  const updatedTargetGameCardZone = gameModel.gameCards.find(gameCard => gameCard.id === payload.targetCard.id)?.zone;
 
   if (updatedGameCardZone !== 'BATTLE' && originalGameCardPosition) {
     gameModel = packBattlePositions(gameModel, userId, originalGameCardPosition);

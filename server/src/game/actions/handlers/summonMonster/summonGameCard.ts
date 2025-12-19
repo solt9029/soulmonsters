@@ -13,7 +13,7 @@ const calcNewBattleGameCardPosition = (gameModel: GameModel, userId: string): nu
 };
 
 export const summonGameCard = (gameModel: GameModel, userId: string, gameCardId: number): GameModel => {
-  const gameCard = gameModel.gameCards.find(card => card.id === gameCardId);
+  const gameCard = gameModel.gameCards.find(gameCard => gameCard.id === gameCardId);
   if (!gameCard) {
     throw new Error('Card not found');
   }
