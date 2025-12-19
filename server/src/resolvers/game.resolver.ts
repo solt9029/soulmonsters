@@ -7,8 +7,8 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
-import { GameActionGrantor } from 'src/game/actions/grantors/game.action.grantor';
-import { GameStateReflector } from 'src/game/states/reflectors/game.state.reflector';
+import { GameActionGrantor } from 'src/game/actions/grantors';
+import { GameStateReflector } from 'src/game/states/reflectors';
 import { GamePresenter } from 'src/presenters/game.presenter';
 
 @Resolver()

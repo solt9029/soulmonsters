@@ -37,9 +37,9 @@ import { GameCardToModelMapper } from 'src/mappers/to-model/game-card.to-model.m
 import { GameUserToModelMapper } from 'src/mappers/to-model/game-user.to-model.mapper';
 import { GameStateToModelMapper } from 'src/mappers/to-model/game-state.to-model.mapper';
 import { GameStateRepository } from 'src/repositories/game-state.repository';
-import { GameActionGrantor } from 'src/game/actions/grantors/game.action.grantor';
-import { GameActionHandler } from 'src/game/actions/handlers/game.action.handler';
-import { GameStateReflector } from 'src/game/states/reflectors/game.state.reflector';
+import { GameActionGrantor } from 'src/game/actions/grantors';
+import { GameActionHandler } from 'src/game/actions/handlers';
+import { GameStateReflector } from 'src/game/states/reflectors';
 
 @Module({
   imports: [
