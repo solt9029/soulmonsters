@@ -85,4 +85,34 @@ describe('directAttack', () => {
     expect(handCards).toHaveLength(2);
     expect(result.gameUsers[1]?.lifePoint).toBe(7400);
   });
+
+  it('should deal additional 1000 damage when card ID 2 (再復活したタキビー) performs direct attack', () => {
+    const gameEntity = new GameModel({
+      id: 1,
+      gameUsers: [
+        new GameUserModel({
+          userId: 'user1',
+          lifePoint: 8000,
+        }),
+        new GameUserModel({
+          userId: 'user2',
+          lifePoint: 8000,
+        }),
+      ],
+      gameCards: [
+        new GameCardModel({
+          id: 1,
+          attack: 1600,
+          currentUserId: 'user1',
+          card: new CardModel({
+            id: 2,
+          }),
+        }),
+      ],
+    });
+
+    const result = directAttack(gameEntity, 1, 'user2');
+
+    expect(result.gameUsers[1]?.lifePoint).toBe(5400); // 8000 - 1600 - 1000
+  });
 });

@@ -18,7 +18,10 @@ export const directAttack = (gameModel: GameModel, attackerCardId: number, oppon
     drawCardFromDeck(gameModel, attackerUserId);
   }
 
-  // TODO: タキビーの直接攻撃の場合、1000ポイントダメージを追加で与える
+  // 再復活したタキビー（カードID 2）の直接攻撃の場合、1000ポイントダメージを追加で与える
+  if (attackerCard.card.id === 2) {
+    dealDamageToPlayer(gameModel, opponentUserId, 1000);
+  }
 
   return gameModel;
 };
