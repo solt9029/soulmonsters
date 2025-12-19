@@ -1,7 +1,7 @@
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
-import { handleGameEvent } from '../../../events/handlers';
+import { handleEvent } from '../../../events/handlers';
 import { GameEventType } from '../../../events';
 
 const calcNewSoulGameCardPosition = (gameModel: GameModel, userId: string): number => {
@@ -31,7 +31,7 @@ export const destroyMonster = (gameModel: GameModel, gameCardId: number): GameMo
       : card,
   );
 
-  gameModel = handleGameEvent(
+  gameModel = handleEvent(
     {
       type: GameEventType.ZONE_CHANGED,
       gameCardId: gameCardId,

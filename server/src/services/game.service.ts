@@ -37,9 +37,9 @@ export class GameService {
       // GameState 状態を GameCard に反映する（攻撃力の減少など）
       const statusReflectedGameModel = this.gameStateReflector.reflectStates(grantedGameModel, userId);
 
-      // TODO:check events. handleGameActionの中でやるかなあ？別で切り出す？
+      // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
       //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
-      const handledGameModel = this.gameActionHandler.handleGameAction(data, userId, statusReflectedGameModel);
+      const handledGameModel = this.gameActionHandler.handleAction(data, userId, statusReflectedGameModel);
       return await manager.save(handledGameModel.toEntity());
     });
   }
