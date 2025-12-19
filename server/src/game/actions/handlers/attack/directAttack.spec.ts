@@ -81,7 +81,7 @@ describe('directAttack', () => {
 
     const result = directAttack(gameEntity, 1, 'user2');
 
-    const handCards = result.gameCards.filter(card => card.zone === Zone.HAND && card.currentUserId === 'user1');
+    const handCards = result.gameCards.filter(gameCard => gameCard.zone === Zone.HAND && gameCard.currentUserId === 'user1');
     expect(handCards).toHaveLength(2);
     expect(result.gameUsers[1]?.lifePoint).toBe(7400);
   });

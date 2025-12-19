@@ -5,7 +5,7 @@ import { handleAttackVsDefense } from './handleAttackVsDefense';
 
 // ダメージ計算・ソウルゾーンへの移動・エナジー加算などの責務を持つ
 export const monsterBattle = (gameModel: GameModel, attackerCardId: number, defenderCardId: number): GameModel => {
-  const defenderCard = gameModel.gameCards.find(card => card.id === defenderCardId);
+  const defenderCard = gameModel.gameCards.find(gameCard => gameCard.id === defenderCardId);
 
   if (!defenderCard) {
     throw new Error('Defender card not found');

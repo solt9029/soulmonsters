@@ -7,8 +7,8 @@ export const handleAttackVsDefense = (
   attackerCardId: number,
   defenderCardId: number,
 ): GameModel => {
-  const attackerCard = gameModel.gameCards.find(card => card.id === attackerCardId);
-  const defenderCard = gameModel.gameCards.find(card => card.id === defenderCardId);
+  const attackerCard = gameModel.gameCards.find(gameCard => gameCard.id === attackerCardId);
+  const defenderCard = gameModel.gameCards.find(gameCard => gameCard.id === defenderCardId);
 
   if (!attackerCard || !defenderCard) {
     throw new Error();
