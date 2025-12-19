@@ -9,7 +9,7 @@
 ## テストファイルの命名と配置
 - ファイル名: `{関数名}.spec.ts`
 - 配置場所: テスト対象ファイルと同じディレクトリ
-- 例: `/server/src/game/actions/handlers/putSoul/savePutCountGameState.spec.ts`
+- 例: `server/src/game/actions/handlers/putSoul/savePutCountGameState.spec.ts`
 
 ## テストケース設計方針
 
@@ -47,17 +47,6 @@ expect((result.gameStates[0]?.state.data as { gameUserId: number; value: number 
 - 型ガードを使用することでTypeScriptの型システムを活用
 - `as`による型アサーションを避け、より安全で読みやすいコード
 - 条件分岐内で型が自動的に絞り込まれる
-
-## アサーション戦略
-
-### 段階的検証
-1. 配列の長さ確認: `expect(result.gameStates).toHaveLength(1)`
-2. 型の確認: `expect(result.gameStates[0]?.state.type).toBe(StateType.PUT_SOUL_COUNT)`
-3. データの確認: プロパティごとに個別検証
-
-### 値の検証
-- 初期化の場合: `value: 1`を期待
-- インクリメントの場合: 元の値 + 1を期待
 
 ## 参考実装との整合性
 
