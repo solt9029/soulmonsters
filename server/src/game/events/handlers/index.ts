@@ -1,29 +1,12 @@
-import { GameEvent, GameEventType, ZoneChangedEvent } from '..';
+import { GameEvent, GameEventType } from '..';
 import { GameModel } from '../../../models/game.model';
-import { Zone } from '../../../graphql';
-import { addUserEnergy } from './addUserEnergy';
+import { handleZoneChanged } from './zoneChanged';
 
 export function handleGameEvent(event: GameEvent, gameModel: GameModel): GameModel {
-  if (event.type === GameEventType.ZONE_CHANGED) {
-    return handleZoneChanged(event, gameModel);
+  switch (event.type) {
+    case GameEventType.ZONE_CHANGED:
+      return handleZoneChanged(event, gameModel);
+    default:
+      return gameModel;
   }
-
-  return gameModel;
-}
-
-function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel): GameModel {
-  if (event.fromZone !== Zone.BATTLE || event.toZone !== Zone.SOUL) {
-    return gameModel;
-  }
-
-  const movedCard = gameModel.gameCards.find(gc => gc.id === event.gameCardId);
-  if (!movedCard || !movedCard.card) {
-    return gameModel;
-  }
-
-  if (movedCard.card.id === 14) {
-    gameModel = addUserEnergy(gameModel, movedCard.currentUserId, 2);
-  }
-
-  return gameModel;
 }
