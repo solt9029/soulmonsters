@@ -13,6 +13,7 @@ import { handleStartEndTimeAction } from './startEndTime';
 import { handleAttackAction } from './attack';
 import { handleFinishEndTimeAction } from './finishEndTime';
 import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
+import { handleEffectFreshFishDraw } from './effectFreshFishDraw';
 import { validateAction } from '../validators';
 
 @Injectable()
@@ -53,6 +54,9 @@ export class GameActionHandler {
       }
       case ActionType.EFFECT_RUTERUTE_DRAW: {
         return handleEffectRuteruteDraw(userId, validationResult.payload, gameModel);
+      }
+      case ActionType.EFFECT_FRESH_FISH_DRAW: {
+        return handleEffectFreshFishDraw(userId, validationResult.payload, gameModel);
       }
       default: {
         return gameModel;

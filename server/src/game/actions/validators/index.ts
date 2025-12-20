@@ -11,10 +11,12 @@ import { validateStartSomethingTimeAction } from '../validators/startSomethingTi
 import { validateStartBattleTimeAction } from '../validators/startBattleTime';
 import { validateFinishEndTimeAction } from '../validators/finishEndTime';
 import { validateEffectRuteruteDrawAction } from '../validators/effectRuteruteDraw';
+import { validateEffectFreshFishDrawAction } from '../validators/effectFreshFishDraw';
 import { PutSoulActionPayload } from '../handlers/putSoul';
 import { AttackActionPayload } from '../handlers/attack';
 import { FinishEndTimeActionPayload } from '../handlers/finishEndTime';
 import { EffectRuteruteDrawActionPayload } from '../handlers/effectRuteruteDraw';
+import { EffectFreshFishDrawActionPayload } from '../handlers/effectFreshFishDraw';
 
 type ValidationResult =
   | { type: ActionType.START_DRAW_TIME }
@@ -27,7 +29,8 @@ type ValidationResult =
   | { type: ActionType.START_END_TIME }
   | { type: ActionType.ATTACK; payload: AttackActionPayload }
   | { type: ActionType.FINISH_END_TIME; payload: FinishEndTimeActionPayload }
-  | { type: ActionType.EFFECT_RUTERUTE_DRAW; payload: EffectRuteruteDrawActionPayload };
+  | { type: ActionType.EFFECT_RUTERUTE_DRAW; payload: EffectRuteruteDrawActionPayload }
+  | { type: ActionType.EFFECT_FRESH_FISH_DRAW; payload: EffectFreshFishDrawActionPayload };
 
 export const validateAction = (
   data: GameActionDispatchInput,
@@ -77,6 +80,10 @@ export const validateAction = (
     case ActionType.EFFECT_RUTERUTE_DRAW: {
       const payload = validateEffectRuteruteDrawAction(data, gameModel);
       return { type: ActionType.EFFECT_RUTERUTE_DRAW, payload };
+    }
+    case ActionType.EFFECT_FRESH_FISH_DRAW: {
+      const payload = validateEffectFreshFishDrawAction(data, gameModel);
+      return { type: ActionType.EFFECT_FRESH_FISH_DRAW, payload };
     }
     default: {
       throw new Error('Invalid action type');
