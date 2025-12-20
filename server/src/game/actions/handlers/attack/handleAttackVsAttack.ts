@@ -1,6 +1,6 @@
 import { GameModel } from '../../../../models/game.model';
 import { destroyMonster } from './destroyMonster';
-import { increaseEnergyToPlayer } from './increaseEnergyToPlayer';
+import { addUserEnergy } from '../../../utils/addUserEnergy';
 import { dealDamageToPlayer } from '../../../utils/dealDamageToPlayer';
 import { GameCardModel } from 'src/models/game-card.model';
 
@@ -60,12 +60,12 @@ export const handleAttackVsAttack = (
 
   if (battleResult.attackerDestroyed) {
     destroyMonster(gameModel, attackerCardId);
-    increaseEnergyToPlayer(gameModel, attackerCard.currentUserId);
+    addUserEnergy(gameModel, attackerCard.currentUserId, 1);
   }
 
   if (battleResult.defenderDestroyed) {
     destroyMonster(gameModel, defenderCardId);
-    increaseEnergyToPlayer(gameModel, defenderCard.currentUserId);
+    addUserEnergy(gameModel, defenderCard.currentUserId, 1);
   }
 
   if (battleResult.damageToAttacker > 0) {
