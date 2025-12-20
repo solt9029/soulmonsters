@@ -1,5 +1,5 @@
-import { GameModel } from '../../../../models/game.model';
-import { GameUserModel } from '../../../../models/game-user.model';
+import { GameModel } from '../../models/game.model';
+import { GameUserModel } from '../../models/game-user.model';
 import { subtractUserEnergy } from './subtractUserEnergy';
 
 describe('subtractUserEnergy', () => {

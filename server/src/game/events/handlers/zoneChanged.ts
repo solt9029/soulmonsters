@@ -1,11 +1,9 @@
 import { ZoneChangedEvent } from '..';
 import { GameModel } from '../../../models/game.model';
 import { Zone } from '../../../graphql';
-import { addUserEnergy } from './zoneChanged/addUserEnergy';
-import { subtractUserEnergy } from './zoneChanged/subtractUserEnergy';
-// TODO: dealDamageToPlayerの定義場所を共通utilsまたはzoneChangedディレクトリに移動する
-// actionのhandlerのための関数がeventのhandlerの中で使われているのは構造的に違和感がある
-import { dealDamageToPlayer } from '../../actions/handlers/attack/dealDamageToPlayer';
+import { addUserEnergy } from '../../utils/addUserEnergy';
+import { subtractUserEnergy } from '../../utils/subtractUserEnergy';
+import { dealDamageToPlayer } from '../../utils/dealDamageToPlayer';
 
 export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel): GameModel {
   const movedCard = gameModel.gameCards.find(gc => gc.id === event.gameCardId);

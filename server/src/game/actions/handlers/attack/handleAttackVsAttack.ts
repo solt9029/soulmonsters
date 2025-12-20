@@ -1,7 +1,7 @@
 import { GameModel } from '../../../../models/game.model';
 import { destroyMonster } from './destroyMonster';
 import { increaseEnergyToPlayer } from './increaseEnergyToPlayer';
-import { dealDamageToPlayer } from './dealDamageToPlayer';
+import { dealDamageToPlayer } from '../../../utils/dealDamageToPlayer';
 import { GameCardModel } from 'src/models/game-card.model';
 
 interface BattleResult {

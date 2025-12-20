@@ -1,5 +1,5 @@
 import { GameModel } from '../../../../models/game.model';
-import { dealDamageToPlayer } from './dealDamageToPlayer';
+import { dealDamageToPlayer } from '../../../utils/dealDamageToPlayer';
 import { handleEvent } from '../../../events/handlers';
 import { GameEventType } from '../../../events';
 

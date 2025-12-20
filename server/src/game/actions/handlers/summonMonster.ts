@@ -1,6 +1,6 @@
 import { GameActionDispatchInput } from '../../../graphql/index';
 import { GameModel } from '../../../models/game.model';
-import { subtractUserEnergy } from './utils/subtractUserEnergy';
+import { subtractUserEnergy } from '../../utils/subtractUserEnergy';
 import { summonGameCard } from './summonMonster/summonGameCard';
 import { packHandPositions } from './utils/packHandPositions';
 

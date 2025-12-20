@@ -1,5 +1,5 @@
-import { GameUserModel } from 'src/models/game-user.model';
-import { GameModel } from '../../../../models/game.model';
+import { GameUserModel } from '../../models/game-user.model';
+import { GameModel } from '../../models/game.model';
 
 export const dealDamageToPlayer = (gameModel: GameModel, userId: string, damage: number): GameModel => {
   gameModel.gameUsers = gameModel.gameUsers.map(gameUser =>
