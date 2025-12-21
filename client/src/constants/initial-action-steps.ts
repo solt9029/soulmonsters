@@ -15,4 +15,5 @@ export const InitialActionStep = {
   ATTACK: ActionStep.SELECT_ATTACK_TARGET,
   USE_SOUL_BARRIER: ActionStep.COMPLETED, // TODO: to be changed
   EFFECT_RUTERUTE_DRAW: ActionStep.COMPLETED,
+  EFFECT_FRESH_FISH_DRAW: ActionStep.COMPLETED,
 };

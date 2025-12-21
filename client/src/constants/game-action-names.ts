@@ -13,4 +13,5 @@ export default {
   ATTACK: '攻撃',
   USE_SOUL_BARRIER: 'ソウルバリア',
   EFFECT_RUTERUTE_DRAW: '効果発動',
+  EFFECT_FRESH_FISH_DRAW: '効果発動',
 };

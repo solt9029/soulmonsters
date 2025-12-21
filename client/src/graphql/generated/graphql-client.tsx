@@ -28,6 +28,7 @@ export type ActionPayload = {
 export enum ActionType {
   Attack = 'ATTACK',
   ChangeBattlePosition = 'CHANGE_BATTLE_POSITION',
+  EffectFreshFishDraw = 'EFFECT_FRESH_FISH_DRAW',
   EffectRuteruteDraw = 'EFFECT_RUTERUTE_DRAW',
   FinishEndTime = 'FINISH_END_TIME',
   PutSoul = 'PUT_SOUL',
@@ -227,6 +228,7 @@ export type QueryUserDataArgs = {
 
 export enum StateType {
   AttackCount = 'ATTACK_COUNT',
+  EffectFreshFishDrawCount = 'EFFECT_FRESH_FISH_DRAW_COUNT',
   EffectRuteruteDrawCount = 'EFFECT_RUTERUTE_DRAW_COUNT',
   PutSoulCount = 'PUT_SOUL_COUNT',
   SelfPowerChange = 'SELF_POWER_CHANGE'
