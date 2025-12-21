@@ -5,7 +5,18 @@
 - 指定がない限りnpmではなくyarnを使用してください。
 - Specの実装をする時は、必ずSpecを実行して成功することを確認してください。
 - 実装作業を完了する前に、`yarn format`などのコードフォーマットを必ず実行してください。
-- コマンドを実行する時は、各ディレクトリ(client, server)にある`README.md`を確認したり、`package.json`を事前に確認してください。憶測でコマンドを実行しないでください。
+  - serverのテスト: `yarn workspace soulmonsters-server test`
+  - serverのフォーマット: `yarn workspace soulmonsters-server format`
+  - clientのフォーマット: `yarn workspace soulmonsters-client format`
+
+# ドメイン知識
 - **gameCardとcardの区別**: gameCardとcardは明確に異なる存在です。gameCardのことをcardと省略しないでください。
   - Card: カードのマスターデータ（テンプレート）。カード自体の基本情報（名前、種類、攻撃力、防御力など）
   - GameCard: ゲーム中の実際のカードインスタンス。Cardの情報を持ちつつ、ゲーム状態（ゾーン、位置、バトルポジションなど）を持つ
+
+# server
+- importは相対パスではなく絶対パスを使用してください。
+- specの実装依頼があった場合はserver-spec-implementerに実装を任せてください。
+
+# client
+- 現状特にルールなし。必要に応じてREADMEを呼んだり、既存実装を真似しながら実装してください。
