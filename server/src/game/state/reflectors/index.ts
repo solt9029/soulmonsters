@@ -1,6 +1,6 @@
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
-import { Zone } from 'src/graphql';
+import { Zone, StateType } from 'src/graphql';
 import { Injectable } from '@nestjs/common';
 
 function isVisibleForAll(zone: Zone) {
@@ -46,11 +46,24 @@ export class GameStateReflector {
   reflectStates(gameModel: GameModel, userId: string): GameModel {
     gameModel.gameCards = gameModel.gameCards
       .map(gameCard => addInfo(gameCard))
-      .map(gameCard => filterByUserId(gameCard, userId));
-
-    // TODO: GameStateに応じてGameCardの情報を適宜書き換える
-    //   例: 「このカードが存在する限り相手モンスターの攻撃力が100下がる」などがあれば、その情報をgameCardに反映する。
+      .map(gameCard => filterByUserId(gameCard, userId))
+      .map(gameCard => this.applyPowerDownEffects(gameCard, gameModel));
 
     return gameModel;
+  }
+
+  private applyPowerDownEffects(gameCard: GameCardModel, gameModel: GameModel): GameCardModel {
+    const powerDownState = gameModel.gameStates.find(
+      state =>
+        state.state.type === StateType.EFFECT_NATSUKASHINORUDE_POWER_DOWN &&
+        state.state.data.targetGameCardId === gameCard.id,
+    );
+
+    if (powerDownState && powerDownState.state.type === StateType.EFFECT_NATSUKASHINORUDE_POWER_DOWN) {
+      const newAttack = (gameCard.attack || 0) - powerDownState.state.data.value;
+      gameCard.attack = newAttack < 0 ? 0 : newAttack;
+    }
+
+    return gameCard;
   }
 }

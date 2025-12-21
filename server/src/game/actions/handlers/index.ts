@@ -14,6 +14,7 @@ import { handleAttackAction } from './attack';
 import { handleFinishEndTimeAction } from './finishEndTime';
 import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
 import { handleEffectFreshFishDraw } from './effectFreshFishDraw';
+import { handleEffectNatsukashinorudePowerDown } from './effectNatsukashinorudePowerDown';
 import { validateAction } from '../validators';
 
 @Injectable()
@@ -57,6 +58,9 @@ export class GameActionHandler {
       }
       case ActionType.EFFECT_FRESH_FISH_DRAW: {
         return handleEffectFreshFishDraw(userId, validationResult.payload, gameModel);
+      }
+      case ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN: {
+        return handleEffectNatsukashinorudePowerDown(userId, validationResult.payload, gameModel);
       }
       default: {
         return gameModel;
