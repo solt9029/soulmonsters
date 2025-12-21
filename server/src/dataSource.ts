@@ -1,6 +1,7 @@
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 if (process.env.NODE_ENV === 'test') {
   dotenv.config({ path: path.resolve(__dirname, '../.env.test') });
@@ -10,7 +11,7 @@ if (process.env.NODE_ENV === 'test') {
 
 const { DB_TYPE, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYNCHRONIZE } = process.env;
 
-export const AppDataSource = new DataSource({
+export const dbOptions: DataSourceOptions & TypeOrmModuleOptions = {
   type: DB_TYPE as any,
   host: DB_HOST,
   port: parseInt(DB_PORT || '13306'),
@@ -21,7 +22,9 @@ export const AppDataSource = new DataSource({
   logging: true,
   entities: [path.join(__dirname, 'entities/*.{ts,js}')],
   migrations: [path.join(__dirname, 'database/migrations/*.{ts,js}')],
-});
+};
+
+export const AppDataSource = new DataSource(dbOptions);
 
 AppDataSource.initialize()
   .then(() => {

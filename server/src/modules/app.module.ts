@@ -15,7 +15,7 @@ import { AppController } from 'src/controllers/app.controller';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameUserEntity } from 'src/entities/game-user.entity';
-import { AppDataSource } from 'src/dataSource';
+import { AppDataSource, dbOptions } from 'src/dataSource';
 import { ApolloDriver } from '@nestjs/apollo';
 import { CardRepository } from 'src/repositories/card.repository';
 import { DeckRepository } from 'src/repositories/deck.repository';
@@ -44,7 +44,7 @@ import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(AppDataSource.options),
+    TypeOrmModule.forRoot(dbOptions),
     TypeOrmModule.forFeature([
       DeckEntity,
       CardEntity,
