@@ -122,6 +122,12 @@
             "deprecationReason": null
           },
           {
+            "name": "EFFECT_NATSUKASHINORUDE_POWER_DOWN",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "EFFECT_RUTERUTE_DRAW",
             "description": null,
             "isDeprecated": false,
@@ -1833,6 +1839,18 @@
           },
           {
             "name": "EFFECT_FRESH_FISH_DRAW_COUNT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EFFECT_NATSUKASHINORUDE_POWER_DOWN",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EFFECT_NATSUKASHINORUDE_USE_COUNT",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

@@ -70,6 +70,15 @@ export default class ActionStatus extends Record<ActionStatusInterface>(
       }
     }
 
+    if (type === ActionType.EffectNatsukashinorudePowerDown) {
+      if (step === ActionStep.SELECT_POWER_DOWN_TARGET) {
+        const { targetGameCardIds } = payload;
+        if (targetGameCardIds?.length === 1) {
+          return this.set('step', ActionStep.COMPLETED);
+        }
+      }
+    }
+
     return this;
   }
 

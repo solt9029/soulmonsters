@@ -29,6 +29,7 @@ export enum ActionType {
   Attack = 'ATTACK',
   ChangeBattlePosition = 'CHANGE_BATTLE_POSITION',
   EffectFreshFishDraw = 'EFFECT_FRESH_FISH_DRAW',
+  EffectNatsukashinorudePowerDown = 'EFFECT_NATSUKASHINORUDE_POWER_DOWN',
   EffectRuteruteDraw = 'EFFECT_RUTERUTE_DRAW',
   FinishEndTime = 'FINISH_END_TIME',
   PutSoul = 'PUT_SOUL',
@@ -229,6 +230,8 @@ export type QueryUserDataArgs = {
 export enum StateType {
   AttackCount = 'ATTACK_COUNT',
   EffectFreshFishDrawCount = 'EFFECT_FRESH_FISH_DRAW_COUNT',
+  EffectNatsukashinorudePowerDown = 'EFFECT_NATSUKASHINORUDE_POWER_DOWN',
+  EffectNatsukashinorudeUseCount = 'EFFECT_NATSUKASHINORUDE_USE_COUNT',
   EffectRuteruteDrawCount = 'EFFECT_RUTERUTE_DRAW_COUNT',
   PutSoulCount = 'PUT_SOUL_COUNT',
   SelfPowerChange = 'SELF_POWER_CHANGE'
@@ -420,6 +423,9 @@ export function useCardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Card
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CardsQuery, CardsQueryVariables>(CardsDocument, options);
         }
+// @ts-ignore
+export function useCardsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CardsQuery, CardsQueryVariables>): Apollo.UseSuspenseQueryResult<CardsQuery, CardsQueryVariables>;
+export function useCardsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CardsQuery, CardsQueryVariables>): Apollo.UseSuspenseQueryResult<CardsQuery | undefined, CardsQueryVariables>;
 export function useCardsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<CardsQuery, CardsQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<CardsQuery, CardsQueryVariables>(CardsDocument, options);
@@ -464,6 +470,9 @@ export function useDeckCardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<DeckCardsQuery, DeckCardsQueryVariables>(DeckCardsDocument, options);
         }
+// @ts-ignore
+export function useDeckCardsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<DeckCardsQuery, DeckCardsQueryVariables>): Apollo.UseSuspenseQueryResult<DeckCardsQuery, DeckCardsQueryVariables>;
+export function useDeckCardsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DeckCardsQuery, DeckCardsQueryVariables>): Apollo.UseSuspenseQueryResult<DeckCardsQuery | undefined, DeckCardsQueryVariables>;
 export function useDeckCardsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DeckCardsQuery, DeckCardsQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<DeckCardsQuery, DeckCardsQueryVariables>(DeckCardsDocument, options);
@@ -574,6 +583,9 @@ export function useDecksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Deck
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<DecksQuery, DecksQueryVariables>(DecksDocument, options);
         }
+// @ts-ignore
+export function useDecksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<DecksQuery, DecksQueryVariables>): Apollo.UseSuspenseQueryResult<DecksQuery, DecksQueryVariables>;
+export function useDecksSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DecksQuery, DecksQueryVariables>): Apollo.UseSuspenseQueryResult<DecksQuery | undefined, DecksQueryVariables>;
 export function useDecksSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<DecksQuery, DecksQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<DecksQuery, DecksQueryVariables>(DecksDocument, options);
@@ -645,6 +657,9 @@ export function useActiveGameIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ActiveGameIdQuery, ActiveGameIdQueryVariables>(ActiveGameIdDocument, options);
         }
+// @ts-ignore
+export function useActiveGameIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ActiveGameIdQuery, ActiveGameIdQueryVariables>): Apollo.UseSuspenseQueryResult<ActiveGameIdQuery, ActiveGameIdQueryVariables>;
+export function useActiveGameIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ActiveGameIdQuery, ActiveGameIdQueryVariables>): Apollo.UseSuspenseQueryResult<ActiveGameIdQuery | undefined, ActiveGameIdQueryVariables>;
 export function useActiveGameIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ActiveGameIdQuery, ActiveGameIdQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ActiveGameIdQuery, ActiveGameIdQueryVariables>(ActiveGameIdDocument, options);
@@ -697,6 +712,9 @@ export function useGameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GameQ
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GameQuery, GameQueryVariables>(GameDocument, options);
         }
+// @ts-ignore
+export function useGameSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GameQuery, GameQueryVariables>): Apollo.UseSuspenseQueryResult<GameQuery, GameQueryVariables>;
+export function useGameSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GameQuery, GameQueryVariables>): Apollo.UseSuspenseQueryResult<GameQuery | undefined, GameQueryVariables>;
 export function useGameSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GameQuery, GameQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<GameQuery, GameQueryVariables>(GameDocument, options);
