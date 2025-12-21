@@ -3,6 +3,14 @@
     "deny": [
       "Read(client/.env)",
       "Read(server/.env)"
+    ],
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(yarn format)",
+      "Bash(yarn test)",
+      "Bash(yarn workspace soulmonsters-server test)",
+      "Bash(yarn workspace soulmonsters-server format)",
+      "Bash(cd:*)"
     ]
   }
 }
