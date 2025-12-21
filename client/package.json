@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-graphql-types": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",

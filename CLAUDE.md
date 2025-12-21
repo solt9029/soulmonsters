@@ -8,6 +8,8 @@
   - serverのテスト: `yarn workspace soulmonsters-server test`
   - serverのフォーマット: `yarn workspace soulmonsters-server format`
   - clientのフォーマット: `yarn workspace soulmonsters-client format`
+- GraphQLのスキーマを編集した場合、ルートディレクトリで以下のコマンドを実行すればclient, serverの両方の型ファイルが自動生成されます。
+  - `yarn generate-graphql-types`
 
 # ドメイン知識
 - **gameCardとcardの区別**: gameCardとcardは明確に異なる存在です。gameCardのことをcardと省略しないでください。

@@ -22,5 +22,5 @@ yarn dev
 ## GraphQL
 
 ```sh
-npx graphql-codegen --config codegen.yml # generates src/graphql/generated/*
+yarn generate-graphql-types # generates src/graphql/generated/*
 ```
