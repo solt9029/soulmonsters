@@ -40,6 +40,7 @@ import { GameStateRepository } from 'src/repositories/game-state.repository';
 import { GameActionGrantor } from 'src/game/actions/grantors';
 import { GameActionHandler } from 'src/game/actions/handlers';
 import { GameStateReflector } from 'src/game/state/reflectors';
+import { DataSource } from 'typeorm';
 
 @Module({
   imports: [
@@ -69,6 +70,10 @@ import { GameStateReflector } from 'src/game/state/reflectors';
   ],
   controllers: [AppController],
   providers: [
+    {
+      provide: DataSource,
+      useValue: AppDataSource,
+    },
     CardRepository,
     DeckRepository,
     DeckCardRepository,
