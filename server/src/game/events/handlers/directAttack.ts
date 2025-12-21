@@ -2,6 +2,7 @@ import { DirectAttackEvent } from '..';
 import { GameModel } from '../../../models/game.model';
 import { dealDamageToPlayer } from '../../utils/dealDamageToPlayer';
 import { drawCardFromDeck } from '../../actions/handlers/startDrawTime/drawCardFromDeck';
+import { CARD_ID } from '../../../constants/card';
 
 export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameModel): GameModel {
   const attackerCard = gameModel.gameCards.find(gameCard => gameCard.id === event.attackerCardId);
@@ -10,15 +11,13 @@ export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameMode
     return gameModel;
   }
 
-  // カード固有の効果処理（カードID 11の冷徹な鳥の2枚ドロー）
-  if (attackerCard.card.id === 11) {
+  if (attackerCard.card.id === CARD_ID.REITETSUNATOTI) {
     const attackerUserId = attackerCard.currentUserId;
     drawCardFromDeck(gameModel, attackerUserId);
     drawCardFromDeck(gameModel, attackerUserId);
   }
 
-  // 再復活したタキビー（カードID 2）の直接攻撃の場合、1000ポイントダメージを追加で与える
-  if (attackerCard.card.id === 2) {
+  if (attackerCard.card.id === CARD_ID.SAIFUKKATSUSHITATAKIBEE) {
     dealDamageToPlayer(gameModel, event.opponentUserId, 1000);
   }
 
