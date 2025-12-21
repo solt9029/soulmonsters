@@ -1,0 +1,17 @@
+{
+  "name": "soulmonsters",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "engines": {
+    "node": "22.14.0",
+    "yarn": "1.22.22"
+  },
+  "scripts": {
+    "format": "yarn workspace soulmonsters-client format && yarn workspace soulmonsters-server format",
+    "test": "yarn workspace soulmonsters-server test"
+  }
+}
