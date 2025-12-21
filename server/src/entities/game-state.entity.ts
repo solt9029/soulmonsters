@@ -20,6 +20,10 @@ type State =
   | {
       type: StateType.EFFECT_RUTERUTE_DRAW_COUNT;
       data: { value: number };
+    }
+  | {
+      type: StateType.EFFECT_FRESH_FISH_DRAW_COUNT;
+      data: { value: number };
     };
 
 @Entity({ name: 'gameStates' })
