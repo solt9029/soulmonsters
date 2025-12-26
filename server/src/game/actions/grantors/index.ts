@@ -13,6 +13,7 @@ import { grantFinishEndTimeAction } from './finishEndTime';
 import { grantEffectRuteRuteDrawAction } from './effectRuteruteDraw';
 import { grantEffectFreshFishDrawAction } from './effectFreshFishDraw';
 import { grantEffectNatsukashinorudePowerDownAction } from './effectNatsukashinorudePowerDown';
+import { grantChangeBattlePositionAction } from './changeBattlePosition';
 
 function pipe<T>(initialValue: T, ...fns: Array<(arg: T) => T>): T {
   return fns.reduce((acc, fn) => fn(acc), initialValue);
@@ -28,6 +29,7 @@ export class GameActionGrantor {
       model => grantStartPutTimeAction(model, userId),
       model => grantStartSomethingTimeAction(model, userId),
       model => grantPutSoulAction(model, userId),
+      model => grantChangeBattlePositionAction(model, userId),
       model => grantStartBattleTimeAction(model, userId),
       model => grantSummonMonsterAction(model, userId),
       model => grantAttackAction(model, userId),

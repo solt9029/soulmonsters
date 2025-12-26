@@ -13,12 +13,14 @@ import { validateFinishEndTimeAction } from '../validators/finishEndTime';
 import { validateEffectRuteruteDrawAction } from '../validators/effectRuteruteDraw';
 import { validateEffectFreshFishDrawAction } from '../validators/effectFreshFishDraw';
 import { validateEffectNatsukashinorudePowerDownAction } from '../validators/effectNatsukashinorudePowerDown';
+import { validateChangeBattlePositionAction } from '../validators/changeBattlePosition';
 import { PutSoulActionPayload } from '../handlers/putSoul';
 import { AttackActionPayload } from '../handlers/attack';
 import { FinishEndTimeActionPayload } from '../handlers/finishEndTime';
 import { EffectRuteruteDrawActionPayload } from '../handlers/effectRuteruteDraw';
 import { EffectFreshFishDrawActionPayload } from '../handlers/effectFreshFishDraw';
 import { EffectNatsukashinorudePowerDownActionPayload } from '../handlers/effectNatsukashinorudePowerDown';
+import { ChangeBattlePositionActionPayload } from '../handlers/changeBattlePosition';
 
 type ValidationResult =
   | { type: ActionType.START_DRAW_TIME }
@@ -33,7 +35,8 @@ type ValidationResult =
   | { type: ActionType.FINISH_END_TIME; payload: FinishEndTimeActionPayload }
   | { type: ActionType.EFFECT_RUTERUTE_DRAW; payload: EffectRuteruteDrawActionPayload }
   | { type: ActionType.EFFECT_FRESH_FISH_DRAW; payload: EffectFreshFishDrawActionPayload }
-  | { type: ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN; payload: EffectNatsukashinorudePowerDownActionPayload };
+  | { type: ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN; payload: EffectNatsukashinorudePowerDownActionPayload }
+  | { type: ActionType.CHANGE_BATTLE_POSITION; payload: ChangeBattlePositionActionPayload };
 
 export const validateAction = (
   data: GameActionDispatchInput,
@@ -91,6 +94,10 @@ export const validateAction = (
     case ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN: {
       const payload = validateEffectNatsukashinorudePowerDownAction(data, gameModel, userId);
       return { type: ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN, payload };
+    }
+    case ActionType.CHANGE_BATTLE_POSITION: {
+      const payload = validateChangeBattlePositionAction(data, gameModel);
+      return { type: ActionType.CHANGE_BATTLE_POSITION, payload };
     }
     default: {
       throw new Error('Invalid action type');

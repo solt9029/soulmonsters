@@ -15,6 +15,7 @@ import { handleFinishEndTimeAction } from './finishEndTime';
 import { handleEffectRuteruteDraw } from './effectRuteruteDraw';
 import { handleEffectFreshFishDraw } from './effectFreshFishDraw';
 import { handleEffectNatsukashinorudePowerDown } from './effectNatsukashinorudePowerDown';
+import { handleChangeBattlePositionAction } from './changeBattlePosition';
 import { validateAction } from '../validators';
 
 @Injectable()
@@ -61,6 +62,9 @@ export class GameActionHandler {
       }
       case ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN: {
         return handleEffectNatsukashinorudePowerDown(userId, validationResult.payload, gameModel);
+      }
+      case ActionType.CHANGE_BATTLE_POSITION: {
+        return handleChangeBattlePositionAction(validationResult.payload, gameModel);
       }
       default: {
         return gameModel;
