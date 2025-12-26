@@ -13,6 +13,10 @@
   "scripts": {
     "format": "yarn workspace soulmonsters-client format && yarn workspace soulmonsters-server format",
     "test": "yarn workspace soulmonsters-server test",
-    "generate-graphql-types": "yarn workspace soulmonsters-client generate-graphql-types && yarn workspace soulmonsters-server generate-graphql-types"
+    "generate-graphql-types": "yarn workspace soulmonsters-client generate-graphql-types && yarn workspace soulmonsters-server generate-graphql-types",
+    "dev": "concurrently \"yarn workspace soulmonsters-server start:dev\" \"yarn workspace soulmonsters-client dev\" \"yarn workspace soulmonsters-client dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
   }
 }
