@@ -6,16 +6,19 @@ import { AppContext } from '../../contexts/AppContext';
 import {
   type GameCardFragment,
   Zone,
+  BattlePosition,
   useActiveGameIdQuery,
 } from '../../graphql/generated/graphql-client';
 import ActionStatus from '../../models/ActionStatus';
 import { ActionStep } from '../../constants/action-steps';
 import { useDispatchGameActionMutation } from '../../hooks/useDispatchGameActionMutation';
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(Card)<{ $isDefence: boolean }>`
   min-width: 60px;
   width: 60px;
   margin: 5px;
+  transform: ${(props) => (props.$isDefence ? 'rotate(-90deg)' : 'none')};
+  transition: transform 0.3s ease;
 `;
 
 export type GameCardProps = {
@@ -79,8 +82,10 @@ export default function GameCard({ data }: GameCardProps) {
     });
   };
 
+  const isDefence = data.battlePosition === BattlePosition.Defence;
+
   return (
-    <StyledCard onClick={handleClick}>
+    <StyledCard onClick={handleClick} $isDefence={isDefence}>
       <CardImg src={data.card?.picture || BACK_SIDE_CARD} />
     </StyledCard>
   );
