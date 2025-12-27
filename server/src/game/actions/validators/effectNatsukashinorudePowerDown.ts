@@ -3,6 +3,8 @@ import { GameModel } from 'src/models/game.model';
 import { BadRequestException } from '@nestjs/common';
 import { EffectNatsukashinorudePowerDownActionPayload } from '../handlers/effectNatsukashinorudePowerDown';
 
+const NATSUKASHINORUDE_POWER_DOWN_COST = 2;
+
 export function validateEffectNatsukashinorudePowerDownAction(
   data: GameActionDispatchInput,
   game: GameModel,
@@ -27,6 +29,17 @@ export function validateEffectNatsukashinorudePowerDownAction(
   if (!gameCard.actionTypes.includes(ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN)) {
     throw new BadRequestException(
       'The specified game card does not have the EFFECT_NATSUKASHINORUDE_POWER_DOWN action type',
+    );
+  }
+
+  const gameUser = game.gameUsers.find(gu => gu.userId === userId);
+  if (!gameUser) {
+    throw new BadRequestException(`User with id ${userId} not found in game`);
+  }
+
+  if (gameUser.energy < NATSUKASHINORUDE_POWER_DOWN_COST) {
+    throw new BadRequestException(
+      `Insufficient energy. Required: ${NATSUKASHINORUDE_POWER_DOWN_COST}, Available: ${gameUser.energy}`,
     );
   }
 

@@ -84,11 +84,11 @@ export const validateAction = (
       return { type: ActionType.FINISH_END_TIME, payload };
     }
     case ActionType.EFFECT_RUTERUTE_DRAW: {
-      const payload = validateEffectRuteruteDrawAction(data, gameModel);
+      const payload = validateEffectRuteruteDrawAction(data, gameModel, userId);
       return { type: ActionType.EFFECT_RUTERUTE_DRAW, payload };
     }
     case ActionType.EFFECT_FRESH_FISH_DRAW: {
-      const payload = validateEffectFreshFishDrawAction(data, gameModel);
+      const payload = validateEffectFreshFishDrawAction(data, gameModel, userId);
       return { type: ActionType.EFFECT_FRESH_FISH_DRAW, payload };
     }
     case ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN: {
