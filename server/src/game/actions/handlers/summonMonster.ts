@@ -1,19 +1,23 @@
-import { GameActionDispatchInput } from '../../../graphql/index';
 import { GameModel } from '../../../models/game.model';
 import { subtractUserEnergy } from '../../utils/subtractUserEnergy';
 import { summonGameCard } from './summonMonster/summonGameCard';
 import { packHandPositions } from './utils/packHandPositions';
+import { SummonMonsterActionPayload } from '../validators/summonMonster';
 
 export function handleSummonMonsterAction(
   userId: string,
-  data: GameActionDispatchInput,
+  payload: SummonMonsterActionPayload,
   gameModel: GameModel,
 ): GameModel {
-  const gameCard = gameModel.gameCards.find(value => value.id === data.payload.gameCardId)!;
+  const gameCard = gameModel.gameCards.find(value => value.id === payload.gameCardId);
+  if (!gameCard) {
+    throw new Error(`GameCard with id ${payload.gameCardId} not found`);
+  }
+
   const originalPosition = gameCard.position;
 
-  gameModel = subtractUserEnergy(gameModel, userId, gameCard.card.cost!);
-  gameModel = summonGameCard(gameModel, userId, data.payload.gameCardId!);
+  gameModel = subtractUserEnergy(gameModel, userId, payload.cost);
+  gameModel = summonGameCard(gameModel, userId, payload.gameCardId);
   gameModel = packHandPositions(gameModel, userId, originalPosition);
 
   return gameModel;

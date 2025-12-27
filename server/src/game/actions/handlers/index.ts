@@ -40,7 +40,7 @@ export class GameActionHandler {
         return handleStartSomethingTimeAction(gameModel);
       }
       case ActionType.SUMMON_MONSTER: {
-        return handleSummonMonsterAction(userId, data, gameModel);
+        return handleSummonMonsterAction(userId, validationResult.payload, gameModel);
       }
       case ActionType.START_BATTLE_TIME: {
         return handleStartBattleTimeAction(gameModel);

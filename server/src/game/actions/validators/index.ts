@@ -14,6 +14,7 @@ import { validateEffectRuteruteDrawAction } from '../validators/effectRuteruteDr
 import { validateEffectFreshFishDrawAction } from '../validators/effectFreshFishDraw';
 import { validateEffectNatsukashinorudePowerDownAction } from '../validators/effectNatsukashinorudePowerDown';
 import { validateChangeBattlePositionAction } from '../validators/changeBattlePosition';
+import { validateSummonMonsterAction } from '../validators/summonMonster';
 import { PutSoulActionPayload } from '../handlers/putSoul';
 import { AttackActionPayload } from '../handlers/attack';
 import { FinishEndTimeActionPayload } from '../handlers/finishEndTime';
@@ -21,6 +22,7 @@ import { EffectRuteruteDrawActionPayload } from '../handlers/effectRuteruteDraw'
 import { EffectFreshFishDrawActionPayload } from '../handlers/effectFreshFishDraw';
 import { EffectNatsukashinorudePowerDownActionPayload } from '../handlers/effectNatsukashinorudePowerDown';
 import { ChangeBattlePositionActionPayload } from '../handlers/changeBattlePosition';
+import { SummonMonsterActionPayload } from '../validators/summonMonster';
 
 type ValidationResult =
   | { type: ActionType.START_DRAW_TIME }
@@ -28,7 +30,7 @@ type ValidationResult =
   | { type: ActionType.START_PUT_TIME }
   | { type: ActionType.PUT_SOUL; payload: PutSoulActionPayload }
   | { type: ActionType.START_SOMETHING_TIME }
-  | { type: ActionType.SUMMON_MONSTER; payload: GameActionDispatchInput }
+  | { type: ActionType.SUMMON_MONSTER; payload: SummonMonsterActionPayload }
   | { type: ActionType.START_BATTLE_TIME }
   | { type: ActionType.START_END_TIME }
   | { type: ActionType.ATTACK; payload: AttackActionPayload }
@@ -65,7 +67,8 @@ export const validateAction = (
       return { type: ActionType.START_SOMETHING_TIME };
     }
     case ActionType.SUMMON_MONSTER: {
-      return { type: ActionType.SUMMON_MONSTER, payload: data };
+      const payload = validateSummonMonsterAction(data, gameModel, userId);
+      return { type: ActionType.SUMMON_MONSTER, payload };
     }
     case ActionType.START_BATTLE_TIME: {
       validateStartBattleTimeAction(gameModel, userId);
