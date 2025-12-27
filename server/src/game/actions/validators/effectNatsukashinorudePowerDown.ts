@@ -25,7 +25,9 @@ export function validateEffectNatsukashinorudePowerDownAction(
   }
 
   if (!gameCard.actionTypes.includes(ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN)) {
-    throw new BadRequestException('The specified game card does not have the EFFECT_NATSUKASHINORUDE_POWER_DOWN action type');
+    throw new BadRequestException(
+      'The specified game card does not have the EFFECT_NATSUKASHINORUDE_POWER_DOWN action type',
+    );
   }
 
   const targetGameCardId = targetGameCardIds[0];

@@ -27,11 +27,7 @@ describe('handleEffectNatsukashinorudePowerDown', () => {
       gameStates: [],
     });
 
-    const result = handleEffectNatsukashinorudePowerDown(
-      'user1',
-      { gameCard, targetGameCard },
-      gameModel,
-    );
+    const result = handleEffectNatsukashinorudePowerDown('user1', { gameCard, targetGameCard }, gameModel);
 
     expect(result.gameUsers[0]?.energy).toBe(3);
     expect(result.gameStates).toHaveLength(2);
