@@ -59,6 +59,9 @@ export default function DeckModal() {
 
   const handleClick = () => {
     if (selectedDeckId !== null) {
+      dispatch({ type: 'RESET_ERROR', payload: 'plusDeckCardError' });
+      dispatch({ type: 'RESET_ERROR', payload: 'minusDeckCardError' });
+
       const options = {
         variables: { deckId: selectedDeckId, cardId: deckModal.data.cardId },
       };

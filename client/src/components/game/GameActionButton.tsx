@@ -38,6 +38,8 @@ export default function GameActionButton({
     useDispatchGameActionMutation(activeGameId);
 
   const handleClick = async () => {
+    dispatch({ type: 'RESET_ERROR', payload: 'dispatchGameActionError' });
+
     const gameCardId = gameCard?.id;
     const newActionStatus = actionStatus.start({ type, gameCardId });
     if (newActionStatus.isCompleted()) {
