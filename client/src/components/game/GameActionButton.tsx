@@ -34,7 +34,8 @@ export default function GameActionButton({
   const activeGameIdQueryResult = useActiveGameIdQuery();
   const activeGameId = activeGameIdQueryResult.data?.activeGameId || 1;
 
-  const [dispatchGameAction] = useDispatchGameActionMutation(activeGameId);
+  const [dispatchGameAction, { loading }] =
+    useDispatchGameActionMutation(activeGameId);
 
   const handleClick = async () => {
     const gameCardId = gameCard?.id;
@@ -56,7 +57,7 @@ export default function GameActionButton({
   };
 
   return (
-    <StyledButton color="primary" onClick={handleClick}>
+    <StyledButton color="primary" onClick={handleClick} disabled={loading}>
       {gameActionNames[type]}
     </StyledButton>
   );

@@ -14,8 +14,9 @@ const StyledButton = styled(Button)`
 export default function CreateDeckInput() {
   const { dispatch } = useContext(AppContext);
 
-  const [createDeck] = useCreateDeckMutation({
+  const [createDeck, { loading }] = useCreateDeckMutation({
     refetchQueries: [{ query: DecksDocument }],
+    awaitRefetchQueries: true,
     onCompleted: () => {
       dispatch({ type: 'RESET_ERROR', payload: 'createDeckError' });
     },
@@ -53,6 +54,7 @@ export default function CreateDeckInput() {
           style={{ width: '100%' }}
           color="success"
           onClick={handleClick}
+          disabled={loading}
         >
           作成
         </StyledButton>

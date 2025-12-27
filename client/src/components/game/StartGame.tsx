@@ -19,8 +19,9 @@ export default function StartGame() {
     dispatch,
   } = useContext(AppContext);
 
-  const [startGame] = useStartGameMutation({
+  const [startGame, { loading }] = useStartGameMutation({
     refetchQueries: [{ query: ActiveGameIdDocument }],
+    awaitRefetchQueries: true,
     onError: () => {
       // TODO: handle error
     },
@@ -62,6 +63,7 @@ export default function StartGame() {
           style={{ width: '100%' }}
           color="success"
           onClick={handleClick}
+          disabled={loading}
         >
           ソウルバトル開始
         </StyledButton>

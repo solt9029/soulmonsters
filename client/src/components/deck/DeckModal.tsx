@@ -23,8 +23,9 @@ export default function DeckModal() {
     variables: { deckId: selectedDeckId },
   };
 
-  const [plusDeckCard] = usePlusDeckCardMutation({
+  const [plusDeckCard, { loading: plusLoading }] = usePlusDeckCardMutation({
     refetchQueries: [refetchDeckCardsQuery],
+    awaitRefetchQueries: true,
     onCompleted: () => {
       dispatch({ type: 'RESET_ERROR', payload: 'plusDeckCardError' });
     },
@@ -36,8 +37,9 @@ export default function DeckModal() {
     },
   });
 
-  const [minusDeckCard] = useMinusDeckCardMutation({
+  const [minusDeckCard, { loading: minusLoading }] = useMinusDeckCardMutation({
     refetchQueries: [refetchDeckCardsQuery],
+    awaitRefetchQueries: true,
     onCompleted: () => {
       dispatch({ type: 'RESET_ERROR', payload: 'minusDeckCardError' });
     },
@@ -48,6 +50,8 @@ export default function DeckModal() {
       });
     },
   });
+
+  const loading = plusLoading || minusLoading;
 
   const closeModal = () => {
     dispatch({ type: 'SET_DECK_MODAL', payload: deckModal.close() });
@@ -75,11 +79,11 @@ export default function DeckModal() {
       </ModalBody>
       <ModalFooter>
         {deckModal.data.isInDeck ? (
-          <Button onClick={handleClick} color="danger">
+          <Button onClick={handleClick} color="danger" disabled={loading}>
             このカードをデッキから抜く
           </Button>
         ) : (
-          <Button onClick={handleClick} color="success">
+          <Button onClick={handleClick} color="success" disabled={loading}>
             このカードをデッキへ追加する
           </Button>
         )}

@@ -8,6 +8,7 @@ export function useDispatchGameActionMutation(gameId: number) {
 
   return _useDispatchGameActionMutation({
     refetchQueries: [{ query: GameDocument, variables: { id: gameId } }],
+    awaitRefetchQueries: true,
     onCompleted: () => {},
     onError: (error) => {
       dispatch({
