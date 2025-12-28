@@ -231,7 +231,6 @@ export enum StateType {
   AttackCount = 'ATTACK_COUNT',
   EffectFreshFishDrawCount = 'EFFECT_FRESH_FISH_DRAW_COUNT',
   EffectNatsukashinorudePowerDown = 'EFFECT_NATSUKASHINORUDE_POWER_DOWN',
-  EffectNatsukashinorudeUseCount = 'EFFECT_NATSUKASHINORUDE_USE_COUNT',
   EffectRuteruteDrawCount = 'EFFECT_RUTERUTE_DRAW_COUNT',
   PutSoulCount = 'PUT_SOUL_COUNT',
   SelfPowerChange = 'SELF_POWER_CHANGE'

@@ -1,5 +1,5 @@
 import { GameModel } from 'src/models/game.model';
-import { Zone, StateType, ActionType, Phase } from 'src/graphql/index';
+import { Zone, ActionType, Phase } from 'src/graphql/index';
 import { GameCardModel } from 'src/models/game-card.model';
 import { CARD_ID } from 'src/constants/card';
 
@@ -15,20 +15,6 @@ export function grantEffectNatsukashinorudePowerDownAction(gameModel: GameModel,
       gameCard.card?.id === CARD_ID.NATSUKASHINORUDE;
 
     if (!isNatsukashinorudeInBattleZone) {
-      return gameCard;
-    }
-
-    const gameState = gameModel.gameStates.find(
-      gameState =>
-        gameState.state.type === StateType.EFFECT_NATSUKASHINORUDE_USE_COUNT && gameState.gameCardId === gameCard.id,
-    );
-
-    const hasAlreadyUsedEffect =
-      gameState &&
-      gameState.state.type === StateType.EFFECT_NATSUKASHINORUDE_USE_COUNT &&
-      gameState.state.data.value > 0;
-
-    if (hasAlreadyUsedEffect) {
       return gameCard;
     }
 

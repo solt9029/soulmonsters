@@ -1850,12 +1850,6 @@
             "deprecationReason": null
           },
           {
-            "name": "EFFECT_NATSUKASHINORUDE_USE_COUNT",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "EFFECT_RUTERUTE_DRAW_COUNT",
             "description": null,
             "isDeprecated": false,

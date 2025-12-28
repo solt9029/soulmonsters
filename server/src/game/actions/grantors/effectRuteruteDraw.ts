@@ -1,3 +1,4 @@
+import { CARD_ID } from './../../../constants/card';
 import { GameModel } from '../../../models/game.model';
 import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
 import { GameCardModel } from '../../../models/game-card.model';
@@ -9,7 +10,9 @@ export function grantEffectRuteRuteDrawAction(gameModel: GameModel, userId: stri
 
   gameModel.gameCards = gameModel.gameCards.map(gameCard => {
     const isRuteruteInBattleZone =
-      gameCard.currentUserId === userId && gameCard.zone === Zone.BATTLE && gameCard.card?.id === 1;
+      gameCard.currentUserId === userId &&
+      gameCard.zone === Zone.BATTLE &&
+      gameCard.card?.id === CARD_ID.TENKINOKAMIRUTERUTKAI;
 
     if (!isRuteruteInBattleZone) {
       return gameCard;

@@ -47,7 +47,7 @@ describe('cleanGameStates', () => {
     expect(result.gameStates[0]?.state.type).toBe(StateType.SELF_POWER_CHANGE);
   });
 
-  it('should remove EFFECT_NATSUKASHINORUDE_POWER_DOWN and EFFECT_NATSUKASHINORUDE_USE_COUNT states', () => {
+  it('should remove EFFECT_NATSUKASHINORUDE_POWER_DOWN state', () => {
     const gameUser = new GameUserModel({
       id: 1,
       userId: 'user1',
@@ -65,13 +65,6 @@ describe('cleanGameStates', () => {
           state: {
             type: StateType.EFFECT_NATSUKASHINORUDE_POWER_DOWN,
             data: { targetGameCardId: 2, value: 700 },
-          },
-          gameCardId: gameCard.id,
-        }),
-        new GameStateModel({
-          state: {
-            type: StateType.EFFECT_NATSUKASHINORUDE_USE_COUNT,
-            data: { value: 1 },
           },
           gameCardId: gameCard.id,
         }),

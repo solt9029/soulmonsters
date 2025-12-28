@@ -1,6 +1,7 @@
 import { GameModel } from '../../../models/game.model';
 import { Zone, StateType, ActionType, Phase } from '../../../graphql/index';
 import { GameCardModel } from '../../../models/game-card.model';
+import { CARD_ID } from 'src/constants/card';
 
 export function grantEffectFreshFishDrawAction(gameModel: GameModel, userId: string) {
   if (gameModel.phase !== Phase.SOMETHING || gameModel.turnUserId !== userId) {
@@ -9,7 +10,9 @@ export function grantEffectFreshFishDrawAction(gameModel: GameModel, userId: str
 
   gameModel.gameCards = gameModel.gameCards.map(gameCard => {
     const isFreshFishInBattleZone =
-      gameCard.currentUserId === userId && gameCard.zone === Zone.BATTLE && gameCard.card?.id === 6;
+      gameCard.currentUserId === userId &&
+      gameCard.zone === Zone.BATTLE &&
+      gameCard.card?.id === CARD_ID.SARANIMIZUMIZUSHIISAKANA;
 
     if (!isFreshFishInBattleZone) {
       return gameCard;

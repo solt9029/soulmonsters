@@ -19,10 +19,6 @@ const isEffectNatsukashinorudePowerDownState = (gameState: any): boolean => {
   return gameState.state.type === StateType.EFFECT_NATSUKASHINORUDE_POWER_DOWN;
 };
 
-const isEffectNatsukashinorudeUseCountState = (gameState: any): boolean => {
-  return gameState.state.type === StateType.EFFECT_NATSUKASHINORUDE_USE_COUNT;
-};
-
 export const cleanGameStates = (gameModel: GameModel, gameUser: GameUserModel): GameModel => {
   gameModel.gameStates = gameModel.gameStates.filter(
     gameState =>
@@ -30,8 +26,7 @@ export const cleanGameStates = (gameModel: GameModel, gameUser: GameUserModel): 
         isAttackCountState(gameState) ||
         isPutSoulCountState(gameState, gameUser.id) ||
         isEffectRuteruteDrawCountState(gameState) ||
-        isEffectNatsukashinorudePowerDownState(gameState) ||
-        isEffectNatsukashinorudeUseCountState(gameState)
+        isEffectNatsukashinorudePowerDownState(gameState)
       ),
   );
 

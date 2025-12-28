@@ -31,17 +31,5 @@ export function handleEffectNatsukashinorudePowerDown(
 
   gameModel.gameStates = [...gameModel.gameStates, newGameState];
 
-  const useCountGameState = new GameStateModel({
-    gameCardId: payload.gameCard.id,
-    state: {
-      type: StateType.EFFECT_NATSUKASHINORUDE_USE_COUNT,
-      data: { value: 1 },
-    },
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
-
-  gameModel.gameStates = [...gameModel.gameStates, useCountGameState];
-
   return gameModel;
 }
