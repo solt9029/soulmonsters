@@ -44,7 +44,6 @@ function filterByUserId(gameCardModel: GameCardModel, userId: string): GameCardM
 
 @Injectable()
 export class GameStateReflector {
-  // TODO: 今の所grantorの実行前にこれを実行するので問題はないが、なぜかactionTypesが空っぽになる現象がありそうなので、直した方が良いかもしれない
   reflectStates(gameModel: GameModel, userId: string): GameModel {
     gameModel.gameCards = gameModel.gameCards
       .map(gameCard => addInfo(gameCard))
