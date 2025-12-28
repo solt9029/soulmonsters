@@ -18,7 +18,6 @@ const StyledCard = styled(Card)<{ $isDefence: boolean }>`
   width: 60px;
   margin: 5px;
   transform: ${(props) => (props.$isDefence ? 'rotate(-90deg)' : 'none')};
-  transition: transform 0.3s ease;
 `;
 
 export type GameCardProps = {
