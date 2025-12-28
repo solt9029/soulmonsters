@@ -37,9 +37,10 @@ export class GameService {
       // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
       const grantedGameModel = this.gameActionGrantor.grantActions(statusReflectedGameModel, userId);
 
-      // TODO:check events. handleActionの中でやるかなあ？別で切り出す？
-      //   例: このカードが攻撃された時、みたいなやつをチェックする必要があるよ
+      // アクションの内容を検証した上で、問題なければ実行する
+      // アクション実行時に、イベントの検証も行う（直接攻撃に成功したらダメージを追加で与える、など）
       const handledGameModel = this.gameActionHandler.handleAction(data, userId, grantedGameModel);
+
       return await manager.save(handledGameModel.toEntity());
     });
   }
