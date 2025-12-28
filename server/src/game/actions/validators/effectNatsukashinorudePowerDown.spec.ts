@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
+import { GameUserModel } from 'src/models/game-user.model';
 import { ActionType, Zone } from 'src/graphql/index';
 import { validateEffectNatsukashinorudePowerDownAction } from './effectNatsukashinorudePowerDown';
 
@@ -19,8 +20,14 @@ describe('validateEffectNatsukashinorudePowerDownAction', () => {
       zone: Zone.BATTLE,
     });
 
+    const gameUser = new GameUserModel({
+      userId: 'user1',
+      energy: 5,
+    });
+
     const gameModel = new GameModel({
       gameCards: [gameCard, targetGameCard],
+      gameUsers: [gameUser],
     });
 
     const result = validateEffectNatsukashinorudePowerDownAction(
