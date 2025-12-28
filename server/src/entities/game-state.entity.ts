@@ -28,6 +28,10 @@ type State =
   | {
       type: StateType.EFFECT_NATSUKASHINORUDE_POWER_DOWN;
       data: { targetGameCardId: number; value: number };
+    }
+  | {
+      type: StateType.EFFECT_EMERALD_ENERGY_INCREASE_COUNT;
+      data: { value: number };
     };
 
 @Entity({ name: 'gameStates' })

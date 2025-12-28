@@ -13,6 +13,7 @@ import { validateFinishEndTimeAction } from '../validators/finishEndTime';
 import { validateEffectRuteruteDrawAction } from '../validators/effectRuteruteDraw';
 import { validateEffectFreshFishDrawAction } from '../validators/effectFreshFishDraw';
 import { validateEffectNatsukashinorudePowerDownAction } from '../validators/effectNatsukashinorudePowerDown';
+import { validateEffectEmeraldEnergyIncreaseAction } from '../validators/effectEmeraldEnergyIncrease';
 import { validateChangeBattlePositionAction } from '../validators/changeBattlePosition';
 import { validateSummonMonsterAction } from '../validators/summonMonster';
 import { PutSoulActionPayload } from '../handlers/putSoul';
@@ -21,6 +22,7 @@ import { FinishEndTimeActionPayload } from '../handlers/finishEndTime';
 import { EffectRuteruteDrawActionPayload } from '../handlers/effectRuteruteDraw';
 import { EffectFreshFishDrawActionPayload } from '../handlers/effectFreshFishDraw';
 import { EffectNatsukashinorudePowerDownActionPayload } from '../handlers/effectNatsukashinorudePowerDown';
+import { EffectEmeraldEnergyIncreaseActionPayload } from '../handlers/effectEmeraldEnergyIncrease';
 import { ChangeBattlePositionActionPayload } from '../handlers/changeBattlePosition';
 import { SummonMonsterActionPayload } from '../validators/summonMonster';
 
@@ -38,6 +40,7 @@ type ValidationResult =
   | { type: ActionType.EFFECT_RUTERUTE_DRAW; payload: EffectRuteruteDrawActionPayload }
   | { type: ActionType.EFFECT_FRESH_FISH_DRAW; payload: EffectFreshFishDrawActionPayload }
   | { type: ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN; payload: EffectNatsukashinorudePowerDownActionPayload }
+  | { type: ActionType.EFFECT_EMERALD_ENERGY_INCREASE; payload: EffectEmeraldEnergyIncreaseActionPayload }
   | { type: ActionType.CHANGE_BATTLE_POSITION; payload: ChangeBattlePositionActionPayload };
 
 export const validateAction = (
@@ -97,6 +100,10 @@ export const validateAction = (
     case ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN: {
       const payload = validateEffectNatsukashinorudePowerDownAction(data, gameModel, userId);
       return { type: ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN, payload };
+    }
+    case ActionType.EFFECT_EMERALD_ENERGY_INCREASE: {
+      const payload = validateEffectEmeraldEnergyIncreaseAction(data, gameModel, userId);
+      return { type: ActionType.EFFECT_EMERALD_ENERGY_INCREASE, payload };
     }
     case ActionType.CHANGE_BATTLE_POSITION: {
       const payload = validateChangeBattlePositionAction(data, gameModel);
