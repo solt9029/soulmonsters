@@ -25,23 +25,23 @@ export class GameResolver {
 
   @Query()
   async game(@User() user: auth.DecodedIdToken, @Args('id') id: number) {
-    let gameEntity = await this.gameRepository.findByIdWithRelations(id);
+    const gameModel = await this.gameRepository.findByIdWithRelations(id);
 
-    if (!gameEntity) {
+    if (!gameModel) {
       throw new Error('Game not found');
     }
 
     const users = await Promise.all(
-      gameEntity.gameUsers.map(async gameUser => {
+      gameModel.gameUsers.map(async gameUser => {
         const { uid, displayName, photoURL } = await this.userService.findById(gameUser.userId);
         return { id: uid, displayName, photoURL };
       }),
     );
 
-    gameEntity = this.gameStateReflector.reflectStates(gameEntity, user.uid);
-    gameEntity = this.gameActionGrantor.grantActions(gameEntity, user.uid);
+    const stateReflectedGameModel = this.gameStateReflector.reflectStates(gameModel, user.uid);
+    const grantedGameModel = this.gameActionGrantor.grantActions(stateReflectedGameModel, user.uid);
 
-    return this.gamePresenter.present(gameEntity, users);
+    return this.gamePresenter.present(grantedGameModel, users);
   }
 
   @Query()

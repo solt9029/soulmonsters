@@ -32,10 +32,10 @@ export class GameService {
       }
 
       // GameState 状態を GameCard に反映する（攻撃力の減少など）
-      const statusReflectedGameModel = this.gameStateReflector.reflectStates(gameModel, userId);
+      const stateReflectedGameModel = this.gameStateReflector.reflectStates(gameModel, userId);
 
       // 各プレイヤー・カードなどがどんなアクションをできるかを計算する
-      const grantedGameModel = this.gameActionGrantor.grantActions(statusReflectedGameModel, userId);
+      const grantedGameModel = this.gameActionGrantor.grantActions(stateReflectedGameModel, userId);
 
       // アクションの内容を検証した上で、問題なければ実行する
       // アクション実行時に、イベントの検証も行う（直接攻撃に成功したらダメージを追加で与える、など）
