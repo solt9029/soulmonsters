@@ -9,8 +9,13 @@ export function grantSummonMonsterAction(gameModel: GameModel, userId: string): 
   }
 
   gameModel.gameCards = gameModel.gameCards.map(gameCard => {
+    // memo: gameCard.kindに依存しているから、先にreflectStatesが呼ばれている前提である
     const canSummon =
       gameCard && gameCard.zone === Zone.HAND && gameCard.currentUserId === userId && gameCard.kind === Kind.MONSTER;
+
+    if (canSummon) {
+      console.log('***:');
+    }
 
     return canSummon
       ? new GameCardModel({
