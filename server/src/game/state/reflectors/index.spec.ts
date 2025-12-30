@@ -131,10 +131,7 @@ describe('GameStateReflector', () => {
 
       const result = reflector.reflectStates(gameModel, 'user1');
 
-      expect(result.gameCards[0]?.actionTypes).toEqual([
-        ActionType.ATTACK,
-        ActionType.CHANGE_BATTLE_POSITION,
-      ]);
+      expect(result.gameCards[0]?.actionTypes).toEqual([ActionType.ATTACK, ActionType.CHANGE_BATTLE_POSITION]);
     });
 
     it('should preserve actionTypes even when filtered by userId', () => {
