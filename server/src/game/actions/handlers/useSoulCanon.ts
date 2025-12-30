@@ -56,13 +56,13 @@ export function handleUseSoulCanonAction(
 
   // ターゲットモンスターをモルグゾーンに移動する処理
   const targetPreviousZone = targetGameCard.zone;
-  const targetNewPosition = calcNewMorgueGameCardPosition(gameModel, targetGameCard.currentUserId);
+
   gameModel.gameCards = gameModel.gameCards.map(gameCard =>
     gameCard.id === targetGameCard.id
       ? new GameCardModel({
           ...gameCard,
           zone: Zone.MORGUE,
-          position: targetNewPosition,
+          position: calcNewMorgueGameCardPosition(gameModel, targetGameCard.currentUserId),
           battlePosition: null,
         })
       : gameCard,
