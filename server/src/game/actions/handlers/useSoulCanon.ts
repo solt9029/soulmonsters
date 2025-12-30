@@ -10,11 +10,11 @@ export interface UseSoulCanonActionPayload {
 }
 
 const calcNewMorgueGameCardPosition = (gameModel: GameModel, userId: string): number => {
-  const morgueGameCards = gameModel.gameCards
-    .filter(gameCard => gameCard.zone === Zone.MORGUE && gameCard.currentUserId === userId)
-    .sort((a, b) => b.position - a.position);
+  const positions = gameModel.gameCards
+    .filter(gc => gc.zone === Zone.MORGUE && gc.currentUserId === userId)
+    .map(gc => gc.position);
 
-  return morgueGameCards[0] ? morgueGameCards[0].position + 1 : 0;
+  return positions.length > 0 ? Math.max(...positions) + 1 : 0;
 };
 
 export function handleUseSoulCanonAction(
@@ -25,26 +25,29 @@ export function handleUseSoulCanonAction(
   const { costGameCards, targetGameCard } = payload;
 
   // コストの処理
+  const firstPosition = calcNewMorgueGameCardPosition(gameModel, userId);
+
+  gameModel.gameCards = gameModel.gameCards.map(gameCard => {
+    const costGameCardIndex = costGameCards.findIndex(c => c.id === gameCard.id);
+
+    if (costGameCardIndex === -1) {
+      return gameCard;
+    }
+
+    return new GameCardModel({
+      ...gameCard,
+      zone: Zone.MORGUE,
+      position: firstPosition + costGameCardIndex,
+      battlePosition: null,
+    });
+  });
+
   costGameCards.forEach(costGameCard => {
-    const previousZone = costGameCard.zone;
-    const newPosition = calcNewMorgueGameCardPosition(gameModel, userId);
-
-    gameModel.gameCards = gameModel.gameCards.map(gameCard =>
-      gameCard.id === costGameCard.id
-        ? new GameCardModel({
-            ...gameCard,
-            zone: Zone.MORGUE,
-            position: newPosition,
-            battlePosition: null,
-          })
-        : gameCard,
-    );
-
     gameModel = handleEvent(
       {
         type: GameEventType.ZONE_CHANGED,
         gameCardId: costGameCard.id,
-        fromZone: previousZone,
+        fromZone: costGameCard.zone,
         toZone: Zone.MORGUE,
       },
       gameModel,
