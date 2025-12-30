@@ -7,19 +7,19 @@ const isAttackCountState = (gameState: GameStateModel): boolean => {
   return gameState.state.type === StateType.ATTACK_COUNT;
 };
 
-const isPutSoulCountState = (gameState: any, gameUserId: number): boolean => {
+const isPutSoulCountState = (gameState: GameStateModel, gameUserId: number): boolean => {
   return gameState.state.type === StateType.PUT_SOUL_COUNT && gameState.state.data.gameUserId === gameUserId;
 };
 
-const isEffectRuteruteDrawCountState = (gameState: any): boolean => {
+const isEffectRuteruteDrawCountState = (gameState: GameStateModel): boolean => {
   return gameState.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT;
 };
 
-const isEffectNatsukashinorudePowerDownState = (gameState: any): boolean => {
+const isEffectNatsukashinorudePowerDownState = (gameState: GameStateModel): boolean => {
   return gameState.state.type === StateType.EFFECT_NATSUKASHINORUDE_POWER_DOWN;
 };
 
-const isEffectEmeraldEnergyIncreaseCountState = (gameState: any): boolean => {
+const isEffectEmeraldEnergyIncreaseCountState = (gameState: GameStateModel): boolean => {
   return gameState.state.type === StateType.EFFECT_EMERALD_ENERGY_INCREASE_COUNT;
 };
 
