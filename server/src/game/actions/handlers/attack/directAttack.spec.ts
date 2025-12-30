@@ -1,4 +1,3 @@
-import { CardEntity } from '../../../../entities/card.entity';
 import { GameModel } from '../../../../models/game.model';
 import { GameUserModel } from '../../../../models/game-user.model';
 import { Zone } from '../../../../graphql';

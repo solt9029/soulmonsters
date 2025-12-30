@@ -6,7 +6,6 @@ import { EffectEmeraldEnergyIncreaseActionPayload } from '../handlers/effectEmer
 export function validateEffectEmeraldEnergyIncreaseAction(
   data: GameActionDispatchInput,
   game: GameModel,
-  userId: string,
 ): EffectEmeraldEnergyIncreaseActionPayload {
   const { gameCardId } = data.payload;
 

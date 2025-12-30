@@ -102,7 +102,7 @@ export const validateAction = (
       return { type: ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN, payload };
     }
     case ActionType.EFFECT_EMERALD_ENERGY_INCREASE: {
-      const payload = validateEffectEmeraldEnergyIncreaseAction(data, gameModel, userId);
+      const payload = validateEffectEmeraldEnergyIncreaseAction(data, gameModel);
       return { type: ActionType.EFFECT_EMERALD_ENERGY_INCREASE, payload };
     }
     case ActionType.CHANGE_BATTLE_POSITION: {

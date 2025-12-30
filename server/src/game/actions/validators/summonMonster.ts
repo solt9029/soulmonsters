@@ -1,4 +1,4 @@
-import { ActionType, GameActionDispatchInput, Zone } from '../../../graphql/index';
+import { ActionType, GameActionDispatchInput } from '../../../graphql/index';
 import { GameModel } from '../../../models/game.model';
 import { BadRequestException } from '@nestjs/common';
 

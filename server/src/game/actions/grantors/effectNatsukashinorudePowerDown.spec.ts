@@ -1,9 +1,8 @@
 import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
-import { GameStateModel } from 'src/models/game-state.model';
 import { CardModel } from 'src/models/card.model';
-import { Zone, StateType, ActionType, Phase } from 'src/graphql/index';
+import { Zone, ActionType, Phase } from 'src/graphql/index';
 import { CARD_ID } from 'src/constants/card';
 import { grantEffectNatsukashinorudePowerDownAction } from './effectNatsukashinorudePowerDown';
 

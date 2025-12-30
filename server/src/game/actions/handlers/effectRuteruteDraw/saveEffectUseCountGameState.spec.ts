@@ -1,7 +1,6 @@
 import { GameModel } from 'src/models/game.model';
 import { GameStateModel } from 'src/models/game-state.model';
 import { GameUserModel } from 'src/models/game-user.model';
-import { CardEntity } from 'src/entities/card.entity';
 import { StateType, Zone } from 'src/graphql';
 import { saveEffectUseCountGameState } from './saveEffectUseCountGameState';
 import { GameCardModel } from 'src/models/game-card.model';
