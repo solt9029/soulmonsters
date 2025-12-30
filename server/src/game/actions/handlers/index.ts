@@ -29,6 +29,7 @@ export class GameActionHandler {
         return handleStartDrawTimeAction(userId, gameModel);
       }
       case ActionType.START_ENERGY_TIME: {
+        // TODO: gameUserが存在するかどうかのバリデーションを行い, ValidationResultとしてgameUserを渡す
         return handleStartEnergyTimeAction(userId, gameModel);
       }
       case ActionType.START_PUT_TIME: {
