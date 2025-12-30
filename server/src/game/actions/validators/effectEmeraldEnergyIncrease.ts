@@ -21,7 +21,9 @@ export function validateEffectEmeraldEnergyIncreaseAction(
   }
 
   if (!gameCard.actionTypes.includes(ActionType.EFFECT_EMERALD_ENERGY_INCREASE)) {
-    throw new BadRequestException('The specified game card does not have the EFFECT_EMERALD_ENERGY_INCREASE action type');
+    throw new BadRequestException(
+      'The specified game card does not have the EFFECT_EMERALD_ENERGY_INCREASE action type',
+    );
   }
 
   return { gameCard };

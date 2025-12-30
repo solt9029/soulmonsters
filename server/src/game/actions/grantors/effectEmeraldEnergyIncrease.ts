@@ -24,7 +24,9 @@ export function grantEffectEmeraldEnergyIncreaseAction(gameModel: GameModel, use
     );
 
     const hasAlreadyUsedEffect =
-      gameState && gameState.state.type === StateType.EFFECT_EMERALD_ENERGY_INCREASE_COUNT && gameState.state.data.value > 0;
+      gameState &&
+      gameState.state.type === StateType.EFFECT_EMERALD_ENERGY_INCREASE_COUNT &&
+      gameState.state.data.value > 0;
 
     if (hasAlreadyUsedEffect) {
       return gameCard;

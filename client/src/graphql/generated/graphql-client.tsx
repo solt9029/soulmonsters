@@ -28,6 +28,7 @@ export type ActionPayload = {
 export enum ActionType {
   Attack = 'ATTACK',
   ChangeBattlePosition = 'CHANGE_BATTLE_POSITION',
+  EffectEmeraldEnergyIncrease = 'EFFECT_EMERALD_ENERGY_INCREASE',
   EffectFreshFishDraw = 'EFFECT_FRESH_FISH_DRAW',
   EffectNatsukashinorudePowerDown = 'EFFECT_NATSUKASHINORUDE_POWER_DOWN',
   EffectRuteruteDraw = 'EFFECT_RUTERUTE_DRAW',
@@ -229,6 +230,7 @@ export type QueryUserDataArgs = {
 
 export enum StateType {
   AttackCount = 'ATTACK_COUNT',
+  EffectEmeraldEnergyIncreaseCount = 'EFFECT_EMERALD_ENERGY_INCREASE_COUNT',
   EffectFreshFishDrawCount = 'EFFECT_FRESH_FISH_DRAW_COUNT',
   EffectNatsukashinorudePowerDown = 'EFFECT_NATSUKASHINORUDE_POWER_DOWN',
   EffectRuteruteDrawCount = 'EFFECT_RUTERUTE_DRAW_COUNT',
