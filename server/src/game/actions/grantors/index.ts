@@ -15,6 +15,7 @@ import { grantEffectFreshFishDrawAction } from './effectFreshFishDraw';
 import { grantEffectNatsukashinorudePowerDownAction } from './effectNatsukashinorudePowerDown';
 import { grantEffectEmeraldEnergyIncreaseAction } from './effectEmeraldEnergyIncrease';
 import { grantChangeBattlePositionAction } from './changeBattlePosition';
+import { grantUseSoulCanonAction } from './useSoulCanon';
 
 function pipe<T>(initialValue: T, ...fns: Array<(arg: T) => T>): T {
   return fns.reduce((acc, fn) => fn(acc), initialValue);
@@ -40,6 +41,7 @@ export class GameActionGrantor {
       model => grantEffectFreshFishDrawAction(model, userId),
       model => grantEffectNatsukashinorudePowerDownAction(model, userId),
       model => grantEffectEmeraldEnergyIncreaseAction(model, userId),
+      model => grantUseSoulCanonAction(model, userId),
     );
   }
 }

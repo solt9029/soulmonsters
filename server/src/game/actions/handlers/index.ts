@@ -17,6 +17,7 @@ import { handleEffectFreshFishDraw } from './effectFreshFishDraw';
 import { handleEffectNatsukashinorudePowerDown } from './effectNatsukashinorudePowerDown';
 import { handleEffectEmeraldEnergyIncrease } from './effectEmeraldEnergyIncrease';
 import { handleChangeBattlePositionAction } from './changeBattlePosition';
+import { handleUseSoulCanonAction } from './useSoulCanon';
 import { validateAction } from '../validators';
 
 @Injectable()
@@ -70,6 +71,9 @@ export class GameActionHandler {
       }
       case ActionType.CHANGE_BATTLE_POSITION: {
         return handleChangeBattlePositionAction(validationResult.payload, gameModel);
+      }
+      case ActionType.USE_SOUL_CANON: {
+        return handleUseSoulCanonAction(userId, validationResult.payload, gameModel);
       }
       default: {
         return gameModel;
