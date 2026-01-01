@@ -23,6 +23,10 @@ const isEffectEmeraldEnergyIncreaseCountState = (gameState: GameStateModel): boo
   return gameState.state.type === StateType.EFFECT_EMERALD_ENERGY_INCREASE_COUNT;
 };
 
+const isEffectSupernewvoltsDestroyMonsterCountState = (gameState: GameStateModel): boolean => {
+  return gameState.state.type === StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT;
+};
+
 export const cleanGameStates = (gameModel: GameModel, gameUser: GameUserModel): GameModel => {
   gameModel.gameStates = gameModel.gameStates.filter(
     gameState =>
@@ -31,7 +35,8 @@ export const cleanGameStates = (gameModel: GameModel, gameUser: GameUserModel): 
         isPutSoulCountState(gameState, gameUser.id) ||
         isEffectRuteruteDrawCountState(gameState) ||
         isEffectNatsukashinorudePowerDownState(gameState) ||
-        isEffectEmeraldEnergyIncreaseCountState(gameState)
+        isEffectEmeraldEnergyIncreaseCountState(gameState) ||
+        isEffectSupernewvoltsDestroyMonsterCountState(gameState)
       ),
   );
 

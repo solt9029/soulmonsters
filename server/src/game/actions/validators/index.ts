@@ -17,6 +17,7 @@ import { validateEffectEmeraldEnergyIncreaseAction } from '../validators/effectE
 import { validateChangeBattlePositionAction } from '../validators/changeBattlePosition';
 import { validateSummonMonsterAction } from '../validators/summonMonster';
 import { validateUseSoulCanonAction } from '../validators/useSoulCanon';
+import { validateEffectSupernewvoltsDestroyMonsterAction } from '../validators/effectSupernewvoltsDestroyMonster';
 import { PutSoulActionPayload } from '../handlers/putSoul';
 import { AttackActionPayload } from '../handlers/attack';
 import { FinishEndTimeActionPayload } from '../handlers/finishEndTime';
@@ -24,6 +25,7 @@ import { EffectRuteruteDrawActionPayload } from '../handlers/effectRuteruteDraw'
 import { EffectFreshFishDrawActionPayload } from '../handlers/effectFreshFishDraw';
 import { EffectNatsukashinorudePowerDownActionPayload } from '../handlers/effectNatsukashinorudePowerDown';
 import { EffectEmeraldEnergyIncreaseActionPayload } from '../handlers/effectEmeraldEnergyIncrease';
+import { EffectSupernewvoltsDestroyMonsterActionPayload } from '../handlers/effectSupernewvoltsDestroyMonster';
 import { ChangeBattlePositionActionPayload } from '../handlers/changeBattlePosition';
 import { SummonMonsterActionPayload } from '../validators/summonMonster';
 import { UseSoulCanonActionPayload } from '../handlers/useSoulCanon';
@@ -43,6 +45,10 @@ type ValidationResult =
   | { type: ActionType.EFFECT_FRESH_FISH_DRAW; payload: EffectFreshFishDrawActionPayload }
   | { type: ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN; payload: EffectNatsukashinorudePowerDownActionPayload }
   | { type: ActionType.EFFECT_EMERALD_ENERGY_INCREASE; payload: EffectEmeraldEnergyIncreaseActionPayload }
+  | {
+      type: ActionType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER;
+      payload: EffectSupernewvoltsDestroyMonsterActionPayload;
+    }
   | { type: ActionType.CHANGE_BATTLE_POSITION; payload: ChangeBattlePositionActionPayload }
   | { type: ActionType.USE_SOUL_CANON; payload: UseSoulCanonActionPayload };
 
@@ -115,6 +121,10 @@ export const validateAction = (
     case ActionType.USE_SOUL_CANON: {
       const payload = validateUseSoulCanonAction(data, gameModel, userId);
       return { type: ActionType.USE_SOUL_CANON, payload };
+    }
+    case ActionType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER: {
+      const payload = validateEffectSupernewvoltsDestroyMonsterAction(data, gameModel, userId);
+      return { type: ActionType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER, payload };
     }
     default: {
       throw new Error('Invalid action type');

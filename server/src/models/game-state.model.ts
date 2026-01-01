@@ -28,6 +28,10 @@ type State =
   | {
       type: StateType.EFFECT_EMERALD_ENERGY_INCREASE_COUNT;
       data: { value: number };
+    }
+  | {
+      type: StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT;
+      data: { value: number };
     };
 
 export class GameStateModel {

@@ -14,6 +14,7 @@ import { grantEffectRuteRuteDrawAction } from './effectRuteruteDraw';
 import { grantEffectFreshFishDrawAction } from './effectFreshFishDraw';
 import { grantEffectNatsukashinorudePowerDownAction } from './effectNatsukashinorudePowerDown';
 import { grantEffectEmeraldEnergyIncreaseAction } from './effectEmeraldEnergyIncrease';
+import { grantEffectSupernewvoltsDestroyMonsterAction } from './effectSupernewvoltsDestroyMonster';
 import { grantChangeBattlePositionAction } from './changeBattlePosition';
 import { grantUseSoulCanonAction } from './useSoulCanon';
 
@@ -41,6 +42,7 @@ export class GameActionGrantor {
       model => grantEffectFreshFishDrawAction(model, userId),
       model => grantEffectNatsukashinorudePowerDownAction(model, userId),
       model => grantEffectEmeraldEnergyIncreaseAction(model, userId),
+      model => grantEffectSupernewvoltsDestroyMonsterAction(model, userId),
       model => grantUseSoulCanonAction(model, userId),
     );
   }
