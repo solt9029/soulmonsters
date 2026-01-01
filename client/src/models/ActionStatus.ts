@@ -79,6 +79,15 @@ export default class ActionStatus extends Record<ActionStatusInterface>(
       }
     }
 
+    if (type === ActionType.EffectSupernewvoltsDestroyMonster) {
+      if (step === ActionStep.SELECT_DESTROY_TARGET) {
+        const { targetGameCardIds } = payload;
+        if (targetGameCardIds?.length === 1) {
+          return this.set('step', ActionStep.COMPLETED);
+        }
+      }
+    }
+
     if (type === ActionType.UseSoulCanon) {
       if (step === ActionStep.SELECT_SOUL_CANON_COST) {
         const { costGameCardIds } = payload;

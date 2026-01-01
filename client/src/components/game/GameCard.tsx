@@ -66,6 +66,14 @@ export default function GameCard({ data }: GameCardProps) {
     }
 
     if (
+      actionStatus.step === ActionStep.SELECT_DESTROY_TARGET &&
+      data.zone === Zone.Battle &&
+      data.currentUserId !== user.data?.uid
+    ) {
+      newActionStatus = actionStatus.addPayloadTargetGameCardId(data.id);
+    }
+
+    if (
       actionStatus.step === ActionStep.SELECT_SOUL_CANON_COST &&
       data.zone === Zone.Soul &&
       data.currentUserId === user.data?.uid
