@@ -32,6 +32,7 @@ export enum ActionType {
   EffectFreshFishDraw = 'EFFECT_FRESH_FISH_DRAW',
   EffectNatsukashinorudePowerDown = 'EFFECT_NATSUKASHINORUDE_POWER_DOWN',
   EffectRuteruteDraw = 'EFFECT_RUTERUTE_DRAW',
+  EffectSupernewvoltsDestroyMonster = 'EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER',
   FinishEndTime = 'FINISH_END_TIME',
   PutSoul = 'PUT_SOUL',
   StartBattleTime = 'START_BATTLE_TIME',
@@ -234,6 +235,7 @@ export enum StateType {
   EffectFreshFishDrawCount = 'EFFECT_FRESH_FISH_DRAW_COUNT',
   EffectNatsukashinorudePowerDown = 'EFFECT_NATSUKASHINORUDE_POWER_DOWN',
   EffectRuteruteDrawCount = 'EFFECT_RUTERUTE_DRAW_COUNT',
+  EffectSupernewvoltsDestroyMonsterCount = 'EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT',
   PutSoulCount = 'PUT_SOUL_COUNT',
   SelfPowerChange = 'SELF_POWER_CHANGE'
 }

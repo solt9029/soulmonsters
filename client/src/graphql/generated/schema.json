@@ -140,6 +140,12 @@
             "deprecationReason": null
           },
           {
+            "name": "EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "FINISH_END_TIME",
             "description": null,
             "isDeprecated": false,
@@ -1863,6 +1869,12 @@
           },
           {
             "name": "EFFECT_RUTERUTE_DRAW_COUNT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
