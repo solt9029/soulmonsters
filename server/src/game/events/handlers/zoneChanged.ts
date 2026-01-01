@@ -35,5 +35,12 @@ export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel)
     }
   }
 
+  if (event.toZone === Zone.MORGUE && movedCard.card.id === CARD_ID.AIKAWARAZUYOKUWAKARANAIHANA) {
+    const opponentUserId = gameModel.gameUsers.find(gu => gu.userId !== movedCard.currentUserId)?.userId;
+    if (opponentUserId) {
+      gameModel = dealDamageToPlayer(gameModel, opponentUserId, 600);
+    }
+  }
+
   return gameModel;
 }

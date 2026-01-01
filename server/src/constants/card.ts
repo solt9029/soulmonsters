@@ -10,7 +10,7 @@ export const CARD_ID = {
   HAMONTAKINIKARARENUMONO: 9, // ハモンタキーに狩られぬもの todo
   SUPERNEWVOLTS: 10, // スーパーニューボルツ todo
   REITETSUNATOTI: 11, // 冷徹な鳥
-  AIKAWARAZUYOKUWAKARANAIHANA: 12, // 相変わらずよく分からない花 todo
+  AIKAWARAZUYOKUWAKARANAIHANA: 12, // 相変わらずよく分からない花
   SHIMASHIMAJUNIOR: 13, // シマシマジュニア
   NISEKISANCHOU: 14, // ニセキサンチョウ
 } as const;
