@@ -16,6 +16,7 @@ import { validateEffectNatsukashinorudePowerDownAction } from '../validators/eff
 import { validateEffectEmeraldEnergyIncreaseAction } from '../validators/effectEmeraldEnergyIncrease';
 import { validateChangeBattlePositionAction } from '../validators/changeBattlePosition';
 import { validateSummonMonsterAction } from '../validators/summonMonster';
+import { validateUseSoulCanonAction } from '../validators/useSoulCanon';
 import { PutSoulActionPayload } from '../handlers/putSoul';
 import { AttackActionPayload } from '../handlers/attack';
 import { FinishEndTimeActionPayload } from '../handlers/finishEndTime';
@@ -25,6 +26,7 @@ import { EffectNatsukashinorudePowerDownActionPayload } from '../handlers/effect
 import { EffectEmeraldEnergyIncreaseActionPayload } from '../handlers/effectEmeraldEnergyIncrease';
 import { ChangeBattlePositionActionPayload } from '../handlers/changeBattlePosition';
 import { SummonMonsterActionPayload } from '../validators/summonMonster';
+import { UseSoulCanonActionPayload } from '../handlers/useSoulCanon';
 
 type ValidationResult =
   | { type: ActionType.START_DRAW_TIME }
@@ -41,7 +43,8 @@ type ValidationResult =
   | { type: ActionType.EFFECT_FRESH_FISH_DRAW; payload: EffectFreshFishDrawActionPayload }
   | { type: ActionType.EFFECT_NATSUKASHINORUDE_POWER_DOWN; payload: EffectNatsukashinorudePowerDownActionPayload }
   | { type: ActionType.EFFECT_EMERALD_ENERGY_INCREASE; payload: EffectEmeraldEnergyIncreaseActionPayload }
-  | { type: ActionType.CHANGE_BATTLE_POSITION; payload: ChangeBattlePositionActionPayload };
+  | { type: ActionType.CHANGE_BATTLE_POSITION; payload: ChangeBattlePositionActionPayload }
+  | { type: ActionType.USE_SOUL_CANON; payload: UseSoulCanonActionPayload };
 
 export const validateAction = (
   data: GameActionDispatchInput,
@@ -108,6 +111,10 @@ export const validateAction = (
     case ActionType.CHANGE_BATTLE_POSITION: {
       const payload = validateChangeBattlePositionAction(data, gameModel);
       return { type: ActionType.CHANGE_BATTLE_POSITION, payload };
+    }
+    case ActionType.USE_SOUL_CANON: {
+      const payload = validateUseSoulCanonAction(data, gameModel, userId);
+      return { type: ActionType.USE_SOUL_CANON, payload };
     }
     default: {
       throw new Error('Invalid action type');

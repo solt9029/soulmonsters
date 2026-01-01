@@ -79,6 +79,22 @@ export default class ActionStatus extends Record<ActionStatusInterface>(
       }
     }
 
+    if (type === ActionType.UseSoulCanon) {
+      if (step === ActionStep.SELECT_SOUL_CANON_COST) {
+        const { costGameCardIds } = payload;
+        if (costGameCardIds?.length === 4) {
+          return this.set('step', ActionStep.SELECT_SOUL_CANON_TARGET);
+        }
+      }
+
+      if (step === ActionStep.SELECT_SOUL_CANON_TARGET) {
+        const { targetGameCardIds } = payload;
+        if (targetGameCardIds?.length === 1) {
+          return this.set('step', ActionStep.COMPLETED);
+        }
+      }
+    }
+
     return this;
   }
 
