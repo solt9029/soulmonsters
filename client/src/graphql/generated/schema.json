@@ -140,6 +140,12 @@
             "deprecationReason": null
           },
           {
+            "name": "EFFECT_SPEED_DRAGON_BIRD_CHANGE_POSITION",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER",
             "description": null,
             "isDeprecated": false,

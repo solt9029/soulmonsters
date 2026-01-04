@@ -32,6 +32,7 @@ export enum ActionType {
   EffectFreshFishDraw = 'EFFECT_FRESH_FISH_DRAW',
   EffectNatsukashinorudePowerDown = 'EFFECT_NATSUKASHINORUDE_POWER_DOWN',
   EffectRuteruteDraw = 'EFFECT_RUTERUTE_DRAW',
+  EffectSpeedDragonBirdChangePosition = 'EFFECT_SPEED_DRAGON_BIRD_CHANGE_POSITION',
   EffectSupernewvoltsDestroyMonster = 'EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER',
   FinishEndTime = 'FINISH_END_TIME',
   PutSoul = 'PUT_SOUL',
