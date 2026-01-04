@@ -17,6 +17,7 @@ import { handleEffectFreshFishDraw } from './effectFreshFishDraw';
 import { handleEffectNatsukashinorudePowerDown } from './effectNatsukashinorudePowerDown';
 import { handleEffectEmeraldEnergyIncrease } from './effectEmeraldEnergyIncrease';
 import { handleEffectSupernewvoltsDestroyMonster } from './effectSupernewvoltsDestroyMonster';
+import { handleEffectSpeedDragonBirdChangePosition } from './effectSpeedDragonBirdChangePosition';
 import { handleChangeBattlePositionAction } from './changeBattlePosition';
 import { handleUseSoulCanonAction } from './useSoulCanon';
 import { validateAction } from '../validators';
@@ -78,6 +79,9 @@ export class GameActionHandler {
       }
       case ActionType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER: {
         return handleEffectSupernewvoltsDestroyMonster(userId, validationResult.payload, gameModel);
+      }
+      case ActionType.EFFECT_SPEED_DRAGON_BIRD_CHANGE_POSITION: {
+        return handleEffectSpeedDragonBirdChangePosition(userId, validationResult.payload, gameModel);
       }
       default: {
         return gameModel;

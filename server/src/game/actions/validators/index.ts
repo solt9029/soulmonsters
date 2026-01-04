@@ -18,6 +18,7 @@ import { validateChangeBattlePositionAction } from '../validators/changeBattlePo
 import { validateSummonMonsterAction } from '../validators/summonMonster';
 import { validateUseSoulCanonAction } from '../validators/useSoulCanon';
 import { validateEffectSupernewvoltsDestroyMonsterAction } from '../validators/effectSupernewvoltsDestroyMonster';
+import { validateEffectSpeedDragonBirdChangePositionAction } from '../validators/effectSpeedDragonBirdChangePosition';
 import { PutSoulActionPayload } from '../handlers/putSoul';
 import { AttackActionPayload } from '../handlers/attack';
 import { FinishEndTimeActionPayload } from '../handlers/finishEndTime';
@@ -26,6 +27,7 @@ import { EffectFreshFishDrawActionPayload } from '../handlers/effectFreshFishDra
 import { EffectNatsukashinorudePowerDownActionPayload } from '../handlers/effectNatsukashinorudePowerDown';
 import { EffectEmeraldEnergyIncreaseActionPayload } from '../handlers/effectEmeraldEnergyIncrease';
 import { EffectSupernewvoltsDestroyMonsterActionPayload } from '../handlers/effectSupernewvoltsDestroyMonster';
+import { EffectSpeedDragonBirdChangePositionActionPayload } from '../handlers/effectSpeedDragonBirdChangePosition';
 import { ChangeBattlePositionActionPayload } from '../handlers/changeBattlePosition';
 import { SummonMonsterActionPayload } from '../validators/summonMonster';
 import { UseSoulCanonActionPayload } from '../handlers/useSoulCanon';
@@ -48,6 +50,10 @@ type ValidationResult =
   | {
       type: ActionType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER;
       payload: EffectSupernewvoltsDestroyMonsterActionPayload;
+    }
+  | {
+      type: ActionType.EFFECT_SPEED_DRAGON_BIRD_CHANGE_POSITION;
+      payload: EffectSpeedDragonBirdChangePositionActionPayload;
     }
   | { type: ActionType.CHANGE_BATTLE_POSITION; payload: ChangeBattlePositionActionPayload }
   | { type: ActionType.USE_SOUL_CANON; payload: UseSoulCanonActionPayload };
@@ -125,6 +131,10 @@ export const validateAction = (
     case ActionType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER: {
       const payload = validateEffectSupernewvoltsDestroyMonsterAction(data, gameModel, userId);
       return { type: ActionType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER, payload };
+    }
+    case ActionType.EFFECT_SPEED_DRAGON_BIRD_CHANGE_POSITION: {
+      const payload = validateEffectSpeedDragonBirdChangePositionAction(data, gameModel, userId);
+      return { type: ActionType.EFFECT_SPEED_DRAGON_BIRD_CHANGE_POSITION, payload };
     }
     default: {
       throw new Error('Invalid action type');

@@ -15,6 +15,7 @@ import { grantEffectFreshFishDrawAction } from './effectFreshFishDraw';
 import { grantEffectNatsukashinorudePowerDownAction } from './effectNatsukashinorudePowerDown';
 import { grantEffectEmeraldEnergyIncreaseAction } from './effectEmeraldEnergyIncrease';
 import { grantEffectSupernewvoltsDestroyMonsterAction } from './effectSupernewvoltsDestroyMonster';
+import { grantEffectSpeedDragonBirdChangePositionAction } from './effectSpeedDragonBirdChangePosition';
 import { grantChangeBattlePositionAction } from './changeBattlePosition';
 import { grantUseSoulCanonAction } from './useSoulCanon';
 
@@ -43,6 +44,7 @@ export class GameActionGrantor {
       model => grantEffectNatsukashinorudePowerDownAction(model, userId),
       model => grantEffectEmeraldEnergyIncreaseAction(model, userId),
       model => grantEffectSupernewvoltsDestroyMonsterAction(model, userId),
+      model => grantEffectSpeedDragonBirdChangePositionAction(model, userId),
       model => grantUseSoulCanonAction(model, userId),
     );
   }
