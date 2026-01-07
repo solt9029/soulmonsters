@@ -17,9 +17,7 @@ export function validateEffectSpeedDragonBirdChangePositionAction(
   }
 
   if (!costGameCardIds || costGameCardIds.length !== SPEED_DRAGON_BIRD_SOUL_COST) {
-    throw new BadRequestException(
-      `costGameCardIds must contain exactly ${SPEED_DRAGON_BIRD_SOUL_COST} cards`,
-    );
+    throw new BadRequestException(`costGameCardIds must contain exactly ${SPEED_DRAGON_BIRD_SOUL_COST} cards`);
   }
 
   if (!targetGameCardIds || targetGameCardIds.length !== 1) {

@@ -3,10 +3,7 @@ import { Zone, ActionType, Phase } from 'src/graphql/index';
 import { GameCardModel } from 'src/models/game-card.model';
 import { CARD_ID } from 'src/constants/card';
 
-export function grantEffectSpeedDragonBirdChangePositionAction(
-  gameModel: GameModel,
-  userId: string,
-) {
+export function grantEffectSpeedDragonBirdChangePositionAction(gameModel: GameModel, userId: string) {
   if (gameModel.phase !== Phase.SOMETHING || gameModel.turnUserId !== userId) {
     return gameModel;
   }
