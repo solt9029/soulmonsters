@@ -1,7 +1,7 @@
 export const CARD_ID = {
   TENKINOKAMIRUTERUTKAI: 1, // 天気の神　ルテルテ改
   SAIFUKKATSUSHITATAKIBEE: 2, // 再復活したタキビー
-  SPEEDDRAGONANDSPEEDBIRD: 3, // スピードラゴン＆スピーバード todo
+  SPEEDDRAGONANDSPEEDBIRD: 3, // スピードラゴン＆スピーバード
   MORINOMUROSAEMERARL: 4, // 森の村長　エメラル
   HEDORON: 5, // ヘドロン todo
   SARANIMIZUMIZUSHIISAKANA: 6, // さらにみずみずしい魚
