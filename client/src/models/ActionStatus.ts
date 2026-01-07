@@ -104,6 +104,22 @@ export default class ActionStatus extends Record<ActionStatusInterface>(
       }
     }
 
+    if (type === ActionType.EffectSpeedDragonBirdChangePosition) {
+      if (step === ActionStep.SELECT_SPEED_DRAGON_BIRD_COST) {
+        const { costGameCardIds } = payload;
+        if (costGameCardIds?.length === 3) {
+          return this.set('step', ActionStep.SELECT_SPEED_DRAGON_BIRD_TARGET);
+        }
+      }
+
+      if (step === ActionStep.SELECT_SPEED_DRAGON_BIRD_TARGET) {
+        const { targetGameCardIds } = payload;
+        if (targetGameCardIds?.length === 1) {
+          return this.set('step', ActionStep.COMPLETED);
+        }
+      }
+    }
+
     return this;
   }
 

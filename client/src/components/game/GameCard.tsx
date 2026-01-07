@@ -89,6 +89,22 @@ export default function GameCard({ data }: GameCardProps) {
       newActionStatus = actionStatus.addPayloadTargetGameCardId(data.id);
     }
 
+    if (
+      actionStatus.step === ActionStep.SELECT_SPEED_DRAGON_BIRD_COST &&
+      data.zone === Zone.Soul &&
+      data.currentUserId === user.data?.uid
+    ) {
+      newActionStatus = actionStatus.addPayloadCostGameCardId(data.id);
+    }
+
+    if (
+      actionStatus.step === ActionStep.SELECT_SPEED_DRAGON_BIRD_TARGET &&
+      data.zone === Zone.Battle &&
+      data.currentUserId !== user.data?.uid
+    ) {
+      newActionStatus = actionStatus.addPayloadTargetGameCardId(data.id);
+    }
+
     if (newActionStatus.isCompleted() && newActionStatus.type) {
       const { type, payload } = newActionStatus;
       await dispatchGameAction({

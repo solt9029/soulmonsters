@@ -6,5 +6,9 @@ export const ActionStepAlertMessages = {
   SELECT_SOUL_CANON_COST:
     'コストとなるソウルゾーンのカードを4枚選択してください',
   SELECT_SOUL_CANON_TARGET:
-    '効果対象となる相手バトルゾーンのカードを選択してください',
+    '効果対象とする相手バトルゾーンのカードを選択してください',
+  SELECT_SPEED_DRAGON_BIRD_COST:
+    'コストとなるソウルゾーンのカードを3枚選択してください',
+  SELECT_SPEED_DRAGON_BIRD_TARGET:
+    '効果対象とする相手バトルゾーンのカードを選択してください',
 };
