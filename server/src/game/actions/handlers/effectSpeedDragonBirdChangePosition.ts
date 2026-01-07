@@ -2,8 +2,7 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { BattlePosition } from 'src/graphql/index';
 
-// TODO: utilsに移動させる
-import { moveCostGameCardsToMorgue } from './useSoulCanon/moveCostGameCardsToMorgue';
+import { moveCostGameCardsToMorgue } from 'src/game/utils/moveCostGameCardsToMorgue';
 
 export type EffectSpeedDragonBirdChangePositionActionPayload = {
   gameCard: GameCardModel;

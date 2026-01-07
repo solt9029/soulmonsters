@@ -1,6 +1,6 @@
 import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
-import { moveCostGameCardsToMorgue } from './useSoulCanon/moveCostGameCardsToMorgue';
+import { moveCostGameCardsToMorgue } from 'src/game/utils/moveCostGameCardsToMorgue';
 import { moveTargetGameCardToMorgue } from './useSoulCanon/moveTargetGameCardToMorgue';
 
 export interface UseSoulCanonActionPayload {

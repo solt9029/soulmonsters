@@ -1,5 +1,5 @@
 import { Zone } from 'src/graphql';
-import { calcNewMorgueGameCardPosition } from './calcNewMorgueGameCardPosition';
+import { calcNewMorgueGameCardPosition } from 'src/game/utils/calcNewMorgueGameCardPosition';
 import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
 
