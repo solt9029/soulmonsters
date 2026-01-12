@@ -75,6 +75,8 @@ export class ChainResolver {
     // memo: これでちゃんと更新されるかやや不安。gameModel経由で書き換えたい
     gameChainLink.status = GameChainLinkStatus.RESOLVED;
 
+    // TODO: gameChainLinkが全部RESOLVEDになってたらgameChainもRESOLVEDにする処理を書く
+
     return gameModel;
   }
 }

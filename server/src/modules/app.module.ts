@@ -41,6 +41,9 @@ import { GameActionGrantor } from 'src/game/actions/grantors';
 import { GameActionHandler } from 'src/game/actions/handlers';
 import { GameStateReflector } from 'src/game/state/reflectors';
 import { DataSource } from 'typeorm';
+import { ChainResolver } from 'src/game/chain/resolver';
+import { GameChainToModelMapper } from 'src/mappers/to-model/game-chain.to-model.mapper';
+import { GameChainLinkToModelMapper } from 'src/mappers/to-model/game-chain-link.to-model.mapper';
 
 @Module({
   imports: [
@@ -100,9 +103,12 @@ import { DataSource } from 'typeorm';
     GameCardToModelMapper,
     GameUserToModelMapper,
     GameStateToModelMapper,
+    GameChainToModelMapper,
+    GameChainLinkToModelMapper,
     GameActionGrantor,
     GameActionHandler,
     GameStateReflector,
+    ChainResolver,
   ],
 })
 export class AppModule {}

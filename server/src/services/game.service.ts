@@ -10,6 +10,7 @@ import { DeckCardEntity } from 'src/entities/deck-card.entity';
 import { GameActionGrantor } from 'src/game/actions/grantors';
 import { initializeGameCards } from 'src/game/initializers';
 import { GameStateReflector } from 'src/game/state/reflectors';
+import { ChainResolver } from 'src/game/chain/resolver';
 
 @Injectable()
 export class GameService {
@@ -21,6 +22,7 @@ export class GameService {
     private gameActionGrantor: GameActionGrantor,
     private gameActionHandler: GameActionHandler,
     private gameStateReflector: GameStateReflector,
+    private chainResolver: ChainResolver,
   ) {}
 
   async dispatchAction(id: number, userId: string, data: GameActionDispatchInput) {
@@ -40,7 +42,8 @@ export class GameService {
       // アクションの内容を検証した上で、問題なければ実行する
       // アクション実行時に、イベントの検証も行う（直接攻撃に成功したらダメージを追加で与える、など）
       const handledGameModel = this.gameActionHandler.handleAction(data, userId, grantedGameModel);
-      const resolvedGameModel = handledGameModel; // TODO: ここで ChainResolver を使ってチェインを解決する
+
+      const resolvedGameModel = this.chainResolver.resolveChainIfNeeded(handledGameModel);
 
       return await manager.save(resolvedGameModel.toEntity());
     });

@@ -1,3 +1,4 @@
+import { GameChainToEntityMapper } from './game-chain.to-entity.mapper';
 import { Injectable } from '@nestjs/common';
 import { GameEntity } from '../../entities/game.entity';
 import { GameModel } from '../../models/game.model';
@@ -11,6 +12,7 @@ export class GameToEntityMapper {
     private readonly gameUserToEntityMapper: GameUserToEntityMapper,
     private readonly gameCardToEntityMapper: GameCardToEntityMapper,
     private readonly gameStateToEntityMapper: GameStateToEntityMapper,
+    private readonly gameChainToEntityMapper: GameChainToEntityMapper,
   ) {}
 
   toEntity(model: GameModel): GameEntity {
@@ -27,6 +29,7 @@ export class GameToEntityMapper {
       gameUsers: model.gameUsers.map(m => this.gameUserToEntityMapper.toEntity(m)),
       gameCards: model.gameCards.map(m => this.gameCardToEntityMapper.toEntity(m)),
       gameStates: model.gameStates.map(m => this.gameStateToEntityMapper.toEntity(m)),
+      gameChains: model.gameChains.map(m => this.gameChainToEntityMapper.toEntity(m)), // TODO: gameChainLinkもマッピングしてあげる
     });
   }
 }
