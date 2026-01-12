@@ -1,6 +1,10 @@
 import { EffectType } from '../graphql/index';
 
-export type GameChainLinkStatus = 'WAITING' | 'RESOLVING' | 'RESOLVED';
+export enum GameChainLinkStatus {
+  WAITING = 'WAITING',
+  RESOLVING = 'RESOLVING',
+  RESOLVED = 'RESOLVED',
+}
 
 export type Effect = {
   type: EffectType.RUTERUTE_DRAW;
