@@ -1,8 +1,9 @@
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from '../../../models/game.model';
-import { drawCardFromDeck } from './effectRuteruteDraw/drawCardFromDeck';
-import { saveEffectUseCountGameState } from './effectRuteruteDraw/saveEffectUseCountGameState';
+import { GameChainModel, GameChainStatus } from '../../../models/game-chain.model';
+import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
 import { subtractUserEnergy } from '../../utils/subtractUserEnergy';
+import { EffectType } from '../../../graphql/index';
 
 export type EffectRuteruteDrawActionPayload = {
   gameCard: GameCardModel;
@@ -14,7 +15,22 @@ export function handleEffectRuteruteDraw(
   gameModel: GameModel,
 ): GameModel {
   subtractUserEnergy(gameModel, userId, 1);
-  drawCardFromDeck(gameModel, userId);
-  saveEffectUseCountGameState(gameModel, payload.gameCard);
+
+  const gameChain = new GameChainModel({
+    gameId: gameModel.id,
+    status: GameChainStatus.RESOLVING,
+    gameChainLinks: [
+      new GameChainLinkModel({
+        orderIndex: 0,
+        userId,
+        gameCardId: payload.gameCard.id,
+        status: GameChainLinkStatus.RESOLVING,
+        effect: { type: EffectType.RUTERUTE_DRAW },
+      }),
+    ],
+  });
+
+  gameModel.gameChains = [...gameModel.gameChains, gameChain];
+
   return gameModel;
 }

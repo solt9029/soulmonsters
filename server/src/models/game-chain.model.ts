@@ -1,3 +1,5 @@
+import { GameChainLinkModel } from './game-chain-link.model';
+
 export enum GameChainStatus {
   BUILDING = 'BUILDING',
   RESOLVING = 'RESOLVING',
@@ -11,6 +13,7 @@ export class GameChainModel {
   id: number;
   gameId: number;
   status: GameChainStatus;
+  gameChainLinks: GameChainLinkModel[];
   createdAt: Date;
   updatedAt: Date;
 }
