@@ -5,7 +5,6 @@ import { EffectType, StateType } from '../../graphql/index';
 import { drawCardFromDeck } from '../actions/handlers/effectRuteruteDraw/drawCardFromDeck';
 import { GameChainStatus } from 'src/models/game-chain.model';
 
-// TODO: これを使うように既存コードを書き換える
 export class ChainResolver {
   resolveChainIfNeeded(gameModel: GameModel): GameModel {
     const resolvingGameChain = gameModel.gameChains

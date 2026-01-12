@@ -40,8 +40,9 @@ export class GameService {
       // アクションの内容を検証した上で、問題なければ実行する
       // アクション実行時に、イベントの検証も行う（直接攻撃に成功したらダメージを追加で与える、など）
       const handledGameModel = this.gameActionHandler.handleAction(data, userId, grantedGameModel);
+      const resolvedGameModel = handledGameModel; // TODO: ここで ChainResolver を使ってチェインを解決する
 
-      return await manager.save(handledGameModel.toEntity());
+      return await manager.save(resolvedGameModel.toEntity());
     });
   }
 
