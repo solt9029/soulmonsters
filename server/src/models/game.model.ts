@@ -3,6 +3,8 @@ import { Phase } from '../graphql/index';
 import { GameUserModel } from './game-user.model';
 import { GameStateModel } from './game-state.model';
 import { GameCardModel } from './game-card.model';
+import { GameChainModel } from './game-chain.model';
+import { GamePendingEffectModel } from './game-pending-effect.model';
 import { GameToEntityMapper } from '../mappers/to-entity/game.to-entity.mapper';
 import { GameUserToEntityMapper } from '../mappers/to-entity/game-user.to-entity.mapper';
 import { GameCardToEntityMapper } from '../mappers/to-entity/game-card.to-entity.mapper';
@@ -26,6 +28,8 @@ export class GameModel {
   gameUsers: GameUserModel[] = [];
   gameCards: GameCardModel[] = [];
   gameStates: GameStateModel[] = [];
+  gameChains: GameChainModel[] = [];
+  gamePendingEffects: GamePendingEffectModel[] = [];
 
   toEntity(): GameEntity {
     const mapper = new GameToEntityMapper(
