@@ -1,6 +1,8 @@
 import { GameStateEntity } from './game-state.entity';
 import { GameEntity } from './game.entity';
 import { CardEntity } from './card.entity';
+import { GameChainLinkEntity } from './game-chain-link.entity';
+import { GamePendingEffectEntity } from './game-pending-effect.entity';
 import { Zone, BattlePosition, Kind, Type, Attribute } from '../graphql/index';
 import {
   Entity,
@@ -68,6 +70,18 @@ export class GameCardEntity extends AppEntity<GameCardEntity> {
     gameStateEntity => gameStateEntity.gameCard,
   )
   gameStates: GameStateEntity[];
+
+  @OneToMany(
+    () => GameChainLinkEntity,
+    gameChainLinkEntity => gameChainLinkEntity.gameCard,
+  )
+  gameChainLinks: GameChainLinkEntity[];
+
+  @OneToMany(
+    () => GamePendingEffectEntity,
+    gamePendingEffectEntity => gamePendingEffectEntity.gameCard,
+  )
+  gamePendingEffects: GamePendingEffectEntity[];
 
   name?: string | null;
   kind?: Kind | null;
