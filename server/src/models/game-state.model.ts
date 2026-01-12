@@ -42,6 +42,6 @@ export class GameStateModel {
   id: number;
   gameCardId: number;
   state: State;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date; // TODO: いらないかも
+  updatedAt: Date; // TODO: いらないかも
 }
