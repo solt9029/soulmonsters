@@ -101,6 +101,17 @@ export type DeckCreateInput = {
   name: Scalars['String']['input'];
 };
 
+export enum EffectType {
+  EmeraldEnergyIncrease = 'EMERALD_ENERGY_INCREASE',
+  FreshFishDraw = 'FRESH_FISH_DRAW',
+  NatsukashinorudePowerDown = 'NATSUKASHINORUDE_POWER_DOWN',
+  RuteruteDraw = 'RUTERUTE_DRAW',
+  SoulBarrier = 'SOUL_BARRIER',
+  SoulCanon = 'SOUL_CANON',
+  SpeedDragonBirdChangePosition = 'SPEED_DRAGON_BIRD_CHANGE_POSITION',
+  SupernewvoltsDestroyMonster = 'SUPERNEWVOLTS_DESTROY_MONSTER'
+}
+
 export type Game = Node & {
   __typename?: 'Game';
   endedAt?: Maybe<Scalars['DateTime']['output']>;
