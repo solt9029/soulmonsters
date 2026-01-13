@@ -9,6 +9,7 @@ export class GameChainToModelMapper {
       id: entity.id,
       gameId: entity.gameId,
       status: entity.status,
+      gameChainLinks: [], // TODO: これもマッピングする --- IGNORE ---
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     });
