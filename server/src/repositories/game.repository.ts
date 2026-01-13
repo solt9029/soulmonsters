@@ -42,6 +42,9 @@ export class GameRepository {
       .leftJoinAndSelect('gameCards.card', 'card')
       .leftJoinAndSelect('games.gameStates', 'gameStates')
       .leftJoinAndSelect('gameStates.gameCard', 'gameCard')
+      .leftJoinAndSelect('games.gameChains', 'gameChains')
+      .leftJoinAndSelect('gameChains.gameChainLinks', 'gameChainLinks')
+      .leftJoinAndSelect('games.gamePendingEffects', 'gamePendingEffects')
       .where('games.id = :id', { id })
       .getOne();
 
