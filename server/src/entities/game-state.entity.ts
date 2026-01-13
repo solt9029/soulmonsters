@@ -57,7 +57,7 @@ export class GameStateEntity extends AppEntity<GameStateEntity> {
   )
   gameCard: GameCardEntity;
 
-  @Column()
+  @Column({ nullable: true })
   gameCardId: number;
 
   @Column({ type: 'json' })

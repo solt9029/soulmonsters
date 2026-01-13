@@ -11,13 +11,11 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  Unique,
   OneToMany,
 } from 'typeorm';
 import { AppEntity } from './app.entity';
 
 @Entity({ name: 'gameCards' })
-@Unique(['position', 'zone', 'currentUserId'])
 export class GameCardEntity extends AppEntity<GameCardEntity> {
   constructor(partial?: Partial<GameCardEntity>) {
     super(partial);
