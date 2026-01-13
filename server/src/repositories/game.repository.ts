@@ -27,7 +27,17 @@ export class GameRepository {
   async findByIdWithRelations(id: number, manager?: EntityManager): Promise<GameModel | null> {
     const entity = await this.getEntityRepository(manager).findOne({
       where: { id },
-      relations: ['gameUsers', 'gameUsers.deck', 'gameCards', 'gameCards.card', 'gameStates', 'gameStates.gameCard'],
+      relations: [
+        'gameUsers',
+        'gameUsers.deck',
+        'gameCards',
+        'gameCards.card',
+        'gameStates',
+        'gameStates.gameCard',
+        'gameChains',
+        'gameChains.gameChainLinks',
+        'gamePendingEffects',
+      ],
     });
 
     return entity ? this.gameToModelMapper.toModel(entity) : null;
