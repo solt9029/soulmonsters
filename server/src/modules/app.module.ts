@@ -41,7 +41,7 @@ import { GameActionGrantor } from 'src/game/actions/grantors';
 import { GameActionHandler } from 'src/game/actions/handlers';
 import { GameStateReflector } from 'src/game/state/reflectors';
 import { DataSource } from 'typeorm';
-import { ChainResolver } from 'src/game/chains/resolver';
+import { ChainResolver } from 'src/game/chains/resolvers';
 import { GameChainToModelMapper } from 'src/mappers/to-model/game-chain.to-model.mapper';
 import { GameChainLinkToModelMapper } from 'src/mappers/to-model/game-chain-link.to-model.mapper';
 

@@ -1,8 +1,8 @@
-import { GameModel } from '../../models/game.model';
-import { GameChainLinkModel, GameChainLinkStatus } from '../../models/game-chain-link.model';
-import { GameStateModel } from '../../models/game-state.model';
-import { EffectType, StateType } from '../../graphql/index';
-import { drawCardFromDeck } from '../actions/handlers/effectRuteruteDraw/drawCardFromDeck';
+import { GameModel } from '../../../models/game.model';
+import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
+import { GameStateModel } from '../../../models/game-state.model';
+import { EffectType, StateType } from '../../../graphql/index';
+import { drawCardFromDeck } from '../../actions/handlers/effectRuteruteDraw/drawCardFromDeck';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 
 export class ChainResolver {

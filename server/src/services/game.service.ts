@@ -10,7 +10,7 @@ import { DeckCardEntity } from 'src/entities/deck-card.entity';
 import { GameActionGrantor } from 'src/game/actions/grantors';
 import { initializeGameCards } from 'src/game/initializers';
 import { GameStateReflector } from 'src/game/state/reflectors';
-import { ChainResolver } from 'src/game/chains/resolver';
+import { ChainResolver } from 'src/game/chains/resolvers';
 
 @Injectable()
 export class GameService {
