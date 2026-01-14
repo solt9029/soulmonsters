@@ -19,6 +19,10 @@ export class ChainResolver {
       return gameModel;
     }
 
+    // TODO:
+    // - gameChainLinksをorderIndexの降順にした上で、ループで、各gameChainLinkをRESOLVINGに変更しつつ処理実行する
+    // - 今後出てくるgameChainLinkのeffectによっては、ユーザーのアクションが必要になりループ途中で止まる想定
+
     const resolvingGameChainLinks = resolvingGameChain.gameChainLinks.filter(
       cl => cl.status === GameChainLinkStatus.RESOLVING,
     );
