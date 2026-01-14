@@ -38,12 +38,12 @@ export class ChainResolver {
       return gameModel;
     }
 
-    gameModel = this.resolveGameChainLink(gameModel, resolvingGameChain, resolvingGameChainLink);
+    gameModel = this.resolveChainLink(gameModel, resolvingGameChain, resolvingGameChainLink);
 
     return gameModel;
   }
 
-  private resolveGameChainLink(
+  private resolveChainLink(
     gameModel: GameModel,
     gameChain: GameChainModel,
     gameChainLink: GameChainLinkModel,
