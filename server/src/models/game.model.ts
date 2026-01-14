@@ -11,6 +11,7 @@ import { GameCardToEntityMapper } from '../mappers/to-entity/game-card.to-entity
 import { GameStateToEntityMapper } from '../mappers/to-entity/game-state.to-entity.mapper';
 import { DeckToEntityMapper } from '../mappers/to-entity/deck.to-entity.mapper';
 import { GameChainToEntityMapper } from 'src/mappers/to-entity/game-chain.to-entity.mapper';
+import { GameChainLinkToEntityMapper } from 'src/mappers/to-entity/game-chain-link.to-entity.mapper';
 
 export class GameModel {
   constructor(partial?: Partial<GameModel>) {
@@ -37,7 +38,7 @@ export class GameModel {
       new GameUserToEntityMapper(new DeckToEntityMapper()),
       new GameCardToEntityMapper(),
       new GameStateToEntityMapper(),
-      new GameChainToEntityMapper(),
+      new GameChainToEntityMapper(new GameChainLinkToEntityMapper()),
     );
     return mapper.toEntity(this);
   }

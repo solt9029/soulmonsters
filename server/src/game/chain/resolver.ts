@@ -3,7 +3,7 @@ import { GameChainLinkModel, GameChainLinkStatus } from '../../models/game-chain
 import { GameStateModel } from '../../models/game-state.model';
 import { EffectType, StateType } from '../../graphql/index';
 import { drawCardFromDeck } from '../actions/handlers/effectRuteruteDraw/drawCardFromDeck';
-import { GameChainStatus } from 'src/models/game-chain.model';
+import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 
 export class ChainResolver {
   resolveChainIfNeeded(gameModel: GameModel): GameModel {
@@ -24,12 +24,16 @@ export class ChainResolver {
       return gameModel;
     }
 
-    gameModel = this.resolveGameChainLink(gameModel, resolvingGameChainLink);
+    gameModel = this.resolveGameChainLink(gameModel, resolvingGameChain, resolvingGameChainLink);
 
     return gameModel;
   }
 
-  private resolveGameChainLink(gameModel: GameModel, gameChainLink: GameChainLinkModel): GameModel {
+  private resolveGameChainLink(
+    gameModel: GameModel,
+    gameChain: GameChainModel,
+    gameChainLink: GameChainLinkModel,
+  ): GameModel {
     switch (gameChainLink.effect.type) {
       case EffectType.RUTERUTE_DRAW: {
         const gameCard = gameModel.gameCards.find(gc => gc.id === gameChainLink.gameCardId);
@@ -75,7 +79,8 @@ export class ChainResolver {
     // memo: これでちゃんと更新されるかやや不安。gameModel経由で書き換えたい
     gameChainLink.status = GameChainLinkStatus.RESOLVED;
 
-    // TODO: gameChainLinkが全部RESOLVEDになってたらgameChainもRESOLVEDにする処理を書く
+    // TODO: gameChainLinkが全部RESOLVEDになってたらgameChainもRESOLVEDにする
+    gameChain.status = GameChainStatus.RESOLVED;
 
     return gameModel;
   }
