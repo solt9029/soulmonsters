@@ -43,7 +43,7 @@ export class GameService {
       // アクション実行時に、イベントの検証も行う（直接攻撃に成功したらダメージを追加で与える、など）
       const handledGameModel = this.gameActionHandler.handleAction(data, userId, grantedGameModel);
 
-      const resolvedGameModel = this.chainResolver.resolveChainIfNeeded(handledGameModel);
+      const resolvedGameModel = this.chainResolver.resolveChain(handledGameModel);
 
       return await manager.save(resolvedGameModel.toEntity());
     });

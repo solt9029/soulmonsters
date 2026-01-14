@@ -6,7 +6,7 @@ import { drawCardFromDeck } from '../actions/handlers/effectRuteruteDraw/drawCar
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 
 export class ChainResolver {
-  resolveChainIfNeeded(gameModel: GameModel): GameModel {
+  resolveChain(gameModel: GameModel): GameModel {
     const resolvingGameChains = gameModel.gameChains.filter(c => c.status === GameChainStatus.RESOLVING);
 
     if (resolvingGameChains.length > 1) {
