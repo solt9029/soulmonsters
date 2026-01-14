@@ -7,19 +7,29 @@ import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 
 export class ChainResolver {
   resolveChainIfNeeded(gameModel: GameModel): GameModel {
-    const resolvingGameChain = gameModel.gameChains
-      .filter(c => c.status === 'RESOLVING')
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
+    const resolvingGameChains = gameModel.gameChains.filter(c => c.status === GameChainStatus.RESOLVING);
 
-    if (!resolvingGameChain) {
+    if (resolvingGameChains.length > 1) {
+      throw new Error('Multiple resolving gameChains found');
+    }
+
+    const resolvingGameChain = resolvingGameChains[0];
+
+    if (resolvingGameChain === undefined) {
       return gameModel;
     }
 
-    const resolvingGameChainLink = resolvingGameChain.gameChainLinks
-      .filter(cl => cl.status === GameChainLinkStatus.RESOLVING)
-      .sort((a, b) => b.orderIndex - a.orderIndex)[0];
+    const resolvingGameChainLinks = resolvingGameChain.gameChainLinks.filter(
+      cl => cl.status === GameChainLinkStatus.RESOLVING,
+    );
 
-    if (!resolvingGameChainLink) {
+    if (resolvingGameChainLinks.length > 1) {
+      throw new Error('Multiple resolving gameChainLinks found');
+    }
+
+    const resolvingGameChainLink = resolvingGameChainLinks[0];
+
+    if (resolvingGameChainLink === undefined) {
       resolvingGameChain.status = GameChainStatus.RESOLVED;
       return gameModel;
     }
@@ -76,7 +86,7 @@ export class ChainResolver {
         throw new Error(`Unsupported effectType: ${gameChainLink.effect.type}`);
     }
 
-    // memo: これでちゃんと更新されるかやや不安。gameModel経由で書き換えたい
+    // TODO: これでちゃんと更新されるかやや不安。gameModel経由で書き換えたい
     gameChainLink.status = GameChainLinkStatus.RESOLVED;
 
     // TODO: gameChainLinkが全部RESOLVEDになってたらgameChainもRESOLVEDにする
