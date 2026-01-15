@@ -23,9 +23,17 @@ export class GamePendingEffectEntity extends AppEntity<GamePendingEffectEntity> 
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => GameEntity, game => game.gamePendingEffects, { onDelete: 'CASCADE' })
+  @ManyToOne(
+    () => GameEntity,
+    game => game.gamePendingEffects,
+    { onDelete: 'CASCADE' },
+  )
   game: GameEntity;
 
-  @ManyToOne(() => GameCardEntity, gameCard => gameCard.gamePendingEffects, { nullable: true })
+  @ManyToOne(
+    () => GameCardEntity,
+    gameCard => gameCard.gamePendingEffects,
+    { nullable: true },
+  )
   gameCard: GameCardEntity | null;
 }

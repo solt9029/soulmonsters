@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { AppEntity } from './app.entity';
 import { GameEntity } from './game.entity';
 import { GameChainLinkEntity } from './game-chain-link.entity';
@@ -26,9 +34,17 @@ export class GameChainEntity extends AppEntity<GameChainEntity> {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => GameEntity, game => game.gameChains, { onDelete: 'CASCADE' })
+  @ManyToOne(
+    () => GameEntity,
+    game => game.gameChains,
+    { onDelete: 'CASCADE' },
+  )
   game: GameEntity;
 
-  @OneToMany(() => GameChainLinkEntity, gameChainLink => gameChainLink.gameChain, { cascade: true })
+  @OneToMany(
+    () => GameChainLinkEntity,
+    gameChainLink => gameChainLink.gameChain,
+    { cascade: true },
+  )
   gameChainLinks: GameChainLinkEntity[];
 }

@@ -1,9 +1,8 @@
-import { GameModel } from '../../../models/game.model';
-import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
-import { GameStateModel } from '../../../models/game-state.model';
-import { EffectType, StateType } from '../../../graphql/index';
-import { drawCardFromDeck } from '../../actions/handlers/effectRuteruteDraw/drawCardFromDeck';
+import { GameModel } from 'src/models/game.model';
+import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
+import { EffectType } from 'src/graphql/index';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
+import { resolveRuteruteDraw } from './ruteruteDraw';
 
 export class ChainResolver {
   resolveChain(gameModel: GameModel): GameModel {
@@ -50,39 +49,7 @@ export class ChainResolver {
   ): GameModel {
     switch (gameChainLink.effect.type) {
       case EffectType.RUTERUTE_DRAW: {
-        const gameCard = gameModel.gameCards.find(gc => gc.id === gameChainLink.gameCardId);
-        if (!gameCard) {
-          break;
-        }
-
-        drawCardFromDeck(gameModel, gameChainLink.userId);
-
-        const existsState = gameModel.gameStates.find(
-          gs => gs.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gs.gameCardId === gameCard.id,
-        );
-
-        if (existsState) {
-          gameModel.gameStates = gameModel.gameStates.map(gs =>
-            gs.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gs.gameCardId === gameCard.id
-              ? new GameStateModel({
-                  ...gs,
-                  state: {
-                    type: StateType.EFFECT_RUTERUTE_DRAW_COUNT,
-                    data: { value: gs.state.data.value + 1 },
-                  },
-                })
-              : gs,
-          );
-        } else {
-          const newGameState = new GameStateModel({
-            gameCardId: gameCard.id,
-            state: { type: StateType.EFFECT_RUTERUTE_DRAW_COUNT, data: { value: 1 } },
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          });
-          gameModel.gameStates = [...gameModel.gameStates, newGameState];
-        }
-
+        resolveRuteruteDraw(gameModel, gameChainLink);
         break;
       }
 
