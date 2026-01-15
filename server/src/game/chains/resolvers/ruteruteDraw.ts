@@ -4,13 +4,13 @@ import { GameStateModel } from 'src/models/game-state.model';
 import { StateType } from 'src/graphql/index';
 import { drawCardFromDeck } from 'src/game/actions/handlers/effectRuteruteDraw/drawCardFromDeck';
 
-export const resolveRuteruteDraw = (gameModel: GameModel, gameChainLink: GameChainLinkModel): void => {
+export const resolveRuteruteDraw = (gameModel: GameModel, gameChainLink: GameChainLinkModel): GameModel => {
   const gameCard = gameModel.gameCards.find(gc => gc.id === gameChainLink.gameCardId);
   if (!gameCard) {
-    return;
+    return gameModel;
   }
 
-  drawCardFromDeck(gameModel, gameChainLink.userId);
+  gameModel = drawCardFromDeck(gameModel, gameChainLink.userId);
 
   const existsState = gameModel.gameStates.find(
     gs => gs.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT && gs.gameCardId === gameCard.id,
@@ -37,4 +37,6 @@ export const resolveRuteruteDraw = (gameModel: GameModel, gameChainLink: GameCha
     });
     gameModel.gameStates = [...gameModel.gameStates, newGameState];
   }
+
+  return gameModel;
 };
