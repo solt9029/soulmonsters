@@ -16,6 +16,7 @@ export const markGameChainLinkAsResolved = (
     link.id === gameChainLink.id ? updatedGameChainLink : link,
   );
 
+  // memo: allLinksResolved の場合の更新は、ChainResolver#resolveChainの中で行えば良さそうな気がする。
   const allLinksResolved = updatedGameChainLinks.every(link => link.status === GameChainLinkStatus.RESOLVED);
 
   const updatedGameChain = new GameChainModel({
