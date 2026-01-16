@@ -1,7 +1,7 @@
 import { GameModel } from 'src/models/game.model';
 import { GameChainLinkModel } from 'src/models/game-chain-link.model';
 import { drawCardFromDeck } from 'src/game/utils/drawCardFromDeck';
-import { saveEffectUseCountGameState } from 'src/game/actions/handlers/effectRuteruteDraw/saveEffectUseCountGameState';
+import { saveEffectUseCountGameState } from 'src/game/chains/resolvers/ruteruteDraw/saveEffectUseCountGameState';
 
 export const resolveRuteruteDraw = (gameModel: GameModel, gameChainLink: GameChainLinkModel): GameModel => {
   const gameCard = gameModel.gameCards.find(gc => gc.id === gameChainLink.gameCardId);
