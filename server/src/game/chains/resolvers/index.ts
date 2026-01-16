@@ -3,6 +3,7 @@ import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-l
 import { EffectType } from 'src/graphql/index';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { resolveRuteruteDraw } from './ruteruteDraw';
+import { markGameChainLinkAsResolved } from 'src/game/utils/markGameChainLinkAsResolved';
 
 export class ChainResolver {
   resolveChain(gameModel: GameModel): GameModel {
@@ -57,25 +58,6 @@ export class ChainResolver {
         throw new Error(`Unsupported effectType: ${gameChainLink.effect.type}`);
     }
 
-    const updatedGameChainLink = new GameChainLinkModel({
-      ...gameChainLink,
-      status: GameChainLinkStatus.RESOLVED,
-    });
-
-    const updatedGameChainLinks = gameChain.gameChainLinks.map(link =>
-      link.id === gameChainLink.id ? updatedGameChainLink : link,
-    );
-
-    const allLinksResolved = updatedGameChainLinks.every(link => link.status === GameChainLinkStatus.RESOLVED);
-
-    const updatedGameChain = new GameChainModel({
-      ...gameChain,
-      gameChainLinks: updatedGameChainLinks,
-      status: allLinksResolved ? GameChainStatus.RESOLVED : gameChain.status,
-    });
-
-    gameModel.gameChains = gameModel.gameChains.map(chain => (chain.id === gameChain.id ? updatedGameChain : chain));
-
-    return gameModel;
+    return markGameChainLinkAsResolved(gameModel, gameChain, gameChainLink);
   }
 }
