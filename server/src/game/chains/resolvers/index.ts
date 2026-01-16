@@ -28,12 +28,7 @@ export class ChainResolver {
     // TODO: 「gameChainLinksが全部RESOLVEDだったら」の条件を入れる
     // memo: 多分ここのchain.idはnullとかになってるので、その点は注意する必要がある
     gameModel.gameChains = gameModel.gameChains.map(chain =>
-      chain.id === resolvingGameChain.id
-        ? new GameChainModel({
-            ...chain,
-            status: GameChainStatus.RESOLVED,
-          })
-        : chain,
+      chain.id === resolvingGameChain.id ? new GameChainModel({ ...chain, status: GameChainStatus.RESOLVED }) : chain,
     );
 
     return gameModel;

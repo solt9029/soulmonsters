@@ -7,22 +7,14 @@ export const markGameChainLinkAsResolved = (
   gameChain: GameChainModel, // TODO: もうgameChainのresolvedにする処理はここでやらないので不要のはず！gameChainLink.gameChainIdからいけそう？
   gameChainLink: GameChainLinkModel,
 ): GameModel => {
-  const updatedGameChainLink = new GameChainLinkModel({
-    ...gameChainLink,
-    status: GameChainLinkStatus.RESOLVED,
-  });
+  const updatedGameChainLink = new GameChainLinkModel({ ...gameChainLink, status: GameChainLinkStatus.RESOLVED });
 
   const updatedGameChainLinks = gameChain.gameChainLinks.map(link =>
     link.id === gameChainLink.id ? updatedGameChainLink : link,
   );
 
   gameModel.gameChains = gameModel.gameChains.map(chain =>
-    chain.id === gameChain.id
-      ? new GameChainModel({
-          ...chain,
-          gameChainLinks: updatedGameChainLinks,
-        })
-      : chain,
+    chain.id === gameChain.id ? new GameChainModel({ ...chain, gameChainLinks: updatedGameChainLinks }) : chain,
   );
 
   return gameModel;
