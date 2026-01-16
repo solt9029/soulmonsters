@@ -26,7 +26,7 @@ export class ChainResolver {
     gameModel = this.resolveChainLink(gameModel, resolvingGameChain, resolvingGameChainLink);
 
     // TODO: 「gameChainLinksが全部RESOLVEDだったら」の条件を入れる
-    // memo: 多分ここのchain.idはnullとかになってるので、その点は注意する必要がある
+    // memo: 多分ここのchain.idは、DB保存前のものでnullとかになってるので、その点は注意する必要がある
     gameModel.gameChains = gameModel.gameChains.map(chain =>
       chain.id === resolvingGameChain.id ? new GameChainModel({ ...chain, status: GameChainStatus.RESOLVED }) : chain,
     );
