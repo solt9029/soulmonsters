@@ -5,6 +5,7 @@ import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { resolveRuteruteDraw } from './ruteruteDraw';
 import { getResolvingGameChain } from 'src/game/utils/getResolvingGameChain';
 import { getResolvingGameChainLink } from 'src/game/utils/getResolvingGameChainLink';
+import { markGameChainAsResolved } from 'src/game/utils/markGameChainAsResolved';
 
 export class ChainResolver {
   resolveChain(gameModel: GameModel): GameModel {
@@ -19,10 +20,7 @@ export class ChainResolver {
 
     const resolvingGameChainLink = getResolvingGameChainLink(resolvingGameChain);
     if (resolvingGameChainLink === undefined) {
-      // TODO: markGameChainAsResolvedというメソッドに実装するようにする
-      gameModel.gameChains = gameModel.gameChains.map(chain =>
-        chain.id === resolvingGameChain.id ? new GameChainModel({ ...chain, status: GameChainStatus.RESOLVED }) : chain,
-      );
+      gameModel = markGameChainAsResolved(gameModel, resolvingGameChain.id);
       return gameModel;
     }
 
