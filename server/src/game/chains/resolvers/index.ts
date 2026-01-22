@@ -19,7 +19,10 @@ export class ChainResolver {
 
     const resolvingGameChainLink = getResolvingGameChainLink(resolvingGameChain);
     if (resolvingGameChainLink === undefined) {
-      resolvingGameChain.status = GameChainStatus.RESOLVED;
+      // TODO: markGameChainAsResolvedというメソッドに実装するようにする
+      gameModel.gameChains = gameModel.gameChains.map(chain =>
+        chain.id === resolvingGameChain.id ? new GameChainModel({ ...chain, status: GameChainStatus.RESOLVED }) : chain,
+      );
       return gameModel;
     }
 
