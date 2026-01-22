@@ -3,7 +3,6 @@ import { GameChainLinkModel } from 'src/models/game-chain-link.model';
 import { EffectType } from 'src/graphql/index';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { resolveRuteruteDraw } from './ruteruteDraw';
-import { markGameChainLinkAsResolved } from 'src/game/utils/markGameChainLinkAsResolved';
 import { getResolvingGameChain } from 'src/game/utils/getResolvingGameChain';
 import { getResolvingGameChainLink } from 'src/game/utils/getResolvingGameChainLink';
 
@@ -26,6 +25,12 @@ export class ChainResolver {
 
     gameModel = this.resolveChainLink(gameModel, resolvingGameChain, resolvingGameChainLink);
 
+    // TODO: 「gameChainLinksが全部RESOLVEDだったら」の条件を入れる
+    // memo: 多分ここのchain.idは、DB保存前のものでnullとかになってるので、その点は注意する必要がある
+    gameModel.gameChains = gameModel.gameChains.map(chain =>
+      chain.id === resolvingGameChain.id ? new GameChainModel({ ...chain, status: GameChainStatus.RESOLVED }) : chain,
+    );
+
     return gameModel;
   }
 
@@ -36,14 +41,10 @@ export class ChainResolver {
   ): GameModel {
     switch (gameChainLink.effect.type) {
       case EffectType.RUTERUTE_DRAW: {
-        gameModel = resolveRuteruteDraw(gameModel, gameChainLink);
-        break;
+        return resolveRuteruteDraw(gameModel, gameChain, gameChainLink);
       }
-
       default:
         throw new Error(`Unsupported effectType: ${gameChainLink.effect.type}`);
     }
-
-    return markGameChainLinkAsResolved(gameModel, gameChain, gameChainLink);
   }
 }

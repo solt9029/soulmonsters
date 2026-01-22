@@ -1,31 +1,21 @@
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
-import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
+import { GameChainModel } from 'src/models/game-chain.model';
 import { GameModel } from 'src/models/game.model';
 
 export const markGameChainLinkAsResolved = (
   gameModel: GameModel,
-  gameChain: GameChainModel,
+  gameChain: GameChainModel, // TODO: もうgameChainのresolvedにする処理はここでやらないので不要のはず！gameChainLink.gameChainIdからいけそう？
   gameChainLink: GameChainLinkModel,
 ): GameModel => {
-  const updatedGameChainLink = new GameChainLinkModel({
-    ...gameChainLink,
-    status: GameChainLinkStatus.RESOLVED,
-  });
+  const updatedGameChainLink = new GameChainLinkModel({ ...gameChainLink, status: GameChainLinkStatus.RESOLVED });
 
   const updatedGameChainLinks = gameChain.gameChainLinks.map(link =>
     link.id === gameChainLink.id ? updatedGameChainLink : link,
   );
 
-  // memo: allLinksResolved の場合の更新は、ChainResolver#resolveChainの中で行えば良さそうな気がする。
-  const allLinksResolved = updatedGameChainLinks.every(link => link.status === GameChainLinkStatus.RESOLVED);
-
-  const updatedGameChain = new GameChainModel({
-    ...gameChain,
-    gameChainLinks: updatedGameChainLinks,
-    status: allLinksResolved ? GameChainStatus.RESOLVED : gameChain.status,
-  });
-
-  gameModel.gameChains = gameModel.gameChains.map(chain => (chain.id === gameChain.id ? updatedGameChain : chain));
+  gameModel.gameChains = gameModel.gameChains.map(chain =>
+    chain.id === gameChain.id ? new GameChainModel({ ...chain, gameChainLinks: updatedGameChainLinks }) : chain,
+  );
 
   return gameModel;
 };
