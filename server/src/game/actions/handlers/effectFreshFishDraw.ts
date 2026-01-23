@@ -3,7 +3,7 @@ import { GameModel } from '../../../models/game.model';
 import { GameChainModel, GameChainStatus } from '../../../models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
 import { subtractUserEnergy } from '../../mutations/subtractUserEnergy';
-import { saveEffectUseCountGameState } from '../../chains/resolvers/freshFishDraw/saveEffectUseCountGameState';
+import { saveEffectUseCountGameState } from './effectFreshFishDraw/saveEffectUseCountGameState';
 import { EffectType } from '../../../graphql/index';
 
 export type EffectFreshFishDrawActionPayload = {
