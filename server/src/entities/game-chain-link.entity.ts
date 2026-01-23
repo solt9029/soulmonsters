@@ -10,9 +10,14 @@ export enum GameChainLinkStatus {
   RESOLVED = 'RESOLVED',
 }
 
-export type Effect = {
-  type: EffectType.RUTERUTE_DRAW;
-};
+export type Effect =
+  | {
+      type: EffectType.RUTERUTE_DRAW;
+    }
+  | {
+      type: EffectType.SUPERNEWVOLTS_DESTROY_MONSTER;
+      payload: any;
+    };
 // | {
 //     type: EffectType.FRESH_FISH_DRAW;
 //     data: { costGameCardIds: number[] };

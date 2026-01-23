@@ -139,7 +139,7 @@ describe('saveEffectUseCountGameState', () => {
     const result = saveEffectUseCountGameState(gameModel, supernewvoltsCard1);
 
     expect(result.gameStates).toHaveLength(2);
-    
+
     const card1State = result.gameStates.find(gs => gs.gameCardId === 1)?.state;
     if (card1State?.type === StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT) {
       expect(card1State.data.value).toBe(2); // Incremented
@@ -177,7 +177,9 @@ describe('saveEffectUseCountGameState', () => {
 
     expect(result.gameStates).toHaveLength(2);
     expect(result.gameStates.some(gs => gs.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT)).toBe(true);
-    expect(result.gameStates.some(gs => gs.state.type === StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT)).toBe(true);
+    expect(result.gameStates.some(gs => gs.state.type === StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT)).toBe(
+      true,
+    );
   });
 
   it('should preserve other GameStates when incrementing existing effect count state', () => {
@@ -210,13 +212,16 @@ describe('saveEffectUseCountGameState', () => {
     const result = saveEffectUseCountGameState(gameModel, supernewvoltsCard);
 
     expect(result.gameStates).toHaveLength(2);
-    
-    const effectState = result.gameStates.find(gs => gs.state.type === StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT)?.state;
+
+    const effectState = result.gameStates.find(
+      gs => gs.state.type === StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT,
+    )?.state;
     if (effectState?.type === StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT) {
       expect(effectState.data.value).toBe(2); // Incremented
     }
 
-    const otherStateResult = result.gameStates.find(gs => gs.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT)?.state;
+    const otherStateResult = result.gameStates.find(gs => gs.state.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT)
+      ?.state;
     if (otherStateResult?.type === StateType.EFFECT_RUTERUTE_DRAW_COUNT) {
       expect(otherStateResult.data.value).toBe(2); // Unchanged
     }

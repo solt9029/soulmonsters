@@ -2,6 +2,7 @@ import { GameModel } from 'src/models/game.model';
 import { GameUserModel } from 'src/models/game-user.model';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
+import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameStateModel } from 'src/models/game-state.model';
 import { CardModel } from 'src/models/card.model';
 import { Zone, EffectType, StateType, BattlePosition } from 'src/graphql/index';
@@ -11,7 +12,7 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
   it('should move deck top card to morgue, target monster to morgue, save effect count, and mark chain link as resolved', () => {
     const gameUser1 = new GameUserModel({ id: 1, userId: 'user1' });
     const gameUser2 = new GameUserModel({ id: 2, userId: 'user2' });
-    
+
     const supernewvoltsCard = new CardModel({ id: 1 });
     const deckCard = new CardModel({ id: 2 });
     const targetCard = new CardModel({ id: 3 });
@@ -42,7 +43,7 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
     });
 
     const gameChainLink = new GameChainLinkModel({
-      id: 'link1',
+      id: 1,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -56,12 +57,19 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
       },
     });
 
+    const gameChain = new GameChainModel({
+      id: 1,
+      gameId: 1,
+      status: GameChainStatus.RESOLVING,
+      gameChainLinks: [gameChainLink],
+    });
+
     const gameModel = new GameModel({
-      id: 'game1',
+      id: 1,
       gameUsers: [gameUser1, gameUser2],
       gameCards: [supernewvoltsGameCard, deckTopCard, targetGameCard],
       gameStates: [],
-      gameChainLinks: [gameChainLink],
+      gameChains: [gameChain],
     });
 
     const result = resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);
@@ -89,13 +97,13 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
     }
 
     // Verify game chain link marked as resolved
-    const resolvedLink = result.gameChainLinks.find(gcl => gcl.id === 'link1');
+    const resolvedLink = result.gameChains[0]?.gameChainLinks.find(gcl => gcl.id === 1);
     expect(resolvedLink?.status).toBe(GameChainLinkStatus.RESOLVED);
   });
 
   it('should return unchanged model when gameCard is not found', () => {
     const gameChainLink = new GameChainLinkModel({
-      id: 'link1',
+      id: 1,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 999, // non-existent gameCard
@@ -109,12 +117,19 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
       },
     });
 
+    const gameChain = new GameChainModel({
+      id: 1,
+      gameId: 1,
+      status: GameChainStatus.RESOLVING,
+      gameChainLinks: [gameChainLink],
+    });
+
     const gameModel = new GameModel({
-      id: 'game1',
+      id: 1,
       gameUsers: [],
       gameCards: [],
       gameStates: [],
-      gameChainLinks: [gameChainLink],
+      gameChains: [gameChain],
     });
 
     const result = resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);
@@ -131,7 +146,7 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
     });
 
     const gameChainLink = new GameChainLinkModel({
-      id: 'link1',
+      id: 1,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -142,12 +157,19 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
       },
     });
 
+    const gameChain = new GameChainModel({
+      id: 1,
+      gameId: 1,
+      status: GameChainStatus.RESOLVING,
+      gameChainLinks: [gameChainLink],
+    });
+
     const gameModel = new GameModel({
-      id: 'game1',
+      id: 1,
       gameUsers: [gameUser],
       gameCards: [supernewvoltsGameCard],
       gameStates: [],
-      gameChainLinks: [gameChainLink],
+      gameChains: [gameChain],
     });
 
     const result = resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);
@@ -164,7 +186,7 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
     });
 
     const gameChainLink = new GameChainLinkModel({
-      id: 'link1',
+      id: 1,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -178,12 +200,19 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
       },
     });
 
+    const gameChain = new GameChainModel({
+      id: 1,
+      gameId: 1,
+      status: GameChainStatus.RESOLVING,
+      gameChainLinks: [gameChainLink],
+    });
+
     const gameModel = new GameModel({
-      id: 'game1',
+      id: 1,
       gameUsers: [gameUser],
       gameCards: [supernewvoltsGameCard],
       gameStates: [],
-      gameChainLinks: [gameChainLink],
+      gameChains: [gameChain],
     });
 
     const result = resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);
@@ -194,7 +223,7 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
   it('should handle case when no deck cards exist', () => {
     const gameUser1 = new GameUserModel({ id: 1, userId: 'user1' });
     const gameUser2 = new GameUserModel({ id: 2, userId: 'user2' });
-    
+
     const supernewvoltsCard = new CardModel({ id: 1 });
     const targetCard = new CardModel({ id: 3 });
 
@@ -216,7 +245,7 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
     });
 
     const gameChainLink = new GameChainLinkModel({
-      id: 'link1',
+      id: 1,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -230,12 +259,19 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
       },
     });
 
+    const gameChain = new GameChainModel({
+      id: 1,
+      gameId: 1,
+      status: GameChainStatus.RESOLVING,
+      gameChainLinks: [gameChainLink],
+    });
+
     const gameModel = new GameModel({
-      id: 'game1',
+      id: 1,
       gameUsers: [gameUser1, gameUser2],
       gameCards: [supernewvoltsGameCard, targetGameCard], // No deck cards
       gameStates: [],
-      gameChainLinks: [gameChainLink],
+      gameChains: [gameChain],
     });
 
     const result = resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);
@@ -249,14 +285,14 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
     expect(result.gameStates[0]?.state.type).toBe(StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT);
 
     // Verify game chain link marked as resolved
-    const resolvedLink = result.gameChainLinks.find(gcl => gcl.id === 'link1');
+    const resolvedLink = result.gameChains[0]?.gameChainLinks.find(gcl => gcl.id === 1);
     expect(resolvedLink?.status).toBe(GameChainLinkStatus.RESOLVED);
   });
 
   it('should increment existing effect use count', () => {
     const gameUser1 = new GameUserModel({ id: 1, userId: 'user1' });
     const gameUser2 = new GameUserModel({ id: 2, userId: 'user2' });
-    
+
     const supernewvoltsCard = new CardModel({ id: 1 });
     const targetCard = new CardModel({ id: 3 });
 
@@ -284,7 +320,7 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
     });
 
     const gameChainLink = new GameChainLinkModel({
-      id: 'link1',
+      id: 1,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -298,12 +334,19 @@ describe('resolveSupernewvoltsDestroyMonster', () => {
       },
     });
 
+    const gameChain = new GameChainModel({
+      id: 1,
+      gameId: 1,
+      status: GameChainStatus.RESOLVING,
+      gameChainLinks: [gameChainLink],
+    });
+
     const gameModel = new GameModel({
-      id: 'game1',
+      id: 1,
       gameUsers: [gameUser1, gameUser2],
       gameCards: [supernewvoltsGameCard, targetGameCard],
       gameStates: [existingState],
-      gameChainLinks: [gameChainLink],
+      gameChains: [gameChain],
     });
 
     const result = resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);

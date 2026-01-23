@@ -25,9 +25,9 @@ export function handleEffectSupernewvoltsDestroyMonster(
         userId,
         gameCardId: payload.gameCard.id,
         status: GameChainLinkStatus.WAITING,
-        effect: { 
+        effect: {
           type: EffectType.SUPERNEWVOLTS_DESTROY_MONSTER,
-          payload: payload
+          payload: payload,
         },
       }),
     ],

@@ -42,7 +42,7 @@ describe('moveTargetMonsterToMorgue', () => {
       currentUserId: 'user1',
       zone: Zone.BATTLE,
       position: 0,
-      battlePosition: BattlePosition.DEFENSE,
+      battlePosition: BattlePosition.DEFENCE,
       card: card,
     });
 

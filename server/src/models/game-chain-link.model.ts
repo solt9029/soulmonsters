@@ -6,9 +6,14 @@ export enum GameChainLinkStatus {
   RESOLVED = 'RESOLVED',
 }
 
-export type Effect = {
-  type: EffectType.RUTERUTE_DRAW;
-};
+export type Effect =
+  | {
+      type: EffectType.RUTERUTE_DRAW;
+    }
+  | {
+      type: EffectType.SUPERNEWVOLTS_DESTROY_MONSTER;
+      payload: any;
+    };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {

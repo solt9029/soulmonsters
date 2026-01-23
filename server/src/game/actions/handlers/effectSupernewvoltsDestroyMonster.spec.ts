@@ -2,8 +2,13 @@ import { GameModel } from 'src/models/game.model';
 import { GameUserModel } from 'src/models/game-user.model';
 import { GameCardModel } from 'src/models/game-card.model';
 import { CardModel } from 'src/models/card.model';
-import { Zone, Phase, GameChainStatus, GameChainLinkStatus, EffectType } from 'src/graphql/index';
-import { handleEffectSupernewvoltsDestroyMonster, EffectSupernewvoltsDestroyMonsterActionPayload } from './effectSupernewvoltsDestroyMonster';
+import { Zone, Phase, EffectType } from 'src/graphql/index';
+import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
+import { GameChainLinkStatus } from 'src/models/game-chain-link.model';
+import {
+  handleEffectSupernewvoltsDestroyMonster,
+  EffectSupernewvoltsDestroyMonsterActionPayload,
+} from './effectSupernewvoltsDestroyMonster';
 
 describe('handleEffectSupernewvoltsDestroyMonster', () => {
   it('should create GameChain with GameChainLink containing correct effect payload', () => {
@@ -26,7 +31,7 @@ describe('handleEffectSupernewvoltsDestroyMonster', () => {
     });
 
     const gameModel = new GameModel({
-      id: 'game1',
+      id: 1,
       phase: Phase.SOMETHING,
       turnUserId: 'user1',
       gameUsers: [gameUser],
@@ -54,7 +59,10 @@ describe('handleEffectSupernewvoltsDestroyMonster', () => {
     expect(gameChainLink?.gameCardId).toBe(1);
     expect(gameChainLink?.status).toBe(GameChainLinkStatus.WAITING);
     expect(gameChainLink?.effect.type).toBe(EffectType.SUPERNEWVOLTS_DESTROY_MONSTER);
-    expect(gameChainLink?.effect.payload).toEqual(payload);
+
+    if (gameChainLink?.effect.type === EffectType.SUPERNEWVOLTS_DESTROY_MONSTER) {
+      expect(gameChainLink.effect.payload).toEqual(payload);
+    }
   });
 
   it('should preserve existing GameChains when adding new chain', () => {
@@ -77,15 +85,17 @@ describe('handleEffectSupernewvoltsDestroyMonster', () => {
     });
 
     // Create a game model with an existing game chain
-    const existingGameChain = {
-      id: 'existing-chain',
-      gameId: 'game1',
+    const existingGameChain = new GameChainModel({
+      id: 1,
+      gameId: 1,
       status: GameChainStatus.RESOLVED,
       gameChainLinks: [],
-    };
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
 
     const gameModel = new GameModel({
-      id: 'game1',
+      id: 1,
       phase: Phase.SOMETHING,
       turnUserId: 'user1',
       gameUsers: [gameUser],
