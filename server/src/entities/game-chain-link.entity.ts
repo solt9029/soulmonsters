@@ -17,6 +17,10 @@ export type Effect =
   | {
       type: EffectType.NATSUKASHINORUDE_POWER_DOWN;
       targetGameCardId: number;
+    }
+  | {
+      type: EffectType.SUPERNEWVOLTS_DESTROY_MONSTER;
+      targetGameCardId: number;
     };
 // | {
 //     type: EffectType.FRESH_FISH_DRAW;
@@ -24,10 +28,6 @@ export type Effect =
 //   }
 // | {
 //     type: EffectType.EMERALD_ENERGY_INCREASE;
-//   }
-// | {
-//     type: EffectType.SUPERNEWVOLTS_DESTROY_MONSTER;
-//     data: { targetGameCardId: number };
 //   }
 // | {
 //     type: EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION;

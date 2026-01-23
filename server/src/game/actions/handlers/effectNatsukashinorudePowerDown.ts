@@ -19,7 +19,7 @@ export function handleEffectNatsukashinorudePowerDown(
 
   const gameChain = new GameChainModel({
     gameId: gameModel.id,
-    status: GameChainStatus.RESOLVING,
+    status: GameChainStatus.RESOLVING, // TODO: WAITINGにしたい。今はGameChainLinkConfirmationの概念がないためRESOLVINGにしている
     gameChainLinks: [
       new GameChainLinkModel({
         orderIndex: 0,

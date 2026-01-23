@@ -3,6 +3,7 @@ import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-l
 import { EffectType } from 'src/graphql/index';
 import { resolveRuteruteDraw } from './ruteruteDraw';
 import { resolveNatsukashinorudePowerDown } from './natsukashinorudePowerDown';
+import { resolveSupernewvoltsDestroyMonster } from './supernewvoltsDestroyMonster';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -50,6 +51,9 @@ export class ChainResolver {
       }
       case EffectType.NATSUKASHINORUDE_POWER_DOWN: {
         return resolveNatsukashinorudePowerDown(gameModel, gameChainLink);
+      }
+      case EffectType.SUPERNEWVOLTS_DESTROY_MONSTER: {
+        return resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);
       }
       default: {
         const _exhaustiveCheck: never = gameChainLink.effect;

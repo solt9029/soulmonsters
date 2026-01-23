@@ -8,7 +8,8 @@ export enum GameChainLinkStatus {
 
 export type Effect =
   | { type: EffectType.RUTERUTE_DRAW }
-  | { type: EffectType.NATSUKASHINORUDE_POWER_DOWN; targetGameCardId: number };
+  | { type: EffectType.NATSUKASHINORUDE_POWER_DOWN; targetGameCardId: number }
+  | { type: EffectType.SUPERNEWVOLTS_DESTROY_MONSTER; targetGameCardId: number };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {
