@@ -1,11 +1,11 @@
 import { GameModel } from 'src/models/game.model';
-import { GameChainLinkModel } from 'src/models/game-chain-link.model';
+import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { EffectType } from 'src/graphql/index';
-import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
+import { GameChainModel } from 'src/models/game-chain.model';
 import { resolveRuteruteDraw } from './ruteruteDraw';
 import { getResolvingGameChain } from 'src/game/utils/getResolvingGameChain';
-import { getResolvingGameChainLink } from 'src/game/utils/getResolvingGameChainLink';
 import { markGameChainAsResolved } from 'src/game/utils/markGameChainAsResolved';
+import { markGameChainLinkAsResolving } from 'src/game/utils/markGameChainLinkAsResolving';
 
 export class ChainResolver {
   resolveChain(gameModel: GameModel): GameModel {
@@ -14,23 +14,27 @@ export class ChainResolver {
       return gameModel;
     }
 
-    // TODO:
-    // - gameChainLinksをorderIndexの降順にした上で、ループで、各gameChainLinkをRESOLVINGに変更しつつ処理実行する
-    // - 今後出てくるgameChainLinkのeffectによっては、ユーザーのアクションが必要になりループ途中で止まる想定
+    const sortedLinks = [...resolvingGameChain.gameChainLinks].sort((a, b) => b.orderIndex - a.orderIndex);
 
-    const resolvingGameChainLink = getResolvingGameChainLink(resolvingGameChain);
-    if (resolvingGameChainLink === undefined) {
-      gameModel = markGameChainAsResolved(gameModel, resolvingGameChain.id);
-      return gameModel;
+    for (const link of sortedLinks) {
+      if (link.status === GameChainLinkStatus.RESOLVED) {
+        continue;
+      }
+
+      if (link.status === GameChainLinkStatus.WAITING) {
+        gameModel = markGameChainLinkAsResolving(gameModel, resolvingGameChain, link);
+      }
+
+      gameModel = this.resolveChainLink(gameModel, resolvingGameChain, link);
+
+      const updatedChain = gameModel.gameChains.find(chain => chain.id === resolvingGameChain.id);
+      const updatedLink = updatedChain?.gameChainLinks.find(l => l.id === link.id);
+      if (updatedLink?.status !== GameChainLinkStatus.RESOLVED) {
+        return gameModel;
+      }
     }
 
-    gameModel = this.resolveChainLink(gameModel, resolvingGameChain, resolvingGameChainLink);
-
-    // TODO: 「gameChainLinksが全部RESOLVEDだったら」の条件を入れる
-    // memo: 多分ここのchain.idは、DB保存前のものでnullとかになってるので、その点は注意する必要がある
-    gameModel.gameChains = gameModel.gameChains.map(chain =>
-      chain.id === resolvingGameChain.id ? new GameChainModel({ ...chain, status: GameChainStatus.RESOLVED }) : chain,
-    );
+    gameModel = markGameChainAsResolved(gameModel, resolvingGameChain.id);
 
     return gameModel;
   }
