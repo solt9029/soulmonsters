@@ -1,7 +1,6 @@
 import { GameModel } from 'src/models/game.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { EffectType } from 'src/graphql/index';
-import { GameChainModel } from 'src/models/game-chain.model';
 import { resolveRuteruteDraw } from './ruteruteDraw';
 import { getResolvingGameChain } from 'src/game/utils/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/utils/markGameChainAsResolved';
@@ -25,7 +24,7 @@ export class ChainResolver {
         gameModel = markGameChainLinkAsResolving(gameModel, resolvingGameChain, link);
       }
 
-      gameModel = this.resolveChainLink(gameModel, resolvingGameChain, link);
+      gameModel = this.resolveChainLink(gameModel, link);
 
       const updatedChain = gameModel.gameChains.find(chain => chain.id === resolvingGameChain.id);
       const updatedLink = updatedChain?.gameChainLinks.find(l => l.id === link.id);
@@ -39,14 +38,10 @@ export class ChainResolver {
     return gameModel;
   }
 
-  private resolveChainLink(
-    gameModel: GameModel,
-    gameChain: GameChainModel,
-    gameChainLink: GameChainLinkModel,
-  ): GameModel {
+  private resolveChainLink(gameModel: GameModel, gameChainLink: GameChainLinkModel): GameModel {
     switch (gameChainLink.effect.type) {
       case EffectType.RUTERUTE_DRAW: {
-        return resolveRuteruteDraw(gameModel, gameChain, gameChainLink);
+        return resolveRuteruteDraw(gameModel, gameChainLink);
       }
       default:
         throw new Error(`Unsupported effectType: ${gameChainLink.effect.type}`);
