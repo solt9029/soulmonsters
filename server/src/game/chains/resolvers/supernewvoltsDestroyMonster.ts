@@ -4,16 +4,18 @@ import { EffectType } from 'src/graphql/index';
 import { markGameChainLinkAsResolved } from 'src/game/mutations/markGameChainLinkAsResolved';
 import { moveTargetMonsterToMorgue } from 'src/game/actions/handlers/effectSupernewvoltsDestroyMonster/moveTargetMonsterToMorgue';
 
+const getTargetGameCard = (gameModel: GameModel, gameChainLink: GameChainLinkModel) => {
+  const targetGameCardId =
+    gameChainLink.effect.type === EffectType.SUPERNEWVOLTS_DESTROY_MONSTER && gameChainLink.effect.targetGameCardId;
+
+  return gameModel.gameCards.find(gameCard => gameCard.id === targetGameCardId);
+};
+
 export const resolveSupernewvoltsDestroyMonster = (
   gameModel: GameModel,
   gameChainLink: GameChainLinkModel,
 ): GameModel => {
-  if (gameChainLink.effect.type !== EffectType.SUPERNEWVOLTS_DESTROY_MONSTER) {
-    return gameModel;
-  }
-
-  const targetGameCardId = gameChainLink.effect.targetGameCardId;
-  const targetGameCard = gameModel.gameCards.find(gameCard => gameCard.id === targetGameCardId);
+  const targetGameCard = getTargetGameCard(gameModel, gameChainLink);
 
   if (!targetGameCard) {
     return gameModel;

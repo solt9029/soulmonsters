@@ -4,11 +4,6 @@ import { drawCardFromDeck } from 'src/game/mutations/drawCardFromDeck';
 import { markGameChainLinkAsResolved } from 'src/game/mutations/markGameChainLinkAsResolved';
 
 export const resolveFreshFishDraw = (gameModel: GameModel, gameChainLink: GameChainLinkModel): GameModel => {
-  const gameCard = gameModel.gameCards.find(gc => gc.id === gameChainLink.gameCardId);
-  if (!gameCard) {
-    return gameModel;
-  }
-
   gameModel = drawCardFromDeck(gameModel, gameChainLink.userId);
   gameModel = drawCardFromDeck(gameModel, gameChainLink.userId);
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
