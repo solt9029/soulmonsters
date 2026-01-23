@@ -1,7 +1,9 @@
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from '../../../models/game.model';
-import { addUserEnergy } from '../../mutations/addUserEnergy';
-import { saveEffectUseCountGameState } from './effectEmeraldEnergyIncrease/saveEffectUseCountGameState';
+import { GameChainModel, GameChainStatus } from '../../../models/game-chain.model';
+import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
+import { saveEffectUseCountGameState } from '../../chains/resolvers/emeraldEnergyIncrease/saveEffectUseCountGameState';
+import { EffectType } from '../../../graphql/index';
 
 export type EffectEmeraldEnergyIncreaseActionPayload = {
   gameCard: GameCardModel;
@@ -12,7 +14,23 @@ export function handleEffectEmeraldEnergyIncrease(
   payload: EffectEmeraldEnergyIncreaseActionPayload,
   gameModel: GameModel,
 ): GameModel {
-  addUserEnergy(gameModel, userId, 1);
-  saveEffectUseCountGameState(gameModel, payload.gameCard);
+  gameModel = saveEffectUseCountGameState(gameModel, payload.gameCard);
+
+  const gameChain = new GameChainModel({
+    gameId: gameModel.id,
+    status: GameChainStatus.RESOLVING,
+    gameChainLinks: [
+      new GameChainLinkModel({
+        orderIndex: 0,
+        userId,
+        gameCardId: payload.gameCard.id,
+        status: GameChainLinkStatus.WAITING,
+        effect: { type: EffectType.EMERALD_ENERGY_INCREASE },
+      }),
+    ],
+  });
+
+  gameModel.gameChains = [...gameModel.gameChains, gameChain];
+
   return gameModel;
 }
