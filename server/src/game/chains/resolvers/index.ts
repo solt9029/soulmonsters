@@ -32,7 +32,6 @@ export class ChainResolver {
       gameModel = this.resolveChainLink(gameModel, link);
 
       const updatedLink = getGameChainLink(gameModel, link.id);
-
       if (updatedLink?.status !== GameChainLinkStatus.RESOLVED) {
         return gameModel;
       }
