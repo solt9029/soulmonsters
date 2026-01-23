@@ -9,7 +9,7 @@ import { GameRepository } from 'src/repositories/game.repository';
 import { DeckCardEntity } from 'src/entities/deck-card.entity';
 import { GameActionGrantor } from 'src/game/actions/grantors';
 import { initializeGameCards } from 'src/game/initializers';
-import { GameStateReflector } from 'src/game/state/reflectors';
+import { GameStateReflector } from 'src/game/states/reflectors';
 import { ChainResolver } from 'src/game/chains/resolvers';
 
 @Injectable()
