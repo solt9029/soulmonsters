@@ -18,13 +18,13 @@ export function handleEffectRuteruteDraw(
 
   const gameChain = new GameChainModel({
     gameId: gameModel.id,
-    status: GameChainStatus.RESOLVING,
+    status: GameChainStatus.RESOLVING, // TODO: WAITINGにしたい。今はGameChainLinkConfirmationの概念がないためRESOLVINGにしている
     gameChainLinks: [
       new GameChainLinkModel({
         orderIndex: 0,
         userId,
         gameCardId: payload.gameCard.id,
-        status: GameChainLinkStatus.RESOLVING,
+        status: GameChainLinkStatus.WAITING,
         effect: { type: EffectType.RUTERUTE_DRAW },
       }),
     ],
