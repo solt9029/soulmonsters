@@ -26,8 +26,12 @@ export class ChainResolver {
 
       gameModel = this.resolveChainLink(gameModel, link);
 
+      // TODO: getGameChain(gameModel, resolvingGameChain.id) が理想的
       const updatedChain = gameModel.gameChains.find(chain => chain.id === resolvingGameChain.id);
+
+      // TODO: getGameChainLink(gameModel, link.id) が理想的
       const updatedLink = updatedChain?.gameChainLinks.find(l => l.id === link.id);
+
       if (updatedLink?.status !== GameChainLinkStatus.RESOLVED) {
         return gameModel;
       }
