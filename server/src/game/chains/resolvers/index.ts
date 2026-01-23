@@ -5,6 +5,7 @@ import { resolveRuteruteDraw } from './ruteruteDraw';
 import { resolveNatsukashinorudePowerDown } from './natsukashinorudePowerDown';
 import { resolveSupernewvoltsDestroyMonster } from './supernewvoltsDestroyMonster';
 import { resolveEmeraldEnergyIncrease } from './emeraldEnergyIncrease';
+import { resolveFreshFishDraw } from './freshFishDraw';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -49,6 +50,9 @@ export class ChainResolver {
     switch (gameChainLink.effect.type) {
       case EffectType.RUTERUTE_DRAW: {
         return resolveRuteruteDraw(gameModel, gameChainLink);
+      }
+      case EffectType.FRESH_FISH_DRAW: {
+        return resolveFreshFishDraw(gameModel, gameChainLink);
       }
       case EffectType.NATSUKASHINORUDE_POWER_DOWN: {
         return resolveNatsukashinorudePowerDown(gameModel, gameChainLink);

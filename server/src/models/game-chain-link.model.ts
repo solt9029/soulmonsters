@@ -10,7 +10,8 @@ export type Effect =
   | { type: EffectType.RUTERUTE_DRAW }
   | { type: EffectType.NATSUKASHINORUDE_POWER_DOWN; targetGameCardId: number }
   | { type: EffectType.SUPERNEWVOLTS_DESTROY_MONSTER; targetGameCardId: number }
-  | { type: EffectType.EMERALD_ENERGY_INCREASE };
+  | { type: EffectType.EMERALD_ENERGY_INCREASE }
+  | { type: EffectType.FRESH_FISH_DRAW };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {
