@@ -1,6 +1,6 @@
-import { GameModel } from '../../../models/game.model';
+import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
-import { BattlePosition } from '../../../graphql/index';
+import { BattlePosition } from 'src/graphql/index';
 
 export type ChangeBattlePositionActionPayload = {
   gameCard: GameCardModel;
