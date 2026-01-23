@@ -3,6 +3,7 @@ import { GameModel } from '../../../models/game.model';
 import { GameChainModel, GameChainStatus } from '../../../models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
 import { subtractUserEnergy } from '../../mutations/subtractUserEnergy';
+import { saveEffectUseCountGameState } from '../../chains/resolvers/ruteruteDraw/saveEffectUseCountGameState';
 import { EffectType } from '../../../graphql/index';
 
 export type EffectRuteruteDrawActionPayload = {
@@ -14,7 +15,8 @@ export function handleEffectRuteruteDraw(
   payload: EffectRuteruteDrawActionPayload,
   gameModel: GameModel,
 ): GameModel {
-  subtractUserEnergy(gameModel, userId, 1);
+  gameModel = subtractUserEnergy(gameModel, userId, 1);
+  gameModel = saveEffectUseCountGameState(gameModel, payload.gameCard);
 
   const gameChain = new GameChainModel({
     gameId: gameModel.id,
