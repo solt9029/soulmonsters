@@ -56,8 +56,8 @@ export class ChainResolver {
         return resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);
       }
       default: {
-        const _exhaustiveCheck: never = gameChainLink.effect;
-        throw new Error(`Unsupported effectType: ${(_exhaustiveCheck as { type: string }).type}`);
+        const _unreachable: never = gameChainLink.effect;
+        throw new Error(`Unsupported effectType: ${gameChainLink.effect.type}`);
       }
     }
   }
