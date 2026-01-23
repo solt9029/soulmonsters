@@ -2,7 +2,7 @@ import { GameModel } from '../../../models/game.model';
 import { directAttack } from './attack/directAttack';
 import { monsterBattle } from './attack/monsterBattle';
 import { incrementAttackCount } from './attack/incrementAttackCount';
-import { packBattlePositions } from './utils/packBattlePositions';
+import { packBattlePositions } from '../../mutations/packBattlePositions';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
 
