@@ -10,6 +10,7 @@ export const incrementEffectUseCount = (
     | StateType.EFFECT_FRESH_FISH_DRAW_COUNT
     | StateType.EFFECT_RUTERUTE_DRAW_COUNT
     | StateType.EFFECT_EMERALD_ENERGY_INCREASE_COUNT
+    | StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT
     | StateType.ATTACK_COUNT,
 ): GameModel => {
   const existsState =
