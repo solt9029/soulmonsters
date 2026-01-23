@@ -2,10 +2,10 @@ import { GameModel } from 'src/models/game.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { EffectType } from 'src/graphql/index';
 import { resolveRuteruteDraw } from './ruteruteDraw';
-import { getResolvingGameChain } from 'src/game/utils/getResolvingGameChain';
+import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/utils/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/utils/markGameChainLinkAsResolving';
-import { getGameChainLink } from 'src/game/utils/getGameChainLink';
+import { getGameChainLink } from 'src/game/selectors/getGameChainLink';
 
 export class ChainResolver {
   resolveChain(gameModel: GameModel): GameModel {

@@ -4,7 +4,7 @@ import { Zone } from 'src/graphql';
 import { handleEvent } from 'src/game/events/handlers';
 import { GameEventType } from 'src/game/events';
 
-import { calcNewMorgueGameCardPosition } from 'src/game/utils/calcNewMorgueGameCardPosition';
+import { calcNewMorgueGameCardPosition } from 'src/game/selectors/calcNewMorgueGameCardPosition';
 
 export const moveDeckTopCardToMorgue = (gameModel: GameModel, userId: string): GameModel => {
   const deckCards = gameModel.gameCards

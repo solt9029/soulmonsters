@@ -3,7 +3,7 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { Zone } from 'src/graphql';
 import { handleEvent } from 'src/game/events/handlers';
 import { GameEventType } from 'src/game/events';
-import { calcNewMorgueGameCardPosition } from 'src/game/utils/calcNewMorgueGameCardPosition';
+import { calcNewMorgueGameCardPosition } from 'src/game/selectors/calcNewMorgueGameCardPosition';
 
 export const moveTargetGameCardToMorgue = (gameModel: GameModel, targetGameCard: GameCardModel): GameModel => {
   const targetPreviousZone = targetGameCard.zone;
