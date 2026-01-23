@@ -10,16 +10,17 @@ export enum GameChainLinkStatus {
   RESOLVED = 'RESOLVED',
 }
 
-export type Effect = {
-  type: EffectType.RUTERUTE_DRAW;
-};
+export type Effect =
+  | {
+      type: EffectType.RUTERUTE_DRAW;
+    }
+  | {
+      type: EffectType.NATSUKASHINORUDE_POWER_DOWN;
+      targetGameCardId: number;
+    };
 // | {
 //     type: EffectType.FRESH_FISH_DRAW;
 //     data: { costGameCardIds: number[] };
-//   }
-// | {
-//     type: EffectType.NATSUKASHINORUDE_POWER_DOWN;
-//     data: { targetGameCardId: number };
 //   }
 // | {
 //     type: EffectType.EMERALD_ENERGY_INCREASE;
