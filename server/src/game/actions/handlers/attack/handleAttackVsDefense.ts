@@ -1,6 +1,6 @@
 import { GameModel } from '../../../../models/game.model';
 import { destroyMonster } from './destroyMonster';
-import { dealDamageToPlayer } from '../../../utils/dealDamageToPlayer';
+import { dealDamageToPlayer } from '../../../mutations/dealDamageToPlayer';
 
 export const handleAttackVsDefense = (
   gameModel: GameModel,

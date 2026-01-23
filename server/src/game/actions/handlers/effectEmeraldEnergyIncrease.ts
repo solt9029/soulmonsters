@@ -1,6 +1,6 @@
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from '../../../models/game.model';
-import { addUserEnergy } from '../../utils/addUserEnergy';
+import { addUserEnergy } from '../../mutations/addUserEnergy';
 import { saveEffectUseCountGameState } from './effectEmeraldEnergyIncrease/saveEffectUseCountGameState';
 
 export type EffectEmeraldEnergyIncreaseActionPayload = {

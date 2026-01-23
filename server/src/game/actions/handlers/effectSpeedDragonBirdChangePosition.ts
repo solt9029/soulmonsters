@@ -2,7 +2,7 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { BattlePosition } from 'src/graphql/index';
 
-import { moveCostGameCardsToMorgue } from 'src/game/utils/moveCostGameCardsToMorgue';
+import { moveCostGameCardsToMorgue } from 'src/game/mutations/moveCostGameCardsToMorgue';
 
 export type EffectSpeedDragonBirdChangePositionActionPayload = {
   gameCard: GameCardModel;

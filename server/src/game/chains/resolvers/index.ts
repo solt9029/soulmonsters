@@ -3,8 +3,8 @@ import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-l
 import { EffectType } from 'src/graphql/index';
 import { resolveRuteruteDraw } from './ruteruteDraw';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
-import { markGameChainAsResolved } from 'src/game/utils/markGameChainAsResolved';
-import { markGameChainLinkAsResolving } from 'src/game/utils/markGameChainLinkAsResolving';
+import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
+import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
 import { getGameChainLink } from 'src/game/selectors/getGameChainLink';
 
 export class ChainResolver {

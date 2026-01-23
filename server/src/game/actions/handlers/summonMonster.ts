@@ -1,5 +1,5 @@
 import { GameModel } from '../../../models/game.model';
-import { subtractUserEnergy } from '../../utils/subtractUserEnergy';
+import { subtractUserEnergy } from '../../mutations/subtractUserEnergy';
 import { summonGameCard } from './summonMonster/summonGameCard';
 import { packHandPositions } from './utils/packHandPositions';
 import { SummonMonsterActionPayload } from '../validators/summonMonster';

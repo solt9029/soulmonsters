@@ -1,6 +1,6 @@
 import { DirectAttackEvent } from '..';
 import { GameModel } from '../../../models/game.model';
-import { dealDamageToPlayer } from '../../utils/dealDamageToPlayer';
+import { dealDamageToPlayer } from '../../mutations/dealDamageToPlayer';
 import { drawCardFromDeck } from '../../actions/handlers/startDrawTime/drawCardFromDeck';
 import { CARD_ID } from '../../../constants/card';
 

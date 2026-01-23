@@ -1,9 +1,9 @@
 import { ZoneChangedEvent } from '..';
 import { GameModel } from '../../../models/game.model';
 import { Zone } from '../../../graphql';
-import { addUserEnergy } from '../../utils/addUserEnergy';
-import { subtractUserEnergy } from '../../utils/subtractUserEnergy';
-import { dealDamageToPlayer } from '../../utils/dealDamageToPlayer';
+import { addUserEnergy } from '../../mutations/addUserEnergy';
+import { subtractUserEnergy } from '../../mutations/subtractUserEnergy';
+import { dealDamageToPlayer } from '../../mutations/dealDamageToPlayer';
 import { CARD_ID } from '../../../constants/card';
 
 export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel): GameModel {

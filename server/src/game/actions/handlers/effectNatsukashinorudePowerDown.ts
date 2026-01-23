@@ -2,7 +2,7 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { GameStateModel } from 'src/models/game-state.model';
 import { StateType } from 'src/graphql';
-import { subtractUserEnergy } from 'src/game/utils/subtractUserEnergy';
+import { subtractUserEnergy } from 'src/game/mutations/subtractUserEnergy';
 
 export type EffectNatsukashinorudePowerDownActionPayload = {
   gameCard: GameCardModel;

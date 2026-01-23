@@ -2,7 +2,7 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from '../../../models/game.model';
 import { GameChainModel, GameChainStatus } from '../../../models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
-import { subtractUserEnergy } from '../../utils/subtractUserEnergy';
+import { subtractUserEnergy } from '../../mutations/subtractUserEnergy';
 import { EffectType } from '../../../graphql/index';
 
 export type EffectRuteruteDrawActionPayload = {

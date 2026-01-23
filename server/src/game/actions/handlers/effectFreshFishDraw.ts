@@ -1,8 +1,8 @@
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from '../../../models/game.model';
-import { drawCardFromDeck } from '../../utils/drawCardFromDeck';
+import { drawCardFromDeck } from '../../mutations/drawCardFromDeck';
 import { saveEffectUseCountGameState } from './effectFreshFishDraw/saveEffectUseCountGameState';
-import { subtractUserEnergy } from '../../utils/subtractUserEnergy';
+import { subtractUserEnergy } from '../../mutations/subtractUserEnergy';
 
 export type EffectFreshFishDrawActionPayload = {
   gameCard: GameCardModel;
