@@ -17,18 +17,18 @@
 - payload: `{ gameCard, targetGameCard }`
 
 ### 2. effectSupernewvoltsDestroyMonster
-- コスト: なし
-- 効果: デッキトップをモルグへ + 対象モンスターをモルグへ + 効果使用回数GameState保存
+- コスト: デッキトップをモルグへ + 効果発動回数GameState保存
+- 効果: 対象モンスターをモルグへ 
 - payload: `{ gameCard, targetGameCard }`
 
 ### 3. effectEmeraldEnergyIncrease
-- コスト: なし
-- 効果: エナジー+1 + 効果使用回数GameState保存
+- コスト: 効果使用回数GameState保存
+- 効果: エナジー+1
 - payload: `{ gameCard }`
 
 ### 4. effectFreshFishDraw
-- コスト: `subtractUserEnergy(3)`
-- 効果: 2枚ドロー + 効果使用回数GameState保存
+- コスト: `subtractUserEnergy(3)` + 効果使用回数GameState保存
+- 効果: 2枚ドロー
 - payload: `{ gameCard }`
 
 ### 5. effectSpeedDragonBirdChangePosition
