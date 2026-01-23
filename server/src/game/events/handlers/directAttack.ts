@@ -1,7 +1,7 @@
 import { DirectAttackEvent } from '..';
 import { GameModel } from '../../../models/game.model';
 import { dealDamageToPlayer } from '../../mutations/dealDamageToPlayer';
-import { drawCardFromDeck } from '../../actions/handlers/startDrawTime/drawCardFromDeck';
+import { drawCardFromDeck } from 'src/game/mutations/drawCardFromDeck';
 import { CARD_ID } from '../../../constants/card';
 
 export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameModel): GameModel {
