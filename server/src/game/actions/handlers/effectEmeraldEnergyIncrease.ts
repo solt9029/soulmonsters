@@ -2,8 +2,8 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from '../../../models/game.model';
 import { GameChainModel, GameChainStatus } from '../../../models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
-import { saveEffectUseCountGameState } from './effectEmeraldEnergyIncrease/saveEffectUseCountGameState';
-import { EffectType } from '../../../graphql/index';
+import { incrementEffectUseCount } from 'src/game/mutations/incrementEffectUseCount';
+import { EffectType, StateType } from 'src/graphql';
 
 export type EffectEmeraldEnergyIncreaseActionPayload = {
   gameCard: GameCardModel;
@@ -14,7 +14,7 @@ export function handleEffectEmeraldEnergyIncrease(
   payload: EffectEmeraldEnergyIncreaseActionPayload,
   gameModel: GameModel,
 ): GameModel {
-  gameModel = saveEffectUseCountGameState(gameModel, payload.gameCard);
+  gameModel = incrementEffectUseCount(gameModel, payload.gameCard, StateType.EFFECT_EMERALD_ENERGY_INCREASE_COUNT);
 
   const gameChain = new GameChainModel({
     gameId: gameModel.id,

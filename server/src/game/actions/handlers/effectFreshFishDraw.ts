@@ -2,9 +2,9 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from '../../../models/game.model';
 import { GameChainModel, GameChainStatus } from '../../../models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
-import { subtractUserEnergy } from '../../mutations/subtractUserEnergy';
-import { saveEffectUseCountGameState } from './effectFreshFishDraw/saveEffectUseCountGameState';
-import { EffectType } from '../../../graphql/index';
+import { subtractUserEnergy } from 'src/game/mutations/subtractUserEnergy';
+import { incrementEffectUseCount } from 'src/game/mutations/incrementEffectUseCount';
+import { EffectType, StateType } from 'src/graphql';
 
 export type EffectFreshFishDrawActionPayload = {
   gameCard: GameCardModel;
@@ -16,7 +16,7 @@ export function handleEffectFreshFishDraw(
   gameModel: GameModel,
 ): GameModel {
   gameModel = subtractUserEnergy(gameModel, userId, 3);
-  gameModel = saveEffectUseCountGameState(gameModel, payload.gameCard);
+  gameModel = incrementEffectUseCount(gameModel, payload.gameCard, StateType.EFFECT_FRESH_FISH_DRAW_COUNT);
 
   const gameChain = new GameChainModel({
     gameId: gameModel.id,
