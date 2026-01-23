@@ -4,6 +4,7 @@ import { EffectType } from 'src/graphql/index';
 import { resolveRuteruteDraw } from './ruteruteDraw';
 import { resolveNatsukashinorudePowerDown } from './natsukashinorudePowerDown';
 import { resolveSupernewvoltsDestroyMonster } from './supernewvoltsDestroyMonster';
+import { resolveSpeedDragonBirdChangePosition } from './speedDragonBirdChangePosition';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -54,6 +55,9 @@ export class ChainResolver {
       }
       case EffectType.SUPERNEWVOLTS_DESTROY_MONSTER: {
         return resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);
+      }
+      case EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION: {
+        return resolveSpeedDragonBirdChangePosition(gameModel, gameChainLink);
       }
       default: {
         const _exhaustiveCheck: never = gameChainLink.effect;
