@@ -21,6 +21,9 @@ export type Effect =
   | {
       type: EffectType.SUPERNEWVOLTS_DESTROY_MONSTER;
       targetGameCardId: number;
+    }
+  | {
+      type: EffectType.EMERALD_ENERGY_INCREASE;
     };
 // | {
 //     type: EffectType.FRESH_FISH_DRAW;

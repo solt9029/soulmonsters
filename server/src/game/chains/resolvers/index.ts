@@ -4,6 +4,7 @@ import { EffectType } from 'src/graphql/index';
 import { resolveRuteruteDraw } from './ruteruteDraw';
 import { resolveNatsukashinorudePowerDown } from './natsukashinorudePowerDown';
 import { resolveSupernewvoltsDestroyMonster } from './supernewvoltsDestroyMonster';
+import { resolveEmeraldEnergyIncrease } from './emeraldEnergyIncrease';
 import { resolveFreshFishDraw } from './freshFishDraw';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
@@ -59,9 +60,8 @@ export class ChainResolver {
       case EffectType.SUPERNEWVOLTS_DESTROY_MONSTER: {
         return resolveSupernewvoltsDestroyMonster(gameModel, gameChainLink);
       }
-      default: {
-        const _exhaustiveCheck: never = gameChainLink.effect;
-        throw new Error(`Unsupported effectType: ${(_exhaustiveCheck as { type: string }).type}`);
+      case EffectType.EMERALD_ENERGY_INCREASE: {
+        return resolveEmeraldEnergyIncrease(gameModel, gameChainLink);
       }
     }
   }
