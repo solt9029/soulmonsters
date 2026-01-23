@@ -7,6 +7,10 @@ import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResol
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
 import { getGameChainLink } from 'src/game/selectors/getGameChainLink';
 
+const sortLinksByOrderIndexDesc = (links: GameChainLinkModel[]) => {
+  return [...links].sort((a, b) => b.orderIndex - a.orderIndex);
+};
+
 export class ChainResolver {
   resolveChain(gameModel: GameModel): GameModel {
     const resolvingGameChain = getResolvingGameChain(gameModel);
@@ -14,9 +18,9 @@ export class ChainResolver {
       return gameModel;
     }
 
-    const sortedLinks = [...resolvingGameChain.gameChainLinks].sort((a, b) => b.orderIndex - a.orderIndex);
+    const links = sortLinksByOrderIndexDesc(resolvingGameChain.gameChainLinks);
 
-    for (const link of sortedLinks) {
+    for (const link of links) {
       if (link.status === GameChainLinkStatus.RESOLVED) {
         continue;
       }
