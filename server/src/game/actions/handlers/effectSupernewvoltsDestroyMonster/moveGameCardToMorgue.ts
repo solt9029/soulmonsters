@@ -5,7 +5,7 @@ import { handleEvent } from 'src/game/events/handlers';
 import { GameEventType } from 'src/game/events';
 import { calcNewMorgueGameCardPosition } from 'src/game/selectors/calcNewMorgueGameCardPosition';
 
-export const moveTargetMonsterToMorgue = (gameModel: GameModel, targetGameCard: GameCardModel): GameModel => {
+export const moveGameCardToMorgue = (gameModel: GameModel, targetGameCard: GameCardModel): GameModel => {
   const newPosition = calcNewMorgueGameCardPosition(gameModel, targetGameCard.currentUserId);
 
   gameModel.gameCards = gameModel.gameCards.map(gc => {

@@ -2,7 +2,7 @@ import { GameModel } from 'src/models/game.model';
 import { GameChainLinkModel } from 'src/models/game-chain-link.model';
 import { EffectType } from 'src/graphql/index';
 import { markGameChainLinkAsResolved } from 'src/game/mutations/markGameChainLinkAsResolved';
-import { moveTargetMonsterToMorgue } from 'src/game/actions/handlers/effectSupernewvoltsDestroyMonster/moveTargetMonsterToMorgue';
+import { moveGameCardToMorgue } from 'src/game/actions/handlers/effectSupernewvoltsDestroyMonster/moveGameCardToMorgue';
 
 const getTargetGameCard = (gameModel: GameModel, gameChainLink: GameChainLinkModel) => {
   const targetGameCardId =
@@ -21,7 +21,7 @@ export const resolveSupernewvoltsDestroyMonster = (
     return gameModel;
   }
 
-  gameModel = moveTargetMonsterToMorgue(gameModel, targetGameCard);
+  gameModel = moveGameCardToMorgue(gameModel, targetGameCard);
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
 
   return gameModel;
