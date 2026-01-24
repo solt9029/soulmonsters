@@ -1,7 +1,7 @@
 import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
 import { moveGameCardsToMorgue } from 'src/game/mutations/moveGameCardsToMorgue';
-import { moveTargetGameCardToMorgue } from '../../mutations/useSoulCanon/moveTargetGameCardToMorgue';
+import { moveGameCardToMorgue } from 'src/game/mutations/moveGameCardToMorgue';
 
 export interface UseSoulCanonActionPayload {
   costGameCards: GameCardModel[];
@@ -16,7 +16,7 @@ export function handleUseSoulCanonAction(
   const { costGameCards, targetGameCard } = payload;
 
   gameModel = moveGameCardsToMorgue(gameModel, userId, costGameCards);
-  gameModel = moveTargetGameCardToMorgue(gameModel, targetGameCard);
+  gameModel = moveGameCardToMorgue(gameModel, targetGameCard);
 
   return gameModel;
 }
