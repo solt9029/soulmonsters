@@ -10,7 +10,7 @@ const calcNewSoulGameCardPosition = (gameModel: GameModel, userId: string): numb
   return soulGameCards[0] ? soulGameCards[0].position + 1 : 0;
 };
 
-export const putSoulGameCard = (gameModel: GameModel, userId: string, gameCardId: number): GameModel => {
+export const moveGameCardToSoul = (gameModel: GameModel, userId: string, gameCardId: number): GameModel => {
   gameModel.gameCards = gameModel.gameCards.map(gameCard =>
     gameCard.id === gameCardId
       ? new GameCardModel({

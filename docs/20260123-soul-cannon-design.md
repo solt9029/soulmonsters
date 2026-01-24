@@ -91,7 +91,7 @@ export type UseSoulCannonActionPayload = {
 
 ## モルグゾーンへの移動処理
 
-既存の `putSoulGameCard` や `destroyMonster` を参考に、モルグゾーンへの移動処理を実装します。
+既存の `moveGameCardToSoul` や `destroyMonster` を参考に、モルグゾーンへの移動処理を実装します。
 
 ### モルグゾーン position の計算
 ```typescript

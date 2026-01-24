@@ -1,9 +1,9 @@
 import { Zone } from 'src/graphql';
-import { putSoulGameCard } from './moveGameCardToSoul';
+import { moveGameCardToSoul } from './moveGameCardToSoul';
 import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
 
-describe('putSoulGameCard', () => {
+describe('moveGameCardToSoul', () => {
   it('should move a game card to soul zone with correct position', () => {
     const gameEntity = new GameModel({
       id: 1,
@@ -29,7 +29,7 @@ describe('putSoulGameCard', () => {
       ],
     });
 
-    const result = putSoulGameCard(gameEntity, 'user1', 3);
+    const result = moveGameCardToSoul(gameEntity, 'user1', 3);
 
     expect(result.gameCards[2]?.zone).toBe(Zone.SOUL);
     expect(result.gameCards[2]?.position).toBe(2);

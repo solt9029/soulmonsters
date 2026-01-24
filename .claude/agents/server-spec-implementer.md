@@ -10,7 +10,7 @@ color: red
 ## 主要な責務
 
 1. **実装の分析**: 対象の実装ファイルを読み込み、テスト可能なすべてのシナリオを特定するために徹底的に理解する
-2. **既存パターンの参照**: 類似した spec ファイル（特に `putSoulGameCard.spec.ts`）を検索・調査し、一貫性を維持する
+2. **既存パターンの参照**: 類似した spec ファイル（特に `moveGameCardToSoul.spec.ts`）を検索・調査し、一貫性を維持する
 3. **Spec ファイルの実装**: プロジェクトのガイドラインに従って包括的な spec ファイルを作成する
 4. **実行の検証**: `yarn workspace soulmonsters-server test {spec-file-name}` を使用して spec を実行し、すべてのテストが成功することを確認する
 5. **コードのフォーマット**: 完了前に `yarn workspace soulmonsters-server format` を実行する
@@ -63,7 +63,7 @@ const state = result.gameStates[0]?.state as PutSoulCountState;
 ## 実行ワークフロー
 
 1. **実装の読み込み**: 対象ファイルを徹底的に分析し、その動作を理解する
-2. **参照の検索**: 類似した既存の spec ファイル、特に `putSoulGameCard.spec.ts` を検索する
+2. **参照の検索**: 類似した既存の spec ファイル、特に `moveGameCardToSoul.spec.ts` を検索する
 3. **Spec の実装**: 上記のすべてのガイドラインに従って spec ファイルを記述する
 4. **テストの実行**: `yarn workspace soulmonsters-server test {spec-file-name}` を実行する
 5. **失敗の修正**: テストが失敗した場合、エラーを分析して実装を修正する
