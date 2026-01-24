@@ -5,15 +5,11 @@ import { handleEvent } from 'src/game/events/handlers';
 import { GameEventType } from 'src/game/events';
 import { calcNewMorgueGameCardPosition } from 'src/game/selectors/calcNewMorgueGameCardPosition';
 
-export const moveCostGameCardsToMorgue = (
-  gameModel: GameModel,
-  userId: string,
-  costGameCards: GameCardModel[],
-): GameModel => {
+export const moveGameCardsToMorgue = (gameModel: GameModel, userId: string, gameCards: GameCardModel[]): GameModel => {
   const firstPosition = calcNewMorgueGameCardPosition(gameModel, userId);
 
   gameModel.gameCards = gameModel.gameCards.map(gameCard => {
-    const costGameCardIndex = costGameCards.findIndex(c => c.id === gameCard.id);
+    const costGameCardIndex = gameCards.findIndex(c => c.id === gameCard.id);
 
     if (costGameCardIndex === -1) {
       return gameCard;
@@ -27,7 +23,7 @@ export const moveCostGameCardsToMorgue = (
     });
   });
 
-  costGameCards.forEach(costGameCard => {
+  gameCards.forEach(costGameCard => {
     gameModel = handleEvent(
       {
         type: GameEventType.ZONE_CHANGED,

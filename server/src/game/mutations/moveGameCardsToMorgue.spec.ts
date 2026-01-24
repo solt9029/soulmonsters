@@ -1,9 +1,9 @@
 import { Zone } from 'src/graphql';
-import { moveCostGameCardsToMorgue } from 'src/game/mutations/moveCostGameCardsToMorgue';
+import { moveGameCardsToMorgue } from 'src/game/mutations/moveGameCardsToMorgue';
 import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
 
-describe('moveCostGameCardsToMorgue', () => {
+describe('moveGameCardsToMorgue', () => {
   it('should move cost game cards from soul zone to morgue zone', () => {
     const costGameCard1 = new GameCardModel({
       id: 1,
@@ -24,7 +24,7 @@ describe('moveCostGameCardsToMorgue', () => {
       gameCards: [costGameCard1, costGameCard2],
     });
 
-    const result = moveCostGameCardsToMorgue(gameEntity, 'user1', [costGameCard1, costGameCard2]);
+    const result = moveGameCardsToMorgue(gameEntity, 'user1', [costGameCard1, costGameCard2]);
 
     const movedCard1 = result.gameCards.find(gc => gc.id === 1);
     const movedCard2 = result.gameCards.find(gc => gc.id === 2);

@@ -32,12 +32,12 @@
 - payload: `{ gameCard }`
 
 ### 5. effectSpeedDragonBirdChangePosition
-- コスト: `moveCostGameCardsToMorgue`
+- コスト: `moveGameCardsToMorgue`
 - 効果: 対象モンスターのバトルポジション変更
 - payload: `{ gameCard, costGameCards, targetGameCard }`
 
 ### 6. useSoulCanon
-- コスト: `moveCostGameCardsToMorgue`
+- コスト: `moveGameCardsToMorgue`
 - 効果: 対象GameCardをモルグへ移動
 - payload: `{ costGameCards, targetGameCard }`
 

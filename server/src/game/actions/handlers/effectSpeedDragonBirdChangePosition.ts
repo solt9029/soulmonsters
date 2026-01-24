@@ -2,7 +2,7 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { BattlePosition } from 'src/graphql/index';
 
-import { moveCostGameCardsToMorgue } from 'src/game/mutations/moveCostGameCardsToMorgue';
+import { moveGameCardsToMorgue } from 'src/game/mutations/moveGameCardsToMorgue';
 
 export type EffectSpeedDragonBirdChangePositionActionPayload = {
   gameCard: GameCardModel;
@@ -17,7 +17,7 @@ export function handleEffectSpeedDragonBirdChangePosition(
 ): GameModel {
   const { costGameCards, targetGameCard } = payload;
 
-  gameModel = moveCostGameCardsToMorgue(gameModel, userId, costGameCards);
+  gameModel = moveGameCardsToMorgue(gameModel, userId, costGameCards);
 
   const newBattlePosition =
     targetGameCard.battlePosition === BattlePosition.ATTACK ? BattlePosition.DEFENCE : BattlePosition.ATTACK;
