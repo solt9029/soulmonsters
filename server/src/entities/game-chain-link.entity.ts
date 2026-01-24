@@ -27,18 +27,11 @@ export type Effect =
     }
   | {
       type: EffectType.FRESH_FISH_DRAW;
+    }
+  | {
+      type: EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION;
+      targetGameCardId: number;
     };
-// | {
-//     type: EffectType.FRESH_FISH_DRAW;
-//     data: { costGameCardIds: number[] };
-//   }
-// | {
-//     type: EffectType.EMERALD_ENERGY_INCREASE;
-//   }
-// | {
-//     type: EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION;
-//     data: { costGameCardIds: number[]; targetGameCardId: number };
-//   };
 
 @Entity({ name: 'gameChainLinks' })
 export class GameChainLinkEntity extends AppEntity<GameChainLinkEntity> {

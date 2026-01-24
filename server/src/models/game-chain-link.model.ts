@@ -11,7 +11,8 @@ export type Effect =
   | { type: EffectType.NATSUKASHINORUDE_POWER_DOWN; targetGameCardId: number }
   | { type: EffectType.SUPERNEWVOLTS_DESTROY_MONSTER; targetGameCardId: number }
   | { type: EffectType.EMERALD_ENERGY_INCREASE }
-  | { type: EffectType.FRESH_FISH_DRAW };
+  | { type: EffectType.FRESH_FISH_DRAW }
+  | { type: EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION; targetGameCardId: number };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {

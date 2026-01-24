@@ -6,6 +6,7 @@ import { resolveNatsukashinorudePowerDown } from './natsukashinorudePowerDown';
 import { resolveSupernewvoltsDestroyMonster } from './supernewvoltsDestroyMonster';
 import { resolveEmeraldEnergyIncrease } from './emeraldEnergyIncrease';
 import { resolveFreshFishDraw } from './freshFishDraw';
+import { resolveSpeedDragonBirdChangePosition } from './speedDragonBirdChangePosition';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -62,6 +63,9 @@ export class ChainResolver {
       }
       case EffectType.EMERALD_ENERGY_INCREASE: {
         return resolveEmeraldEnergyIncrease(gameModel, gameChainLink);
+      }
+      case EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION: {
+        return resolveSpeedDragonBirdChangePosition(gameModel, gameChainLink);
       }
     }
   }
