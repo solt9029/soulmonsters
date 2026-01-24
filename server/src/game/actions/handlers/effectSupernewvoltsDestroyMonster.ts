@@ -4,7 +4,7 @@ import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { EffectType, StateType } from 'src/graphql/index';
 import { incrementEffectUseCount } from 'src/game/mutations/incrementCountStateValue';
-import { moveDeckTopCardToMorgue } from './effectSupernewvoltsDestroyMonster/moveDeckTopCardToMorgue';
+import { moveDeckTopCardToMorgue } from '../../mutations/moveDeckTopCardToMorgue';
 
 export type EffectSupernewvoltsDestroyMonsterActionPayload = {
   gameCard: GameCardModel;
