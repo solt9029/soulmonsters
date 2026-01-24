@@ -1,9 +1,9 @@
 import { GameModel } from '../../../models/game.model';
-import { startEnergyPhase } from '../../mutations/startEnergyTime/startEnergyPhase';
 import { increaseGameUserEnergy } from '../../mutations/startEnergyTime/increaseGameUserEnergy';
+import { Phase } from 'src/graphql';
 
 export function handleStartEnergyTimeAction(userId: string, gameModel: GameModel): GameModel {
-  increaseGameUserEnergy(gameModel, userId);
-  startEnergyPhase(gameModel);
+  gameModel = increaseGameUserEnergy(gameModel, userId);
+  gameModel.phase = Phase.ENERGY;
   return gameModel;
 }
