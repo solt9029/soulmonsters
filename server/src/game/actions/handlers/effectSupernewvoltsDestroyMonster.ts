@@ -3,7 +3,7 @@ import { GameModel } from 'src/models/game.model';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { EffectType, StateType } from 'src/graphql/index';
-import { incrementEffectUseCount } from 'src/game/mutations/incrementCountStateValue';
+import { incrementGameCardCountStateValue } from 'src/game/mutations/incrementGameCardCountStateValue';
 import { moveDeckTopCardToMorgue } from '../../mutations/moveDeckTopCardToMorgue';
 
 export type EffectSupernewvoltsDestroyMonsterActionPayload = {
@@ -17,7 +17,7 @@ export function handleEffectSupernewvoltsDestroyMonster(
   gameModel: GameModel,
 ): GameModel {
   gameModel = moveDeckTopCardToMorgue(gameModel, userId);
-  gameModel = incrementEffectUseCount(
+  gameModel = incrementGameCardCountStateValue(
     gameModel,
     payload.gameCard,
     StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT,

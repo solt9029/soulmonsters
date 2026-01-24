@@ -3,7 +3,7 @@ import { GameStateModel } from 'src/models/game-state.model';
 import { GameCardModel } from 'src/models/game-card.model';
 import { StateType } from 'src/graphql';
 
-export const incrementEffectUseCount = (
+export const incrementGameCardCountStateValue = (
   gameModel: GameModel,
   gameCard: GameCardModel,
   stateType:

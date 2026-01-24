@@ -1,7 +1,7 @@
 import { GameModel } from '../../../models/game.model';
 import { directAttack } from '../../mutations/attack/directAttack';
 import { monsterBattle } from '../../mutations/attack/monsterBattle';
-import { incrementEffectUseCount } from '../../mutations/incrementCountStateValue';
+import { incrementGameCardCountStateValue } from '../../mutations/incrementGameCardCountStateValue';
 import { packBattlePositions } from '../../mutations/packBattlePositions';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
@@ -25,7 +25,7 @@ export type AttackActionPayload =
 export function handleAttackAction(userId: string, payload: AttackActionPayload, gameModel: GameModel): GameModel {
   if (payload.type === 'DIRECT_ATTACK') {
     directAttack(gameModel, payload.attackerCard.id, payload.opponentGameUser.userId);
-    incrementEffectUseCount(gameModel, payload.attackerCard, StateType.ATTACK_COUNT);
+    incrementGameCardCountStateValue(gameModel, payload.attackerCard, StateType.ATTACK_COUNT);
     return gameModel;
   }
 
@@ -33,7 +33,7 @@ export function handleAttackAction(userId: string, payload: AttackActionPayload,
   const originalTargetGameCardPosition = payload.targetCard.position;
 
   gameModel = monsterBattle(gameModel, payload.attackerCard.id, payload.targetCard.id);
-  gameModel = incrementEffectUseCount(gameModel, payload.attackerCard, StateType.ATTACK_COUNT);
+  gameModel = incrementGameCardCountStateValue(gameModel, payload.attackerCard, StateType.ATTACK_COUNT);
 
   const updatedGameCardZone = gameModel.gameCards.find(gameCard => gameCard.id === payload.attackerCard.id)?.zone;
   const updatedTargetGameCardZone = gameModel.gameCards.find(gameCard => gameCard.id === payload.targetCard.id)?.zone;
