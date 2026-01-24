@@ -1,6 +1,6 @@
 import { GameModel } from '../../../models/game.model';
-import { switchToOpponentTurn } from './finishEndTime/switchToOpponentTurn';
-import { cleanGameStates } from './finishEndTime/cleanGameStates';
+import { switchToOpponentTurn } from '../../mutations/switchToOpponentTurn';
+import { cleanGameStates } from '../../mutations/cleanGameStates';
 import { GameUserModel } from '../../../models/game-user.model';
 
 export type FinishEndTimeActionPayload = {
