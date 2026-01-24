@@ -45,6 +45,10 @@ export class GameService {
 
       const resolvedGameModel = this.chainResolver.resolveChain(handledGameModel);
 
+      // TODO: handle, resolveの中でつまれたpendingEffectsをチェックする
+      // 全てのchainがresolvedだったら、pendingEffectsからchainを作り上げる(1個だけなら) & 処理する
+      // 複数個のpendingEffectsがある場合はどれから処理したいかをユーザーが選ぶ必要がある
+
       return await manager.save(resolvedGameModel.toEntity());
     });
   }
