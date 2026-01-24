@@ -1,9 +1,9 @@
 import { GameModel } from '../../models/game.model';
 import { BattlePosition, Zone } from '../../graphql';
-import { summonGameCard } from './summonGameCard';
+import { moveGameCardToBattle } from './moveGameCardToBattle';
 import { GameCardModel } from 'src/models/game-card.model';
 
-describe('summonGameCard', () => {
+describe('moveGameCardToBattle', () => {
   it('should move card from hand to battle zone in attack position', () => {
     const gameEntity = new GameModel({
       id: 1,
@@ -17,7 +17,7 @@ describe('summonGameCard', () => {
       ],
     });
 
-    const result = summonGameCard(gameEntity, 'user1', 1);
+    const result = moveGameCardToBattle(gameEntity, 'user1', 1);
 
     expect(result.gameCards[0]?.zone).toBe(Zone.BATTLE);
     expect(result.gameCards[0]?.battlePosition).toBe(BattlePosition.ATTACK);
@@ -49,7 +49,7 @@ describe('summonGameCard', () => {
       ],
     });
 
-    const result = summonGameCard(gameEntity, 'user1', 3);
+    const result = moveGameCardToBattle(gameEntity, 'user1', 3);
 
     expect(result.gameCards[2]?.zone).toBe(Zone.BATTLE);
     expect(result.gameCards[2]?.position).toBe(2);

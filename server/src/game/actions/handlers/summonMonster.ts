@@ -1,6 +1,6 @@
 import { GameModel } from '../../../models/game.model';
 import { subtractUserEnergy } from '../../mutations/subtractUserEnergy';
-import { summonGameCard } from '../../mutations/summonGameCard';
+import { moveGameCardToBattle } from '../../mutations/moveGameCardToBattle';
 import { packHandPositions } from '../../mutations/packHandPositions';
 import { SummonMonsterActionPayload } from '../validators/summonMonster';
 
@@ -17,7 +17,7 @@ export function handleSummonMonsterAction(
   const originalPosition = gameCard.position;
 
   gameModel = subtractUserEnergy(gameModel, userId, payload.cost);
-  gameModel = summonGameCard(gameModel, userId, payload.gameCardId);
+  gameModel = moveGameCardToBattle(gameModel, userId, payload.gameCardId);
   gameModel = packHandPositions(gameModel, userId, originalPosition);
 
   return gameModel;

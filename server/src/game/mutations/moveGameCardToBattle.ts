@@ -12,7 +12,7 @@ const calcNewBattleGameCardPosition = (gameModel: GameModel, userId: string): nu
   return battleGameCards[0] ? battleGameCards[0].position + 1 : 0;
 };
 
-export const summonGameCard = (gameModel: GameModel, userId: string, gameCardId: number): GameModel => {
+export const moveGameCardToBattle = (gameModel: GameModel, userId: string, gameCardId: number): GameModel => {
   const gameCard = gameModel.gameCards.find(gameCard => gameCard.id === gameCardId);
   if (!gameCard) {
     throw new Error('Card not found');
