@@ -2,7 +2,7 @@ import { GameModel } from 'src/models/game.model';
 import { GameChainLinkModel } from 'src/models/game-chain-link.model';
 import { EffectType } from 'src/graphql/index';
 import { markGameChainLinkAsResolved } from 'src/game/mutations/markGameChainLinkAsResolved';
-import { moveGameCardToMorgue } from 'src/game/actions/handlers/effectSupernewvoltsDestroyMonster/moveGameCardToMorgue';
+import { moveGameCardToMorgue } from 'src/game/mutations/moveGameCardToMorgue';
 
 const getTargetGameCard = (gameModel: GameModel, gameChainLink: GameChainLinkModel) => {
   const targetGameCardId =
