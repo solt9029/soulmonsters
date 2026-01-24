@@ -1,5 +1,5 @@
 import { Zone } from 'src/graphql';
-import { putSoulGameCard } from './putSoulGameCard';
+import { putSoulGameCard } from './moveGameCardToSoul';
 import { GameModel } from 'src/models/game.model';
 import { GameCardModel } from 'src/models/game-card.model';
 

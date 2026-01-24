@@ -1,5 +1,5 @@
 import { GameModel } from '../../../models/game.model';
-import { putSoulGameCard } from '../../mutations/putSoul/putSoulGameCard';
+import { putSoulGameCard } from '../../mutations/moveGameCardToSoul';
 import { incrementUserCountStateValue } from '../../mutations/incrementUserCountStateValue';
 import { packHandPositions } from '../../mutations/packHandPositions';
 import { GameCardModel } from 'src/models/game-card.model';
