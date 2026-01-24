@@ -44,6 +44,7 @@ import { DataSource } from 'typeorm';
 import { ChainResolver } from 'src/game/chains/resolvers';
 import { GameChainToModelMapper } from 'src/mappers/to-model/game-chain.to-model.mapper';
 import { GameChainLinkToModelMapper } from 'src/mappers/to-model/game-chain-link.to-model.mapper';
+import { GamePendingEffectToModelMapper } from 'src/mappers/to-model/game-pending-effect.to-model.mapper';
 
 @Module({
   imports: [
@@ -105,6 +106,7 @@ import { GameChainLinkToModelMapper } from 'src/mappers/to-model/game-chain-link
     GameStateToModelMapper,
     GameChainToModelMapper,
     GameChainLinkToModelMapper,
+    GamePendingEffectToModelMapper,
     GameActionGrantor,
     GameActionHandler,
     GameStateReflector,
