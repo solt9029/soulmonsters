@@ -7,6 +7,7 @@ import { resolveSupernewvoltsDestroyMonster } from './supernewvoltsDestroyMonste
 import { resolveEmeraldEnergyIncrease } from './emeraldEnergyIncrease';
 import { resolveFreshFishDraw } from './freshFishDraw';
 import { resolveSpeedDragonBirdChangePosition } from './speedDragonBirdChangePosition';
+import { resolveSoulCanon } from './soulCanon';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -66,6 +67,9 @@ export class ChainResolver {
       }
       case EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION: {
         return resolveSpeedDragonBirdChangePosition(gameModel, gameChainLink);
+      }
+      case EffectType.SOUL_CANON: {
+        return resolveSoulCanon(gameModel, gameChainLink);
       }
     }
   }
