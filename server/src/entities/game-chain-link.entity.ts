@@ -31,6 +31,10 @@ export type Effect =
   | {
       type: EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION;
       targetGameCardId: number;
+    }
+  | {
+      type: EffectType.SOUL_CANON;
+      targetGameCardId: number;
     };
 
 @Entity({ name: 'gameChainLinks' })
