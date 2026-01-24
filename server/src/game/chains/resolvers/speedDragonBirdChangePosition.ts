@@ -6,8 +6,7 @@ import { markGameChainLinkAsResolved } from 'src/game/mutations/markGameChainLin
 
 const getTargetGameCard = (gameModel: GameModel, gameChainLink: GameChainLinkModel) => {
   const targetGameCardId =
-    gameChainLink.effect.type === EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION &&
-    gameChainLink.effect.targetGameCardId;
+    gameChainLink.effect.type === EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION && gameChainLink.effect.targetGameCardId;
 
   return gameModel.gameCards.find(gameCard => gameCard.id === targetGameCardId);
 };
