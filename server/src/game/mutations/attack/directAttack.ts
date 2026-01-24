@@ -1,7 +1,7 @@
-import { GameModel } from '../../../../models/game.model';
-import { dealDamageToPlayer } from '../../../mutations/dealDamageToPlayer';
-import { handleEvent } from '../../../events/handlers';
-import { GameEventType } from '../../../events';
+import { GameModel } from '../../../models/game.model';
+import { dealDamageToPlayer } from '../dealDamageToPlayer';
+import { handleEvent } from '../../events/handlers';
+import { GameEventType } from '../../events';
 
 export const directAttack = (gameModel: GameModel, attackerCardId: number, opponentUserId: string): GameModel => {
   const attackerCard = gameModel.gameCards.find(gameCard => gameCard.id === attackerCardId);

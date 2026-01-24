@@ -1,5 +1,5 @@
-import { GameModel } from '../../../../models/game.model';
-import { BattlePosition } from '../../../../graphql';
+import { GameModel } from '../../../models/game.model';
+import { BattlePosition } from '../../../graphql';
 import { handleAttackVsAttack } from './handleAttackVsAttack';
 import { handleAttackVsDefense } from './handleAttackVsDefense';
 

@@ -1,5 +1,5 @@
-import { GameModel } from '../../../../models/game.model';
-import { BattlePosition, Zone } from '../../../../graphql';
+import { GameModel } from '../../../models/game.model';
+import { BattlePosition, Zone } from '../../../graphql';
 import { summonGameCard } from './summonGameCard';
 import { GameCardModel } from 'src/models/game-card.model';
 

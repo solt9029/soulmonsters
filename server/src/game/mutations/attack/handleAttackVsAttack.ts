@@ -1,7 +1,7 @@
-import { GameModel } from '../../../../models/game.model';
+import { GameModel } from '../../../models/game.model';
 import { destroyMonster } from './destroyMonster';
-import { addUserEnergy } from '../../../mutations/addUserEnergy';
-import { dealDamageToPlayer } from '../../../mutations/dealDamageToPlayer';
+import { addUserEnergy } from '../addUserEnergy';
+import { dealDamageToPlayer } from '../dealDamageToPlayer';
 import { GameCardModel } from 'src/models/game-card.model';
 
 interface BattleResult {

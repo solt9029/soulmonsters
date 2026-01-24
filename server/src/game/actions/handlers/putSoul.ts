@@ -1,6 +1,6 @@
 import { GameModel } from '../../../models/game.model';
-import { putSoulGameCard } from './putSoul/putSoulGameCard';
-import { savePutCountGameState } from './putSoul/savePutCountGameState';
+import { putSoulGameCard } from '../../mutations/putSoul/putSoulGameCard';
+import { savePutCountGameState } from '../../mutations/putSoul/savePutCountGameState';
 import { packHandPositions } from '../../mutations/packHandPositions';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';

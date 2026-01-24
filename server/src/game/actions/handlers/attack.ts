@@ -1,6 +1,6 @@
 import { GameModel } from '../../../models/game.model';
-import { directAttack } from './attack/directAttack';
-import { monsterBattle } from './attack/monsterBattle';
+import { directAttack } from '../../mutations/attack/directAttack';
+import { monsterBattle } from '../../mutations/attack/monsterBattle';
 import { incrementEffectUseCount } from '../../mutations/incrementCountStateValue';
 import { packBattlePositions } from '../../mutations/packBattlePositions';
 import { GameCardModel } from 'src/models/game-card.model';

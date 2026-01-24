@@ -1,8 +1,8 @@
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
-import { handleEvent } from '../../../events/handlers';
-import { GameEventType } from '../../../events';
+import { handleEvent } from '../../events/handlers';
+import { GameEventType } from '../../events';
 
 const calcNewSoulGameCardPosition = (gameModel: GameModel, userId: string): number => {
   const soulGameCards = gameModel.gameCards

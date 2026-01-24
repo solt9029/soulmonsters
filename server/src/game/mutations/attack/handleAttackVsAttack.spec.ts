@@ -1,6 +1,6 @@
-import { GameModel } from '../../../../models/game.model';
-import { GameUserModel } from '../../../../models/game-user.model';
-import { Zone } from '../../../../graphql';
+import { GameModel } from '../../../models/game.model';
+import { GameUserModel } from '../../../models/game-user.model';
+import { Zone } from '../../../graphql';
 import { handleAttackVsAttack } from './handleAttackVsAttack';
 import { GameCardModel } from 'src/models/game-card.model';
 

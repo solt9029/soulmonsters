@@ -1,5 +1,5 @@
-import { GameModel } from '../../../../models/game.model';
-import { Zone } from '../../../../graphql';
+import { GameModel } from '../../../models/game.model';
+import { Zone } from '../../../graphql';
 import { destroyMonster } from './destroyMonster';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
