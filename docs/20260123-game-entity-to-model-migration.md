@@ -49,7 +49,7 @@ GameEntityをDB層（Entity）とドメイン層（Model）に分離する作業
 以下のファイルで`gameModel.toEntity()`を使用するように修正：
 - [server/src/game/actions/handlers/attack/incrementAttackCount.ts](server/src/game/actions/handlers/attack/incrementAttackCount.ts:34)
 - [server/src/game/actions/handlers/effectRuteruteDraw/saveEffectUseCountGameState.ts](server/src/game/actions/handlers/effectRuteruteDraw/saveEffectUseCountGameState.ts:8)
-- [server/src/game/actions/handlers/putSoul/savePutCountGameState.ts](server/src/game/actions/handlers/putSoul/savePutCountGameState.ts:7)
+- [server/src/game/mutations/incrementUserCountStateValue.ts](server/src/game/mutations/incrementUserCountStateValue.ts)
 
 ### 9. コードフォーマット ✅
 - `yarn format`を実行し、全ファイルをフォーマット
