@@ -13,7 +13,8 @@ export type Effect =
   | { type: EffectType.EMERALD_ENERGY_INCREASE }
   | { type: EffectType.FRESH_FISH_DRAW }
   | { type: EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION; targetGameCardId: number }
-  | { type: EffectType.SOUL_CANON; targetGameCardId: number };
+  | { type: EffectType.SOUL_CANON; targetGameCardId: number }
+  | { type: EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {
