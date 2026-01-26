@@ -35,6 +35,9 @@ export type Effect =
   | {
       type: EffectType.SOUL_CANON;
       targetGameCardId: number;
+    }
+  | {
+      type: EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER;
     };
 
 @Entity({ name: 'gameChainLinks' })
