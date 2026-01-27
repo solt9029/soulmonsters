@@ -13,10 +13,6 @@ export function grantSummonMonsterAction(gameModel: GameModel, userId: string): 
     const canSummon =
       gameCard && gameCard.zone === Zone.HAND && gameCard.currentUserId === userId && gameCard.kind === Kind.MONSTER;
 
-    if (canSummon) {
-      console.log('***:');
-    }
-
     return canSummon
       ? new GameCardModel({
           ...gameCard,

@@ -106,6 +106,7 @@ export enum EffectType {
   FreshFishDraw = 'FRESH_FISH_DRAW',
   NatsukashinorudePowerDown = 'NATSUKASHINORUDE_POWER_DOWN',
   RuteruteDraw = 'RUTERUTE_DRAW',
+  ShimashimajuniorEnergyTransfer = 'SHIMASHIMAJUNIOR_ENERGY_TRANSFER',
   SoulBarrier = 'SOUL_BARRIER',
   SoulCanon = 'SOUL_CANON',
   SpeedDragonBirdChangePosition = 'SPEED_DRAGON_BIRD_CHANGE_POSITION',

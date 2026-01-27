@@ -12,6 +12,7 @@ import { GameStateToEntityMapper } from '../mappers/to-entity/game-state.to-enti
 import { DeckToEntityMapper } from '../mappers/to-entity/deck.to-entity.mapper';
 import { GameChainToEntityMapper } from 'src/mappers/to-entity/game-chain.to-entity.mapper';
 import { GameChainLinkToEntityMapper } from 'src/mappers/to-entity/game-chain-link.to-entity.mapper';
+import { GamePendingEffectToEntityMapper } from 'src/mappers/to-entity/game-pending-effect.to-entity.mapper';
 
 export class GameModel {
   constructor(partial?: Partial<GameModel>) {
@@ -39,6 +40,7 @@ export class GameModel {
       new GameCardToEntityMapper(),
       new GameStateToEntityMapper(),
       new GameChainToEntityMapper(new GameChainLinkToEntityMapper()),
+      new GamePendingEffectToEntityMapper(),
     );
     return mapper.toEntity(this);
   }

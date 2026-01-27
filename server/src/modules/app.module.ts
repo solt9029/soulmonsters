@@ -42,8 +42,10 @@ import { GameActionHandler } from 'src/game/actions/handlers';
 import { GameStateReflector } from 'src/game/states/reflectors';
 import { DataSource } from 'typeorm';
 import { ChainResolver } from 'src/game/chains/resolvers';
+import { ChainBuilder } from 'src/game/chains/builders';
 import { GameChainToModelMapper } from 'src/mappers/to-model/game-chain.to-model.mapper';
 import { GameChainLinkToModelMapper } from 'src/mappers/to-model/game-chain-link.to-model.mapper';
+import { GamePendingEffectToModelMapper } from 'src/mappers/to-model/game-pending-effect.to-model.mapper';
 
 @Module({
   imports: [
@@ -105,10 +107,12 @@ import { GameChainLinkToModelMapper } from 'src/mappers/to-model/game-chain-link
     GameStateToModelMapper,
     GameChainToModelMapper,
     GameChainLinkToModelMapper,
+    GamePendingEffectToModelMapper,
     GameActionGrantor,
     GameActionHandler,
     GameStateReflector,
     ChainResolver,
+    ChainBuilder,
   ],
 })
 export class AppModule {}

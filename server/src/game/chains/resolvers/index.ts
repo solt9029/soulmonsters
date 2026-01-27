@@ -8,6 +8,7 @@ import { resolveEmeraldEnergyIncrease } from './emeraldEnergyIncrease';
 import { resolveFreshFishDraw } from './freshFishDraw';
 import { resolveSpeedDragonBirdChangePosition } from './speedDragonBirdChangePosition';
 import { resolveSoulCanon } from './soulCanon';
+import { resolveShimashimajuniorEnergyTransfer } from './shimashimajuniorEnergyTransfer';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -70,6 +71,9 @@ export class ChainResolver {
       }
       case EffectType.SOUL_CANON: {
         return resolveSoulCanon(gameModel, gameChainLink);
+      }
+      case EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER: {
+        return resolveShimashimajuniorEnergyTransfer(gameModel, gameChainLink);
       }
     }
   }

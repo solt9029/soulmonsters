@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } f
 import { AppEntity } from './app.entity';
 import { GameEntity } from './game.entity';
 import { GameCardEntity } from './game-card.entity';
+import { EffectType } from '../graphql/index';
 
 @Entity({ name: 'gamePendingEffects' })
 export class GamePendingEffectEntity extends AppEntity<GamePendingEffectEntity> {
@@ -18,7 +19,7 @@ export class GamePendingEffectEntity extends AppEntity<GamePendingEffectEntity> 
   gameCardId: number | null;
 
   @Column('varchar')
-  effectType: string;
+  effectType: EffectType;
 
   @CreateDateColumn()
   createdAt: Date;
