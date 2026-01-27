@@ -107,6 +107,7 @@ export enum EffectType {
   NatsukashinorudePowerDown = 'NATSUKASHINORUDE_POWER_DOWN',
   RuteruteDraw = 'RUTERUTE_DRAW',
   ShimashimajuniorEnergyTransfer = 'SHIMASHIMAJUNIOR_ENERGY_TRANSFER',
+  ShinkashitabakubomdanDamage = 'SHINKASHITABAKUBOMDAN_DAMAGE',
   SoulBarrier = 'SOUL_BARRIER',
   SoulCanon = 'SOUL_CANON',
   SpeedDragonBirdChangePosition = 'SPEED_DRAGON_BIRD_CHANGE_POSITION',
