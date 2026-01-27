@@ -102,6 +102,7 @@ export type DeckCreateInput = {
 };
 
 export enum EffectType {
+  AikawarazuyokuwakaranaihanaDamage = 'AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE',
   EmeraldEnergyIncrease = 'EMERALD_ENERGY_INCREASE',
   FreshFishDraw = 'FRESH_FISH_DRAW',
   NatsukashinorudePowerDown = 'NATSUKASHINORUDE_POWER_DOWN',
