@@ -20,6 +20,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "db:up": "docker-compose -f docker-compose.yml up -d",
     "db:down": "docker-compose -f docker-compose.yml down",
+    "db:shell": "docker-compose -f docker-compose.yml exec mysql mysql -u root -proot soulmonsters",
     "db:migrate": "yarn typeorm migration:run -d src/dataSource.ts",
     "db:generate": "yarn typeorm migration:generate -d src/dataSource.ts src/database/migrations/Migration",
     "test": "jest --passWithNoTests",
