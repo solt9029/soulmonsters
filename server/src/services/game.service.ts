@@ -11,6 +11,7 @@ import { GameActionGrantor } from 'src/game/actions/grantors';
 import { initializeGameCards } from 'src/game/initializers';
 import { GameStateReflector } from 'src/game/states/reflectors';
 import { ChainResolver } from 'src/game/chains/resolvers';
+import { ChainBuilder } from 'src/game/chains/builders';
 
 @Injectable()
 export class GameService {
@@ -22,6 +23,7 @@ export class GameService {
     private gameActionGrantor: GameActionGrantor,
     private gameActionHandler: GameActionHandler,
     private gameStateReflector: GameStateReflector,
+    private chainBuilder: ChainBuilder,
     private chainResolver: ChainResolver,
   ) {}
 
@@ -43,11 +45,13 @@ export class GameService {
       // アクション実行時に、イベントの検証も行う（直接攻撃に成功したらダメージを追加で与える、など）
       const handledGameModel = this.gameActionHandler.handleAction(data, userId, grantedGameModel);
 
-      const resolvedGameModel = this.chainResolver.resolveChain(handledGameModel);
+      // TODO: GameChain解決時にpendingEffectがつまれることがあるのでresolve → buildの順番で処理する
 
-      // TODO: handle, resolveの中でつまれたpendingEffectsをチェックする
-      // 全てのchainがresolvedだったら、pendingEffectsからchainを作り上げる(1個だけなら) & 処理する
-      // 複数個のpendingEffectsがある場合はどれから処理したいかをユーザーが選ぶ必要がある
+      // GamePendingEffectからGameChainを構築
+      const builtGameModel = this.chainBuilder.buildChain(handledGameModel);
+
+      // GameChainを解決
+      const resolvedGameModel = this.chainResolver.resolveChain(builtGameModel);
 
       return await manager.save(resolvedGameModel.toEntity());
     });
