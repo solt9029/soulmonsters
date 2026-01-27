@@ -38,6 +38,9 @@ export type Effect =
     }
   | {
       type: EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER;
+    }
+  | {
+      type: EffectType.SHINKASHITABAKUBOMDAN_DAMAGE;
     };
 
 @Entity({ name: 'gameChainLinks' })

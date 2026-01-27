@@ -9,6 +9,7 @@ import { resolveFreshFishDraw } from './freshFishDraw';
 import { resolveSpeedDragonBirdChangePosition } from './speedDragonBirdChangePosition';
 import { resolveSoulCanon } from './soulCanon';
 import { resolveShimashimajuniorEnergyTransfer } from './shimashimajuniorEnergyTransfer';
+import { resolveShinkashitabakubomdanDamage } from './shinkashitabakubomdanDamage';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -74,6 +75,9 @@ export class ChainResolver {
       }
       case EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER: {
         return resolveShimashimajuniorEnergyTransfer(gameModel, gameChainLink);
+      }
+      case EffectType.SHINKASHITABAKUBOMDAN_DAMAGE: {
+        return resolveShinkashitabakubomdanDamage(gameModel, gameChainLink);
       }
     }
   }
