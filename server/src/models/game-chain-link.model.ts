@@ -15,7 +15,8 @@ export type Effect =
   | { type: EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION; targetGameCardId: number }
   | { type: EffectType.SOUL_CANON; targetGameCardId: number }
   | { type: EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER }
-  | { type: EffectType.SHINKASHITABAKUBOMDAN_DAMAGE };
+  | { type: EffectType.SHINKASHITABAKUBOMDAN_DAMAGE }
+  | { type: EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {

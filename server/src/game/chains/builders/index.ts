@@ -50,6 +50,8 @@ export class ChainBuilder {
         return { type: EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER };
       case EffectType.SHINKASHITABAKUBOMDAN_DAMAGE:
         return { type: EffectType.SHINKASHITABAKUBOMDAN_DAMAGE };
+      case EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE:
+        return { type: EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE };
       default:
         throw new Error(`Unsupported effectType: ${gamePendingEffect.effectType}`);
     }

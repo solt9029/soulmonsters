@@ -41,6 +41,9 @@ export type Effect =
     }
   | {
       type: EffectType.SHINKASHITABAKUBOMDAN_DAMAGE;
+    }
+  | {
+      type: EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE;
     };
 
 @Entity({ name: 'gameChainLinks' })
