@@ -45,15 +45,32 @@ export class GameService {
       // アクション実行時に、イベントの検証も行う（直接攻撃に成功したらダメージを追加で与える、など）
       const handledGameModel = this.gameActionHandler.handleAction(data, userId, grantedGameModel);
 
-      // TODO: GameChain解決時にpendingEffectがつまれることがあるのでresolve → buildの順番で処理する
-
-      // GamePendingEffectからGameChainを構築
-      const builtGameModel = this.chainBuilder.buildChain(handledGameModel);
-
       // GameChainを解決
-      const resolvedGameModel = this.chainResolver.resolveChain(builtGameModel);
+      const resolvedGameModel = this.chainResolver.resolveChain(handledGameModel);
 
-      return await manager.save(resolvedGameModel.toEntity());
+      // GamePendingEffectからGameChainを構築 & 解決
+      const builtGameModel = this.chainBuilder.buildChain(resolvedGameModel); // 今の所仮実装で1件しか処理していない
+      const finalGameModel = this.chainResolver.resolveChain(builtGameModel);
+
+      // TODO: なぜかソウルキャノンを相変わらずよく分からない花をコストにして打つと、SOUL_CANONが登録されず、AIKAWARAZUYOKUWAKARANAIHANA_DAMAGEが2件登録される → 原因わかった！ https://github.com/solt9029/soulmonsters/pull/60#issuecomment-3821228486
+      // [0]   GameChainLinkModel {
+      // [0]     orderIndex: 0,
+      // [0]     userId: '9YFJFpQOAmPxyNzp3iefreirSDR2',
+      // [0]     gameCardId: 373,
+      // [0]     status: 'RESOLVED',
+      // [0]     effect: { type: 'AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE' }
+      // [0]   },
+      // [0]   GameChainLinkModel {
+      // [0]     orderIndex: 0,
+      // [0]     userId: '9YFJFpQOAmPxyNzp3iefreirSDR2',
+      // [0]     gameCardId: 373,
+      // [0]     status: 'RESOLVED',
+      // [0]     effect: { type: 'AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE' }
+      // [0]   }
+      // [0] ]
+      console.log(finalGameModel.gameChains.flatMap(chain => chain.gameChainLinks));
+
+      return await manager.save(finalGameModel.toEntity());
     });
   }
 
