@@ -1,12 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { AppEntity } from './app.entity';
 import { GameEntity } from './game.entity';
 import { GameChainLinkEntity } from './game-chain-link.entity';
@@ -19,8 +11,8 @@ export enum GameChainStatus {
 
 @Entity({ name: 'gameChains' })
 export class GameChainEntity extends AppEntity<GameChainEntity> {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('uuid')
+  id: string;
 
   @Column()
   gameId: number;

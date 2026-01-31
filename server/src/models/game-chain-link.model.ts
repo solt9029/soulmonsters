@@ -22,8 +22,8 @@ export class GameChainLinkModel {
     Object.assign(this, partial);
   }
 
-  id: number;
-  gameChainId: number;
+  id: string;
+  gameChainId: string;
   orderIndex: number;
   userId: string;
   gameCardId: number | null;

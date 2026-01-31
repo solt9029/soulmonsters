@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { AppEntity } from './app.entity';
 import { GameChainEntity } from './game-chain.entity';
 import { GameCardEntity } from './game-card.entity';
@@ -45,11 +45,11 @@ export type Effect =
 
 @Entity({ name: 'gameChainLinks' })
 export class GameChainLinkEntity extends AppEntity<GameChainLinkEntity> {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('uuid')
+  id: string;
 
-  @Column()
-  gameChainId: number;
+  @Column('uuid')
+  gameChainId: string;
 
   @Column()
   orderIndex: number;

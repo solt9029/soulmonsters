@@ -14,9 +14,10 @@ describe('resolveEmeraldEnergyIncrease', () => {
       lifePoint: 8000,
     });
 
+    const gameChainId = 'chain-uuid-1';
     const gameChainLink = new GameChainLinkModel({
-      id: 1,
-      gameChainId: 1,
+      id: 'link-uuid-1',
+      gameChainId,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -27,7 +28,7 @@ describe('resolveEmeraldEnergyIncrease', () => {
     });
 
     const gameChain = new GameChainModel({
-      id: 1,
+      id: gameChainId,
       gameId: 1,
       status: GameChainStatus.RESOLVING,
       gameChainLinks: [gameChainLink],

@@ -10,7 +10,7 @@ export class GameChainModel {
     Object.assign(this, partial);
   }
 
-  id: number;
+  id: string;
   gameId: number;
   status: GameChainStatus;
   gameChainLinks: GameChainLinkModel[];
