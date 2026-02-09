@@ -6,9 +6,10 @@ import { resolveNatsukashinorudePowerDown } from './natsukashinorudePowerDown';
 
 describe('resolveNatsukashinorudePowerDown', () => {
   it('should create game state with target game card id and value 700', () => {
+    const gameChainId = 'chain-uuid-1';
     const gameChainLink = new GameChainLinkModel({
-      id: 1,
-      gameChainId: 1,
+      id: 'link-uuid-1',
+      gameChainId,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -20,7 +21,7 @@ describe('resolveNatsukashinorudePowerDown', () => {
     });
 
     const gameChain = new GameChainModel({
-      id: 1,
+      id: gameChainId,
       gameId: 1,
       status: GameChainStatus.RESOLVING,
       gameChainLinks: [gameChainLink],
@@ -51,9 +52,10 @@ describe('resolveNatsukashinorudePowerDown', () => {
   });
 
   it('should return unchanged model when effect type does not match', () => {
+    const gameChainId = 'chain-uuid-2';
     const gameChainLink = new GameChainLinkModel({
-      id: 1,
-      gameChainId: 1,
+      id: 'link-uuid-2',
+      gameChainId,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -64,7 +66,7 @@ describe('resolveNatsukashinorudePowerDown', () => {
     });
 
     const gameChain = new GameChainModel({
-      id: 1,
+      id: gameChainId,
       gameId: 1,
       status: GameChainStatus.RESOLVING,
       gameChainLinks: [gameChainLink],

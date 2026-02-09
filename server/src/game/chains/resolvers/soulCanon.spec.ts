@@ -14,9 +14,10 @@ describe('resolveSoulCanon', () => {
       position: 0,
     });
 
+    const gameChainId = 'chain-uuid-1';
     const gameChainLink = new GameChainLinkModel({
-      id: 1,
-      gameChainId: 1,
+      id: 'link-uuid-1',
+      gameChainId,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -28,7 +29,7 @@ describe('resolveSoulCanon', () => {
     });
 
     const gameChain = new GameChainModel({
-      id: 1,
+      id: gameChainId,
       gameId: 1,
       status: GameChainStatus.RESOLVING,
       gameChainLinks: [gameChainLink],
@@ -52,9 +53,10 @@ describe('resolveSoulCanon', () => {
   });
 
   it('should return game model unchanged when target game card is not found', () => {
+    const gameChainId = 'chain-uuid-2';
     const gameChainLink = new GameChainLinkModel({
-      id: 1,
-      gameChainId: 1,
+      id: 'link-uuid-2',
+      gameChainId,
       orderIndex: 0,
       userId: 'user1',
       gameCardId: 1,
@@ -66,7 +68,7 @@ describe('resolveSoulCanon', () => {
     });
 
     const gameChain = new GameChainModel({
-      id: 1,
+      id: gameChainId,
       gameId: 1,
       status: GameChainStatus.RESOLVING,
       gameChainLinks: [gameChainLink],
