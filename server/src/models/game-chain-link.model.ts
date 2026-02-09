@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { EffectType } from '../graphql/index';
 
 export enum GameChainLinkStatus {
@@ -20,6 +21,9 @@ export type Effect =
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {
     Object.assign(this, partial);
+    if (!this.id) {
+      this.id = uuidv4();
+    }
   }
 
   id: string;

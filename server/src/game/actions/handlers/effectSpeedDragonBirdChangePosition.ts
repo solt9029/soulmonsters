@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { EffectType } from 'src/graphql/index';
@@ -21,15 +20,11 @@ export function handleEffectSpeedDragonBirdChangePosition(
 
   gameModel = moveGameCardsToMorgue(gameModel, userId, costGameCards);
 
-  const gameChainId = uuidv4();
   const gameChain = new GameChainModel({
-    id: gameChainId,
     gameId: gameModel.id,
     status: GameChainStatus.RESOLVING,
     gameChainLinks: [
       new GameChainLinkModel({
-        id: uuidv4(),
-        gameChainId,
         orderIndex: 0,
         userId,
         gameCardId: payload.gameCard.id,
