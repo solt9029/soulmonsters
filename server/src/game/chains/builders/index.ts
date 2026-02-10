@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
 import { GameModel } from 'src/models/game.model';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus, Effect } from 'src/models/game-chain-link.model';
@@ -22,11 +23,15 @@ export class ChainBuilder {
     const gamePendingEffect = gameModel.gamePendingEffects[0];
     const effect = this.buildEffect(gamePendingEffect);
 
+    const gameChainId = uuidv4();
     const gameChain = new GameChainModel({
+      id: gameChainId,
       gameId: gameModel.id,
       status: GameChainStatus.RESOLVING,
       gameChainLinks: [
         new GameChainLinkModel({
+          id: uuidv4(),
+          gameChainId,
           orderIndex: 0,
           userId: gamePendingEffect.userId,
           gameCardId: gamePendingEffect.gameCardId,

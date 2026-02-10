@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
@@ -17,11 +18,15 @@ export function handleEffectNatsukashinorudePowerDown(
 ): GameModel {
   subtractUserEnergy(gameModel, userId, 2);
 
+  const gameChainId = uuidv4();
   const gameChain = new GameChainModel({
+    id: gameChainId,
     gameId: gameModel.id,
     status: GameChainStatus.RESOLVING, // TODO: WAITINGにしたい。今はGameChainLinkConfirmationの概念がないためRESOLVINGにしている
     gameChainLinks: [
       new GameChainLinkModel({
+        id: uuidv4(),
+        gameChainId,
         orderIndex: 0,
         userId,
         gameCardId: payload.gameCard.id,
