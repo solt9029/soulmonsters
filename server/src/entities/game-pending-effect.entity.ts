@@ -24,10 +24,14 @@ export class GamePendingEffectEntity extends AppEntity<GamePendingEffectEntity> 
   @CreateDateColumn()
   createdAt: Date;
 
+  // memo:
+  // orphanedRowActionの設定によって、
+  // game.gamePendingEffects = [] などでgameの保存処理を実行すると、
+  // gameに紐づくgamePendingEffectsが削除されるようになる
   @ManyToOne(
     () => GameEntity,
     game => game.gamePendingEffects,
-    { onDelete: 'CASCADE' },
+    { onDelete: 'CASCADE', orphanedRowAction: 'delete' },
   )
   game: GameEntity;
 

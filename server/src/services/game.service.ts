@@ -45,15 +45,14 @@ export class GameService {
       // アクション実行時に、イベントの検証も行う（直接攻撃に成功したらダメージを追加で与える、など）
       const handledGameModel = this.gameActionHandler.handleAction(data, userId, grantedGameModel);
 
-      // TODO: GameChain解決時にpendingEffectがつまれることがあるのでresolve → buildの順番で処理する
-
-      // GamePendingEffectからGameChainを構築
-      const builtGameModel = this.chainBuilder.buildChain(handledGameModel);
-
       // GameChainを解決
-      const resolvedGameModel = this.chainResolver.resolveChain(builtGameModel);
+      const resolvedGameModel = this.chainResolver.resolveChain(handledGameModel);
 
-      return await manager.save(resolvedGameModel.toEntity());
+      // GamePendingEffectからGameChainを構築 & 解決
+      const builtGameModel = this.chainBuilder.buildChain(resolvedGameModel); // 今の所仮実装で1件しか処理していない
+      const finalGameModel = this.chainResolver.resolveChain(builtGameModel);
+
+      return await manager.save(finalGameModel.toEntity());
     });
   }
 

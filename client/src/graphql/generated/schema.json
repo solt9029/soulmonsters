@@ -734,6 +734,12 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "EMERALD_ENERGY_INCREASE",
             "description": null,
             "isDeprecated": false,

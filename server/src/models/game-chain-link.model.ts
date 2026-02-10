@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { EffectType } from '../graphql/index';
 
 export enum GameChainLinkStatus {
@@ -16,14 +15,12 @@ export type Effect =
   | { type: EffectType.SPEED_DRAGON_BIRD_CHANGE_POSITION; targetGameCardId: number }
   | { type: EffectType.SOUL_CANON; targetGameCardId: number }
   | { type: EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER }
-  | { type: EffectType.SHINKASHITABAKUBOMDAN_DAMAGE };
+  | { type: EffectType.SHINKASHITABAKUBOMDAN_DAMAGE }
+  | { type: EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {
     Object.assign(this, partial);
-    if (!this.id) {
-      this.id = uuidv4();
-    }
   }
 
   id: string;
