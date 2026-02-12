@@ -2,7 +2,6 @@ import { ZoneChangedEvent } from '..';
 import { GameModel } from 'src/models/game.model';
 import { GamePendingEffectModel } from 'src/models/game-pending-effect.model';
 import { EffectType, Zone } from 'src/graphql';
-import { addUserEnergy } from 'src/game/mutations/addUserEnergy';
 import { CARD_ID } from 'src/constants/card';
 
 export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel): GameModel {
@@ -23,7 +22,14 @@ export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel)
   }
 
   if (event.fromZone === Zone.BATTLE && event.toZone === Zone.SOUL && movedCard.card.id === CARD_ID.NISEKISANCHOU) {
-    gameModel = addUserEnergy(gameModel, movedCard.currentUserId, 2);
+    const gamePendingEffect = new GamePendingEffectModel({
+      gameId: gameModel.id,
+      userId: movedCard.currentUserId,
+      gameCardId: movedCard.id,
+      effectType: EffectType.NISEKISANCHOU_ENERGY_INCREASE,
+      createdAt: new Date(),
+    });
+    gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
   }
 
   if (

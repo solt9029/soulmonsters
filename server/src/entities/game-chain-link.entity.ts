@@ -44,6 +44,9 @@ export type Effect =
     }
   | {
       type: EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE;
+    }
+  | {
+      type: EffectType.NISEKISANCHOU_ENERGY_INCREASE;
     };
 
 @Entity({ name: 'gameChainLinks' })

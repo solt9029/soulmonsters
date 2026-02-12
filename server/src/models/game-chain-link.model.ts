@@ -16,7 +16,8 @@ export type Effect =
   | { type: EffectType.SOUL_CANON; targetGameCardId: number }
   | { type: EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER }
   | { type: EffectType.SHINKASHITABAKUBOMDAN_DAMAGE }
-  | { type: EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE };
+  | { type: EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE }
+  | { type: EffectType.NISEKISANCHOU_ENERGY_INCREASE };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {

@@ -11,6 +11,7 @@ import { resolveSoulCanon } from './soulCanon';
 import { resolveShimashimajuniorEnergyTransfer } from './shimashimajuniorEnergyTransfer';
 import { resolveShinkashitabakubomdanDamage } from './shinkashitabakubomdanDamage';
 import { resolveAikawarazuyokuwakaranaihana } from './aikawarazuyokuwakaranaihana';
+import { resolveNisekisanchouEnergyIncrease } from './nisekisanchouEnergyIncrease';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -82,6 +83,9 @@ export class ChainResolver {
       }
       case EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE: {
         return resolveAikawarazuyokuwakaranaihana(gameModel, gameChainLink);
+      }
+      case EffectType.NISEKISANCHOU_ENERGY_INCREASE: {
+        return resolveNisekisanchouEnergyIncrease(gameModel, gameChainLink);
       }
     }
   }

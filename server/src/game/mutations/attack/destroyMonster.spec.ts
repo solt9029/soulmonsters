@@ -1,5 +1,5 @@
 import { GameModel } from '../../../models/game.model';
-import { Zone } from '../../../graphql';
+import { Zone, EffectType } from '../../../graphql';
 import { destroyMonster } from './destroyMonster';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
@@ -79,7 +79,11 @@ describe('destroyMonster', () => {
     const result = destroyMonster(gameEntity, 1);
 
     expect(result.gameCards[0]?.zone).toBe(Zone.SOUL);
-    expect(result.gameUsers[0]?.energy).toBe(5);
+    expect(result.gameUsers[0]?.energy).toBe(3);
+    expect(result.gamePendingEffects).toHaveLength(1);
+    expect(result.gamePendingEffects[0]?.effectType).toBe(EffectType.NISEKISANCHOU_ENERGY_INCREASE);
+    expect(result.gamePendingEffects[0]?.gameCardId).toBe(1);
+    expect(result.gamePendingEffects[0]?.userId).toBe('user1');
   });
 
   it('should not trigger effect for non-ニセキサンチョウ cards', () => {
@@ -109,5 +113,6 @@ describe('destroyMonster', () => {
 
     expect(result.gameCards[0]?.zone).toBe(Zone.SOUL);
     expect(result.gameUsers[0]?.energy).toBe(3);
+    expect(result.gamePendingEffects).toHaveLength(0);
   });
 });
