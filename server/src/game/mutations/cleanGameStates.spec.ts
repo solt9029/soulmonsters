@@ -82,4 +82,40 @@ describe('cleanGameStates', () => {
     expect(result.gameStates).toHaveLength(1);
     expect(result.gameStates[0]?.state.type).toBe(StateType.SELF_POWER_CHANGE);
   });
+
+  it('should remove EFFECT_FRESH_FISH_DRAW_COUNT state', () => {
+    const gameUser = new GameUserModel({
+      id: 1,
+      userId: 'user1',
+    });
+
+    const gameCard = new GameCardModel({
+      id: 1,
+      currentUserId: 'user1',
+    });
+
+    const gameEntity = new GameModel({
+      gameUsers: [gameUser],
+      gameStates: [
+        new GameStateModel({
+          state: {
+            type: StateType.EFFECT_FRESH_FISH_DRAW_COUNT,
+            data: { value: 1 },
+          },
+          gameCardId: gameCard.id,
+        }),
+        new GameStateModel({
+          state: {
+            type: StateType.SELF_POWER_CHANGE,
+            data: { attack: 100, defence: 200 },
+          },
+        }),
+      ],
+    });
+
+    const result = cleanGameStates(gameEntity, gameUser);
+
+    expect(result.gameStates).toHaveLength(1);
+    expect(result.gameStates[0]?.state.type).toBe(StateType.SELF_POWER_CHANGE);
+  });
 });

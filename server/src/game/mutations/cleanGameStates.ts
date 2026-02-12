@@ -27,7 +27,9 @@ const isEffectSupernewvoltsDestroyMonsterCountState = (gameState: GameStateModel
   return gameState.state.type === StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT;
 };
 
-// TODO: EFFECT_FRESH_FISH_DRAW_COUNTのクリア
+const isEffectFreshFishDrawCountState = (gameState: GameStateModel): boolean => {
+  return gameState.state.type === StateType.EFFECT_FRESH_FISH_DRAW_COUNT;
+};
 
 export const cleanGameStates = (gameModel: GameModel, gameUser: GameUserModel): GameModel => {
   gameModel.gameStates = gameModel.gameStates.filter(
@@ -38,7 +40,8 @@ export const cleanGameStates = (gameModel: GameModel, gameUser: GameUserModel): 
         isEffectRuteruteDrawCountState(gameState) ||
         isEffectNatsukashinorudePowerDownState(gameState) ||
         isEffectEmeraldEnergyIncreaseCountState(gameState) ||
-        isEffectSupernewvoltsDestroyMonsterCountState(gameState)
+        isEffectSupernewvoltsDestroyMonsterCountState(gameState) ||
+        isEffectFreshFishDrawCountState(gameState)
       ),
   );
 
