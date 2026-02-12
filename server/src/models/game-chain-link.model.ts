@@ -17,7 +17,8 @@ export type Effect =
   | { type: EffectType.SHIMASHIMAJUNIOR_ENERGY_TRANSFER }
   | { type: EffectType.SHINKASHITABAKUBOMDAN_DAMAGE }
   | { type: EffectType.AIKAWARAZUYOKUWAKARANAIHANA_DAMAGE }
-  | { type: EffectType.NISEKISANCHOU_ENERGY_INCREASE };
+  | { type: EffectType.NISEKISANCHOU_ENERGY_INCREASE }
+  | { type: EffectType.SAIFUKKATSUSHITATAKIBEE_DAMAGE };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {

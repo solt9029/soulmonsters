@@ -1,8 +1,9 @@
 import { DirectAttackEvent } from '..';
 import { GameModel } from '../../../models/game.model';
-import { dealDamageToPlayer } from '../../mutations/dealDamageToPlayer';
 import { drawCardFromDeck } from 'src/game/mutations/drawCardFromDeck';
 import { CARD_ID } from '../../../constants/card';
+import { GamePendingEffectModel } from 'src/models/game-pending-effect.model';
+import { EffectType } from 'src/graphql';
 
 export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameModel): GameModel {
   const attackerCard = gameModel.gameCards.find(gameCard => gameCard.id === event.attackerCardId);
@@ -18,7 +19,14 @@ export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameMode
   }
 
   if (attackerCard.card.id === CARD_ID.SAIFUKKATSUSHITATAKIBEE) {
-    dealDamageToPlayer(gameModel, event.opponentUserId, 1000);
+    const gamePendingEffect = new GamePendingEffectModel({
+      gameId: gameModel.id,
+      userId: attackerCard.currentUserId,
+      gameCardId: attackerCard.id,
+      effectType: EffectType.SAIFUKKATSUSHITATAKIBEE_DAMAGE,
+      createdAt: new Date(),
+    });
+    gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
   }
 
   return gameModel;
