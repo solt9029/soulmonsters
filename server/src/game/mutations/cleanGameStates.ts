@@ -27,6 +27,8 @@ const isEffectSupernewvoltsDestroyMonsterCountState = (gameState: GameStateModel
   return gameState.state.type === StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT;
 };
 
+// TODO: EFFECT_FRESH_FISH_DRAW_COUNTのクリア
+
 export const cleanGameStates = (gameModel: GameModel, gameUser: GameUserModel): GameModel => {
   gameModel.gameStates = gameModel.gameStates.filter(
     gameState =>
