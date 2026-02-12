@@ -8,6 +8,7 @@
   - serverのテスト: `yarn workspace soulmonsters-server test`
   - serverのフォーマット: `yarn workspace soulmonsters-server format`
   - clientのフォーマット: `yarn workspace soulmonsters-client format`
+- 実装作業を完了する前に、`yarn build`などを実行して必ずビルドが通ることを確認してください。
 - GraphQLのスキーマを編集した場合、ルートディレクトリで以下のコマンドを実行すればclient, serverの両方の型ファイルが自動生成されます。
   - `yarn generate-graphql-types`
 
