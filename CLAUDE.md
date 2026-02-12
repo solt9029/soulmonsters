@@ -19,7 +19,8 @@
 
 # server
 - importは相対パスではなく絶対パスを使用してください。
-- specの実装依頼があった場合はserver-spec-implementerに実装を任せてください。
+- `as any`は使わないでください。できる限り正しい型を定義・指定してください。
+- specに関する作業（作成・修正・削減など）はすべてserver-spec-implementerに任せてください。
 
 # client
 - 現状特にルールなし。必要に応じてREADMEを呼んだり、既存実装を真似しながら実装してください。
