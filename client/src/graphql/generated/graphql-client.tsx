@@ -107,6 +107,7 @@ export enum EffectType {
   FreshFishDraw = 'FRESH_FISH_DRAW',
   NatsukashinorudePowerDown = 'NATSUKASHINORUDE_POWER_DOWN',
   NisekisanchouEnergyIncrease = 'NISEKISANCHOU_ENERGY_INCREASE',
+  ReitetsunatotiDraw = 'REITETSUNATOTI_DRAW',
   RuteruteDraw = 'RUTERUTE_DRAW',
   SaifukkatsushitatakibeeDamage = 'SAIFUKKATSUSHITATAKIBEE_DAMAGE',
   ShimashimajuniorEnergyTransfer = 'SHIMASHIMAJUNIOR_ENERGY_TRANSFER',
