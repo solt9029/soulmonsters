@@ -50,6 +50,9 @@ export type Effect =
     }
   | {
       type: EffectType.SAIFUKKATSUSHITATAKIBEE_DAMAGE;
+    }
+  | {
+      type: EffectType.REITETSUNATOTI_DRAW;
     };
 
 @Entity({ name: 'gameChainLinks' })

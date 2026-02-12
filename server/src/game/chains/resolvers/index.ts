@@ -13,6 +13,7 @@ import { resolveShinkashitabakubomdanDamage } from './shinkashitabakubomdanDamag
 import { resolveAikawarazuyokuwakaranaihana } from './aikawarazuyokuwakaranaihana';
 import { resolveNisekisanchouEnergyIncrease } from './nisekisanchouEnergyIncrease';
 import { resolveSaifukkatsushitatakibeeDamage } from './saifukkatsushitatakibeeDamage';
+import { resolveReitetsunatotiDraw } from './reitetsunatotiDraw';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -90,6 +91,9 @@ export class ChainResolver {
       }
       case EffectType.SAIFUKKATSUSHITATAKIBEE_DAMAGE: {
         return resolveSaifukkatsushitatakibeeDamage(gameModel, gameChainLink);
+      }
+      case EffectType.REITETSUNATOTI_DRAW: {
+        return resolveReitetsunatotiDraw(gameModel, gameChainLink);
       }
     }
   }

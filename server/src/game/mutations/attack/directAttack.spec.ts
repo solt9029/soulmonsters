@@ -1,6 +1,6 @@
 import { GameModel } from '../../../models/game.model';
 import { GameUserModel } from '../../../models/game-user.model';
-import { Zone } from '../../../graphql';
+import { EffectType } from '../../../graphql';
 import { directAttack } from './directAttack';
 import { GameCardModel } from 'src/models/game-card.model';
 import { CardModel } from 'src/models/card.model';
@@ -35,7 +35,7 @@ describe('directAttack', () => {
     expect(result.gameUsers[1]?.lifePoint).toBe(6500);
   });
 
-  it('should draw 2 cards when card ID 11 (冷徹な鳥) performs direct attack', () => {
+  it('should add REITETSUNATOTI_DRAW pending effect when card ID 11 (冷徹な鳥) performs direct attack', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
@@ -57,37 +57,19 @@ describe('directAttack', () => {
             id: 11,
           }),
         }),
-        new GameCardModel({
-          id: 2,
-          zone: Zone.DECK,
-          position: 1,
-          currentUserId: 'user1',
-          card: new CardModel({
-            id: 2,
-          }),
-        }),
-        new GameCardModel({
-          id: 3,
-          zone: Zone.DECK,
-          position: 0,
-          currentUserId: 'user1',
-          card: new CardModel({
-            id: 3,
-          }),
-        }),
       ],
     });
 
     const result = directAttack(gameEntity, 1, 'user2');
 
-    const handCards = result.gameCards.filter(
-      gameCard => gameCard.zone === Zone.HAND && gameCard.currentUserId === 'user1',
-    );
-    expect(handCards).toHaveLength(2);
+    expect(result.gamePendingEffects).toHaveLength(1);
+    expect(result.gamePendingEffects[0]?.effectType).toBe(EffectType.REITETSUNATOTI_DRAW);
+    expect(result.gamePendingEffects[0]?.gameCardId).toBe(1);
+    expect(result.gamePendingEffects[0]?.userId).toBe('user1');
     expect(result.gameUsers[1]?.lifePoint).toBe(7400);
   });
 
-  it('should deal additional 1000 damage when card ID 2 (再復活したタキビー) performs direct attack', () => {
+  it('should add SAIFUKKATSUSHITATAKIBEE_DAMAGE pending effect when card ID 2 (再復活したタキビー) performs direct attack', () => {
     const gameEntity = new GameModel({
       id: 1,
       gameUsers: [
@@ -114,6 +96,8 @@ describe('directAttack', () => {
 
     const result = directAttack(gameEntity, 1, 'user2');
 
-    expect(result.gameUsers[1]?.lifePoint).toBe(5400); // 8000 - 1600 - 1000
+    expect(result.gamePendingEffects).toHaveLength(1);
+    expect(result.gamePendingEffects[0]?.effectType).toBe(EffectType.SAIFUKKATSUSHITATAKIBEE_DAMAGE);
+    expect(result.gameUsers[1]?.lifePoint).toBe(6400); // 8000 - 1600 (damage is applied later via resolver)
   });
 });

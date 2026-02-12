@@ -61,6 +61,8 @@ export class ChainBuilder {
         return { type: EffectType.NISEKISANCHOU_ENERGY_INCREASE };
       case EffectType.SAIFUKKATSUSHITATAKIBEE_DAMAGE:
         return { type: EffectType.SAIFUKKATSUSHITATAKIBEE_DAMAGE };
+      case EffectType.REITETSUNATOTI_DRAW:
+        return { type: EffectType.REITETSUNATOTI_DRAW };
       default:
         throw new Error(`Unsupported effectType: ${gamePendingEffect.effectType}`);
     }

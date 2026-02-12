@@ -1,6 +1,5 @@
 import { DirectAttackEvent } from '..';
 import { GameModel } from '../../../models/game.model';
-import { drawCardFromDeck } from 'src/game/mutations/drawCardFromDeck';
 import { CARD_ID } from '../../../constants/card';
 import { GamePendingEffectModel } from 'src/models/game-pending-effect.model';
 import { EffectType } from 'src/graphql';
@@ -13,9 +12,14 @@ export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameMode
   }
 
   if (attackerCard.card.id === CARD_ID.REITETSUNATOTI) {
-    const attackerUserId = attackerCard.currentUserId;
-    drawCardFromDeck(gameModel, attackerUserId);
-    drawCardFromDeck(gameModel, attackerUserId);
+    const gamePendingEffect = new GamePendingEffectModel({
+      gameId: gameModel.id,
+      userId: attackerCard.currentUserId,
+      gameCardId: attackerCard.id,
+      effectType: EffectType.REITETSUNATOTI_DRAW,
+      createdAt: new Date(),
+    });
+    gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
   }
 
   if (attackerCard.card.id === CARD_ID.SAIFUKKATSUSHITATAKIBEE) {
