@@ -14,6 +14,10 @@ export function validateUseSoulCanonAction(
     throw new BadRequestException('costGameCardIds must contain exactly 4 cards');
   }
 
+  if (new Set(costGameCardIds).size !== costGameCardIds.length) {
+    throw new BadRequestException('costGameCardIds must not contain duplicates');
+  }
+
   if (!targetGameCardIds || targetGameCardIds.length !== 1) {
     throw new BadRequestException('targetGameCardIds must contain exactly one target');
   }
