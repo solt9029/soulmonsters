@@ -49,9 +49,16 @@ export default class ActionStatus extends Record<ActionStatusInterface>(
   }
 
   addPayloadCostGameCardId(id: number) {
+    const current = this.payload.costGameCardIds || [];
+    const isAlreadySelected = current.includes(id);
+
+    const costGameCardIds = isAlreadySelected
+      ? current.filter((cardId) => cardId !== id)
+      : [...current, id];
+
     return this.set('payload', {
       ...this.payload,
-      costGameCardIds: [...(this.payload.costGameCardIds || []), id],
+      costGameCardIds,
     }).updateStep();
   }
 
