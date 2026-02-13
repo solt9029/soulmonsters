@@ -4,7 +4,7 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { CardModel } from 'src/models/card.model';
-import { Zone, ActionType, EffectType, Kind } from 'src/graphql';
+import { Zone, ActionType, EffectType, Kind, Type } from 'src/graphql';
 
 describe('grantSelectAsHamontakiTargetAction', () => {
   it('should grant SELECT_AS_HAMONTAKI_TARGET action to monster cards in morgue when resolving HAMONTAKI_SPECIAL_SUMMON chain link', () => {
@@ -33,6 +33,7 @@ describe('grantSelectAsHamontakiTargetAction', () => {
     const monsterCard = new CardModel({
       id: 1,
       kind: Kind.MONSTER,
+      type: Type.RECTANGLE,
     });
 
     const morgueMonster = new GameCardModel({

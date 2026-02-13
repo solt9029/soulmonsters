@@ -1,5 +1,5 @@
 import { GameModel } from 'src/models/game.model';
-import { ActionType, EffectType, Kind, Zone } from 'src/graphql/index';
+import { ActionType, EffectType, Kind, Type, Zone } from 'src/graphql/index';
 import { GameCardModel } from 'src/models/game-card.model';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { getResolvingGameChainLink } from 'src/game/selectors/getResolvingGameChainLink';
@@ -38,7 +38,7 @@ export function grantSelectAsHamontakiTargetAction(gameModel: GameModel, userId:
       return gameCard;
     }
 
-    if (!gameCard.card || !MONSTER_KINDS.includes(gameCard.card.kind)) {
+    if (!gameCard.card || !MONSTER_KINDS.includes(gameCard.card.kind) || gameCard.card.type !== Type.RECTANGLE) {
       return gameCard;
     }
 

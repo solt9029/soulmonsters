@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { GameModel } from '../../../models/game.model';
+import { ActionType } from '../../../graphql/index';
+import { GameCardModel } from '../../../models/game-card.model';
+import { GameUserModel } from '../../../models/game-user.model';
 import { grantStartDrawTimeAction } from './startDrawTime';
 import { grantStartEnergyTimeAction } from './startEnergyTime';
 import { grantStartPutTimeAction } from './startPutTime';
@@ -22,6 +25,36 @@ import { grantSelectAsHamontakiTargetAction } from './selectAsHamontakiTarget';
 
 function pipe<T>(initialValue: T, ...fns: Array<(arg: T) => T>): T {
   return fns.reduce((acc, fn) => fn(acc), initialValue);
+}
+
+const EXCLUSIVE_ACTION_TYPES: ActionType[] = [ActionType.SELECT_AS_HAMONTAKI_TARGET];
+
+function clearNonExclusiveActions(gameModel: GameModel): GameModel {
+  const hasExclusiveAction =
+    gameModel.gameCards.some(gc => gc.actionTypes.some(at => EXCLUSIVE_ACTION_TYPES.includes(at))) ||
+    gameModel.gameUsers.some(gu => gu.actionTypes.some(at => EXCLUSIVE_ACTION_TYPES.includes(at)));
+
+  if (!hasExclusiveAction) {
+    return gameModel;
+  }
+
+  gameModel.gameCards = gameModel.gameCards.map(gc => {
+    const exclusiveActions = gc.actionTypes.filter(at => EXCLUSIVE_ACTION_TYPES.includes(at));
+    if (gc.actionTypes.length === exclusiveActions.length) {
+      return gc;
+    }
+    return new GameCardModel({ ...gc, actionTypes: exclusiveActions });
+  });
+
+  gameModel.gameUsers = gameModel.gameUsers.map(gu => {
+    const exclusiveActions = gu.actionTypes.filter(at => EXCLUSIVE_ACTION_TYPES.includes(at));
+    if (gu.actionTypes.length === exclusiveActions.length) {
+      return gu;
+    }
+    return new GameUserModel({ ...gu, actionTypes: exclusiveActions });
+  });
+
+  return gameModel;
 }
 
 @Injectable()
@@ -48,6 +81,7 @@ export class GameActionGrantor {
       model => grantEffectSpeedDragonBirdChangePositionAction(model, userId),
       model => grantUseSoulCanonAction(model, userId),
       model => grantSelectAsHamontakiTargetAction(model, userId),
+      model => clearNonExclusiveActions(model),
     );
   }
 }
