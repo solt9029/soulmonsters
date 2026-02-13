@@ -12,6 +12,9 @@
       "Bash(yarn workspace soulmonsters-server format)",
       "Bash(yarn workspace soulmonsters-server test:*)",
       "Bash(yarn workspace soulmonsters-server format:*)",
+      "Bash(yarn workspace soulmonsters-client format)",
+      "Bash(yarn workspace soulmonsters-client build)",
+      "Bash(yarn workspace soulmonsters-server build)",
       "Bash(cd:*)",
       "Bash(yarn generate-graphql-types)"
     ]
