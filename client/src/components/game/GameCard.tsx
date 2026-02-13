@@ -47,7 +47,7 @@ export default function GameCard({ data }: GameCardProps) {
     }
 
     // handle action operation
-    let newActionStatus = new ActionStatus();
+    let newActionStatus = actionStatus;
 
     if (
       actionStatus.step === ActionStep.SELECT_ATTACK_TARGET &&
