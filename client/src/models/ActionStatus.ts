@@ -127,6 +127,15 @@ export default class ActionStatus extends Record<ActionStatusInterface>(
       }
     }
 
+    if (type === ActionType.EffectFreshFishDraw) {
+      if (step === ActionStep.SELECT_FRESH_FISH_COST) {
+        const { costGameCardIds } = payload;
+        if (costGameCardIds?.length === 3) {
+          return this.set('step', ActionStep.COMPLETED);
+        }
+      }
+    }
+
     return this;
   }
 

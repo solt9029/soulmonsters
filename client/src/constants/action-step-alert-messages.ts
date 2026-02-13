@@ -11,4 +11,6 @@ export const ActionStepAlertMessages = {
     'コストとなるソウルゾーンのカードを3枚選択してください',
   SELECT_SPEED_DRAGON_BIRD_TARGET:
     '効果対象とする相手バトルゾーンのカードを選択してください',
+  SELECT_FRESH_FISH_COST:
+    'コストとなるソウルゾーンのカードを3枚選択してください',
 };
