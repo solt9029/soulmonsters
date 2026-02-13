@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {
   useGameQuery,
   Zone,
+  ActionType,
   useActiveGameIdQuery,
 } from '../../graphql/generated/graphql-client';
 import GameCardStack from './GameCardStack';
@@ -70,11 +71,24 @@ export default function GameCardArea() {
   const gameCards = data?.game.gameCards;
   const gameUsers = data?.game.gameUsers;
 
+  const hasHamontakiTargetSelection = gameCards?.some((gc) =>
+    gc.actionTypes.includes(ActionType.SelectAsHamontakiTarget)
+  );
+
   return (
     <Container marginTop={20} marginBottom={20}>
       {actionStatus.isStarted() && !actionStatus.isCompleted() && (
         <Row>
           <GameActionAlert />
+        </Row>
+      )}
+      {hasHamontakiTargetSelection && (
+        <Row>
+          <Col xs={12}>
+            <StyledAlert color="primary">
+              モルグゾーンからバトルゾーンに特殊召喚するモンスターを選択してください
+            </StyledAlert>
+          </Col>
         </Row>
       )}
       {dispatchGameActionError !== null && (

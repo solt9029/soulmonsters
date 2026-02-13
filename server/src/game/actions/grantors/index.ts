@@ -18,6 +18,7 @@ import { grantEffectSupernewvoltsDestroyMonsterAction } from './effectSupernewvo
 import { grantEffectSpeedDragonBirdChangePositionAction } from './effectSpeedDragonBirdChangePosition';
 import { grantChangeBattlePositionAction } from './changeBattlePosition';
 import { grantUseSoulCanonAction } from './useSoulCanon';
+import { grantSelectAsHamontakiTargetAction } from './selectAsHamontakiTarget';
 
 function pipe<T>(initialValue: T, ...fns: Array<(arg: T) => T>): T {
   return fns.reduce((acc, fn) => fn(acc), initialValue);
@@ -46,6 +47,7 @@ export class GameActionGrantor {
       model => grantEffectSupernewvoltsDestroyMonsterAction(model, userId),
       model => grantEffectSpeedDragonBirdChangePositionAction(model, userId),
       model => grantUseSoulCanonAction(model, userId),
+      model => grantSelectAsHamontakiTargetAction(model, userId),
     );
   }
 }

@@ -53,6 +53,10 @@ export type Effect =
     }
   | {
       type: EffectType.REITETSUNATOTI_DRAW;
+    }
+  | {
+      type: EffectType.HAMONTAKI_SPECIAL_SUMMON;
+      targetGameCardId?: number;
     };
 
 @Entity({ name: 'gameChainLinks' })

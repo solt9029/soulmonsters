@@ -47,6 +47,17 @@ export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel)
     gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
   }
 
+  if (event.toZone === Zone.SOUL && movedCard.card.id === CARD_ID.HAMONTAKINIKARARENUMONO) {
+    const gamePendingEffect = new GamePendingEffectModel({
+      gameId: gameModel.id,
+      userId: movedCard.currentUserId,
+      gameCardId: movedCard.id,
+      effectType: EffectType.HAMONTAKI_SPECIAL_SUMMON,
+      createdAt: new Date(),
+    });
+    gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
+  }
+
   if (event.toZone === Zone.MORGUE && movedCard.card.id === CARD_ID.AIKAWARAZUYOKUWAKARANAIHANA) {
     const gamePendingEffect = new GamePendingEffectModel({
       gameId: gameModel.id,

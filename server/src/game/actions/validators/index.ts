@@ -19,6 +19,7 @@ import { validateSummonMonsterAction } from '../validators/summonMonster';
 import { validateUseSoulCanonAction } from '../validators/useSoulCanon';
 import { validateEffectSupernewvoltsDestroyMonsterAction } from '../validators/effectSupernewvoltsDestroyMonster';
 import { validateEffectSpeedDragonBirdChangePositionAction } from '../validators/effectSpeedDragonBirdChangePosition';
+import { validateSelectAsHamontakiTargetAction } from '../validators/selectAsHamontakiTarget';
 import { PutSoulActionPayload } from '../handlers/putSoul';
 import { AttackActionPayload } from '../handlers/attack';
 import { FinishEndTimeActionPayload } from '../handlers/finishEndTime';
@@ -31,6 +32,7 @@ import { EffectSpeedDragonBirdChangePositionActionPayload } from '../handlers/ef
 import { ChangeBattlePositionActionPayload } from '../handlers/changeBattlePosition';
 import { SummonMonsterActionPayload } from '../validators/summonMonster';
 import { UseSoulCanonActionPayload } from '../handlers/useSoulCanon';
+import { SelectAsHamontakiTargetActionPayload } from '../handlers/selectAsHamontakiTarget';
 
 type ValidationResult =
   | { type: ActionType.START_DRAW_TIME }
@@ -56,7 +58,8 @@ type ValidationResult =
       payload: EffectSpeedDragonBirdChangePositionActionPayload;
     }
   | { type: ActionType.CHANGE_BATTLE_POSITION; payload: ChangeBattlePositionActionPayload }
-  | { type: ActionType.USE_SOUL_CANON; payload: UseSoulCanonActionPayload };
+  | { type: ActionType.USE_SOUL_CANON; payload: UseSoulCanonActionPayload }
+  | { type: ActionType.SELECT_AS_HAMONTAKI_TARGET; payload: SelectAsHamontakiTargetActionPayload };
 
 export const validateAction = (
   data: GameActionDispatchInput,
@@ -135,6 +138,10 @@ export const validateAction = (
     case ActionType.EFFECT_SPEED_DRAGON_BIRD_CHANGE_POSITION: {
       const payload = validateEffectSpeedDragonBirdChangePositionAction(data, gameModel, userId);
       return { type: ActionType.EFFECT_SPEED_DRAGON_BIRD_CHANGE_POSITION, payload };
+    }
+    case ActionType.SELECT_AS_HAMONTAKI_TARGET: {
+      const payload = validateSelectAsHamontakiTargetAction(data, gameModel);
+      return { type: ActionType.SELECT_AS_HAMONTAKI_TARGET, payload };
     }
     default: {
       throw new Error('Invalid action type');
