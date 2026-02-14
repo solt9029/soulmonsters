@@ -26,11 +26,11 @@ export const resolveHamontakiSpecialSummon = (gameModel: GameModel, gameChainLin
     return markGameChainLinkAsResolved(gameModel, gameChainLink);
   }
 
-  if (gameChainLink.effect.targetGameCardId === undefined) {
+  if (gameChainLink.effect.selectedGameCardId === undefined) {
     return gameModel;
   }
 
-  gameModel = moveGameCardToBattle(gameModel, gameChainLink.userId, gameChainLink.effect.targetGameCardId);
+  gameModel = moveGameCardToBattle(gameModel, gameChainLink.userId, gameChainLink.effect.selectedGameCardId);
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
 
   return gameModel;

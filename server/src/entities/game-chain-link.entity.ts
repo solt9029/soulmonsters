@@ -56,7 +56,7 @@ export type Effect =
     }
   | {
       type: EffectType.HAMONTAKI_SPECIAL_SUMMON;
-      targetGameCardId?: number;
+      selectedGameCardId?: number;
     };
 
 @Entity({ name: 'gameChainLinks' })

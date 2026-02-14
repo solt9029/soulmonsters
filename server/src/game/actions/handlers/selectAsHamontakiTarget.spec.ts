@@ -6,7 +6,7 @@ import { EffectType } from 'src/graphql/index';
 import { handleSelectAsHamontakiTarget } from './selectAsHamontakiTarget';
 
 describe('handleSelectAsHamontakiTarget', () => {
-  it('should set targetGameCardId in resolving chain link effect', () => {
+  it('should set selectedGameCardId in resolving chain link effect', () => {
     const userId = 'user1';
     const targetGameCard = new GameCardModel({
       id: 2,
@@ -22,7 +22,7 @@ describe('handleSelectAsHamontakiTarget', () => {
       status: GameChainLinkStatus.RESOLVING,
       effect: {
         type: EffectType.HAMONTAKI_SPECIAL_SUMMON,
-        targetGameCardId: undefined,
+        selectedGameCardId: undefined,
       },
     });
 
@@ -45,7 +45,7 @@ describe('handleSelectAsHamontakiTarget', () => {
     expect(updatedLink?.effect.type).toBe(EffectType.HAMONTAKI_SPECIAL_SUMMON);
 
     if (updatedLink?.effect.type === EffectType.HAMONTAKI_SPECIAL_SUMMON) {
-      expect(updatedLink.effect.targetGameCardId).toBe(2);
+      expect(updatedLink.effect.selectedGameCardId).toBe(2);
     }
   });
 

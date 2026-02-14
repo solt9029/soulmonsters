@@ -19,7 +19,7 @@ describe('grantSelectAsHamontakiTargetAction', () => {
       status: GameChainLinkStatus.RESOLVING,
       effect: {
         type: EffectType.HAMONTAKI_SPECIAL_SUMMON,
-        targetGameCardId: undefined,
+        selectedGameCardId: undefined,
       },
     });
 
@@ -79,7 +79,7 @@ describe('grantSelectAsHamontakiTargetAction', () => {
     expect(result.gameCards[0]?.actionTypes).not.toContain(ActionType.SELECT_AS_HAMONTAKI_TARGET);
   });
 
-  it('should not grant action when targetGameCardId is already set', () => {
+  it('should not grant action when selectedGameCardId is already set', () => {
     const userId = 'user1';
     const gameChainId = 'chain-uuid-1';
     const gameChainLink = new GameChainLinkModel({
@@ -91,7 +91,7 @@ describe('grantSelectAsHamontakiTargetAction', () => {
       status: GameChainLinkStatus.RESOLVING,
       effect: {
         type: EffectType.HAMONTAKI_SPECIAL_SUMMON,
-        targetGameCardId: 2,
+        selectedGameCardId: 2,
       },
     });
 
@@ -137,7 +137,7 @@ describe('grantSelectAsHamontakiTargetAction', () => {
       status: GameChainLinkStatus.RESOLVING,
       effect: {
         type: EffectType.HAMONTAKI_SPECIAL_SUMMON,
-        targetGameCardId: undefined,
+        selectedGameCardId: undefined,
       },
     });
 
@@ -184,7 +184,7 @@ describe('grantSelectAsHamontakiTargetAction', () => {
       status: GameChainLinkStatus.RESOLVING,
       effect: {
         type: EffectType.HAMONTAKI_SPECIAL_SUMMON,
-        targetGameCardId: undefined,
+        selectedGameCardId: undefined,
       },
     });
 

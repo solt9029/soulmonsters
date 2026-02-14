@@ -31,7 +31,7 @@ export function handleSelectAsHamontakiTarget(
 
   const updatedLink = new GameChainLinkModel({
     ...resolvingGameChainLink,
-    effect: { type: EffectType.HAMONTAKI_SPECIAL_SUMMON, targetGameCardId: payload.targetGameCard.id },
+    effect: { type: EffectType.HAMONTAKI_SPECIAL_SUMMON, selectedGameCardId: payload.targetGameCard.id },
   });
 
   gameModel.gameChains = gameModel.gameChains.map(chain =>

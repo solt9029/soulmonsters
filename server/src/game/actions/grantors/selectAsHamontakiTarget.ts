@@ -21,7 +21,7 @@ export function grantSelectAsHamontakiTargetAction(gameModel: GameModel, userId:
     return gameModel;
   }
 
-  if (resolvingGameChainLink.effect.targetGameCardId !== undefined) {
+  if (resolvingGameChainLink.effect.selectedGameCardId !== undefined) {
     return gameModel;
   }
 

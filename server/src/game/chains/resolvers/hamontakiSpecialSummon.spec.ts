@@ -7,7 +7,7 @@ import { EffectType, Zone, BattlePosition, Kind, Type } from 'src/graphql/index'
 import { resolveHamontakiSpecialSummon } from './hamontakiSpecialSummon';
 
 describe('resolveHamontakiSpecialSummon', () => {
-  it('should do nothing when targetGameCardId is undefined and eligible target exists in morgue', () => {
+  it('should do nothing when selectedGameCardId is undefined and eligible target exists in morgue', () => {
     const gameChainId = 'chain-uuid-1';
     const gameChainLink = new GameChainLinkModel({
       id: 'link-uuid-1',
@@ -18,7 +18,7 @@ describe('resolveHamontakiSpecialSummon', () => {
       status: GameChainLinkStatus.WAITING,
       effect: {
         type: EffectType.HAMONTAKI_SPECIAL_SUMMON,
-        targetGameCardId: undefined,
+        selectedGameCardId: undefined,
       },
     });
 
@@ -56,7 +56,7 @@ describe('resolveHamontakiSpecialSummon', () => {
     expect(updatedLink?.status).toBe(GameChainLinkStatus.WAITING);
   });
 
-  it('should move target game card to battle zone and mark chain link as resolved when targetGameCardId is set', () => {
+  it('should move target game card to battle zone and mark chain link as resolved when selectedGameCardId is set', () => {
     const gameChainId = 'chain-uuid-1';
     const gameChainLink = new GameChainLinkModel({
       id: 'link-uuid-1',
@@ -67,7 +67,7 @@ describe('resolveHamontakiSpecialSummon', () => {
       status: GameChainLinkStatus.WAITING,
       effect: {
         type: EffectType.HAMONTAKI_SPECIAL_SUMMON,
-        targetGameCardId: 2,
+        selectedGameCardId: 2,
       },
     });
 
@@ -125,7 +125,7 @@ describe('resolveHamontakiSpecialSummon', () => {
       status: GameChainLinkStatus.WAITING,
       effect: {
         type: EffectType.HAMONTAKI_SPECIAL_SUMMON,
-        targetGameCardId: undefined,
+        selectedGameCardId: undefined,
       },
     });
 

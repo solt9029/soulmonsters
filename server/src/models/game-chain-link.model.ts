@@ -20,7 +20,7 @@ export type Effect =
   | { type: EffectType.NISEKISANCHOU_ENERGY_INCREASE }
   | { type: EffectType.SAIFUKKATSUSHITATAKIBEE_DAMAGE }
   | { type: EffectType.REITETSUNATOTI_DRAW }
-  | { type: EffectType.HAMONTAKI_SPECIAL_SUMMON; targetGameCardId?: number };
+  | { type: EffectType.HAMONTAKI_SPECIAL_SUMMON; selectedGameCardId?: number };
 
 export class GameChainLinkModel {
   constructor(partial?: Partial<GameChainLinkModel>) {
