@@ -11,6 +11,7 @@
     "yarn": "1.22.22"
   },
   "scripts": {
+    "build": "concurrently \"yarn workspace soulmonsters-server build\" \"yarn workspace soulmonsters-client build\"",
     "format": "yarn workspace soulmonsters-client format && yarn workspace soulmonsters-server format",
     "test": "yarn workspace soulmonsters-server test",
     "generate-graphql-types": "yarn workspace soulmonsters-client generate-graphql-types && yarn workspace soulmonsters-server generate-graphql-types",
