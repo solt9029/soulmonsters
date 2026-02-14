@@ -63,6 +63,8 @@ export class ChainBuilder {
         return { type: EffectType.SAIFUKKATSUSHITATAKIBEE_DAMAGE };
       case EffectType.REITETSUNATOTI_DRAW:
         return { type: EffectType.REITETSUNATOTI_DRAW };
+      case EffectType.HAMONTAKI_SPECIAL_SUMMON:
+        return { type: EffectType.HAMONTAKI_SPECIAL_SUMMON };
       default:
         throw new Error(`Unsupported effectType: ${gamePendingEffect.effectType}`);
     }

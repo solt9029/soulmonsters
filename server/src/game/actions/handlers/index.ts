@@ -20,6 +20,7 @@ import { handleEffectSupernewvoltsDestroyMonster } from './effectSupernewvoltsDe
 import { handleEffectSpeedDragonBirdChangePosition } from './effectSpeedDragonBirdChangePosition';
 import { handleChangeBattlePositionAction } from './changeBattlePosition';
 import { handleUseSoulCanonAction } from './useSoulCanon';
+import { handleSelectAsHamontakiTarget } from './selectAsHamontakiTarget';
 import { validateAction } from '../validators';
 
 @Injectable()
@@ -82,6 +83,9 @@ export class GameActionHandler {
       }
       case ActionType.EFFECT_SPEED_DRAGON_BIRD_CHANGE_POSITION: {
         return handleEffectSpeedDragonBirdChangePosition(userId, validationResult.payload, gameModel);
+      }
+      case ActionType.SELECT_AS_HAMONTAKI_TARGET: {
+        return handleSelectAsHamontakiTarget(userId, validationResult.payload, gameModel);
       }
       default: {
         return gameModel;
