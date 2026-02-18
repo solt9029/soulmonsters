@@ -8,12 +8,15 @@
       "Bash(mkdir:*)",
       "Bash(yarn format)",
       "Bash(yarn test)",
+      "Bash(yarn build)",
       "Bash(yarn workspace soulmonsters-server test)",
       "Bash(yarn workspace soulmonsters-server format)",
       "Bash(yarn workspace soulmonsters-server test:*)",
       "Bash(yarn workspace soulmonsters-server format:*)",
       "Bash(cd:*)",
-      "Bash(yarn generate-graphql-types)"
+      "Bash(yarn generate-graphql-types)",
+      "Bash(yarn workspace soulmonsters-server build)",
+      "Bash(yarn workspace soulmonsters-client build)"
     ]
   }
 }

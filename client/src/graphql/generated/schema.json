@@ -164,6 +164,12 @@
             "deprecationReason": null
           },
           {
+            "name": "SELECT_AS_HAMONTAKI_TARGET",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "START_BATTLE_TIME",
             "description": null,
             "isDeprecated": false,
@@ -747,6 +753,12 @@
           },
           {
             "name": "FRESH_FISH_DRAW",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HAMONTAKI_SPECIAL_SUMMON",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

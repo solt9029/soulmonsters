@@ -1,6 +1,8 @@
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from 'src/models/game.model';
 import { Zone } from 'src/graphql';
+import { handleEvent } from '../events/handlers';
+import { GameEventType } from '../events';
 
 const calcNewSoulGameCardPosition = (gameModel: GameModel, userId: string): number => {
   const soulGameCards = gameModel.gameCards
@@ -11,6 +13,13 @@ const calcNewSoulGameCardPosition = (gameModel: GameModel, userId: string): numb
 };
 
 export const moveGameCardToSoul = (gameModel: GameModel, userId: string, gameCardId: number): GameModel => {
+  const gameCard = gameModel.gameCards.find(gameCard => gameCard.id === gameCardId);
+  if (!gameCard) {
+    throw new Error('Card not found');
+  }
+
+  const previousZone = gameCard.zone;
+
   gameModel.gameCards = gameModel.gameCards.map(gameCard =>
     gameCard.id === gameCardId
       ? new GameCardModel({
@@ -19,6 +28,16 @@ export const moveGameCardToSoul = (gameModel: GameModel, userId: string, gameCar
           position: calcNewSoulGameCardPosition(gameModel, userId),
         })
       : gameCard,
+  );
+
+  gameModel = handleEvent(
+    {
+      type: GameEventType.ZONE_CHANGED,
+      gameCardId,
+      fromZone: previousZone,
+      toZone: Zone.SOUL,
+    },
+    gameModel,
   );
 
   return gameModel;

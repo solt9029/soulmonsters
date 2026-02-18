@@ -16,11 +16,14 @@
 - **gameCardとcardの区別**: gameCardとcardは明確に異なる存在です。gameCardのことをcardと省略しないでください。
   - Card: カードのマスターデータ（テンプレート）。カード自体の基本情報（名前、種類、攻撃力、防御力など）
   - GameCard: ゲーム中の実際のカードインスタンス。Cardの情報を持ちつつ、ゲーム状態（ゾーン、位置、バトルポジションなど）を持つ
+- **Effect型のGameCardIdフィールド命名規約**: 効果の対象をいつ決定するかによって命名を使い分けてください。
+  - `targetGameCardId`: 効果の発動時にプレイヤーが対象を選ぶもの（例: SOUL_CANON, NATSUKASHINORUDE_POWER_DOWN）
+  - `selectedGameCardId`: 効果の解決時にプレイヤーが対象を選ぶもの（例: HAMONTAKI_SPECIAL_SUMMON）
 
 # server
 - importは相対パスではなく絶対パスを使用してください。
 - `as any`は使わないでください。できる限り正しい型を定義・指定してください。
-- specに関する作業（作成・修正・削減など）はすべてserver-spec-implementerに任せてください。
+- specの新規作成や大幅な修正はserver-spec-implementerに任せてください。リネームや軽微な修正は直接行って構いません。
 
 # client
 - 現状特にルールなし。必要に応じてREADMEを呼んだり、既存実装を真似しながら実装してください。
