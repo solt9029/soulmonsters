@@ -3,12 +3,13 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameModel } from '../../../models/game.model';
 import { GameChainModel, GameChainStatus } from '../../../models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
-import { subtractUserEnergy } from 'src/game/mutations/subtractUserEnergy';
+import { moveGameCardsToMorgue } from 'src/game/mutations/moveGameCardsToMorgue';
 import { incrementGameCardCountStateValue } from 'src/game/mutations/incrementGameCardCountStateValue';
 import { EffectType, StateType } from 'src/graphql';
 
 export type EffectFreshFishDrawActionPayload = {
   gameCard: GameCardModel;
+  costGameCards: GameCardModel[];
 };
 
 export function handleEffectFreshFishDraw(
@@ -16,7 +17,9 @@ export function handleEffectFreshFishDraw(
   payload: EffectFreshFishDrawActionPayload,
   gameModel: GameModel,
 ): GameModel {
-  gameModel = subtractUserEnergy(gameModel, userId, 3);
+  const { costGameCards } = payload;
+
+  gameModel = moveGameCardsToMorgue(gameModel, userId, costGameCards);
   gameModel = incrementGameCardCountStateValue(gameModel, payload.gameCard, StateType.EFFECT_FRESH_FISH_DRAW_COUNT);
 
   const gameChainId = uuidv4();
