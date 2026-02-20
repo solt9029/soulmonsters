@@ -136,6 +136,15 @@ export default class ActionStatus extends Record<ActionStatusInterface>(
       }
     }
 
+    if (type === ActionType.UseHedron) {
+      if (step === ActionStep.SELECT_HEDRON_COST) {
+        const { costGameCardIds } = payload;
+        if (costGameCardIds?.length === 3) {
+          return this.set('step', ActionStep.COMPLETED);
+        }
+      }
+    }
+
     return this;
   }
 

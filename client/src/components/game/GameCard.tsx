@@ -113,6 +113,14 @@ export default function GameCard({ data }: GameCardProps) {
       newActionStatus = actionStatus.addPayloadCostGameCardId(data.id);
     }
 
+    if (
+      actionStatus.step === ActionStep.SELECT_HEDRON_COST &&
+      data.zone === Zone.Soul &&
+      data.currentUserId === user.data?.uid
+    ) {
+      newActionStatus = actionStatus.addPayloadCostGameCardId(data.id);
+    }
+
     if (newActionStatus.isCompleted() && newActionStatus.type) {
       const { type, payload } = newActionStatus;
       await dispatchGameAction({

@@ -15,6 +15,7 @@ import { resolveNisekisanchouEnergyIncrease } from './nisekisanchouEnergyIncreas
 import { resolveSaifukkatsushitatakibeeDamage } from './saifukkatsushitatakibeeDamage';
 import { resolveReitetsunatotiDraw } from './reitetsunatotiDraw';
 import { resolveHamontakiSpecialSummon } from './hamontakiSpecialSummon';
+import { resolveHedronSpecialSummon } from './hedronSpecialSummon';
 import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain';
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
@@ -98,6 +99,9 @@ export class ChainResolver {
       }
       case EffectType.HAMONTAKI_SPECIAL_SUMMON: {
         return resolveHamontakiSpecialSummon(gameModel, gameChainLink);
+      }
+      case EffectType.HEDRON_SPECIAL_SUMMON: {
+        return resolveHedronSpecialSummon(gameModel, gameChainLink);
       }
     }
   }

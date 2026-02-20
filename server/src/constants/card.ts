@@ -3,7 +3,7 @@ export const CARD_ID = {
   SAIFUKKATSUSHITATAKIBEE: 2, // 再復活したタキビー
   SPEEDDRAGONANDSPEEDBIRD: 3, // スピードラゴン＆スピーバード
   MORINOMUROSAEMERARL: 4, // 森の村長　エメラル
-  HEDORON: 5, // ヘドロン todo
+  HEDORON: 5, // ヘドロン
   SARANIMIZUMIZUSHIISAKANA: 6, // さらにみずみずしい魚
   SHINKASHITABAKUBOMDAN: 7, // 進化したバクボムダン
   NATSUKASHINORUDE: 8, // 懐かしのルード
