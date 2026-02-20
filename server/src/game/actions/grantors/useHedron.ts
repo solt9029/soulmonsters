@@ -5,6 +5,7 @@ import { GameCardModel } from 'src/models/game-card.model';
 
 const MONSTER_KINDS: Kind[] = [Kind.MONSTER, Kind.CIRCLE_MONSTER];
 
+// TODO: 計算効率は悪そうなので直したい（ヘドロンがバトルゾーンにない場合に）
 export function grantUseHedronAction(gameModel: GameModel, userId: string) {
   if (gameModel.phase !== Phase.SOMETHING || gameModel.turnUserId !== userId) {
     return gameModel;
