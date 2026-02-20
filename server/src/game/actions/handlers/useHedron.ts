@@ -23,7 +23,7 @@ export function handleUseHedronAction(
   const gameChain = new GameChainModel({
     id: gameChainId,
     gameId: gameModel.id,
-    status: GameChainStatus.RESOLVING,
+    status: GameChainStatus.RESOLVING, // TODO: WAITINGにしたい。今はGameChainLinkConfirmationの概念がないためRESOLVINGにしている
     gameChainLinks: [
       new GameChainLinkModel({
         id: uuidv4(),
