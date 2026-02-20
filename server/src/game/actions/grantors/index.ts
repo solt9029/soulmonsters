@@ -22,12 +22,17 @@ import { grantEffectSpeedDragonBirdChangePositionAction } from './effectSpeedDra
 import { grantChangeBattlePositionAction } from './changeBattlePosition';
 import { grantUseSoulCanonAction } from './useSoulCanon';
 import { grantSelectAsHamontakiTargetAction } from './selectAsHamontakiTarget';
+import { grantUseHedronAction } from './useHedron';
+import { grantSelectAsHedronTargetAction } from './selectAsHedronTarget';
 
 function pipe<T>(initialValue: T, ...fns: Array<(arg: T) => T>): T {
   return fns.reduce((acc, fn) => fn(acc), initialValue);
 }
 
-const EXCLUSIVE_ACTION_TYPES: ActionType[] = [ActionType.SELECT_AS_HAMONTAKI_TARGET];
+const EXCLUSIVE_ACTION_TYPES: ActionType[] = [
+  ActionType.SELECT_AS_HAMONTAKI_TARGET,
+  ActionType.SELECT_AS_HEDRON_TARGET,
+];
 
 function clearNonExclusiveActions(gameModel: GameModel): GameModel {
   const hasExclusiveAction =
@@ -80,7 +85,9 @@ export class GameActionGrantor {
       model => grantEffectSupernewvoltsDestroyMonsterAction(model, userId),
       model => grantEffectSpeedDragonBirdChangePositionAction(model, userId),
       model => grantUseSoulCanonAction(model, userId),
+      model => grantUseHedronAction(model, userId),
       model => grantSelectAsHamontakiTargetAction(model, userId),
+      model => grantSelectAsHedronTargetAction(model, userId),
       model => clearNonExclusiveActions(model),
     );
   }

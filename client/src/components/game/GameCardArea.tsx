@@ -75,6 +75,10 @@ export default function GameCardArea() {
     gc.actionTypes.includes(ActionType.SelectAsHamontakiTarget)
   );
 
+  const hasHedronTargetSelection = gameCards?.some((gc) =>
+    gc.actionTypes.includes(ActionType.SelectAsHedronTarget)
+  );
+
   return (
     <Container marginTop={20} marginBottom={20}>
       {actionStatus.isStarted() && !actionStatus.isCompleted() && (
@@ -87,6 +91,15 @@ export default function GameCardArea() {
           <Col xs={12}>
             <StyledAlert color="primary">
               モルグゾーンからバトルゾーンに特殊召喚するモンスターを選択してください
+            </StyledAlert>
+          </Col>
+        </Row>
+      )}
+      {hasHedronTargetSelection && (
+        <Row>
+          <Col xs={12}>
+            <StyledAlert color="primary">
+              モルグゾーンからバトルゾーンに特殊召喚する紫モンスターを選択してください
             </StyledAlert>
           </Col>
         </Row>

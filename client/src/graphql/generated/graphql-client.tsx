@@ -37,6 +37,7 @@ export enum ActionType {
   FinishEndTime = 'FINISH_END_TIME',
   PutSoul = 'PUT_SOUL',
   SelectAsHamontakiTarget = 'SELECT_AS_HAMONTAKI_TARGET',
+  SelectAsHedronTarget = 'SELECT_AS_HEDRON_TARGET',
   StartBattleTime = 'START_BATTLE_TIME',
   StartDrawTime = 'START_DRAW_TIME',
   StartEndTime = 'START_END_TIME',
@@ -44,6 +45,7 @@ export enum ActionType {
   StartPutTime = 'START_PUT_TIME',
   StartSomethingTime = 'START_SOMETHING_TIME',
   SummonMonster = 'SUMMON_MONSTER',
+  UseHedron = 'USE_HEDRON',
   UseSoulBarrier = 'USE_SOUL_BARRIER',
   UseSoulCanon = 'USE_SOUL_CANON'
 }
@@ -107,6 +109,7 @@ export enum EffectType {
   EmeraldEnergyIncrease = 'EMERALD_ENERGY_INCREASE',
   FreshFishDraw = 'FRESH_FISH_DRAW',
   HamontakiSpecialSummon = 'HAMONTAKI_SPECIAL_SUMMON',
+  HedronSpecialSummon = 'HEDRON_SPECIAL_SUMMON',
   NatsukashinorudePowerDown = 'NATSUKASHINORUDE_POWER_DOWN',
   NisekisanchouEnergyIncrease = 'NISEKISANCHOU_ENERGY_INCREASE',
   ReitetsunatotiDraw = 'REITETSUNATOTI_DRAW',

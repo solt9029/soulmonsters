@@ -13,4 +13,5 @@ export const ActionStepAlertMessages = {
     '効果対象とする相手バトルゾーンのカードを選択してください',
   SELECT_FRESH_FISH_COST:
     'コストとなるソウルゾーンのカードを3枚選択してください',
+  SELECT_HEDRON_COST: 'コストとなるソウルゾーンのカードを3枚選択してください',
 };

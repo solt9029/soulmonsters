@@ -21,6 +21,8 @@ import { handleEffectSpeedDragonBirdChangePosition } from './effectSpeedDragonBi
 import { handleChangeBattlePositionAction } from './changeBattlePosition';
 import { handleUseSoulCanonAction } from './useSoulCanon';
 import { handleSelectAsHamontakiTarget } from './selectAsHamontakiTarget';
+import { handleUseHedronAction } from './useHedron';
+import { handleSelectAsHedronTarget } from './selectAsHedronTarget';
 import { validateAction } from '../validators';
 
 @Injectable()
@@ -86,6 +88,12 @@ export class GameActionHandler {
       }
       case ActionType.SELECT_AS_HAMONTAKI_TARGET: {
         return handleSelectAsHamontakiTarget(userId, validationResult.payload, gameModel);
+      }
+      case ActionType.USE_HEDRON: {
+        return handleUseHedronAction(userId, validationResult.payload, gameModel);
+      }
+      case ActionType.SELECT_AS_HEDRON_TARGET: {
+        return handleSelectAsHedronTarget(userId, validationResult.payload, gameModel);
       }
       default: {
         return gameModel;

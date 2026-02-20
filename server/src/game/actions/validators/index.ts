@@ -20,6 +20,8 @@ import { validateUseSoulCanonAction } from '../validators/useSoulCanon';
 import { validateEffectSupernewvoltsDestroyMonsterAction } from '../validators/effectSupernewvoltsDestroyMonster';
 import { validateEffectSpeedDragonBirdChangePositionAction } from '../validators/effectSpeedDragonBirdChangePosition';
 import { validateSelectAsHamontakiTargetAction } from '../validators/selectAsHamontakiTarget';
+import { validateUseHedronAction } from '../validators/useHedron';
+import { validateSelectAsHedronTargetAction } from '../validators/selectAsHedronTarget';
 import { PutSoulActionPayload } from '../handlers/putSoul';
 import { AttackActionPayload } from '../handlers/attack';
 import { FinishEndTimeActionPayload } from '../handlers/finishEndTime';
@@ -33,6 +35,8 @@ import { ChangeBattlePositionActionPayload } from '../handlers/changeBattlePosit
 import { SummonMonsterActionPayload } from '../validators/summonMonster';
 import { UseSoulCanonActionPayload } from '../handlers/useSoulCanon';
 import { SelectAsHamontakiTargetActionPayload } from '../handlers/selectAsHamontakiTarget';
+import { UseHedronActionPayload } from '../handlers/useHedron';
+import { SelectAsHedronTargetActionPayload } from '../handlers/selectAsHedronTarget';
 
 type ValidationResult =
   | { type: ActionType.START_DRAW_TIME }
@@ -59,7 +63,9 @@ type ValidationResult =
     }
   | { type: ActionType.CHANGE_BATTLE_POSITION; payload: ChangeBattlePositionActionPayload }
   | { type: ActionType.USE_SOUL_CANON; payload: UseSoulCanonActionPayload }
-  | { type: ActionType.SELECT_AS_HAMONTAKI_TARGET; payload: SelectAsHamontakiTargetActionPayload };
+  | { type: ActionType.SELECT_AS_HAMONTAKI_TARGET; payload: SelectAsHamontakiTargetActionPayload }
+  | { type: ActionType.USE_HEDRON; payload: UseHedronActionPayload }
+  | { type: ActionType.SELECT_AS_HEDRON_TARGET; payload: SelectAsHedronTargetActionPayload };
 
 export const validateAction = (
   data: GameActionDispatchInput,
@@ -142,6 +148,14 @@ export const validateAction = (
     case ActionType.SELECT_AS_HAMONTAKI_TARGET: {
       const payload = validateSelectAsHamontakiTargetAction(data, gameModel);
       return { type: ActionType.SELECT_AS_HAMONTAKI_TARGET, payload };
+    }
+    case ActionType.USE_HEDRON: {
+      const payload = validateUseHedronAction(data, gameModel, userId);
+      return { type: ActionType.USE_HEDRON, payload };
+    }
+    case ActionType.SELECT_AS_HEDRON_TARGET: {
+      const payload = validateSelectAsHedronTargetAction(data, gameModel);
+      return { type: ActionType.SELECT_AS_HEDRON_TARGET, payload };
     }
     default: {
       throw new Error('Invalid action type');
