@@ -2,7 +2,7 @@ export default function TableMesh() {
   return (
     <>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
-        <planeGeometry args={[28, 22]} />
+        <planeGeometry args={[28, 26]} />
         <meshStandardMaterial
           color="#1a3a2a"
           roughness={0.9}
