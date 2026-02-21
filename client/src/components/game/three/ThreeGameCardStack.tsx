@@ -1,12 +1,9 @@
 import { useContext } from 'react';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
-import {
-  Zone,
-  type GameCardFragment,
-} from '../../../graphql/generated/graphql-client';
+import { type GameCardFragment } from '../../../graphql/generated/graphql-client';
 import { AppContext } from '../../../contexts/AppContext';
-import { findGameCards, findTopGameCard } from '../../../utils/game';
+import { findTopGameCard } from '../../../utils/game';
 import { BACK_SIDE_CARD } from '../../../constants/pictures';
 
 const CARD_W = 1.4;
@@ -16,9 +13,7 @@ const STACK_OFFSET = 0.015;
 const STACK_COUNT = 3;
 
 export type ThreeGameCardStackProps = {
-  gameCards: GameCardFragment[] | undefined;
-  zone: Zone;
-  isYours: boolean;
+  gameCards: GameCardFragment[];
   position: [number, number, number];
 };
 
@@ -101,23 +96,16 @@ function StackMeshes({
 
 function ThreeGameCardStackInner({
   gameCards,
-  zone,
-  isYours,
   position,
 }: ThreeGameCardStackProps) {
-  const {
-    state: { user },
-  } = useContext(AppContext);
-
-  const targetGameCards = findGameCards(gameCards, user, { isYours, zone });
-  const topGameCard = findTopGameCard(targetGameCards);
+  const topGameCard = findTopGameCard(gameCards);
   const topUrl = topGameCard?.card?.picture ?? BACK_SIDE_CARD;
 
   const [topTexture, backTexture] = useTexture([topUrl, BACK_SIDE_CARD]);
 
   return (
     <StackMeshes
-      targetGameCards={targetGameCards}
+      targetGameCards={gameCards}
       position={position}
       topTexture={topTexture}
       backTexture={backTexture}

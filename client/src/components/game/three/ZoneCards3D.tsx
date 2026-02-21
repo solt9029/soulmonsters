@@ -1,10 +1,7 @@
-import { useContext } from 'react';
 import {
   Zone,
   type GameCardFragment,
 } from '../../../graphql/generated/graphql-client';
-import { AppContext } from '../../../contexts/AppContext';
-import { findGameCards } from '../../../utils/game';
 import ThreeGameCard from './ThreeGameCard';
 import ThreeGameCardStack from './ThreeGameCardStack';
 
@@ -28,7 +25,7 @@ const ZONE_POSITIONS: Record<ZoneKey, [number, number, number]> = {
 const STACK_ZONES = new Set([Zone.Deck, Zone.Morgue]);
 
 export type ZoneCards3DProps = {
-  gameCards: GameCardFragment[] | undefined;
+  gameCards: GameCardFragment[];
   zone: Zone;
   isYours: boolean;
   gameId: number;
@@ -40,30 +37,18 @@ export default function ZoneCards3D({
   isYours,
   gameId,
 }: ZoneCards3DProps) {
-  const {
-    state: { user },
-  } = useContext(AppContext);
-
   const key: ZoneKey = `${zone}_${isYours ? 'player' : 'opponent'}`;
   const center = ZONE_POSITIONS[key];
 
   if (STACK_ZONES.has(zone)) {
-    return (
-      <ThreeGameCardStack
-        gameCards={gameCards}
-        zone={zone}
-        isYours={isYours}
-        position={center}
-      />
-    );
+    return <ThreeGameCardStack gameCards={gameCards} position={center} />;
   }
 
-  const cards = findGameCards(gameCards, user, { isYours, zone });
-  const count = cards.length;
+  const count = gameCards.length;
 
   return (
     <>
-      {cards.map((card, i) => {
+      {gameCards.map((card, i) => {
         const offsetX = (i - (count - 1) / 2) * CARD_SPACING;
         return (
           <ThreeGameCard

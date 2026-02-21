@@ -1,9 +1,11 @@
-import { Suspense } from 'react';
+import { Suspense, useContext } from 'react';
 import { Canvas } from '@react-three/fiber';
 import {
   Zone,
   type GameCardFragment,
 } from '../../../graphql/generated/graphql-client';
+import { AppContext } from '../../../contexts/AppContext';
+import { findGameCards } from '../../../utils/game';
 import TableMesh from './TableMesh';
 import ZoneCards3D from './ZoneCards3D';
 
@@ -15,6 +17,10 @@ export type GameBoard3DProps = {
 };
 
 export default function GameBoard3D({ gameId, gameCards }: GameBoard3DProps) {
+  const {
+    state: { user },
+  } = useContext(AppContext);
+
   return (
     <Canvas
       style={{ width: '100%', height: '100%' }}
@@ -31,7 +37,7 @@ export default function GameBoard3D({ gameId, gameCards }: GameBoard3DProps) {
         {ALL_ZONES.map((zone) => (
           <ZoneCards3D
             key={`player-${zone}`}
-            gameCards={gameCards}
+            gameCards={findGameCards(gameCards, user, { zone, isYours: true })}
             zone={zone}
             isYours={true}
             gameId={gameId}
@@ -40,7 +46,7 @@ export default function GameBoard3D({ gameId, gameCards }: GameBoard3DProps) {
         {ALL_ZONES.map((zone) => (
           <ZoneCards3D
             key={`opponent-${zone}`}
-            gameCards={gameCards}
+            gameCards={findGameCards(gameCards, user, { zone, isYours: false })}
             zone={zone}
             isYours={false}
             gameId={gameId}
