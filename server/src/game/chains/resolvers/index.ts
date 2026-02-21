@@ -20,6 +20,7 @@ import { getResolvingGameChain } from 'src/game/selectors/getResolvingGameChain'
 import { markGameChainAsResolved } from 'src/game/mutations/markGameChainAsResolved';
 import { markGameChainLinkAsResolving } from 'src/game/mutations/markGameChainLinkAsResolving';
 import { getGameChainLink } from 'src/game/selectors/getGameChainLink';
+import { endGameIfUserLifeDepleted } from 'src/game/mutations/endGameIfUserLifeDepleted';
 
 const sortLinksByOrderIndexDesc = (links: GameChainLinkModel[]) => {
   return [...links].sort((a, b) => b.orderIndex - a.orderIndex);
@@ -44,6 +45,10 @@ export class ChainResolver {
       }
 
       gameModel = this.resolveChainLink(gameModel, link);
+      gameModel = endGameIfUserLifeDepleted(gameModel);
+      if (gameModel.endedAt !== null) {
+        return gameModel;
+      }
 
       const updatedLink = getGameChainLink(gameModel, link.id);
       if (updatedLink?.status !== GameChainLinkStatus.RESOLVED) {

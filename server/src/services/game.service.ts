@@ -12,6 +12,7 @@ import { initializeGameCards } from 'src/game/initializers';
 import { GameStateReflector } from 'src/game/states/reflectors';
 import { ChainResolver } from 'src/game/chains/resolvers';
 import { ChainBuilder } from 'src/game/chains/builders';
+import { endGameIfUserLifeDepleted } from 'src/game/mutations/endGameIfUserLifeDepleted';
 
 @Injectable()
 export class GameService {
@@ -43,7 +44,9 @@ export class GameService {
 
       // アクションの内容を検証した上で、問題なければ実行する
       // アクション実行時に、イベントの検証も行う（直接攻撃に成功したらダメージを追加で与える、など）
-      const handledGameModel = this.gameActionHandler.handleAction(data, userId, grantedGameModel);
+      const handledGameModel = endGameIfUserLifeDepleted(
+        this.gameActionHandler.handleAction(data, userId, grantedGameModel),
+      );
 
       // GameChainを解決
       const resolvedGameModel = this.chainResolver.resolveChain(handledGameModel);

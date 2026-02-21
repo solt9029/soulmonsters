@@ -65,6 +65,10 @@ function clearNonExclusiveActions(gameModel: GameModel): GameModel {
 @Injectable()
 export class GameActionGrantor {
   grantActions(gameModel: GameModel, userId: string): GameModel {
+    if (gameModel.endedAt !== null) {
+      return gameModel;
+    }
+
     return pipe(
       gameModel,
       model => grantStartDrawTimeAction(model, userId),
