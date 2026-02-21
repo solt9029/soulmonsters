@@ -24,21 +24,19 @@ const InteractiveOverlay = styled.div`
   pointer-events: auto;
 `;
 
-const PlayerInfoTop = styled.div`
+const PlayerInfoTopRight = styled.div`
   pointer-events: auto;
   position: absolute;
-  top: 8px;
-  left: 0;
-  width: 100%;
+  top: 12px;
+  right: 12px;
   z-index: 10;
 `;
 
-const PlayerInfoBottom = styled.div`
+const PlayerInfoBottomLeft = styled.div`
   pointer-events: auto;
   position: absolute;
-  bottom: 8px;
-  left: 0;
-  width: 100%;
+  bottom: 12px;
+  left: 12px;
   z-index: 10;
 `;
 
@@ -122,13 +120,13 @@ export default function GameCardArea({ gameId }: GameCardAreaProps) {
         </InteractiveOverlay>
       </AlertsOverlay>
 
-      <PlayerInfoTop>
+      <PlayerInfoTopRight>
         <GameUser gameUsers={gameUsers} isYours={false} />
-      </PlayerInfoTop>
+      </PlayerInfoTopRight>
 
-      <PlayerInfoBottom>
+      <PlayerInfoBottomLeft>
         <GameUser gameUsers={gameUsers} isYours={true} />
-      </PlayerInfoBottom>
+      </PlayerInfoBottomLeft>
     </div>
   );
 }

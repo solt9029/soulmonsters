@@ -59,7 +59,7 @@ function CardMesh({
     meshRef.current.position.y = THREE.MathUtils.lerp(
       meshRef.current.position.y,
       targetY,
-      0.12,
+      0.12
     );
   });
 
@@ -118,5 +118,11 @@ export default function ThreeGameCard(props: ThreeGameCardProps) {
   const frontUrl = props.data.card?.picture ?? BACK_SIDE_CARD;
   const [frontTexture, backTexture] = useTexture([frontUrl, BACK_SIDE_CARD]);
 
-  return <CardMesh {...props} frontTexture={frontTexture} backTexture={backTexture} />;
+  return (
+    <CardMesh
+      {...props}
+      frontTexture={frontTexture}
+      backTexture={backTexture}
+    />
+  );
 }
