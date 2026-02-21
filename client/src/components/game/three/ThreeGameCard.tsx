@@ -17,6 +17,7 @@ const CARD_H = 2.0;
 const CARD_D = 0.02;
 const HOVER_FLOAT = 0.3;
 const BASE_Y_FLAT = 0.025;
+const BASE_Y_HAND = CARD_H / 2;
 
 export type ThreeGameCardProps = {
   data: GameCardFragment;
@@ -54,8 +55,9 @@ function CardMesh({
     false;
 
   useFrame(() => {
-    if (!meshRef.current || isHand) return;
-    const targetY = hovered ? BASE_Y_FLAT + HOVER_FLOAT : BASE_Y_FLAT;
+    if (!meshRef.current) return;
+    const baseY = isHand ? BASE_Y_HAND : BASE_Y_FLAT;
+    const targetY = hovered ? baseY + HOVER_FLOAT : baseY;
     meshRef.current.position.y = THREE.MathUtils.lerp(
       meshRef.current.position.y,
       targetY,
@@ -87,7 +89,7 @@ function CardMesh({
     ? [Math.PI / 2, 0, 0]
     : [0, baseYRot + (isDefence ? Math.PI / 2 : 0), 0];
 
-  const posY = isHand ? CARD_H / 2 : BASE_Y_FLAT;
+  const posY = isHand ? BASE_Y_HAND : BASE_Y_FLAT;
 
   return (
     <mesh
