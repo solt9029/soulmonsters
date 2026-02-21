@@ -1,4 +1,5 @@
 import { GameEntity } from '../entities/game.entity';
+import { GameUserEntity } from '../entities/game-user.entity';
 import { GameModel } from '../models/game.model';
 import { GameToModelMapper } from '../mappers/to-model/game.to-model.mapper';
 import { DataSource, EntityManager, InsertResult, FindOptionsWhere } from 'typeorm';
@@ -17,7 +18,16 @@ export class GameRepository {
     const entities = await this.getEntityRepository()
       .createQueryBuilder('games')
       .leftJoinAndSelect('games.gameUsers', 'gameUsers')
-      .where('gameUsers.userId = :userId', { userId })
+      .where(qb => {
+        const subQuery = qb
+          .subQuery()
+          .select('gu.gameId')
+          .from(GameUserEntity, 'gu')
+          .where('gu.userId = :userId')
+          .getQuery();
+        return `games.id IN ${subQuery}`;
+      })
+      .setParameter('userId', userId)
       .orderBy('games.id', 'DESC')
       .getMany();
 
