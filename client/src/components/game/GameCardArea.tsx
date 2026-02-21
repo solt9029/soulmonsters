@@ -1,42 +1,55 @@
 import { useContext } from 'react';
-import { Container, Row, Col } from '../../styled/reactstrap';
 import { Alert } from 'reactstrap';
 import styled from 'styled-components';
 import {
   useGameQuery,
-  Zone,
   ActionType,
 } from '../../graphql/generated/graphql-client';
-import GameCardStack from './GameCardStack';
 import GameUser from './GameUser';
-import GameCardList from './GameCardList';
 import { AppContext } from '../../contexts/AppContext';
 import { GameActionAlert } from './GameActionAlert';
+import GameBoard3D from './three/GameBoard3D';
 
-const StyledContainer = styled(Container)`
-  color: white;
+const AlertsOverlay = styled.div`
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 8px;
 `;
 
-const StyledCol = styled(Col)`
-  color: white;
-  align-items: center;
-  -webkit-align-items: center;
-  display: flex;
-  overflow-x: auto;
-  ::before,
-  ::after {
-    content: '';
-    margin: auto;
-  }
+const InteractiveOverlay = styled.div`
+  pointer-events: auto;
 `;
 
-const StyledRow = styled(Row)`
-  display: flex;
-  height: 100px;
+const PlayerInfoTop = styled.div`
+  pointer-events: auto;
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+`;
+
+const PlayerInfoBottom = styled.div`
+  pointer-events: auto;
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
 `;
 
 const StyledAlert = styled(Alert)`
   padding: 6px 12px;
+  margin-bottom: 4px;
+`;
+
+const LoadingText = styled.div`
+  color: white;
+  padding: 12px;
 `;
 
 export type GameCardAreaProps = {
@@ -54,18 +67,14 @@ export default function GameCardArea({ gameId }: GameCardAreaProps) {
 
   if (error) {
     return (
-      <StyledContainer marginTop={12}>
+      <LoadingText>
         <Alert color="danger">ゲーム情報の取得中にエラーが発生しました</Alert>
-      </StyledContainer>
+      </LoadingText>
     );
   }
 
   if (loading) {
-    return (
-      <StyledContainer marginTop={12}>
-        <Col lg={12}>ゲーム情報をロード中です</Col>
-      </StyledContainer>
-    );
+    return <LoadingText>ゲーム情報をロード中です</LoadingText>;
   }
 
   const gameCards = data?.game.gameCards;
@@ -80,131 +89,46 @@ export default function GameCardArea({ gameId }: GameCardAreaProps) {
   );
 
   return (
-    <Container marginTop={20} marginBottom={20}>
-      {actionStatus.isStarted() && !actionStatus.isCompleted() && (
-        <Row>
-          <GameActionAlert />
-        </Row>
-      )}
-      {hasHamontakiTargetSelection && (
-        <Row>
-          <Col xs={12}>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        background: '#111',
+      }}
+    >
+      <GameBoard3D gameId={gameId} gameCards={gameCards} />
+
+      <AlertsOverlay>
+        <InteractiveOverlay>
+          {actionStatus.isStarted() && !actionStatus.isCompleted() && (
+            <GameActionAlert />
+          )}
+          {hasHamontakiTargetSelection && (
             <StyledAlert color="primary">
               モルグゾーンからバトルゾーンに特殊召喚するモンスターを選択してください
             </StyledAlert>
-          </Col>
-        </Row>
-      )}
-      {hasHedronTargetSelection && (
-        <Row>
-          <Col xs={12}>
+          )}
+          {hasHedronTargetSelection && (
             <StyledAlert color="primary">
               モルグゾーンからバトルゾーンに特殊召喚する紫モンスターを選択してください
             </StyledAlert>
-          </Col>
-        </Row>
-      )}
-      {dispatchGameActionError !== null && (
-        <Row>
-          <Col xs={12}>
+          )}
+          {dispatchGameActionError !== null && (
             <StyledAlert color="danger">
               {dispatchGameActionError.message}
             </StyledAlert>
-          </Col>
-        </Row>
-      )}
+          )}
+        </InteractiveOverlay>
+      </AlertsOverlay>
 
-      <Row>
+      <PlayerInfoTop>
         <GameUser gameUsers={gameUsers} isYours={false} />
-      </Row>
-      <StyledRow marginTop={5}>
-        <StyledCol lg={12}>
-          <GameCardList
-            gameCards={gameCards}
-            isYours={false}
-            zone={Zone.Hand}
-          />
-        </StyledCol>
-      </StyledRow>
-      <StyledRow marginTop={5}>
-        <StyledCol lg={2} xs={2}>
-          <GameCardStack
-            gameCards={gameCards}
-            isYours={false}
-            zone={Zone.Deck}
-          />
-        </StyledCol>
-        <StyledCol lg={10} xs={10}>
-          <GameCardList
-            gameCards={gameCards}
-            isYours={false}
-            zone={Zone.Soul}
-          />
-        </StyledCol>
-      </StyledRow>
-      <StyledRow marginTop={5}>
-        <StyledCol lg={2} xs={2}>
-          <GameCardStack
-            gameCards={gameCards}
-            isYours={false}
-            zone={Zone.Morgue}
-          />
-        </StyledCol>
-        <StyledCol lg={10} xs={10}>
-          <GameCardList
-            gameCards={gameCards}
-            isYours={false}
-            zone={Zone.Battle}
-          />
-        </StyledCol>
-      </StyledRow>
+      </PlayerInfoTop>
 
-      <StyledRow marginTop={50}>
-        {/** your battle zone */}
-        <StyledCol lg={10} xs={10}>
-          <GameCardList
-            gameCards={gameCards}
-            isYours={true}
-            zone={Zone.Battle}
-          />
-        </StyledCol>
-
-        {/** your morgue zone */}
-        <StyledCol lg={2} xs={2}>
-          <GameCardStack
-            gameCards={gameCards}
-            isYours={true}
-            zone={Zone.Morgue}
-          />
-        </StyledCol>
-      </StyledRow>
-
-      <StyledRow marginTop={5}>
-        {/** your soul zone */}
-        <StyledCol lg={10} xs={10}>
-          <GameCardList gameCards={gameCards} isYours={true} zone={Zone.Soul} />
-        </StyledCol>
-
-        {/** your deck zone */}
-        <StyledCol lg={2} xs={2}>
-          <GameCardStack
-            gameCards={gameCards}
-            isYours={true}
-            zone={Zone.Deck}
-          />
-        </StyledCol>
-      </StyledRow>
-
-      <StyledRow marginTop={5}>
-        {/** your hand zone */}
-        <StyledCol lg={12}>
-          <GameCardList gameCards={gameCards} isYours={true} zone={Zone.Hand} />
-        </StyledCol>
-      </StyledRow>
-
-      <Row marginTop={5}>
+      <PlayerInfoBottom>
         <GameUser gameUsers={gameUsers} isYours={true} />
-      </Row>
-    </Container>
+      </PlayerInfoBottom>
+    </div>
   );
 }

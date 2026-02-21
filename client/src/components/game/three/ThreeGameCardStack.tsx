@@ -1,0 +1,130 @@
+import { useContext } from 'react';
+import { useTexture } from '@react-three/drei';
+import * as THREE from 'three';
+import {
+  Zone,
+  type GameCardFragment,
+} from '../../../graphql/generated/graphql-client';
+import { AppContext } from '../../../contexts/AppContext';
+import { findGameCards, findTopGameCard } from '../../../utils/game';
+import { BACK_SIDE_CARD } from '../../../constants/pictures';
+
+const CARD_W = 1.4;
+const CARD_H = 2.0;
+const CARD_D = 0.02;
+const STACK_OFFSET = 0.015;
+const STACK_COUNT = 3;
+
+export type ThreeGameCardStackProps = {
+  gameCards: GameCardFragment[] | undefined;
+  zone: Zone;
+  isYours: boolean;
+  position: [number, number, number];
+};
+
+function StackMeshes({
+  targetGameCards,
+  position,
+  topTexture,
+  backTexture,
+}: {
+  targetGameCards: GameCardFragment[];
+  position: [number, number, number];
+  topTexture: THREE.Texture;
+  backTexture: THREE.Texture;
+}) {
+  const {
+    state: { gameCardListModal },
+    dispatch,
+  } = useContext(AppContext);
+
+  if (targetGameCards.length <= 0) return null;
+
+  const handleClick = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
+    dispatch({
+      type: 'SET_GAME_CARD_LIST_MODAL',
+      payload: gameCardListModal.open(targetGameCards),
+    });
+  };
+
+  const visibleCount = Math.min(targetGameCards.length, STACK_COUNT);
+
+  return (
+    <>
+      {Array.from({ length: visibleCount }).map((_, i) => {
+        const isTop = i === visibleCount - 1;
+        const yPos = position[1] + CARD_D / 2 + i * STACK_OFFSET;
+
+        // BoxGeometry face order: 0=+X, 1=-X, 2=+Y, 3=-Y, 4=+Z, 5=-Z
+        // No rotation (flat on table): +Y face (mat2) faces up = visible from camera above
+        const materials = [
+          new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
+          new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
+          new THREE.MeshStandardMaterial({
+            map: isTop ? topTexture : backTexture,
+          }),
+          new THREE.MeshStandardMaterial({ map: backTexture }),
+          new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
+          new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
+        ];
+
+        return (
+          <mesh
+            key={i}
+            position={[position[0], yPos, position[2]]}
+            rotation={[0, 0, 0]}
+            material={materials}
+            onPointerDown={isTop ? handleClick : undefined}
+            onPointerEnter={
+              isTop
+                ? () => {
+                    document.body.style.cursor = 'pointer';
+                  }
+                : undefined
+            }
+            onPointerLeave={
+              isTop
+                ? () => {
+                    document.body.style.cursor = 'default';
+                  }
+                : undefined
+            }
+          >
+            <boxGeometry args={[CARD_W, CARD_D, CARD_H]} />
+          </mesh>
+        );
+      })}
+    </>
+  );
+}
+
+function ThreeGameCardStackInner({
+  gameCards,
+  zone,
+  isYours,
+  position,
+}: ThreeGameCardStackProps) {
+  const {
+    state: { user },
+  } = useContext(AppContext);
+
+  const targetGameCards = findGameCards(gameCards, user, { isYours, zone });
+  const topGameCard = findTopGameCard(targetGameCards);
+  const topUrl = topGameCard?.card?.picture ?? BACK_SIDE_CARD;
+
+  const [topTexture, backTexture] = useTexture([topUrl, BACK_SIDE_CARD]);
+
+  return (
+    <StackMeshes
+      targetGameCards={targetGameCards}
+      position={position}
+      topTexture={topTexture}
+      backTexture={backTexture}
+    />
+  );
+}
+
+export default function ThreeGameCardStack(props: ThreeGameCardStackProps) {
+  return <ThreeGameCardStackInner {...props} />;
+}

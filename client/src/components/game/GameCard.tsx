@@ -6,12 +6,9 @@ import { BACK_SIDE_CARD } from '../../constants/pictures';
 import { AppContext } from '../../contexts/AppContext';
 import {
   type GameCardFragment,
-  Zone,
   BattlePosition,
 } from '../../graphql/generated/graphql-client';
-import ActionStatus from '../../models/ActionStatus';
-import { ActionStep } from '../../constants/action-steps';
-import { useDispatchGameActionMutation } from '../../hooks/useDispatchGameActionMutation';
+import { useGameCardClick } from '../../hooks/useGameCardClick';
 
 const StyledCard = styled(Card)<{ $isDefence: boolean; $isSelected: boolean }>`
   min-width: 60px;
@@ -27,116 +24,13 @@ export type GameCardProps = {
 
 export default function GameCard({ data }: GameCardProps) {
   const {
-    state: { gameCardModal, actionStatus, user },
-    dispatch,
+    state: { actionStatus },
   } = useContext(AppContext);
 
   const { id } = useParams<{ id: string }>();
   const gameId = parseInt(id);
 
-  const [dispatchGameAction] = useDispatchGameActionMutation(gameId);
-
-  const handleClick = async () => {
-    // open modal
-    if (data.card && !actionStatus.isStarted()) {
-      await dispatch({
-        type: 'SET_GAME_CARD_MODAL',
-        payload: gameCardModal.open(data),
-      });
-      return;
-    }
-
-    // handle action operation
-    let newActionStatus = actionStatus;
-
-    if (
-      actionStatus.step === ActionStep.SELECT_ATTACK_TARGET &&
-      data.zone === Zone.Battle &&
-      data.currentUserId !== user.data?.uid
-    ) {
-      newActionStatus = actionStatus.addPayloadTargetGameCardId(data.id);
-    }
-
-    if (
-      actionStatus.step === ActionStep.SELECT_POWER_DOWN_TARGET &&
-      data.zone === Zone.Battle &&
-      data.currentUserId !== user.data?.uid
-    ) {
-      newActionStatus = actionStatus.addPayloadTargetGameCardId(data.id);
-    }
-
-    if (
-      actionStatus.step === ActionStep.SELECT_DESTROY_TARGET &&
-      data.zone === Zone.Battle &&
-      data.currentUserId !== user.data?.uid
-    ) {
-      newActionStatus = actionStatus.addPayloadTargetGameCardId(data.id);
-    }
-
-    if (
-      actionStatus.step === ActionStep.SELECT_SOUL_CANON_COST &&
-      data.zone === Zone.Soul &&
-      data.currentUserId === user.data?.uid
-    ) {
-      newActionStatus = actionStatus.addPayloadCostGameCardId(data.id);
-    }
-
-    if (
-      actionStatus.step === ActionStep.SELECT_SOUL_CANON_TARGET &&
-      data.zone === Zone.Battle &&
-      data.currentUserId !== user.data?.uid
-    ) {
-      newActionStatus = actionStatus.addPayloadTargetGameCardId(data.id);
-    }
-
-    if (
-      actionStatus.step === ActionStep.SELECT_SPEED_DRAGON_BIRD_COST &&
-      data.zone === Zone.Soul &&
-      data.currentUserId === user.data?.uid
-    ) {
-      newActionStatus = actionStatus.addPayloadCostGameCardId(data.id);
-    }
-
-    if (
-      actionStatus.step === ActionStep.SELECT_SPEED_DRAGON_BIRD_TARGET &&
-      data.zone === Zone.Battle &&
-      data.currentUserId !== user.data?.uid
-    ) {
-      newActionStatus = actionStatus.addPayloadTargetGameCardId(data.id);
-    }
-
-    if (
-      actionStatus.step === ActionStep.SELECT_FRESH_FISH_COST &&
-      data.zone === Zone.Soul &&
-      data.currentUserId === user.data?.uid
-    ) {
-      newActionStatus = actionStatus.addPayloadCostGameCardId(data.id);
-    }
-
-    if (
-      actionStatus.step === ActionStep.SELECT_HEDRON_COST &&
-      data.zone === Zone.Soul &&
-      data.currentUserId === user.data?.uid
-    ) {
-      newActionStatus = actionStatus.addPayloadCostGameCardId(data.id);
-    }
-
-    if (newActionStatus.isCompleted() && newActionStatus.type) {
-      const { type, payload } = newActionStatus;
-      await dispatchGameAction({
-        variables: {
-          id: gameId,
-          data: { type, payload },
-        },
-      });
-      newActionStatus = new ActionStatus();
-    }
-
-    await dispatch({
-      type: 'SET_ACTION_STATUS',
-      payload: newActionStatus,
-    });
-  };
+  const { handleClick } = useGameCardClick(data, gameId);
 
   const isDefence = data.battlePosition === BattlePosition.Defence;
 

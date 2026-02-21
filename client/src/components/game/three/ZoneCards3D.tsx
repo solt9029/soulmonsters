@@ -1,0 +1,80 @@
+import { useContext } from 'react';
+import {
+  Zone,
+  type GameCardFragment,
+} from '../../../graphql/generated/graphql-client';
+import { AppContext } from '../../../contexts/AppContext';
+import { findGameCards } from '../../../utils/game';
+import ThreeGameCard from './ThreeGameCard';
+import ThreeGameCardStack from './ThreeGameCardStack';
+
+const CARD_SPACING = 1.6;
+
+type ZoneKey = `${Zone}_${'player' | 'opponent'}`;
+
+const ZONE_POSITIONS: Record<ZoneKey, [number, number, number]> = {
+  [`${Zone.Hand}_player`]: [0, 0, 7.5],
+  [`${Zone.Battle}_player`]: [0, 0, 3.5],
+  [`${Zone.Soul}_player`]: [-4.5, 0, 5.5],
+  [`${Zone.Morgue}_player`]: [5.5, 0, 5.5],
+  [`${Zone.Deck}_player`]: [5.5, 0, 3.5],
+  [`${Zone.Hand}_opponent`]: [0, 0, -7.5],
+  [`${Zone.Battle}_opponent`]: [0, 0, -3.5],
+  [`${Zone.Soul}_opponent`]: [4.5, 0, -5.5],
+  [`${Zone.Morgue}_opponent`]: [-5.5, 0, -5.5],
+  [`${Zone.Deck}_opponent`]: [-5.5, 0, -3.5],
+};
+
+const STACK_ZONES = new Set([Zone.Deck, Zone.Morgue]);
+
+export type ZoneCards3DProps = {
+  gameCards: GameCardFragment[] | undefined;
+  zone: Zone;
+  isYours: boolean;
+  gameId: number;
+};
+
+export default function ZoneCards3D({
+  gameCards,
+  zone,
+  isYours,
+  gameId,
+}: ZoneCards3DProps) {
+  const {
+    state: { user },
+  } = useContext(AppContext);
+
+  const key: ZoneKey = `${zone}_${isYours ? 'player' : 'opponent'}`;
+  const center = ZONE_POSITIONS[key];
+
+  if (STACK_ZONES.has(zone)) {
+    return (
+      <ThreeGameCardStack
+        gameCards={gameCards}
+        zone={zone}
+        isYours={isYours}
+        position={center}
+      />
+    );
+  }
+
+  const cards = findGameCards(gameCards, user, { isYours, zone });
+  const count = cards.length;
+
+  return (
+    <>
+      {cards.map((card, i) => {
+        const offsetX = (i - (count - 1) / 2) * CARD_SPACING;
+        return (
+          <ThreeGameCard
+            key={card.id}
+            data={card}
+            gameId={gameId}
+            zone={zone}
+            position={[center[0] + offsetX, center[1], center[2]]}
+          />
+        );
+      })}
+    </>
+  );
+}
