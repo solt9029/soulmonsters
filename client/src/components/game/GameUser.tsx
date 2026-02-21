@@ -266,7 +266,7 @@ export default function GameUser({ gameUsers, isYours }: GameUserProps) {
       </LifeSection>
 
       <EnergySection>
-        <EnergyLabel>NRG</EnergyLabel>
+        <EnergyLabel>ENERGY</EnergyLabel>
         <Crystals>
           {Array.from({ length: MAX_ENERGY }, (_, i) => (
             <Crystal key={i} $active={i < energy} />
