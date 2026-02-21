@@ -18,7 +18,7 @@ export default function GameBoard3D({ gameId, gameCards }: GameBoard3DProps) {
   return (
     <Canvas
       style={{ width: '100%', height: '100%' }}
-      camera={{ position: [0, 13, 20], fov: 45 }}
+      camera={{ position: [0, 15, 20], fov: 45 }}
       shadows
     >
       <ambientLight intensity={0.6} />
