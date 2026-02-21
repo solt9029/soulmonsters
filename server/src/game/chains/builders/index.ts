@@ -15,36 +15,42 @@ export class ChainBuilder {
       return gameModel;
     }
 
-    // memo: 一旦仮実装なので、gamePendingEffectsの最初の1件しか処理しない
-    if (gameModel.gamePendingEffects[0] === undefined) {
+    if (gameModel.gamePendingEffects.length === 0) {
       return gameModel;
     }
 
-    const gamePendingEffect = gameModel.gamePendingEffects[0];
-    const effect = this.buildEffect(gamePendingEffect);
+    // TODO: 1プレイヤーの効果が複数ある場合には、順番を選択してもらう必要がある
+    // ターンプレイヤーの効果をチェーンリンク1（orderIndex: 0）として積む
+    // ChainResolverはorderIndex降順で処理するため、チェーンリンク2以降（orderIndex高）が先に解決される
+    const sortedPendingEffects = [...gameModel.gamePendingEffects].sort((a, b) => {
+      const aOrder = a.userId === gameModel.turnUserId ? 0 : 1;
+      const bOrder = b.userId === gameModel.turnUserId ? 0 : 1;
+      return aOrder - bOrder;
+    });
 
     const gameChainId = uuidv4();
+    const gameChainLinks = sortedPendingEffects.map(
+      (pendingEffect, index) =>
+        new GameChainLinkModel({
+          id: uuidv4(),
+          gameChainId,
+          orderIndex: index,
+          userId: pendingEffect.userId,
+          gameCardId: pendingEffect.gameCardId,
+          status: GameChainLinkStatus.WAITING,
+          effect: this.buildEffect(pendingEffect),
+        }),
+    );
+
     const gameChain = new GameChainModel({
       id: gameChainId,
       gameId: gameModel.id,
       status: GameChainStatus.RESOLVING,
-      gameChainLinks: [
-        new GameChainLinkModel({
-          id: uuidv4(),
-          gameChainId,
-          orderIndex: 0,
-          userId: gamePendingEffect.userId,
-          gameCardId: gamePendingEffect.gameCardId,
-          status: GameChainLinkStatus.WAITING,
-          effect,
-        }),
-      ],
+      gameChainLinks,
     });
 
     gameModel.gameChains = [...gameModel.gameChains, gameChain];
-    gameModel.gamePendingEffects = gameModel.gamePendingEffects.filter(
-      pendingEffect => pendingEffect.id !== gamePendingEffect.id,
-    );
+    gameModel.gamePendingEffects = [];
 
     return gameModel;
   }

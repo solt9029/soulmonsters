@@ -52,7 +52,7 @@ export class GameService {
       const resolvedGameModel = this.chainResolver.resolveChain(handledGameModel);
 
       // GamePendingEffectからGameChainを構築 & 解決
-      const builtGameModel = this.chainBuilder.buildChain(resolvedGameModel); // 今の所仮実装で1件しか処理していない
+      const builtGameModel = this.chainBuilder.buildChain(resolvedGameModel);
       const finalGameModel = this.chainResolver.resolveChain(builtGameModel);
 
       return await manager.save(finalGameModel.toEntity());
