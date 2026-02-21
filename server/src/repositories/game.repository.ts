@@ -13,6 +13,17 @@ export class GameRepository {
     return entityManager.getRepository(GameEntity);
   }
 
+  async findGamesByUserId(userId: string): Promise<GameModel[]> {
+    const entities = await this.getEntityRepository()
+      .createQueryBuilder('games')
+      .leftJoinAndSelect('games.gameUsers', 'gameUsers')
+      .where('gameUsers.userId = :userId', { userId })
+      .orderBy('games.id', 'DESC')
+      .getMany();
+
+    return entities.map(entity => this.gameToModelMapper.toModel(entity));
+  }
+
   async findActiveGameByUserId(userId: string, manager?: EntityManager): Promise<GameModel | null> {
     const entity = await this.getEntityRepository(manager)
       .createQueryBuilder('games')

@@ -1,8 +1,9 @@
 import { useContext, type ChangeEvent, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   useStartGameMutation,
-  ActiveGameIdDocument,
+  GamesDocument,
   useDecksQuery,
 } from '../../graphql/generated/graphql-client';
 import { FormGroup, Input, Button } from 'reactstrap';
@@ -19,9 +20,14 @@ export default function StartGame() {
     dispatch,
   } = useContext(AppContext);
 
+  const history = useHistory();
+
   const [startGame, { loading }] = useStartGameMutation({
-    refetchQueries: [{ query: ActiveGameIdDocument }],
+    refetchQueries: [{ query: GamesDocument }],
     awaitRefetchQueries: true,
+    onCompleted: (data) => {
+      history.push(`/games/${data.startGame.id}`);
+    },
     onError: () => {
       // TODO: handle error
     },

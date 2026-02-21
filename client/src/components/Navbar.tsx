@@ -100,7 +100,7 @@ export default function Navbar() {
                 <StyledNavLink tag={RRDNavLink} exact to="/deck">
                   デッキ構築
                 </StyledNavLink>
-                <StyledNavLink tag={RRDNavLink} exact to="/game">
+                <StyledNavLink tag={RRDNavLink} exact to="/games">
                   ソウルバトル
                 </StyledNavLink>
               </Fragment>

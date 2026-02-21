@@ -1,10 +1,10 @@
 import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { AppContext } from '../../contexts/AppContext';
 import styled from 'styled-components';
 import gameActionNames from '../../constants/game-action-names';
 import {
-  useActiveGameIdQuery,
   ActionType,
   type GameCardFragment,
 } from '../../graphql/generated/graphql-client';
@@ -31,11 +31,11 @@ export default function GameActionButton({
     dispatch,
   } = useContext(AppContext);
 
-  const activeGameIdQueryResult = useActiveGameIdQuery();
-  const activeGameId = activeGameIdQueryResult.data?.activeGameId || 1;
+  const { id } = useParams<{ id: string }>();
+  const gameId = parseInt(id);
 
   const [dispatchGameAction, { loading }] =
-    useDispatchGameActionMutation(activeGameId);
+    useDispatchGameActionMutation(gameId);
 
   const handleClick = async () => {
     dispatch({ type: 'RESET_ERROR', payload: 'dispatchGameActionError' });
@@ -45,7 +45,7 @@ export default function GameActionButton({
     if (newActionStatus.isCompleted()) {
       await dispatchGameAction({
         variables: {
-          id: activeGameId,
+          id: gameId,
           data: { type, payload: { gameCardId } },
         },
       });

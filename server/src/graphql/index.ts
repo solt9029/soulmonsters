@@ -153,6 +153,7 @@ export interface IQuery {
     decks(): Deck[] | Promise<Deck[]>;
     game(id: number): Game | Promise<Game>;
     activeGameId(): Nullable<number> | Promise<Nullable<number>>;
+    games(): Game[] | Promise<Game[]>;
     userData(userId: string): UserData | Promise<UserData>;
 }
 

@@ -50,6 +50,23 @@ export class GameResolver {
     return activeGame?.id;
   }
 
+  @Query()
+  async games(@User() user: auth.DecodedIdToken) {
+    const gameModels = await this.gameRepository.findGamesByUserId(user.uid);
+
+    return Promise.all(
+      gameModels.map(async gameModel => {
+        const users = await Promise.all(
+          gameModel.gameUsers.map(async gameUser => {
+            const { uid, displayName, photoURL } = await this.userService.findById(gameUser.userId);
+            return { id: uid, displayName, photoURL };
+          }),
+        );
+        return this.gamePresenter.present(gameModel, users);
+      }),
+    );
+  }
+
   @Mutation()
   async startGame(@User() user: auth.DecodedIdToken, @Args('deckId') deckId: number) {
     const gameEntity = await this.gameService.start(user.uid, deckId);

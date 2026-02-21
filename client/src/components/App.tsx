@@ -11,6 +11,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { ID_TOKEN } from '../constants/local-storage-keys';
 import { set, rm } from 'lockr';
 import Game from '../pages/Game';
+import Games from '../pages/Games';
 import AppState from '../models/AppState';
 import reducer from '../reducer';
 import { AppContext } from '../contexts/AppContext';
@@ -41,7 +42,8 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={Index} />
         <PrivateRoute exact path="/deck" component={Deck} />
-        <PrivateRoute exact path="/game" component={Game} />
+        <PrivateRoute exact path="/games" component={Games} />
+        <PrivateRoute exact path="/games/:id" component={Game} />
         <Route exact path="/help" component={Help} />
         <Route exact path="/rule" component={Rule} />
         <Route component={NotFound} />

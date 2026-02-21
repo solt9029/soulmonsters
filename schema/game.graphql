@@ -33,6 +33,7 @@ input GameActionDispatchInput {
 type Query {
   game(id: Int!): Game!
   activeGameId: Int
+  games: [Game!]!
 }
 
 type Mutation {

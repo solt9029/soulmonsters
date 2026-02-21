@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import { Card, CardImg } from 'reactstrap';
 import styled from 'styled-components';
 import { BACK_SIDE_CARD } from '../../constants/pictures';
@@ -7,7 +8,6 @@ import {
   type GameCardFragment,
   Zone,
   BattlePosition,
-  useActiveGameIdQuery,
 } from '../../graphql/generated/graphql-client';
 import ActionStatus from '../../models/ActionStatus';
 import { ActionStep } from '../../constants/action-steps';
@@ -31,10 +31,10 @@ export default function GameCard({ data }: GameCardProps) {
     dispatch,
   } = useContext(AppContext);
 
-  const activeGameIdQueryResult = useActiveGameIdQuery();
-  const activeGameId = activeGameIdQueryResult.data?.activeGameId || 1;
+  const { id } = useParams<{ id: string }>();
+  const gameId = parseInt(id);
 
-  const [dispatchGameAction] = useDispatchGameActionMutation(activeGameId);
+  const [dispatchGameAction] = useDispatchGameActionMutation(gameId);
 
   const handleClick = async () => {
     // open modal
@@ -125,7 +125,7 @@ export default function GameCard({ data }: GameCardProps) {
       const { type, payload } = newActionStatus;
       await dispatchGameAction({
         variables: {
-          id: activeGameId,
+          id: gameId,
           data: { type, payload },
         },
       });

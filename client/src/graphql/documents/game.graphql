@@ -2,6 +2,21 @@ query activeGameId {
   activeGameId
 }
 
+query games {
+  games {
+    id
+    winnerUserId
+    startedAt
+    endedAt
+    gameUsers {
+      userId
+      user {
+        displayName
+      }
+    }
+  }
+}
+
 query game($id: Int!) {
   game(id: $id) {
     id

@@ -6,7 +6,6 @@ import {
   useGameQuery,
   Zone,
   ActionType,
-  useActiveGameIdQuery,
 } from '../../graphql/generated/graphql-client';
 import GameCardStack from './GameCardStack';
 import GameUser from './GameUser';
@@ -40,16 +39,17 @@ const StyledAlert = styled(Alert)`
   padding: 6px 12px;
 `;
 
-export default function GameCardArea() {
+export type GameCardAreaProps = {
+  gameId: number;
+};
+
+export default function GameCardArea({ gameId }: GameCardAreaProps) {
   const {
     state: { actionStatus, dispatchGameActionError },
   } = useContext(AppContext);
 
-  const activeGameIdQueryResult = useActiveGameIdQuery();
-  const activeGameId = activeGameIdQueryResult.data?.activeGameId || 1;
-
   const { data, error, loading } = useGameQuery({
-    variables: { id: activeGameId },
+    variables: { id: gameId },
   });
 
   if (error) {

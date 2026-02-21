@@ -234,6 +234,7 @@ export type Query = {
   deckCards: Array<DeckCard>;
   decks: Array<Deck>;
   game: Game;
+  games: Array<Game>;
   userData: UserData;
 };
 
@@ -340,6 +341,11 @@ export type ActiveGameIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ActiveGameIdQuery = { __typename?: 'Query', activeGameId?: number | null };
+
+export type GamesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GamesQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', id: number, winnerUserId?: string | null, startedAt?: any | null, endedAt?: any | null, gameUsers: Array<{ __typename?: 'GameUser', userId: string, user: { __typename?: 'User', displayName?: string | null } }> }> };
 
 export type GameQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -694,6 +700,57 @@ export type ActiveGameIdQueryHookResult = ReturnType<typeof useActiveGameIdQuery
 export type ActiveGameIdLazyQueryHookResult = ReturnType<typeof useActiveGameIdLazyQuery>;
 export type ActiveGameIdSuspenseQueryHookResult = ReturnType<typeof useActiveGameIdSuspenseQuery>;
 export type ActiveGameIdQueryResult = Apollo.QueryResult<ActiveGameIdQuery, ActiveGameIdQueryVariables>;
+export const GamesDocument = gql`
+    query games {
+  games {
+    id
+    winnerUserId
+    startedAt
+    endedAt
+    gameUsers {
+      userId
+      user {
+        displayName
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGamesQuery__
+ *
+ * To run a query within a React component, call `useGamesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGamesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGamesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGamesQuery(baseOptions?: Apollo.QueryHookOptions<GamesQuery, GamesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GamesQuery, GamesQueryVariables>(GamesDocument, options);
+      }
+export function useGamesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GamesQuery, GamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GamesQuery, GamesQueryVariables>(GamesDocument, options);
+        }
+// @ts-ignore
+export function useGamesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GamesQuery, GamesQueryVariables>): Apollo.UseSuspenseQueryResult<GamesQuery, GamesQueryVariables>;
+export function useGamesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GamesQuery, GamesQueryVariables>): Apollo.UseSuspenseQueryResult<GamesQuery | undefined, GamesQueryVariables>;
+export function useGamesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GamesQuery, GamesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GamesQuery, GamesQueryVariables>(GamesDocument, options);
+        }
+export type GamesQueryHookResult = ReturnType<typeof useGamesQuery>;
+export type GamesLazyQueryHookResult = ReturnType<typeof useGamesLazyQuery>;
+export type GamesSuspenseQueryHookResult = ReturnType<typeof useGamesSuspenseQuery>;
+export type GamesQueryResult = Apollo.QueryResult<GamesQuery, GamesQueryVariables>;
 export const GameDocument = gql`
     query game($id: Int!) {
   game(id: $id) {
