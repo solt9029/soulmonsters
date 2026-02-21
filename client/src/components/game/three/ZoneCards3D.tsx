@@ -71,6 +71,7 @@ export default function ZoneCards3D({
             data={card}
             gameId={gameId}
             zone={zone}
+            isYours={isYours}
             position={[center[0] + offsetX, center[1], center[2]]}
           />
         );

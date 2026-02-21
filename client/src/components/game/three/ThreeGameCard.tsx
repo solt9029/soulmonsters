@@ -23,6 +23,7 @@ export type ThreeGameCardProps = {
   gameId: number;
   position: [number, number, number];
   zone: Zone;
+  isYours: boolean;
 };
 
 function CardMesh({
@@ -30,6 +31,7 @@ function CardMesh({
   gameId,
   position,
   zone,
+  isYours,
   frontTexture,
   backTexture,
 }: ThreeGameCardProps & {
@@ -79,9 +81,11 @@ function CardMesh({
     new THREE.MeshStandardMaterial({ color: sideColor }),
   ];
 
+  // Opponent flat cards are rotated 180° around Y so they face toward their own side
+  const baseYRot = isHand ? 0 : isYours ? 0 : Math.PI;
   const rotation: [number, number, number] = isHand
     ? [Math.PI / 2, 0, 0]
-    : [0, isDefence ? Math.PI / 2 : 0, 0];
+    : [0, baseYRot + (isDefence ? Math.PI / 2 : 0), 0];
 
   const posY = isHand ? CARD_H / 2 : BASE_Y_FLAT;
 
