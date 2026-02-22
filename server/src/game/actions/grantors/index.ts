@@ -53,9 +53,6 @@ function clearNonExclusiveActions(gameModel: GameModel): GameModel {
 
   gameModel.gameUsers = gameModel.gameUsers.map(gu => {
     const exclusiveActions = gu.actionTypes.filter(at => EXCLUSIVE_ACTION_TYPES.includes(at));
-    if (gu.actionTypes.length === exclusiveActions.length) {
-      return gu;
-    }
     return new GameUserModel({ ...gu, actionTypes: exclusiveActions });
   });
 
