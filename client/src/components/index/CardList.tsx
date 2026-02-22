@@ -14,7 +14,7 @@ const pictures = [
 
 export default function CardList() {
   return (
-    <Container>
+    <Container fluid>
       <Row>
         {pictures.map((picture) => (
           <Col marginBottom={30} lg={3} md={4} sm={6} xs={6}>
