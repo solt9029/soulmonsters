@@ -48,7 +48,10 @@ export default function ZoneCards3D({
   const count = gameCards.length;
   const naturalHalfSpread = ((count - 1) / 2) * CARD_SPACING; // 基本的には中央に並べていく
   const deckSideDirection = isYours ? 1 : -1;
-  const overshoot = Math.max(0, naturalHalfSpread - DECK_SIDE_BOUNDARY); // バトルとソウルゾーンのカードが、デッキとモルグゾーンに侵食しないように、はみ出そうな時は調整する
+  const overshoot =
+    zone === Zone.Battle || zone === Zone.Soul
+      ? Math.max(0, naturalHalfSpread - DECK_SIDE_BOUNDARY)
+      : 0; // バトルとソウルゾーンのカードが、デッキとモルグゾーンに侵食しないように、はみ出そうな時は調整する
   const effectiveCenterX = center[0] - deckSideDirection * overshoot;
 
   return (
