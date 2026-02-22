@@ -48,11 +48,10 @@ function CardMesh({
   const [hovered, setHovered] = useState(false);
 
   const isHand = zone === Zone.Hand;
-  const isDefence = !isHand && data.battlePosition === BattlePosition.Defence;
+  const isDefence = data.battlePosition === BattlePosition.Defence;
   const isSelected =
     actionStatus.payload.costGameCardIds?.includes(data.id) ||
-    actionStatus.payload.targetGameCardIds?.includes(data.id) ||
-    false;
+    actionStatus.payload.targetGameCardIds?.includes(data.id);
 
   useFrame(() => {
     if (!meshRef.current) return;
