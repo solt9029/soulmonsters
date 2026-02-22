@@ -6,6 +6,7 @@ import ThreeGameCard from './ThreeGameCard';
 import ThreeGameCardStack from './ThreeGameCardStack';
 
 const CARD_SPACING = 1.6;
+const DECK_SIDE_BOUNDARY = 3.0;
 
 type ZoneKey = `${Zone}_${'player' | 'opponent'}`;
 
@@ -45,19 +46,23 @@ export default function ZoneCards3D({
   }
 
   const count = gameCards.length;
+  const naturalHalfSpread = ((count - 1) / 2) * CARD_SPACING; // 基本的には中央に並べていく
+  const deckSideDirection = isYours ? 1 : -1;
+  const overshoot = Math.max(0, naturalHalfSpread - DECK_SIDE_BOUNDARY); // バトルとソウルゾーンのカードが、デッキとモルグゾーンに侵食しないように、はみ出そうな時は調整する
+  const effectiveCenterX = center[0] - deckSideDirection * overshoot;
 
   return (
     <>
-      {gameCards.map((card, i) => {
+      {gameCards.map((gameCard, i) => {
         const offsetX = (i - (count - 1) / 2) * CARD_SPACING;
         return (
           <ThreeGameCard
-            key={card.id}
-            data={card}
+            key={gameCard.id}
+            data={gameCard}
             gameId={gameId}
             zone={zone}
             isYours={isYours}
-            position={[center[0] + offsetX, center[1], center[2]]}
+            position={[effectiveCenterX + offsetX, center[1], center[2]]}
           />
         );
       })}
