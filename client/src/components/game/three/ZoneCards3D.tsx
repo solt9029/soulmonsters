@@ -12,12 +12,12 @@ type ZoneKey = `${Zone}_${'player' | 'opponent'}`;
 const ZONE_POSITIONS: Record<ZoneKey, [number, number, number]> = {
   [`${Zone.Hand}_player`]: [0, 0, 7.75],
   [`${Zone.Battle}_player`]: [0, 0, 2],
-  [`${Zone.Soul}_player`]: [-4.5, 0, 5],
+  [`${Zone.Soul}_player`]: [-0, 0, 5],
   [`${Zone.Morgue}_player`]: [5.5, 0, 5],
   [`${Zone.Deck}_player`]: [5.5, 0, 2],
   [`${Zone.Hand}_opponent`]: [0, 0, -7.75],
   [`${Zone.Battle}_opponent`]: [0, 0, -2],
-  [`${Zone.Soul}_opponent`]: [4.5, 0, -5],
+  [`${Zone.Soul}_opponent`]: [0, 0, -5],
   [`${Zone.Morgue}_opponent`]: [-5.5, 0, -5],
   [`${Zone.Deck}_opponent`]: [-5.5, 0, -2],
 };

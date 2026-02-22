@@ -15,7 +15,7 @@ import { AppContext } from '../../../contexts/AppContext';
 const CARD_W = 1.4;
 const CARD_H = 2.0;
 const CARD_D = 0.02;
-const HOVER_FLOAT = 0.3;
+const HOVER_FLOAT = 0.5;
 const BASE_Y_FLAT = 0.025;
 const BASE_Y_HAND = CARD_H / 2;
 
