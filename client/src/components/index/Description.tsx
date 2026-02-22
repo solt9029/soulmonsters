@@ -10,7 +10,7 @@ const StyledContainer = styled(Container)`
 
 export default function Description() {
   return (
-    <StyledContainer fluid>
+    <StyledContainer>
       <Row marginTop={70}>
         <Col xs={12}>
           <h2>オンライン対戦カードゲーム</h2>
