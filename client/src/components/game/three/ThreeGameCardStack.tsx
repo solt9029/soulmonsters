@@ -56,7 +56,7 @@ function StackMeshes({
         const materials = [
           new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
           new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
-          new THREE.MeshStandardMaterial({
+          new THREE.MeshBasicMaterial({
             map: isTop ? topTexture : backTexture,
           }),
           new THREE.MeshStandardMaterial({ map: backTexture }),

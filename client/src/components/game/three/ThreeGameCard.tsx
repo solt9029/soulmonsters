@@ -72,10 +72,9 @@ function CardMesh({
   const materials = [
     new THREE.MeshStandardMaterial({ color: sideColor }),
     new THREE.MeshStandardMaterial({ color: sideColor }),
-    new THREE.MeshStandardMaterial({
+    new THREE.MeshBasicMaterial({
       map: frontTexture,
-      emissive: new THREE.Color(isSelected ? '#ff2200' : '#000000'),
-      emissiveIntensity: isSelected ? 0.5 : 0,
+      color: new THREE.Color(isSelected ? '#ff8866' : '#cccccc'),
     }),
     new THREE.MeshStandardMaterial({ map: backTexture }),
     new THREE.MeshStandardMaterial({ color: sideColor }),
