@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button } from 'reactstrap';
 import { AppContext } from '../../contexts/AppContext';
 import styled from 'styled-components';
 import gameActionNames from '../../constants/game-action-names';
@@ -10,10 +9,40 @@ import {
 } from '../../graphql/generated/graphql-client';
 import { useDispatchGameActionMutation } from '../../hooks/useDispatchGameActionMutation';
 
-const StyledButton = styled(Button)`
+const StyledButton = styled.button`
+  background: rgba(180, 140, 30, 0.08);
+  border: 1px solid rgba(180, 140, 30, 0.5);
+  border-radius: 4px;
+  color: #d4bc7a;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  cursor: pointer;
+  white-space: nowrap;
   width: 100%;
-  & + & {
-    margin-left: 10px;
+  font-family: inherit;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: rgba(180, 140, 30, 0.2);
+    border-color: rgba(220, 170, 40, 0.85);
+    color: #f2c84b;
+    box-shadow: 0 0 10px rgba(180, 140, 30, 0.35);
+  }
+
+  &:active:not(:disabled) {
+    background: rgba(180, 140, 30, 0.3);
+    box-shadow: 0 0 14px rgba(180, 140, 30, 0.5);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
   }
 `;
 
@@ -59,7 +88,7 @@ export default function GameActionButton({
   };
 
   return (
-    <StyledButton color="primary" onClick={handleClick} disabled={loading}>
+    <StyledButton onClick={handleClick} disabled={loading}>
       {gameActionNames[type]}
     </StyledButton>
   );
