@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { GameModel } from '../../../models/game.model';
-import { ActionType } from '../../../graphql/index';
+import { ActionType, EffectType } from '../../../graphql/index';
 import { GameCardModel } from '../../../models/game-card.model';
 import { GameUserModel } from '../../../models/game-user.model';
 import { grantStartDrawTimeAction } from './startDrawTime';
@@ -39,7 +39,12 @@ function clearNonExclusiveActions(gameModel: GameModel): GameModel {
     gameModel.gameCards.some(gc => gc.actionTypes.some(at => EXCLUSIVE_ACTION_TYPES.includes(at))) ||
     gameModel.gameUsers.some(gu => gu.actionTypes.some(at => EXCLUSIVE_ACTION_TYPES.includes(at)));
 
-  if (!hasExclusiveAction) {
+  // Check for pending Hamontaki effects that would grant exclusive actions
+  const hasPendingHamontakiEffect = gameModel.gamePendingEffects.some(
+    effect => effect.effectType === EffectType.HAMONTAKI_SPECIAL_SUMMON,
+  );
+
+  if (!hasExclusiveAction && !hasPendingHamontakiEffect) {
     return gameModel;
   }
 
