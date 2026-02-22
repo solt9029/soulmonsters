@@ -85,7 +85,7 @@ function CardMesh({
   // Opponent flat cards are rotated 180° around Y so they face toward their own side
   const baseYRot = isHand ? 0 : isYours ? 0 : Math.PI;
   const rotation: [number, number, number] = isHand
-    ? [Math.PI / 2, 0, 0]
+    ? [(Math.PI / 2) * 0.6, 0, 0]
     : [0, baseYRot + (isDefence ? Math.PI / 2 : 0), 0];
 
   const posY = isHand ? BASE_Y_HAND : BASE_Y_FLAT;
