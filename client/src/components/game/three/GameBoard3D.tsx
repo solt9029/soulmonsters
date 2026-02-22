@@ -8,6 +8,7 @@ import { AppContext } from '../../../contexts/AppContext';
 import { findGameCards } from '../../../utils/game';
 import TableMesh from './TableMesh';
 import ZoneCards3D from './ZoneCards3D';
+import FloatingSouls from './FloatingSouls';
 
 const ALL_ZONES = [Zone.Hand, Zone.Battle, Zone.Soul, Zone.Morgue, Zone.Deck];
 
@@ -32,6 +33,7 @@ export default function GameBoard3D({ gameId, gameCards }: GameBoard3DProps) {
       <pointLight position={[0, 8, 0]} intensity={0.4} color="#ffffff" />
 
       <TableMesh />
+      <FloatingSouls />
 
       <Suspense fallback={null}>
         {ALL_ZONES.map((zone) => (
