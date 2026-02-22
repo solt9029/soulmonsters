@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { GameModel } from '../../../models/game.model';
-import { ActionType } from '../../../graphql/index';
+import { ActionType, EffectType } from '../../../graphql/index';
 import { GameCardModel } from '../../../models/game-card.model';
 import { GameUserModel } from '../../../models/game-user.model';
+import { GameChainStatus } from '../../../models/game-chain.model';
+import { GameChainLinkStatus } from '../../../models/game-chain-link.model';
 import { grantStartDrawTimeAction } from './startDrawTime';
 import { grantStartEnergyTimeAction } from './startEnergyTime';
 import { grantStartPutTimeAction } from './startPutTime';
@@ -34,33 +36,32 @@ const EXCLUSIVE_ACTION_TYPES: ActionType[] = [
   ActionType.SELECT_AS_HEDRON_TARGET,
 ];
 
+function hasResolvingExclusiveEffect(gameModel: GameModel): boolean {
+  const resolvingChain = gameModel.gameChains.find(c => c.status === GameChainStatus.RESOLVING);
+  if (!resolvingChain) return false;
+
+  const resolvingLink = resolvingChain.gameChainLinks.find(cl => cl.status === GameChainLinkStatus.RESOLVING);
+  if (!resolvingLink) return false;
+
+  const { effect } = resolvingLink;
+  return (
+    (effect.type === EffectType.HAMONTAKI_SPECIAL_SUMMON && effect.selectedGameCardId === undefined) ||
+    (effect.type === EffectType.HEDRON_SPECIAL_SUMMON && effect.selectedGameCardId === undefined)
+  );
+}
+
 function clearNonExclusiveActions(gameModel: GameModel): GameModel {
-  // TODO: バグです！！相手がSELECT_AS_HAMONTAKI_TARGETやSELECT_AS_HEDRON_TARGETを持っているときに、自分がSTART_END_TIMEなどを持っている時、そのアクションがそのまま使えてしまう。相手のアクションを自分が使うことができないから。しかし、SELECT_AS_HAMONTAKI_TARGETやSELECT_AS_HEDRON_TARGETが有効な時は、全プレイヤーにおいて他のアクションを取れない状態にしたいのだ。
-  console.log(gameModel.gameCards.map(gc => gc.actionTypes).flat());
-  console.log(gameModel.gameUsers.map(gu => gu.actionTypes).flat());
-
-  const hasExclusiveAction =
-    gameModel.gameCards.some(gc => gc.actionTypes.some(at => EXCLUSIVE_ACTION_TYPES.includes(at))) ||
-    gameModel.gameUsers.some(gu => gu.actionTypes.some(at => EXCLUSIVE_ACTION_TYPES.includes(at)));
-
-  if (!hasExclusiveAction) {
-    console.log('***** No exclusive actions found, skipping clearNonExclusiveActions *****');
+  if (!hasResolvingExclusiveEffect(gameModel)) {
     return gameModel;
   }
 
   gameModel.gameCards = gameModel.gameCards.map(gc => {
     const exclusiveActions = gc.actionTypes.filter(at => EXCLUSIVE_ACTION_TYPES.includes(at));
-    if (gc.actionTypes.length === exclusiveActions.length) {
-      return gc;
-    }
     return new GameCardModel({ ...gc, actionTypes: exclusiveActions });
   });
 
   gameModel.gameUsers = gameModel.gameUsers.map(gu => {
     const exclusiveActions = gu.actionTypes.filter(at => EXCLUSIVE_ACTION_TYPES.includes(at));
-    if (gu.actionTypes.length === exclusiveActions.length) {
-      return gu;
-    }
     return new GameUserModel({ ...gu, actionTypes: exclusiveActions });
   });
 
