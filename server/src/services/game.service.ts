@@ -48,6 +48,11 @@ export class GameService {
         this.gameActionHandler.handleAction(data, userId, grantedGameModel),
       );
 
+      // チェーン処理前のゲーム終了チェック
+      if (handledGameModel.endedAt !== null) {
+        return await manager.save(handledGameModel.toEntity());
+      }
+
       // GameChainを解決
       const resolvedGameModel = this.chainResolver.resolveChain(handledGameModel);
 
