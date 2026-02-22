@@ -86,7 +86,7 @@ export default function Navbar() {
   };
 
   return (
-    <RNavbar className="py-0" color="light" light expand="md">
+    <RNavbar className="py-0" color="light" light expand="md" container={false}>
       <Container>
         <ServiceLogo tag={Link} to="/" />
         <NavbarBrand tag={Link} to="/">
@@ -94,7 +94,7 @@ export default function Navbar() {
         </NavbarBrand>
         <NavbarToggler onClick={toggleCollapse} className="my-2" />
         <StyledCollapse isOpen={isCollapseOpen} navbar>
-          <Nav className="mr-auto" navbar>
+          <Nav className="me-auto" navbar>
             {user?.data !== null && (
               <Fragment>
                 <StyledNavLink tag={RRDNavLink} exact to="/deck">
