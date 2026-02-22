@@ -44,7 +44,8 @@ function CardMesh({
   } = useContext(AppContext);
 
   const { handleClick } = useGameCardClick(data, gameId);
-  const meshRef = useRef<THREE.Mesh>(null!);
+  const groupRef = useRef<THREE.Group>(null!);
+  const glowMatRef = useRef<THREE.MeshBasicMaterial | null>(null);
   const [hovered, setHovered] = useState(false);
 
   const isHand = zone === Zone.Hand;
@@ -53,32 +54,33 @@ function CardMesh({
     actionStatus.payload.costGameCardIds?.includes(data.id) ||
     actionStatus.payload.targetGameCardIds?.includes(data.id);
 
-  useFrame(() => {
-    if (!meshRef.current) return;
+  useFrame(({ clock }) => {
+    if (!groupRef.current) return;
     const baseY = isHand ? BASE_Y_HAND : BASE_Y_FLAT;
     const targetY = hovered ? baseY + HOVER_FLOAT : baseY;
-    meshRef.current.position.y = THREE.MathUtils.lerp(
-      meshRef.current.position.y,
+    groupRef.current.position.y = THREE.MathUtils.lerp(
+      groupRef.current.position.y,
       targetY,
       0.12
     );
+    if (glowMatRef.current) {
+      glowMatRef.current.opacity = 0.5 + 0.35 * Math.sin(clock.elapsedTime * 5);
+    }
   });
-
-  const sideColor = isSelected ? '#ff3300' : '#1a1a1a';
 
   // BoxGeometry face order: 0=+X, 1=-X, 2=+Y, 3=-Y, 4=+Z, 5=-Z
   // Flat (rotation=[0,0,0]): +Y face (mat2) faces up → front texture visible from camera above
   // Standing (rotation=[π/2,0,0]): +Y local (mat2) → world +Z → faces camera
   const materials = [
-    new THREE.MeshStandardMaterial({ color: sideColor }),
-    new THREE.MeshStandardMaterial({ color: sideColor }),
+    new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
+    new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
     new THREE.MeshBasicMaterial({
       map: frontTexture,
-      color: new THREE.Color(isSelected ? '#ff8866' : '#cccccc'),
+      color: new THREE.Color('#cccccc'),
     }),
     new THREE.MeshStandardMaterial({ map: backTexture }),
-    new THREE.MeshStandardMaterial({ color: sideColor }),
-    new THREE.MeshStandardMaterial({ color: sideColor }),
+    new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
+    new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
   ];
 
   // Opponent flat cards are rotated 180° around Y so they face toward their own side
@@ -88,13 +90,13 @@ function CardMesh({
     : [0, baseYRot + (isDefence ? Math.PI / 2 : 0), 0];
 
   const posY = isHand ? BASE_Y_HAND : BASE_Y_FLAT;
+  const GLOW_BORDER = 0.07;
 
   return (
-    <mesh
-      ref={meshRef}
+    <group
+      ref={groupRef}
       position={[position[0], posY, position[2]]}
       rotation={rotation}
-      material={materials}
       onPointerDown={(e) => {
         e.stopPropagation();
         handleClick();
@@ -107,10 +109,24 @@ function CardMesh({
         setHovered(false);
         document.body.style.cursor = 'default';
       }}
-      castShadow
     >
-      <boxGeometry args={[CARD_W, CARD_D, CARD_H]} />
-    </mesh>
+      <mesh material={materials} castShadow>
+        <boxGeometry args={[CARD_W, CARD_D, CARD_H]} />
+      </mesh>
+      {isSelected && (
+        <mesh position={[0, -0.002, 0]}>
+          <boxGeometry
+            args={[CARD_W + GLOW_BORDER * 2, CARD_D, CARD_H + GLOW_BORDER * 2]}
+          />
+          <meshBasicMaterial
+            ref={glowMatRef}
+            color="#00eeff" // TODO: 色は変えてもいいかも。ボタンの色とかに合わせる？
+            transparent
+            opacity={0.8}
+          />
+        </mesh>
+      )}
+    </group>
   );
 }
 
