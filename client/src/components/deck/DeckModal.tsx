@@ -286,9 +286,7 @@ export default function DeckModal() {
             onClick={handleClick}
             disabled={loading}
           >
-            {deckModal.data.isInDeck
-              ? 'デッキから抜く'
-              : 'デッキへ追加する'}
+            {deckModal.data.isInDeck ? 'デッキから抜く' : 'デッキへ追加する'}
           </ActionButton>
           <ActionButton $variant="back" onClick={closeModal}>
             戻る
