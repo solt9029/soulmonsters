@@ -3,7 +3,7 @@ import { Container, Button } from 'reactstrap';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../contexts/AppContext';
-import { login } from '../../actions/user';
+import { loginWithTwitter, loginWithGoogle } from '../../actions/user';
 
 const StyledJumbotron = styled.div`
   padding: 4rem 2rem;
@@ -40,8 +40,12 @@ export default function Jumbotron() {
     dispatch,
   } = useContext(AppContext);
 
-  const handleLoginClick = async () => {
-    await login(dispatch, { user });
+  const handleTwitterLoginClick = async () => {
+    await loginWithTwitter(dispatch, { user });
+  };
+
+  const handleGoogleLoginClick = async () => {
+    await loginWithGoogle(dispatch, { user });
   };
 
   return (
@@ -49,9 +53,22 @@ export default function Jumbotron() {
       <Container>
         <Title>ソウルモンスターズ</Title>
         {user.data === null ? (
-          <StyledButton color="info" size="lg" onClick={handleLoginClick}>
-            <ButtonText>Twitterログイン</ButtonText>
-          </StyledButton>
+          <>
+            <StyledButton
+              color="info"
+              size="lg"
+              onClick={handleTwitterLoginClick}
+            >
+              <ButtonText>Twitterログイン</ButtonText>
+            </StyledButton>
+            <StyledButton
+              color="danger"
+              size="lg"
+              onClick={handleGoogleLoginClick}
+            >
+              <ButtonText>Googleログイン</ButtonText>
+            </StyledButton>
+          </>
         ) : (
           <StyledButton color="info" size="lg" tag={Link} to="/deck">
             <ButtonText>デッキ構築</ButtonText>
