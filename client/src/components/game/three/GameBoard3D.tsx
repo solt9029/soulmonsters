@@ -24,12 +24,12 @@ export default function GameBoard3D({ gameId, gameCards }: GameBoard3DProps) {
   return (
     <Canvas
       style={{ width: '100%', height: '100%' }}
-      camera={{ position: [0, 15, 20], fov: 45 }}
+      camera={{ position: [0, 22, 7], fov: 45 }}
       shadows
     >
       <ambientLight intensity={0.6} />
       <directionalLight position={[5, 15, 5]} intensity={1.2} castShadow />
-      <pointLight position={[0, 8, 0]} intensity={0.4} color="#4466aa" />
+      <pointLight position={[0, 8, 0]} intensity={0.4} color="#ffffff" />
 
       <TableMesh />
 

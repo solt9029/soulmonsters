@@ -223,40 +223,40 @@ export default function TableMesh() {
           Battle x=0  w=8 → edge x=4   gap=0.55 to Deck   (x=5.5, edge=4.55)
           Soul   x=-4.5 w=8 → edge x=0.5 no overlap w/ Morgue (x=5.5) */}
       <ZoneRect
-        position={[-1.5, 0, 3.5]}
+        position={[-1.5, 0, 2]}
         width={11}
         depth={2.8}
         color="#0044cc"
         emissive="#0088ff"
       />
       <ZoneRect
-        position={[-1.5, 0, 6.5]}
+        position={[-1.5, 0, 5]}
         width={11}
         depth={2.8}
         color="#0044cc"
         emissive="#0088ff"
       />
-      <ZoneRect position={[5.5, 0, 6.5]} color="#0044cc" emissive="#0088ff" />
-      <ZoneRect position={[5.5, 0, 3.5]} color="#0044cc" emissive="#0088ff" />
+      <ZoneRect position={[5.5, 0, 5]} color="#0044cc" emissive="#0088ff" />
+      <ZoneRect position={[5.5, 0, 2]} color="#0044cc" emissive="#0088ff" />
       {/* Opponent (mirrored):
           Battle x=0  w=8 → edge x=4   gap=0.55 to Deck   (x=-5.5, edge=-4.55)
           Soul   x=4.5 w=8 → edge x=0.5 no overlap w/ Morgue (x=-5.5) */}
       <ZoneRect
-        position={[1.5, 0, -3.5]}
+        position={[1.5, 0, -2]}
         width={11}
         depth={2.8}
         color="#cc2200"
         emissive="#ff5500"
       />
       <ZoneRect
-        position={[1.5, 0, -6.5]}
+        position={[1.5, 0, -5]}
         width={11}
         depth={2.8}
         color="#cc2200"
         emissive="#ff5500"
       />
-      <ZoneRect position={[-5.5, 0, -6.5]} color="#cc2200" emissive="#ff5500" />
-      <ZoneRect position={[-5.5, 0, -3.5]} color="#cc2200" emissive="#ff5500" />
+      <ZoneRect position={[-5.5, 0, -5]} color="#cc2200" emissive="#ff5500" />
+      <ZoneRect position={[-5.5, 0, -2]} color="#cc2200" emissive="#ff5500" />
 
       {/* ── PERIMETER BORDER ── */}
       <mesh position={[0, 0.15, -13.15]}>
