@@ -1,6 +1,5 @@
 import { useContext } from 'react';
-import { Alert } from 'reactstrap';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {
   useGameQuery,
   ActionType,
@@ -10,6 +9,11 @@ import { AppContext } from '../../contexts/AppContext';
 import { GameActionAlert } from './GameActionAlert';
 import GameBoard3D from './three/GameBoard3D';
 
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+`;
+
 const AlertsOverlay = styled.div`
   pointer-events: none;
   position: absolute;
@@ -17,7 +21,7 @@ const AlertsOverlay = styled.div`
   left: 0;
   width: 100%;
   z-index: 10;
-  padding: 8px;
+  padding: 12px 36px;
 `;
 
 const InteractiveOverlay = styled.div`
@@ -27,22 +31,46 @@ const InteractiveOverlay = styled.div`
 const PlayerInfoTopRight = styled.div`
   pointer-events: auto;
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 68px;
+  right: 36px;
   z-index: 10;
 `;
 
 const PlayerInfoBottomLeft = styled.div`
   pointer-events: auto;
   position: absolute;
-  bottom: 12px;
-  left: 12px;
+  bottom: 68px;
+  left: 36px;
   z-index: 10;
 `;
 
-const StyledAlert = styled(Alert)`
-  padding: 6px 12px;
+const GameAlert = styled.div<{ variant?: 'primary' | 'danger' }>`
+  padding: 8px 14px;
   margin-bottom: 4px;
+  background: linear-gradient(
+    145deg,
+    rgba(5, 8, 20, 0.92) 0%,
+    rgba(12, 18, 38, 0.88) 100%
+  );
+  border: 1px solid
+    ${({ variant }) =>
+      variant === 'danger'
+        ? 'rgba(200, 40, 40, 0.65)'
+        : 'rgba(180, 140, 30, 0.55)'};
+  border-radius: 6px;
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    ${({ variant }) =>
+      variant === 'danger'
+        ? '0 0 12px rgba(200, 40, 40, 0.1)'
+        : '0 0 12px rgba(180, 140, 30, 0.08)'};
+  color: ${({ variant }) => (variant === 'danger' ? '#e87070' : '#d4bc7a')};
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  animation: ${fadeIn} 0.2s ease;
 `;
 
 const LoadingText = styled.div`
@@ -66,7 +94,9 @@ export default function GameCardArea({ gameId }: GameCardAreaProps) {
   if (error) {
     return (
       <LoadingText>
-        <Alert color="danger">ゲーム情報の取得中にエラーが発生しました</Alert>
+        <GameAlert variant="danger">
+          ゲーム情報の取得中にエラーが発生しました
+        </GameAlert>
       </LoadingText>
     );
   }
@@ -103,19 +133,19 @@ export default function GameCardArea({ gameId }: GameCardAreaProps) {
             <GameActionAlert />
           )}
           {hasHamontakiTargetSelection && (
-            <StyledAlert color="primary">
+            <GameAlert>
               モルグゾーンからバトルゾーンに特殊召喚するモンスターを選択してください
-            </StyledAlert>
+            </GameAlert>
           )}
           {hasHedronTargetSelection && (
-            <StyledAlert color="primary">
+            <GameAlert>
               モルグゾーンからバトルゾーンに特殊召喚する紫モンスターを選択してください
-            </StyledAlert>
+            </GameAlert>
           )}
           {dispatchGameActionError !== null && (
-            <StyledAlert color="danger">
+            <GameAlert variant="danger">
               {dispatchGameActionError.message}
-            </StyledAlert>
+            </GameAlert>
           )}
         </InteractiveOverlay>
       </AlertsOverlay>
