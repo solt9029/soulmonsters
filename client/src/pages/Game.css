@@ -114,6 +114,73 @@
   color: #cc8888;
 }
 
+.game-result-buttons {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  margin-top: 2.5rem;
+  opacity: 0;
+  animation: resultSubTextAppear 0.5s ease-out 1.3s forwards;
+}
+
+.game-result-btn {
+  padding: 0.7em 2em;
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  letter-spacing: 0.15em;
+  font-family: inherit;
+  background: transparent;
+  border: 1px solid;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.game-result-victory .game-result-btn {
+  color: #ffd700;
+  border-color: rgba(255, 215, 0, 0.6);
+}
+
+.game-result-victory .game-result-btn:hover {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+.game-result-victory .game-result-btn-primary {
+  background: rgba(255, 215, 0, 0.12);
+  border-color: #ffd700;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.game-result-victory .game-result-btn-primary:hover {
+  background: rgba(255, 215, 0, 0.28);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.game-result-defeat .game-result-btn {
+  color: #cc8888;
+  border-color: rgba(200, 80, 80, 0.5);
+}
+
+.game-result-defeat .game-result-btn:hover {
+  background: rgba(200, 50, 50, 0.15);
+  border-color: #cc5555;
+  box-shadow: 0 0 12px rgba(200, 50, 50, 0.4);
+}
+
+.game-result-defeat .game-result-btn-primary {
+  background: rgba(200, 50, 50, 0.12);
+  border-color: #cc5555;
+  box-shadow: 0 0 8px rgba(200, 50, 50, 0.3);
+}
+
+.game-result-defeat .game-result-btn-primary:hover {
+  background: rgba(200, 50, 50, 0.28);
+  box-shadow: 0 0 20px rgba(200, 50, 50, 0.5);
+}
+
 @keyframes resultBackgroundFadeIn {
   from {
     opacity: 0;
