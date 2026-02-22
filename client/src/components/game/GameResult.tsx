@@ -21,20 +21,20 @@ export default function GameResult({ isWinner }: Props) {
         </div>
         <div className="game-result-divider" />
         <div className="game-result-sub-text">
-          {isWinner ? '勝利しました！' : '敗北しました。'}
+          {isWinner ? '勝利しました' : '敗北しました'}
         </div>
         <div className="game-result-buttons">
           <button
             className="game-result-btn game-result-btn-secondary"
             onClick={() => setDismissed(true)}
           >
-            盤面を確認する
+            最終盤面を確認
           </button>
           <button
             className="game-result-btn game-result-btn-primary"
             onClick={() => history.push('/games')}
           >
-            ゲーム一覧へ戻る
+            メニューへ戻る
           </button>
         </div>
       </div>
