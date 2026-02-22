@@ -35,11 +35,16 @@ const EXCLUSIVE_ACTION_TYPES: ActionType[] = [
 ];
 
 function clearNonExclusiveActions(gameModel: GameModel): GameModel {
+  // TODO: バグです！！相手がSELECT_AS_HAMONTAKI_TARGETやSELECT_AS_HEDRON_TARGETを持っているときに、自分がSTART_END_TIMEなどを持っている時、そのアクションがそのまま使えてしまう。相手のアクションを自分が使うことができないから。しかし、SELECT_AS_HAMONTAKI_TARGETやSELECT_AS_HEDRON_TARGETが有効な時は、全プレイヤーにおいて他のアクションを取れない状態にしたいのだ。
+  console.log(gameModel.gameCards.map(gc => gc.actionTypes).flat());
+  console.log(gameModel.gameUsers.map(gu => gu.actionTypes).flat());
+
   const hasExclusiveAction =
     gameModel.gameCards.some(gc => gc.actionTypes.some(at => EXCLUSIVE_ACTION_TYPES.includes(at))) ||
     gameModel.gameUsers.some(gu => gu.actionTypes.some(at => EXCLUSIVE_ACTION_TYPES.includes(at)));
 
   if (!hasExclusiveAction) {
+    console.log('***** No exclusive actions found, skipping clearNonExclusiveActions *****');
     return gameModel;
   }
 
