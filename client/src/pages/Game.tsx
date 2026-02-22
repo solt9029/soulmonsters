@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { Alert } from 'reactstrap';
 import { Container } from '../styled/reactstrap';
 import { useGameQuery } from '../graphql/generated/graphql-client';
 import GameCardArea from '../components/game/GameCardArea';
+import GameResult from '../components/game/GameResult';
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
 import './Game.css';
@@ -41,11 +41,7 @@ export default function Game() {
 
   return (
     <>
-      {isEnded && (
-        <Alert color={isWinner ? 'success' : 'danger'} className="mb-0">
-          {isWinner ? '勝利しました！' : '敗北しました。'}
-        </Alert>
-      )}
+      {isEnded && <GameResult isWinner={isWinner} />}
       <SplitterLayout secondaryInitialSize={20} percentage>
         <GameCardArea gameId={gameId} />
         <div>pane2</div>
