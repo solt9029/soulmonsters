@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Help from '../pages/Help';
 import Rule from '../pages/Rule';
@@ -18,6 +18,7 @@ import { AppContext } from '../contexts/AppContext';
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, new AppState());
+  const isGamePage = !!useRouteMatch({ path: '/games/:id', exact: true });
 
   // componentDidMount
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function App() {
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
-      <Navbar />
+      {!isGamePage && <Navbar />}
       <Switch>
         <Route exact path="/" component={Index} />
         <PrivateRoute exact path="/deck" component={Deck} />
