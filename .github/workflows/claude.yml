@@ -23,6 +23,19 @@ jobs:
       pull-requests: read
       issues: read
       id-token: write
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: soulmonsters_test
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,6 +50,24 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Configure MySQL charset
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+          mysql -h 127.0.0.1 -P 3307 -u root -proot -e "DROP DATABASE IF EXISTS soulmonsters_test;"
+          mysql -h 127.0.0.1 -P 3307 -u root -proot -e "CREATE DATABASE soulmonsters_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+      - name: Run database migrations
+        run: cd server && yarn db:migrate
+        env:
+          NODE_ENV: test
+          DB_HOST: localhost
+          DB_PORT: 3307
+          DB_USERNAME: root
+          DB_PASSWORD: root
+          DB_DATABASE: soulmonsters_test
+          DB_TYPE: mysql
 
       - name: Run Claude Code
         id: claude
@@ -63,5 +94,11 @@ jobs:
           #   Use TypeScript for new files
           
           # Optional: Custom environment variables for Claude
-          # claude_env: |
-          #   NODE_ENV: test
+          claude_env: |
+            NODE_ENV: test
+            DB_HOST: localhost
+            DB_PORT: 3307
+            DB_USERNAME: root
+            DB_PASSWORD: root
+            DB_DATABASE: soulmonsters_test
+            DB_TYPE: mysql
