@@ -20,6 +20,7 @@ export class ChainBuilder {
     }
 
     // TODO: 1プレイヤーの効果が複数ある場合には、順番を選択してもらう必要がある
+    // TODO: 発動時に対象を選択する必要がある場合の処理も必要そう
     // ターンプレイヤーの効果をチェーンリンク1（orderIndex: 0）として積む
     // ChainResolverはorderIndex降順で処理するため、チェーンリンク2以降（orderIndex高）が先に解決される
     const sortedPendingEffects = [...gameModel.gamePendingEffects].sort((a, b) => {

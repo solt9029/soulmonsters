@@ -1,6 +1,7 @@
 import { GameModel } from '../../../models/game.model';
 import { destroyMonster } from './destroyMonster';
 import { dealDamageToPlayer } from '../dealDamageToPlayer';
+import { addUserEnergy } from '../addUserEnergy';
 
 export const handleAttackVsDefense = (
   gameModel: GameModel,
@@ -20,6 +21,7 @@ export const handleAttackVsDefense = (
 
   if (attackerCard.attack > defenderCard.defence) {
     destroyMonster(gameModel, defenderCardId);
+    addUserEnergy(gameModel, defenderCard.currentUserId, 1);
   } else if (attackerCard.attack < defenderCard.defence) {
     const damagePoint = defenderCard.defence - attackerCard.attack;
     dealDamageToPlayer(gameModel, attackerCard.currentUserId, damagePoint);
