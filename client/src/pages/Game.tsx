@@ -43,7 +43,11 @@ export default function Game() {
     <>
       {isEnded && <GameResult isWinner={isWinner} />}
       <SplitterLayout secondaryInitialSize={20} percentage>
-        <GameCardArea gameId={gameId} />
+        <GameCardArea
+          gameId={gameId}
+          gameCards={game?.gameCards}
+          gameUsers={game?.gameUsers}
+        />
         <div>pane2</div>
       </SplitterLayout>
       <GameCardModal />

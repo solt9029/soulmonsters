@@ -1,8 +1,9 @@
 import { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 import {
-  useGameQuery,
   ActionType,
+  type GameCardFragment,
+  type GameUserFragment,
 } from '../../graphql/generated/graphql-client';
 import GameUser from './GameUser';
 import { AppContext } from '../../contexts/AppContext';
@@ -73,40 +74,20 @@ const GameAlert = styled.div<{ variant?: 'primary' | 'danger' }>`
   animation: ${fadeIn} 0.2s ease;
 `;
 
-const LoadingText = styled.div`
-  color: white;
-  padding: 12px;
-`;
-
 export type GameCardAreaProps = {
   gameId: number;
+  gameCards: GameCardFragment[] | undefined;
+  gameUsers: GameUserFragment[] | undefined;
 };
 
-export default function GameCardArea({ gameId }: GameCardAreaProps) {
+export default function GameCardArea({
+  gameId,
+  gameCards,
+  gameUsers,
+}: GameCardAreaProps) {
   const {
     state: { actionStatus, dispatchGameActionError },
   } = useContext(AppContext);
-
-  const { data, error, loading } = useGameQuery({
-    variables: { id: gameId },
-  });
-
-  if (error) {
-    return (
-      <LoadingText>
-        <GameAlert variant="danger">
-          ゲーム情報の取得中にエラーが発生しました
-        </GameAlert>
-      </LoadingText>
-    );
-  }
-
-  if (loading) {
-    return <LoadingText>ゲーム情報をロード中です</LoadingText>;
-  }
-
-  const gameCards = data?.game.gameCards;
-  const gameUsers = data?.game.gameUsers;
 
   const hasHamontakiTargetSelection = gameCards?.some((gc) =>
     gc.actionTypes.includes(ActionType.SelectAsHamontakiTarget)
