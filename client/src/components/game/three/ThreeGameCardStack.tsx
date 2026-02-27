@@ -15,6 +15,7 @@ const STACK_COUNT = 3;
 export type ThreeGameCardStackProps = {
   gameCards: GameCardFragment[];
   position: [number, number, number];
+  isYours: boolean;
 };
 
 function StackMeshes({
@@ -22,11 +23,13 @@ function StackMeshes({
   position,
   topTexture,
   backTexture,
+  isYours,
 }: {
   targetGameCards: GameCardFragment[];
   position: [number, number, number];
   topTexture: THREE.Texture;
   backTexture: THREE.Texture;
+  isYours: boolean;
 }) {
   const {
     state: { gameCardListModal },
@@ -64,11 +67,14 @@ function StackMeshes({
           new THREE.MeshStandardMaterial({ color: '#1a1a1a' }),
         ];
 
+        // Apply same rotation logic as ThreeGameCard: opponent cards are rotated 180° around Y
+        const baseYRot = isYours ? 0 : Math.PI;
+
         return (
           <mesh
             key={i}
             position={[position[0], yPos, position[2]]}
-            rotation={[0, 0, 0]}
+            rotation={[0, baseYRot, 0]}
             material={materials}
             onPointerDown={isTop ? handleClick : undefined}
             onPointerEnter={
@@ -97,6 +103,7 @@ function StackMeshes({
 function ThreeGameCardStackInner({
   gameCards,
   position,
+  isYours,
 }: ThreeGameCardStackProps) {
   const topGameCard = findTopGameCard(gameCards);
   const topUrl = topGameCard?.card?.picture ?? BACK_SIDE_CARD;
@@ -109,6 +116,7 @@ function ThreeGameCardStackInner({
       position={position}
       topTexture={topTexture}
       backTexture={backTexture}
+      isYours={isYours}
     />
   );
 }

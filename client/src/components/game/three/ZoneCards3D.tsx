@@ -42,7 +42,13 @@ export default function ZoneCards3D({
   const center = ZONE_POSITIONS[key];
 
   if (STACK_ZONES.has(zone)) {
-    return <ThreeGameCardStack gameCards={gameCards} position={center} />;
+    return (
+      <ThreeGameCardStack
+        gameCards={gameCards}
+        position={center}
+        isYours={isYours}
+      />
+    );
   }
 
   const count = gameCards.length;
