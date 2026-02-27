@@ -74,17 +74,17 @@ const GameAlert = styled.div<{ variant?: 'primary' | 'danger' }>`
   animation: ${fadeIn} 0.2s ease;
 `;
 
-export type GameCardAreaProps = {
+export type GameAreaProps = {
   gameId: number;
   gameCards: GameCardFragment[] | undefined;
   gameUsers: GameUserFragment[] | undefined;
 };
 
-export default function GameCardArea({
+export default function GameArea({
   gameId,
   gameCards,
   gameUsers,
-}: GameCardAreaProps) {
+}: GameAreaProps) {
   const {
     state: { actionStatus, dispatchGameActionError },
   } = useContext(AppContext);

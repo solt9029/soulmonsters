@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from '../styled/reactstrap';
 import { useGameQuery } from '../graphql/generated/graphql-client';
-import GameCardArea from '../components/game/GameCardArea';
+import GameArea from '../components/game/GameArea';
 import GameResult from '../components/game/GameResult';
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
@@ -42,7 +42,7 @@ export default function Game() {
     <>
       {isEnded && <GameResult isWinner={isWinner} />}
       <SplitterLayout secondaryInitialSize={20} percentage>
-        <GameCardArea
+        <GameArea
           gameId={parseInt(id)}
           gameCards={game?.gameCards}
           gameUsers={game?.gameUsers}
