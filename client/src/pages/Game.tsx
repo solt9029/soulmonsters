@@ -13,14 +13,13 @@ import { AppContext } from '../contexts/AppContext';
 
 export default function Game() {
   const { id } = useParams<{ id: string }>();
-  const gameId = parseInt(id);
 
   const {
     state: { user },
   } = useContext(AppContext);
 
   const { data, loading, error } = useGameQuery({
-    variables: { id: gameId },
+    variables: { id: parseInt(id) },
   });
 
   if (loading) {
@@ -44,7 +43,7 @@ export default function Game() {
       {isEnded && <GameResult isWinner={isWinner} />}
       <SplitterLayout secondaryInitialSize={20} percentage>
         <GameCardArea
-          gameId={gameId}
+          gameId={parseInt(id)}
           gameCards={game?.gameCards}
           gameUsers={game?.gameUsers}
         />
