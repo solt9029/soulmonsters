@@ -115,12 +115,12 @@ export default function GameArea({
           )}
           {hasHamontakiTargetSelection && (
             <GameAlert>
-              モルグゾーンからバトルゾーンに特殊召喚するモンスターを選択してください
+              モルグゾーンからバトルゾーンに置くモンスターを選択してください
             </GameAlert>
           )}
           {hasHedronTargetSelection && (
             <GameAlert>
-              モルグゾーンからバトルゾーンに特殊召喚する紫モンスターを選択してください
+              モルグゾーンからバトルゾーンに置くモンスターを選択してください
             </GameAlert>
           )}
           {dispatchGameActionError !== null && (
