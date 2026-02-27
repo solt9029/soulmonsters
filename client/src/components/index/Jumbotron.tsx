@@ -50,7 +50,7 @@ export default function Jumbotron() {
         <Title>ソウルモンスターズ</Title>
         {user.data === null ? (
           <StyledButton color="info" size="lg" onClick={handleLoginClick}>
-            <ButtonText>Twitterログイン</ButtonText>
+            <ButtonText>Googleログイン</ButtonText>
           </StyledButton>
         ) : (
           <StyledButton color="info" size="lg" tag={Link} to="/deck">
