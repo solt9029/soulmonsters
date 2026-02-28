@@ -8,6 +8,10 @@ export function grantAttackAction(gameModel: GameModel, userId: string): GameMod
     return gameModel;
   }
 
+  if (gameModel.turnCount <= 1) {
+    return gameModel;
+  }
+
   gameModel.gameCards = gameModel.gameCards.map(gameCard => {
     const isAttackable =
       gameCard.zone === Zone.BATTLE &&
