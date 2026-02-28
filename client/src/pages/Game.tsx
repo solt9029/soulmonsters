@@ -41,7 +41,7 @@ export default function Game() {
   return (
     <>
       {isEnded && <GameResult isWinner={isWinner} />}
-      <SplitterLayout secondaryInitialSize={20} percentage>
+      <SplitterLayout secondaryInitialSize={0} percentage>
         <GameArea
           gameId={parseInt(id)}
           gameCards={game?.gameCards}
