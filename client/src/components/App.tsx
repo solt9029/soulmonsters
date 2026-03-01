@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import Help from '../pages/Help';
 import Rule from '../pages/Rule';
 import NotFound from '../pages/NotFound';
 import Index from '../pages/Index';
@@ -45,7 +44,6 @@ export default function App() {
         <PrivateRoute exact path="/deck" component={Deck} />
         <PrivateRoute exact path="/games" component={Games} />
         <PrivateRoute exact path="/games/:id" component={Game} />
-        <Route exact path="/help" component={Help} />
         <Route exact path="/rule" component={Rule} />
         <Route component={NotFound} />
       </Switch>
