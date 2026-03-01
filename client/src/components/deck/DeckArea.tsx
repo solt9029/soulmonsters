@@ -57,8 +57,12 @@ export default function DeckArea() {
   });
 
   const handleDeckSelectChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedId = parseInt(event.target.value);
-    history.push(`/decks/${selectedId}`);
+    const { value } = event.target;
+    if (value === 'default') {
+      history.push('/decks');
+      return;
+    }
+    history.push(`/decks/${parseInt(value)}`);
   };
 
   return drop(
@@ -126,29 +130,30 @@ export default function DeckArea() {
           </Col>
         </FormGroup>
         <StyledRow>
-          {deckCardsQueryResult.data?.deckCards.map((deckCard) => {
-            return (
-              <Fragment>
-                {[...Array(deckCard.count)].map(() => (
-                  <Col
-                    marginBottom={12}
-                    paddingLeft={6}
-                    paddingRight={6}
-                    lg={2}
-                    md={3}
-                    sm={4}
-                    xs={6}
-                  >
-                    <Card
-                      id={deckCard.card.id}
-                      isInDeck
-                      picture={deckCard.card.picture}
-                    ></Card>
-                  </Col>
-                ))}
-              </Fragment>
-            );
-          })}
+          {deckId !== null &&
+            deckCardsQueryResult.data?.deckCards.map((deckCard) => {
+              return (
+                <Fragment>
+                  {[...Array(deckCard.count)].map(() => (
+                    <Col
+                      marginBottom={12}
+                      paddingLeft={6}
+                      paddingRight={6}
+                      lg={2}
+                      md={3}
+                      sm={4}
+                      xs={6}
+                    >
+                      <Card
+                        id={deckCard.card.id}
+                        isInDeck
+                        picture={deckCard.card.picture}
+                      ></Card>
+                    </Col>
+                  ))}
+                </Fragment>
+              );
+            })}
         </StyledRow>
       </Container>
     </div>
