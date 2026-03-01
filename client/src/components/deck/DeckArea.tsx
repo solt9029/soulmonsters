@@ -64,7 +64,7 @@ export default function DeckArea() {
   return drop(
     <div
       style={{
-        height: '100vh',
+        height: '100%',
         width: '100%',
         backgroundSize: 'cover',
         backgroundColor: canDrop && isOver ? '#444' : '#222',
