@@ -23,7 +23,7 @@ export default function Game() {
   });
 
   if (loading) {
-    return <Container marginTop={12}>ゲーム情報をロード中です</Container>;
+    return <Container marginTop={12}></Container>;
   }
 
   if (error) {

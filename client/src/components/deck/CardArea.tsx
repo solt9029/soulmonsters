@@ -37,11 +37,6 @@ export default function CardArea() {
     >
       <Container marginTop={12}>
         <StyledRow>
-          {loading && (
-            <Col marginBottom={12} lg={12}>
-              カード情報をロード中です
-            </Col>
-          )}
           {error !== undefined && (
             <Col marginBottom={12} lg={12}>
               <Alert color="danger">

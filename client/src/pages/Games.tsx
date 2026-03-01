@@ -24,7 +24,7 @@ export default function Games() {
     <Container marginTop={12}>
       {activeGameIdQueryResult.loading || gamesQueryResult.loading ? (
         <Row>
-          <Col lg={12}>ゲーム情報をロード中です</Col>
+          <Col lg={12}></Col>
         </Row>
       ) : null}
 
