@@ -52,7 +52,7 @@ export default function CreateDeckInput() {
           onChange={handleChange}
         />
       </Col>
-      <Col sm={4}>
+      <Col sm={4} className="mt-2 mt-sm-0">
         <StyledButton
           style={{ width: '100%' }}
           color="success"
