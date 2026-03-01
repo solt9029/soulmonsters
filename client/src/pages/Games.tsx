@@ -47,11 +47,10 @@ export default function Games() {
         </Row>
       )}
 
-      <Row marginTop={24}>
-        <Col lg={12}>
-          <h5>対戦履歴</h5>
-          {games && games.length === 0 && <p>対戦履歴はありません。</p>}
-          {games && games.length > 0 && (
+      {games && games.length > 0 && (
+        <Row marginTop={24}>
+          <Col lg={12}>
+            <h5>対戦履歴</h5>
             <Table>
               <thead>
                 <tr>
@@ -93,9 +92,9 @@ export default function Games() {
                 })}
               </tbody>
             </Table>
-          )}
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 }
