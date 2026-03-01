@@ -19,14 +19,6 @@ import { Link } from 'react-router-dom';
 import { AppContext } from '../contexts/AppContext';
 import { login, logout } from '../actions/user';
 
-const ServiceLogo = styled(NavbarBrand)`
-  background: url('/images/icon.png') no-repeat left center;
-  background-size: contain;
-  border-radius: 50%;
-  height: 45px;
-  width: 45px;
-`;
-
 const UserLogo = styled(DropdownToggle)`
   ${(props) => `background: url('${props.picture}') no-repeat left center;`}
   background-size: contain;
@@ -88,7 +80,6 @@ export default function Navbar() {
   return (
     <RNavbar className="py-0" color="light" light expand="md" container={false}>
       <Container>
-        <ServiceLogo tag={Link} to="/" />
         <NavbarBrand tag={Link} to="/">
           <Brand>ソウルモンスターズ</Brand>
         </NavbarBrand>

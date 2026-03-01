@@ -12,7 +12,7 @@ const StyledRow = styled(Row)`
 `;
 
 export default function CardArea() {
-  const { data, error, loading } = useCardsQuery();
+  const { data, error } = useCardsQuery();
 
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: ItemTypes.DECK_CARD,
