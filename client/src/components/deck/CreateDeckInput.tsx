@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent, useContext, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Col, FormGroup, Input, Button } from 'reactstrap';
 import {
   useCreateDeckMutation,
@@ -13,12 +14,14 @@ const StyledButton = styled(Button)`
 
 export default function CreateDeckInput() {
   const { dispatch } = useContext(AppContext);
+  const history = useHistory();
 
   const [createDeck, { loading }] = useCreateDeckMutation({
     refetchQueries: [{ query: DecksDocument }],
     awaitRefetchQueries: true,
-    onCompleted: () => {
+    onCompleted: (data) => {
       dispatch({ type: 'RESET_ERROR', payload: 'createDeckError' });
+      history.push(`/decks/${data.createDeck.id}`);
     },
     onError: (error) => {
       dispatch({

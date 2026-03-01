@@ -97,7 +97,7 @@ export default function Navbar() {
           <Nav className="me-auto" navbar>
             {user?.data !== null && (
               <Fragment>
-                <StyledNavLink tag={RRDNavLink} exact to="/deck">
+                <StyledNavLink tag={RRDNavLink} to="/decks">
                   デッキ構築
                 </StyledNavLink>
                 <StyledNavLink tag={RRDNavLink} exact to="/games">

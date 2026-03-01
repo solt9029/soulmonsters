@@ -41,7 +41,8 @@ export default function App() {
       {!isGamePage && <Navbar />}
       <Switch>
         <Route exact path="/" component={Index} />
-        <PrivateRoute exact path="/deck" component={Deck} />
+        <PrivateRoute exact path="/decks" component={Deck} />
+        <PrivateRoute exact path="/decks/:id" component={Deck} />
         <PrivateRoute exact path="/games" component={Games} />
         <PrivateRoute exact path="/games/:id" component={Game} />
         <Route exact path="/rule" component={Rule} />

@@ -1,4 +1,5 @@
-import { type ChangeEvent, Fragment, useContext } from 'react';
+import { type ChangeEvent, Fragment, useContext, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { FormGroup, Input, Row, Alert } from 'reactstrap';
 import {
   useDecksQuery,
@@ -19,28 +20,32 @@ const StyledRow = styled(Row)`
 `;
 
 export default function DeckArea() {
+  const { id } = useParams<{ id?: string }>();
+  const history = useHistory();
+  const deckId = id ? parseInt(id) : null;
+
   const {
-    state: {
-      selectedDeckId,
-      plusDeckCardError,
-      minusDeckCardError,
-      createDeckError,
-    },
+    state: { plusDeckCardError, minusDeckCardError, createDeckError },
     dispatch,
   } = useContext(AppContext);
 
+  useEffect(() => {
+    dispatch({ type: 'SET_SELECTED_DECK_ID', payload: deckId });
+  }, [deckId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const [fetchDeckCards, deckCardsQueryResult] = useDeckCardsLazyQuery();
 
-  const decksQueryResult = useDecksQuery({
-    onCompleted: (data) => {
-      if (
-        selectedDeckId !== null &&
-        data.decks.findIndex((deck) => deck.id === selectedDeckId) >= 0
-      ) {
-        fetchDeckCards({ variables: { deckId: selectedDeckId } });
-      }
-    },
-  });
+  const decksQueryResult = useDecksQuery();
+
+  useEffect(() => {
+    if (deckId === null || !decksQueryResult.data) return;
+    const deckExists = decksQueryResult.data.decks.some(
+      (deck) => deck.id === deckId
+    );
+    if (deckExists) {
+      fetchDeckCards({ variables: { deckId } });
+    }
+  }, [deckId, decksQueryResult.data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: ItemTypes.CARD,
@@ -52,9 +57,8 @@ export default function DeckArea() {
   });
 
   const handleDeckSelectChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const deckId = parseInt(event.target.value);
-    fetchDeckCards({ variables: { deckId } });
-    dispatch({ type: 'SET_SELECTED_DECK_ID', payload: deckId });
+    const selectedId = parseInt(event.target.value);
+    history.push(`/decks/${selectedId}`);
   };
 
   return drop(
@@ -82,7 +86,7 @@ export default function DeckArea() {
             <Input
               type="select"
               onChange={handleDeckSelectChange}
-              value={selectedDeckId || undefined}
+              value={deckId || undefined}
             >
               <option value="default">編集するデッキを選択してください</option>
               {decksQueryResult.data?.decks?.map((deck) => (

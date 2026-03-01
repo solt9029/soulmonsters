@@ -53,7 +53,7 @@ export default function Jumbotron() {
             <ButtonText>Googleログイン</ButtonText>
           </StyledButton>
         ) : (
-          <StyledButton color="info" size="lg" tag={Link} to="/deck">
+          <StyledButton color="info" size="lg" tag={Link} to="/decks">
             <ButtonText>デッキ構築</ButtonText>
           </StyledButton>
         )}
