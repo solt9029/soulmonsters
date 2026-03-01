@@ -77,11 +77,11 @@ export default function Games() {
                       <td>{opponent?.user.displayName ?? '-'}</td>
                       <td>
                         {isEnded ? (
-                          <Badge color={isWinner ? 'success' : 'danger'}>
+                          <Badge color="secondary">
                             {isWinner ? '勝利' : '敗北'}
                           </Badge>
                         ) : (
-                          <Badge color="warning">進行中</Badge>
+                          <Badge color="secondary">進行中</Badge>
                         )}
                       </td>
                       <td>
