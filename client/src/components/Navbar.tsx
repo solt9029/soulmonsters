@@ -100,6 +100,9 @@ export default function Navbar() {
             <StyledNavLink tag={RRDNavLink} exact to="/rule">
               ルール
             </StyledNavLink>
+            <StyledNavLink tag={RRDNavLink} exact to="/terms">
+              利用規約
+            </StyledNavLink>
           </Nav>
           <Nav>
             {(() => {
