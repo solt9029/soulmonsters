@@ -77,9 +77,37 @@ export default function DeckArea() {
         {decksQueryResult.error !== undefined && (
           <Alert color="danger">デッキ情報の取得中にエラーが発生しました</Alert>
         )}
+
         {createDeckError !== null && (
           <Alert color="danger">デッキ情報の作成中にエラーが発生しました</Alert>
         )}
+
+        {deckCardsQueryResult.error !== undefined && (
+          <Alert color="danger">
+            デッキのカード情報の取得中にエラーが発生しました
+          </Alert>
+        )}
+
+        {plusDeckCardError !== null &&
+          plusDeckCardError.message === ErrorMessages.MAX_COUNT && (
+            <Alert color="danger">
+              同名カードはデッキに3枚までしか入れることができません
+            </Alert>
+          )}
+
+        {plusDeckCardError !== null &&
+          plusDeckCardError.message !== ErrorMessages.MAX_COUNT && (
+            <Alert color="danger">
+              デッキへカードを追加する途中にエラーが発生しました
+            </Alert>
+          )}
+
+        {minusDeckCardError !== null && (
+          <Alert color="danger">
+            デッキからカードを抜く途中にエラーが発生しました
+          </Alert>
+        )}
+
         <CreateDeckInput />
         <FormGroup row>
           <Col sm={12}>
@@ -98,46 +126,6 @@ export default function DeckArea() {
           </Col>
         </FormGroup>
         <StyledRow>
-          {deckCardsQueryResult.error !== undefined && (
-            <Col lg={12}>
-              <Alert color="danger">
-                デッキのカード情報の取得中にエラーが発生しました
-              </Alert>
-            </Col>
-          )}
-
-          {plusDeckCardError !== null &&
-            plusDeckCardError.message === ErrorMessages.MAX_COUNT && (
-              <Col lg={12}>
-                <Alert color="danger">
-                  同名カードはデッキに3枚までしか入れることができません
-                </Alert>
-              </Col>
-            )}
-
-          {plusDeckCardError !== null &&
-            plusDeckCardError.message !== ErrorMessages.MAX_COUNT && (
-              <Col lg={12}>
-                <Alert color="danger">
-                  デッキへカードを追加する途中にエラーが発生しました
-                </Alert>
-              </Col>
-            )}
-
-          {minusDeckCardError !== null && (
-            <Col lg={12}>
-              <Alert color="danger">
-                デッキからカードを抜く途中にエラーが発生しました
-              </Alert>
-            </Col>
-          )}
-
-          {deckCardsQueryResult.loading && (
-            <Col marginBottom={12} lg={12}>
-              デッキのカード情報をロード中です
-            </Col>
-          )}
-
           {deckCardsQueryResult.data?.deckCards.map((deckCard) => {
             return (
               <Fragment>
