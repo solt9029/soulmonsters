@@ -12,6 +12,7 @@ export interface AppStateInterface {
   plusDeckCardError: ApolloError | null;
   minusDeckCardError: ApolloError | null;
   createDeckError: ApolloError | null;
+  startGameError: ApolloError | null;
   dispatchGameActionError: ApolloError | null;
   deckModal: DeckModal;
   gameCardModal: GameCardModal;
@@ -23,6 +24,7 @@ export type ErrorName =
   | 'plusDeckCardError'
   | 'minusDeckCardError'
   | 'createDeckError'
+  | 'startGameError'
   | 'dispatchGameActionError';
 
 export default class AppState extends Record<AppStateInterface>(
@@ -32,6 +34,7 @@ export default class AppState extends Record<AppStateInterface>(
     plusDeckCardError: null,
     minusDeckCardError: null,
     createDeckError: null,
+    startGameError: null,
     dispatchGameActionError: null,
     deckModal: new DeckModal(),
     gameCardModal: new GameCardModal(),

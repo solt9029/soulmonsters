@@ -1,1 +1,2 @@
-export const MAX_COUNT = 'GraphQL error: Max Count';
+export const MAX_COUNT = 'Max Count';
+export const MIN_COUNT = 'Min Count';

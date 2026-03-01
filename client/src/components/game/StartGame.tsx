@@ -6,9 +6,10 @@ import {
   GamesDocument,
   useDecksQuery,
 } from '../../graphql/generated/graphql-client';
-import { FormGroup, Input, Button } from 'reactstrap';
+import { FormGroup, Input, Button, Alert } from 'reactstrap';
 import { Col } from '../../styled/reactstrap';
 import { AppContext } from '../../contexts/AppContext';
+import * as ErrorMessages from '../../constants/error-messages';
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -16,7 +17,7 @@ const StyledButton = styled(Button)`
 
 export default function StartGame() {
   const {
-    state: { selectedDeckId },
+    state: { selectedDeckId, startGameError },
     dispatch,
   } = useContext(AppContext);
 
@@ -28,8 +29,11 @@ export default function StartGame() {
     onCompleted: (data) => {
       history.push(`/games/${data.startGame.id}`);
     },
-    onError: () => {
-      // TODO: handle error
+    onError: (error) => {
+      dispatch({
+        type: 'SET_ERROR',
+        payload: { name: 'startGameError', error },
+      });
     },
   });
 
@@ -40,14 +44,27 @@ export default function StartGame() {
 
   const handleClick = useCallback(() => {
     if (selectedDeckId !== null) {
+      dispatch({ type: 'RESET_ERROR', payload: 'startGameError' });
       startGame({ variables: { deckId: selectedDeckId } });
     }
-  }, [selectedDeckId, startGame]);
+  }, [selectedDeckId, startGame, dispatch]);
 
   const decksQueryResult = useDecksQuery();
 
   return (
     <FormGroup row>
+      <Col sm={12}>
+        {startGameError !== null &&
+          startGameError.message === ErrorMessages.MIN_COUNT && (
+            <Alert color="danger">
+              デッキのカード枚数が40枚未満のため、ゲームを開始できません
+            </Alert>
+          )}
+        {startGameError !== null &&
+          startGameError.message !== ErrorMessages.MIN_COUNT && (
+            <Alert color="danger">ゲームの開始中にエラーが発生しました</Alert>
+          )}
+      </Col>
       <Col sm={12}>
         <Input
           type="select"
