@@ -10,7 +10,7 @@ const Img = styled.img`
 export default function Rule() {
   return (
     <>
-      <Container marginTop={12}>
+      <Container marginTop={24}>
         <Row marginBottom={50}>
           <Col lg={12}>
             <h3>カードの種類</h3>

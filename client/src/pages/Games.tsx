@@ -29,15 +29,16 @@ export default function Games() {
       ) : null}
 
       {!activeGameId && (
-        <Row marginTop={12}>
+        <Row marginTop={24}>
           <Col lg={12}>
+            <h5>ソウルバトル</h5>
             <StartGame />
           </Col>
         </Row>
       )}
 
       {activeGameId && (
-        <Row marginTop={12}>
+        <Row marginTop={24}>
           <Col lg={12}>
             <Alert color="info">
               ゲームが進行中です。{' '}
@@ -48,7 +49,7 @@ export default function Games() {
       )}
 
       {games && games.length > 0 && (
-        <Row marginTop={24}>
+        <Row marginTop={36}>
           <Col lg={12}>
             <h5>対戦履歴</h5>
             <Table>

@@ -5,7 +5,7 @@ import { Row, Container } from '../styled/reactstrap';
 export default function Terms() {
   return (
     <>
-      <Container marginTop={12}>
+      <Container marginTop={24}>
         <Row marginBottom={50}>
           <Col lg={12}>
             <h3>利用規約</h3>
