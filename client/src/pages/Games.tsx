@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Alert, Table, Badge } from 'reactstrap';
+import { Alert, Table } from 'reactstrap';
 import { Container, Row, Col } from '../styled/reactstrap';
 import {
   useGamesQuery,
@@ -76,13 +76,7 @@ export default function Games() {
                       </td>
                       <td>{opponent?.user.displayName ?? '-'}</td>
                       <td>
-                        {isEnded ? (
-                          <Badge color="secondary">
-                            {isWinner ? '勝利' : '敗北'}
-                          </Badge>
-                        ) : (
-                          <Badge color="secondary">進行中</Badge>
-                        )}
+                        {isEnded ? (isWinner ? '勝利' : '敗北') : '進行中'}
                       </td>
                       <td>
                         <Link to={`/games/${game.id}`}>詳細</Link>
