@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import {
   ActionType,
@@ -45,6 +45,50 @@ const PlayerInfoBottomLeft = styled.div`
   z-index: 10;
 `;
 
+const ReloadButton = styled.button<{ $loading: boolean }>`
+  pointer-events: auto;
+  position: absolute;
+  bottom: 24px;
+  right: 36px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: linear-gradient(
+    145deg,
+    rgba(5, 8, 20, 0.92) 0%,
+    rgba(12, 18, 38, 0.88) 100%
+  );
+  border: 1px solid rgba(180, 140, 30, 0.55);
+  border-radius: 6px;
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    0 0 12px rgba(180, 140, 30, 0.08);
+  color: #d4bc7a;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: ${({ $loading }) => ($loading ? 'not-allowed' : 'pointer')};
+  opacity: ${({ $loading }) => ($loading ? 0.6 : 1)};
+  transition: opacity 0.15s ease;
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  svg {
+    animation: ${({ $loading }) => ($loading ? 'spin 1s linear infinite' : 'none')};
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+`;
+
 const GameAlert = styled.div<{ variant?: 'primary' | 'danger' }>`
   padding: 8px 14px;
   margin-bottom: 4px;
@@ -78,16 +122,25 @@ export type GameAreaProps = {
   gameId: number;
   gameCards: GameCardFragment[] | undefined;
   gameUsers: GameUserFragment[] | undefined;
+  onRefetch: () => Promise<unknown>;
 };
 
 export default function GameArea({
   gameId,
   gameCards,
   gameUsers,
+  onRefetch,
 }: GameAreaProps) {
   const {
     state: { actionStatus, dispatchGameActionError },
   } = useContext(AppContext);
+  const [refetching, setRefetching] = useState(false);
+
+  const handleRefetch = async () => {
+    setRefetching(true);
+    await onRefetch();
+    setRefetching(false);
+  };
 
   const hasHamontakiTargetSelection = gameCards?.some((gc) =>
     gc.actionTypes.includes(ActionType.SelectAsHamontakiTarget)
@@ -138,6 +191,29 @@ export default function GameArea({
       <PlayerInfoBottomLeft>
         <GameUser gameUsers={gameUsers} isYours={true} />
       </PlayerInfoBottomLeft>
+
+      <ReloadButton
+        $loading={refetching}
+        disabled={refetching}
+        onClick={handleRefetch}
+      >
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+          <path d="M21 3v5h-5" />
+          <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+          <path d="M8 16H3v5" />
+        </svg>
+        再読み込み
+      </ReloadButton>
     </div>
   );
 }

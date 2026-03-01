@@ -18,7 +18,7 @@ export default function Game() {
     state: { user },
   } = useContext(AppContext);
 
-  const { data, loading, error } = useGameQuery({
+  const { data, loading, error, refetch } = useGameQuery({
     variables: { id: parseInt(id) },
   });
 
@@ -46,6 +46,7 @@ export default function Game() {
           gameId={parseInt(id)}
           gameCards={game?.gameCards}
           gameUsers={game?.gameUsers}
+          onRefetch={refetch}
         />
         <div>pane2</div>
       </SplitterLayout>
