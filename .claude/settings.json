@@ -2,7 +2,11 @@
   "permissions": {
     "deny": [
       "Read(client/.env)",
-      "Read(server/.env)"
+      "Read(server/.env)",
+      "Read(deploy/.env)",
+      "Read(client/.env.production)",
+      "Read(server/.env.production)",
+      "Read(deploy/.env.production)"
     ],
     "allow": [
       "Bash(mkdir:*)",
