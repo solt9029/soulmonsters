@@ -1,8 +1,8 @@
 # ローカルでイメージをビルド & push する用
 #
 # Usage:
-#   docker compose -f docker-compose.publish.yml --env-file client/.env.production build
-#   docker compose -f docker-compose.publish.yml push
+#   docker compose -f docker-compose.prod.yml --env-file client/.env.production build
+#   docker compose -f docker-compose.prod.yml push
 
 version: "3"
 
