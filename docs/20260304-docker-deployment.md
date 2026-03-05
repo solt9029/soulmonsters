@@ -6,7 +6,7 @@
 soulmonsters/
 ├── docker-compose.dev.yml       # ローカル開発用（DB のみ）
 ├── docker-compose.prod.yml   # ローカルでイメージをビルド & push する用
-├── deploy/
+├── production/
 │   ├── docker-compose.yml       # VPS 上で実行する用
 │   └── .env.example             # VPS 用 .env テンプレート
 ├── server/
@@ -51,15 +51,15 @@ docker compose -f docker-compose.prod.yml push
 ### ファイルの転送
 
 ```bash
-scp -r deploy/ user@your-vps:/path/to/deploy/
+scp -r production/ user@your-vps:/path/to/production/
 ```
 
 ### .env の作成
 
 ```bash
 # VPS 上で
-cp deploy/.env.example deploy/.env
-vi deploy/.env   # 値を埋める
+cp production/.env.example production/.env
+vi production/.env   # 値を埋める
 ```
 
 `.env` に設定する値：
@@ -97,5 +97,5 @@ docker compose up -d
 ## 備考
 
 - `server/Dockerfile` のビルドはリポジトリルートをコンテキストとして実行する（`schema/` が必要なため）
-- `deploy/.env` は VPS のみに存在し、リポジトリには含めない
+- `production/.env` は VPS のみに存在し、リポジトリには含めない
 - `FIREBASE_PRIVATE_KEY` の改行: サーバーコードで `.replace(/\\n/g, '\n')` しているため、`.env` には `\n` リテラルのまま書く
