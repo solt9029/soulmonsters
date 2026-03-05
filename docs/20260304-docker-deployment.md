@@ -4,13 +4,13 @@
 
 ```
 soulmonsters/
+├── docker-compose.dev.yml       # ローカル開発用（DB のみ）
 ├── docker-compose.publish.yml   # ローカルでイメージをビルド & push する用
 ├── deploy/
 │   ├── docker-compose.yml       # VPS 上で実行する用
 │   └── .env.example             # VPS 用 .env テンプレート
 ├── server/
-│   ├── Dockerfile
-│   └── docker-compose.yml       # ローカル開発用（DB のみ）
+│   └── Dockerfile
 └── client/
     ├── Dockerfile
     └── nginx.conf
