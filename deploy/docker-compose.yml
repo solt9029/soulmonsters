@@ -1,4 +1,11 @@
-version: "3"
+# VPS での実行方法:
+#   cd deploy
+#   cp .env.example .env  # 初回のみ
+#   vi .env               # 初回のみ：値を埋める
+#   docker compose up -d
+#
+# イメージ更新時:
+#   docker compose pull && docker compose up -d
 
 services:
   mysql:
@@ -11,9 +18,15 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_PASSWORD}"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
   server:
     image: solt9029/soulmonsters-server:latest
+    command: sh -c "yarn db:migrate:prod && node dist/src/main"
     ports:
       - "3100:3100"
     environment:
@@ -30,7 +43,8 @@ services:
       FIREBASE_DATABASE_URL: ${FIREBASE_DATABASE_URL}
       FIREBASE_PRIVATE_KEY: ${FIREBASE_PRIVATE_KEY}
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     restart: unless-stopped
 
   client:

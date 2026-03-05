@@ -22,6 +22,7 @@
     "db:down": "docker-compose stop mysql",
     "db:shell": "docker-compose exec mysql mysql -u root -proot soulmonsters",
     "db:migrate": "yarn typeorm migration:run -d src/dataSource.ts",
+    "db:migrate:prod": "typeorm migration:run -d dist/src/dataSource.js",
     "db:generate": "yarn typeorm migration:generate -d src/dataSource.ts src/database/migrations/Migration",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
