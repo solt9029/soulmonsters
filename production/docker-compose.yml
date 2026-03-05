@@ -28,7 +28,7 @@ services:
     image: solt9029/soulmonsters-server:latest
     command: sh -c "yarn db:migrate:prod && node dist/src/main"
     ports:
-      - "3100:3100"
+      - "8201:3100"
     environment:
       DB_TYPE: mysql
       DB_HOST: mysql
@@ -50,7 +50,7 @@ services:
   client:
     image: solt9029/soulmonsters-client:latest
     ports:
-      - "80:80"
+      - "8200:80"
     restart: unless-stopped
 
 volumes:
