@@ -5,12 +5,14 @@ version: "3"
 
 services:
   server:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: server/Dockerfile
     image: solt9029/soulmonsters-server:latest
 
   client:
+    platform: linux/amd64
     build:
       context: .
       dockerfile: client/Dockerfile
