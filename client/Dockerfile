@@ -33,6 +33,11 @@ FROM nginx:alpine AS runner
 
 RUN apk update && apk upgrade --no-cache
 
+ARG NGINX_BASIC_AUTH_USER
+ARG NGINX_BASIC_AUTH_PASS
+
+RUN echo "${NGINX_BASIC_AUTH_USER}:$(openssl passwd -apr1 ${NGINX_BASIC_AUTH_PASS})" > /etc/nginx/.htpasswd
+
 COPY client/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /workspace/client/dist /usr/share/nginx/html
 
