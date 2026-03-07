@@ -1,6 +1,3 @@
-# Build from repo root (via build/docker-compose.yml):
-#   docker compose -f build/docker-compose.yml --env-file client/.env.production build client
-
 # ---- Builder ----
 FROM node:22.14.0-alpine AS builder
 
