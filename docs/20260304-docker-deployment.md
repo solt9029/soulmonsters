@@ -5,7 +5,8 @@
 ```
 soulmonsters/
 ├── docker-compose.dev.yml       # ローカル開発用（DB のみ）
-├── docker-compose.prod.yml   # ローカルでイメージをビルド & push する用
+├── build/
+│   └── docker-compose.yml       # ローカルでイメージをビルド & push する用
 ├── production/
 │   ├── docker-compose.yml       # VPS 上で実行する用
 │   └── .env.example             # VPS 用 .env テンプレート
@@ -42,8 +43,8 @@ VITE_FIREBASE_MEASUREMENT_ID=...
 リポジトリルートから実行：
 
 ```bash
-docker compose -f docker-compose.prod.yml --env-file client/.env.production build
-docker compose -f docker-compose.prod.yml push
+docker compose -f build/docker-compose.yml --env-file client/.env.production build
+docker compose -f build/docker-compose.yml push
 ```
 
 ## VPS：初回セットアップ

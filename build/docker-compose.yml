@@ -1,5 +1,5 @@
-# docker compose -f docker-compose.prod.yml --env-file client/.env.production build
-# docker compose -f docker-compose.prod.yml push
+# docker compose -f build/docker-compose.yml --env-file client/.env.production build
+# docker compose -f build/docker-compose.yml push
 
 version: "3"
 
@@ -7,14 +7,14 @@ services:
   server:
     platform: linux/amd64
     build:
-      context: .
+      context: ..
       dockerfile: server/Dockerfile
     image: solt9029/soulmonsters-server:latest
 
   client:
     platform: linux/amd64
     build:
-      context: .
+      context: ..
       dockerfile: client/Dockerfile
       args:
         VITE_HTTP_LINK_URI: ${VITE_HTTP_LINK_URI}
