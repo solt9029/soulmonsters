@@ -15,7 +15,6 @@ RUN yarn install --frozen-lockfile
 
 COPY client/ ./client/
 
-# Vite 環境変数はビルド時に埋め込まれるため ARG で受け取る
 ARG VITE_HTTP_LINK_URI
 ARG VITE_FIREBASE_API_KEY
 ARG VITE_FIREBASE_AUTH_DOMAIN

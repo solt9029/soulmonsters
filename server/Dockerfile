@@ -1,5 +1,5 @@
-# Build from repo root:
-#   docker build -f server/Dockerfile -t soulmonsters-server .
+# Build from repo root (via docker-compose.prod.yml):
+#   docker compose -f docker-compose.prod.yml --env-file client/.env.production build client
 
 # ---- Builder ----
 FROM node:22.14.0-alpine AS builder
