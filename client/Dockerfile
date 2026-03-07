@@ -31,7 +31,7 @@ RUN yarn build
 # ---- Runner ----
 FROM nginx:alpine AS runner
 
-RUN apk update && apk upgrade --no-cache
+RUN apk update && apk upgrade --no-cache && apk add --no-cache apache2-utils
 
 COPY client/nginx.conf /etc/nginx/conf.d/default.conf
 COPY client/entrypoint.sh /entrypoint.sh

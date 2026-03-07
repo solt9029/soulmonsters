@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
 
-echo "${NGINX_BASIC_AUTH_USER}:$(openssl passwd -apr1 ${NGINX_BASIC_AUTH_PASS})" > /etc/nginx/.htpasswd
+htpasswd -bc /etc/nginx/.htpasswd "${NGINX_BASIC_AUTH_USER}" "${NGINX_BASIC_AUTH_PASS}"
 
 exec nginx -g "daemon off;"
