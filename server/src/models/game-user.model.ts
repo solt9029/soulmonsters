@@ -8,6 +8,7 @@ export class GameUserModel {
 
   id: number;
   userId: string;
+  displayName: string;
   energy: number;
   lifePoint: number;
   lastViewedAt: Date;

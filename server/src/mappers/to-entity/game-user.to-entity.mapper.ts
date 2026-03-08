@@ -11,6 +11,7 @@ export class GameUserToEntityMapper {
     return new GameUserEntity({
       id: model.id,
       userId: model.userId,
+      displayName: model.displayName,
       energy: model.energy,
       lifePoint: model.lifePoint,
       lastViewedAt: model.lastViewedAt,

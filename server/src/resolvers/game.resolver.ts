@@ -69,7 +69,8 @@ export class GameResolver {
 
   @Mutation()
   async startGame(@User() user: auth.DecodedIdToken, @Args('deckId') deckId: number) {
-    const gameEntity = await this.gameService.start(user.uid, deckId);
+    const { displayName } = await this.userService.findById(user.uid);
+    const gameEntity = await this.gameService.start(user.uid, deckId, displayName ?? null);
 
     if (!gameEntity) {
       throw new Error('Failed to start game');
