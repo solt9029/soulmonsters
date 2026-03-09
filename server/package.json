@@ -20,7 +20,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "db:up": "docker compose -f ../mysql/docker-compose.yml up -d mysql",
     "db:down": "docker compose -f ../mysql/docker-compose.yml stop mysql",
-    "db:shell": "docker compose -f ../mysql/docker-compose.yml exec mysql mysql -u root -proot soulmonsters",
+    "db:shell": "docker compose -f ../mysql/docker-compose.yml exec mysql mysql --default-character-set=utf8mb4 -u root -proot soulmonsters",
     "db:migrate": "yarn typeorm migration:run -d src/dataSource.ts",
     "db:migrate:prod": "typeorm migration:run -d dist/src/dataSource.js",
     "db:generate": "yarn typeorm migration:generate -d src/dataSource.ts src/database/migrations/Migration",
