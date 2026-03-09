@@ -58,6 +58,7 @@ export class GameRepository {
         'gameChains',
         'gameChains.gameChainLinks',
         'gamePendingEffects',
+        'gameLogs',
       ],
     });
 

@@ -80,12 +80,17 @@ const ReloadButton = styled.button<{ $loading: boolean }>`
   }
 
   svg {
-    animation: ${({ $loading }) => ($loading ? 'spin 1s linear infinite' : 'none')};
+    animation: ${({ $loading }) =>
+      $loading ? 'spin 1s linear infinite' : 'none'};
   }
 
   @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 `;
 

@@ -127,6 +127,7 @@ export type Game = Node & {
   __typename?: 'Game';
   endedAt?: Maybe<Scalars['DateTime']['output']>;
   gameCards: Array<GameCard>;
+  gameLogs: Array<GameLog>;
   gameUsers: Array<GameUser>;
   id: Scalars['Int']['output'];
   phase?: Maybe<Phase>;
@@ -158,6 +159,14 @@ export type GameCard = Node & {
   position: Scalars['Int']['output'];
   type?: Maybe<Type>;
   zone: Zone;
+};
+
+export type GameLog = {
+  __typename?: 'GameLog';
+  createdAt: Scalars['DateTime']['output'];
+  gameId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  message: Scalars['String']['output'];
 };
 
 export type GameUser = Node & {
@@ -352,7 +361,7 @@ export type GameQueryVariables = Exact<{
 }>;
 
 
-export type GameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: number, turnUserId?: string | null, phase?: Phase | null, winnerUserId?: string | null, startedAt?: any | null, endedAt?: any | null, gameUsers: Array<{ __typename?: 'GameUser', id: number, userId: string, energy?: number | null, lifePoint: number, lastViewedAt?: any | null, actionTypes: Array<ActionType>, user: { __typename?: 'User', displayName?: string | null, photoURL?: string | null } }>, gameCards: Array<{ __typename?: 'GameCard', id: number, originalUserId: string, currentUserId: string, zone: Zone, position: number, battlePosition?: BattlePosition | null, name?: string | null, kind?: Kind | null, type?: Type | null, attribute?: Attribute | null, attack?: number | null, defence?: number | null, cost?: number | null, detail?: string | null, actionTypes: Array<ActionType>, card?: { __typename?: 'Card', id: number, picture: string } | null }> } };
+export type GameQuery = { __typename?: 'Query', game: { __typename?: 'Game', id: number, turnUserId?: string | null, phase?: Phase | null, winnerUserId?: string | null, startedAt?: any | null, endedAt?: any | null, gameUsers: Array<{ __typename?: 'GameUser', id: number, userId: string, energy?: number | null, lifePoint: number, lastViewedAt?: any | null, actionTypes: Array<ActionType>, user: { __typename?: 'User', displayName?: string | null, photoURL?: string | null } }>, gameCards: Array<{ __typename?: 'GameCard', id: number, originalUserId: string, currentUserId: string, zone: Zone, position: number, battlePosition?: BattlePosition | null, name?: string | null, kind?: Kind | null, type?: Type | null, attribute?: Attribute | null, attack?: number | null, defence?: number | null, cost?: number | null, detail?: string | null, actionTypes: Array<ActionType>, card?: { __typename?: 'Card', id: number, picture: string } | null }>, gameLogs: Array<{ __typename?: 'GameLog', id: number, gameId: number, message: string, createdAt: any }> } };
 
 export type StartGameMutationVariables = Exact<{
   deckId: Scalars['Int']['input'];
@@ -370,6 +379,8 @@ export type DispatchGameActionMutationVariables = Exact<{
 export type DispatchGameActionMutation = { __typename?: 'Mutation', dispatchGameAction: { __typename?: 'Game', id: number } };
 
 export type GameCardFragment = { __typename?: 'GameCard', id: number, originalUserId: string, currentUserId: string, zone: Zone, position: number, battlePosition?: BattlePosition | null, name?: string | null, kind?: Kind | null, type?: Type | null, attribute?: Attribute | null, attack?: number | null, defence?: number | null, cost?: number | null, detail?: string | null, actionTypes: Array<ActionType>, card?: { __typename?: 'Card', id: number, picture: string } | null };
+
+export type GameLogFragment = { __typename?: 'GameLog', id: number, gameId: number, message: string, createdAt: any };
 
 export type GameUserFragment = { __typename?: 'GameUser', id: number, userId: string, energy?: number | null, lifePoint: number, lastViewedAt?: any | null, actionTypes: Array<ActionType>, user: { __typename?: 'User', displayName?: string | null, photoURL?: string | null } };
 
@@ -408,6 +419,14 @@ export const GameCardFragmentDoc = gql`
     id
     picture
   }
+}
+    `;
+export const GameLogFragmentDoc = gql`
+    fragment GameLog on GameLog {
+  id
+  gameId
+  message
+  createdAt
 }
     `;
 export const GameUserFragmentDoc = gql`
@@ -766,10 +785,14 @@ export const GameDocument = gql`
     gameCards {
       ...GameCard
     }
+    gameLogs {
+      ...GameLog
+    }
   }
 }
     ${GameUserFragmentDoc}
-${GameCardFragmentDoc}`;
+${GameCardFragmentDoc}
+${GameLogFragmentDoc}`;
 
 /**
  * __useGameQuery__

@@ -7,6 +7,13 @@ enum Phase {
   END
 }
 
+type GameLog {
+  id: Int!
+  gameId: Int!
+  message: String!
+  createdAt: DateTime!
+}
+
 type Game implements Node {
   id: Int!
   turnUserId: String
@@ -16,6 +23,7 @@ type Game implements Node {
   endedAt: DateTime
   gameUsers: [GameUser!]!
   gameCards: [GameCard!]!
+  gameLogs: [GameLog!]!
 }
 
 input ActionPayload {
