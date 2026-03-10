@@ -18,6 +18,9 @@ export function handlePutSoulAction(userId: string, payload: PutSoulActionPayloa
   gameModel = moveGameCardToSoul(gameModel, userId, payload.gameCard.id);
   gameModel = packHandPositions(gameModel, userId, originalPosition);
   gameModel = incrementUserCountStateValue(gameModel, payload.gameUser.id, StateType.PUT_SOUL_COUNT);
-  gameModel = addGameLog(gameModel, `${payload.gameUser.displayName}が${payload.gameCard.card.name}をソウルにセットしました。`);
+  gameModel = addGameLog(
+    gameModel,
+    `${payload.gameUser.displayName}が${payload.gameCard.card.name}をソウルにセットしました。`,
+  );
   return gameModel;
 }

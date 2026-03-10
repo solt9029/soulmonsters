@@ -7,7 +7,10 @@ export function handleStartBattleTimeAction(gameModel: GameModel): GameModel {
   gameModel.phase = Phase.BATTLE;
   // TODO: userIdをハンドラーの引数として受け取るようにする
   if (gameModel.turnUserId) {
-    gameModel = addGameLog(gameModel, `${getDisplayName(gameModel, gameModel.turnUserId)}がバトルタイムを開始しました。`);
+    gameModel = addGameLog(
+      gameModel,
+      `${getDisplayName(gameModel, gameModel.turnUserId)}がバトルタイムを開始しました。`,
+    );
   }
   return gameModel;
 }

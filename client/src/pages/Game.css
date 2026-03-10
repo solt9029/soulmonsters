@@ -257,7 +257,7 @@
   color: #ccc;
   font-size: 0.85rem;
   padding: 4px 10px 10px;
-  gap: 6px;
+  gap: 12px;
   overflow-y: auto;
 }
 
@@ -274,7 +274,7 @@
 .game-logs-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .game-logs-item {

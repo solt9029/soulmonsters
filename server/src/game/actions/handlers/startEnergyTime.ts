@@ -7,6 +7,9 @@ import { getDisplayName } from 'src/game/selectors/getDisplayName';
 export function handleStartEnergyTimeAction(userId: string, gameModel: GameModel): GameModel {
   gameModel = addUserEnergy(gameModel, userId, 2);
   gameModel.phase = Phase.ENERGY;
-  gameModel = addGameLog(gameModel, `${getDisplayName(gameModel, userId)}がエナジータイムを開始し、エナジーが2増えました。`);
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}がエナジータイムを開始し、エナジーが2増えました。`,
+  );
   return gameModel;
 }
