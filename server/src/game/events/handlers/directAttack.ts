@@ -3,6 +3,7 @@ import { GameModel } from '../../../models/game.model';
 import { CARD_ID } from '../../../constants/card';
 import { GamePendingEffectModel } from 'src/models/game-pending-effect.model';
 import { EffectType } from 'src/graphql';
+import { addGameLog } from 'src/game/mutations/addGameLog';
 
 export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameModel): GameModel {
   const attackerCard = gameModel.gameCards.find(gameCard => gameCard.id === event.attackerCardId);
@@ -20,6 +21,7 @@ export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameMode
       createdAt: new Date(),
     });
     gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
+    gameModel = addGameLog(gameModel, `${attackerCard.card.name}の効果が発動しました。`);
   }
 
   if (attackerCard.card.id === CARD_ID.SAIFUKKATSUSHITATAKIBEE) {
@@ -31,6 +33,7 @@ export function handleDirectAttack(event: DirectAttackEvent, gameModel: GameMode
       createdAt: new Date(),
     });
     gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
+    gameModel = addGameLog(gameModel, `${attackerCard.card.name}の効果が発動しました。`);
   }
 
   return gameModel;
