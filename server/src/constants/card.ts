@@ -14,3 +14,20 @@ export const CARD_ID = {
   SHIMASHIMAJUNIOR: 13, // シマシマジュニア
   NISEKISANCHOU: 14, // ニセキサンチョウ
 } as const;
+
+export const CARD_NAME = {
+  TENKINOKAMIRUTERUTKAI: '天気の神　ルテルテ改',
+  SAIFUKKATSUSHITATAKIBEE: '再復活したタキビー',
+  SPEEDDRAGONANDSPEEDBIRD: 'スピードラゴン＆スピーバード',
+  MORINOMUROSAEMERARL: '森の村長　エメラル',
+  HEDORON: 'ヘドロン',
+  SARANIMIZUMIZUSHIISAKANA: 'さらにみずみずしい魚',
+  SHINKASHITABAKUBOMDAN: '進化したバクボムダン',
+  NATSUKASHINORUDE: '懐かしのルード',
+  HAMONTAKINIKARARENUMONO: 'ハモンタキーに狩られぬもの',
+  SUPERNEWVOLTS: 'スーパーニューボルツ',
+  REITETSUNATOTI: '冷徹な鳥',
+  AIKAWARAZUYOKUWAKARANAIHANA: '相変わらずよく分からない花',
+  SHIMASHIMAJUNIOR: 'シマシマジュニア',
+  NISEKISANCHOU: 'ニセキサンチョウ',
+} as const;

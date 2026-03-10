@@ -2,7 +2,7 @@ import { ZoneChangedEvent } from '..';
 import { GameModel } from 'src/models/game.model';
 import { GamePendingEffectModel } from 'src/models/game-pending-effect.model';
 import { EffectType, Zone } from 'src/graphql';
-import { CARD_ID } from 'src/constants/card';
+import { CARD_ID, CARD_NAME } from 'src/constants/card';
 import { addGameLog } from 'src/game/mutations/addGameLog';
 
 export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel): GameModel {
@@ -20,7 +20,7 @@ export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel)
       createdAt: new Date(),
     });
     gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
-    gameModel = addGameLog(gameModel, `${movedCard.card.name}の効果が発動しました。`);
+    gameModel = addGameLog(gameModel, `${CARD_NAME.SHIMASHIMAJUNIOR}の効果が発動しました。`);
   }
 
   if (event.fromZone === Zone.BATTLE && event.toZone === Zone.SOUL && movedCard.card.id === CARD_ID.NISEKISANCHOU) {
@@ -32,7 +32,7 @@ export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel)
       createdAt: new Date(),
     });
     gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
-    gameModel = addGameLog(gameModel, `${movedCard.card.name}の効果が発動しました。`);
+    gameModel = addGameLog(gameModel, `${CARD_NAME.NISEKISANCHOU}の効果が発動しました。`);
   }
 
   if (
@@ -48,7 +48,7 @@ export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel)
       createdAt: new Date(),
     });
     gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
-    gameModel = addGameLog(gameModel, `${movedCard.card.name}の効果が発動しました。`);
+    gameModel = addGameLog(gameModel, `${CARD_NAME.SHINKASHITABAKUBOMDAN}の効果が発動しました。`);
   }
 
   if (event.toZone === Zone.SOUL && movedCard.card.id === CARD_ID.HAMONTAKINIKARARENUMONO) {
@@ -60,7 +60,7 @@ export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel)
       createdAt: new Date(),
     });
     gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
-    gameModel = addGameLog(gameModel, `${movedCard.card.name}の効果が発動しました。`);
+    gameModel = addGameLog(gameModel, `${CARD_NAME.HAMONTAKINIKARARENUMONO}の効果が発動しました。`);
   }
 
   if (event.toZone === Zone.MORGUE && movedCard.card.id === CARD_ID.AIKAWARAZUYOKUWAKARANAIHANA) {
@@ -72,7 +72,7 @@ export function handleZoneChanged(event: ZoneChangedEvent, gameModel: GameModel)
       createdAt: new Date(),
     });
     gameModel.gamePendingEffects = [...gameModel.gamePendingEffects, gamePendingEffect];
-    gameModel = addGameLog(gameModel, `${movedCard.card.name}の効果が発動しました。`);
+    gameModel = addGameLog(gameModel, `${CARD_NAME.AIKAWARAZUYOKUWAKARANAIHANA}の効果が発動しました。`);
   }
 
   return gameModel;

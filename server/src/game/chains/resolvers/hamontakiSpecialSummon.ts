@@ -3,6 +3,8 @@ import { GameChainLinkModel } from 'src/models/game-chain-link.model';
 import { EffectType, Kind, Type, Zone } from 'src/graphql/index';
 import { moveGameCardToBattle } from 'src/game/mutations/moveGameCardToBattle';
 import { markGameChainLinkAsResolved } from 'src/game/mutations/markGameChainLinkAsResolved';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { CARD_NAME } from 'src/constants/card';
 
 const MONSTER_KINDS: Kind[] = [Kind.MONSTER, Kind.CIRCLE_MONSTER];
 
@@ -30,8 +32,18 @@ export const resolveHamontakiSpecialSummon = (gameModel: GameModel, gameChainLin
     return gameModel;
   }
 
+  const selectedGameCardId = gameChainLink.effect.selectedGameCardId;
+  const summonedGameCard = gameModel.gameCards.find(gc => gc.id === selectedGameCardId);
+
   gameModel = moveGameCardToBattle(gameModel, gameChainLink.userId, gameChainLink.effect.selectedGameCardId);
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
+
+  if (summonedGameCard) {
+    gameModel = addGameLog(
+      gameModel,
+      `${CARD_NAME.HAMONTAKINIKARARENUMONO}の効果を処理し、${summonedGameCard.card.name}を特殊召喚しました。`,
+    );
+  }
 
   return gameModel;
 };

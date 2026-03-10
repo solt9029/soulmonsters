@@ -3,6 +3,8 @@ import { GameChainLinkModel } from 'src/models/game-chain-link.model';
 import { EffectType } from 'src/graphql/index';
 import { markGameChainLinkAsResolved } from 'src/game/mutations/markGameChainLinkAsResolved';
 import { moveGameCardToMorgue } from 'src/game/mutations/moveGameCardToMorgue';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { CARD_NAME } from 'src/constants/card';
 
 const getTargetGameCard = (gameModel: GameModel, gameChainLink: GameChainLinkModel) => {
   const targetGameCardId =
@@ -23,6 +25,10 @@ export const resolveSupernewvoltsDestroyMonster = (
 
   gameModel = moveGameCardToMorgue(gameModel, targetGameCard);
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
+  gameModel = addGameLog(
+    gameModel,
+    `${CARD_NAME.SUPERNEWVOLTS}の効果を処理し、${targetGameCard.card.name}を破壊しました。`,
+  );
 
   return gameModel;
 };
