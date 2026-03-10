@@ -256,29 +256,43 @@
   background-color: #1a1a1a;
   color: #ccc;
   font-size: 0.85rem;
+  padding: 4px 10px 10px;
+  gap: 6px;
+  overflow-y: auto;
 }
 
 .game-logs-header {
-  padding: 10px 14px;
+  padding: 8px 12px;
   font-weight: bold;
   color: #eee;
-  border-bottom: 1px solid #333;
+  border-bottom: 2px solid #4a4a4a;
   flex-shrink: 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .game-logs-list {
-  overflow-y: auto;
-  flex: 1;
-  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .game-logs-item {
-  padding: 6px 14px;
-  border-bottom: 1px solid #2a2a2a;
+  background: linear-gradient(135deg, #2a2a2a 0%, #242424 100%);
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  padding: 8px 12px;
   line-height: 1.5;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .game-logs-time {
-  color: #555;
-  font-size: 0.8em;
+  color: #666;
+  font-size: 0.75em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }

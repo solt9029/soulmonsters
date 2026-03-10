@@ -22,7 +22,8 @@ export default function GameLogs({ gameLogs }: Props) {
           });
           return (
             <div key={log.id} className="game-logs-item">
-              {log.message} <span className="game-logs-time">{time}</span>
+              <span>{log.message}</span>
+              <span className="game-logs-time">{time}</span>
             </div>
           );
         })}
