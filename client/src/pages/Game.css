@@ -277,3 +277,8 @@
   border-bottom: 1px solid #2a2a2a;
   line-height: 1.5;
 }
+
+.game-logs-time {
+  color: #555;
+  font-size: 0.8em;
+}
