@@ -5,6 +5,8 @@ import { EffectType } from 'src/graphql/index';
 import { moveGameCardsToMorgue } from 'src/game/mutations/moveGameCardsToMorgue';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
 
 export type EffectSpeedDragonBirdChangePositionActionPayload = {
   gameCard: GameCardModel;
@@ -20,6 +22,10 @@ export function handleEffectSpeedDragonBirdChangePosition(
   const { costGameCards, targetGameCard } = payload;
 
   gameModel = moveGameCardsToMorgue(gameModel, userId, costGameCards);
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}がソウル3をコストとして${payload.gameCard.card.name}の効果を発動しました。`,
+  );
 
   const gameChainId = uuidv4();
   const gameChain = new GameChainModel({

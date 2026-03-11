@@ -6,6 +6,8 @@ import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-ch
 import { subtractUserEnergy } from 'src/game/mutations/subtractUserEnergy';
 import { incrementGameCardCountStateValue } from 'src/game/mutations/incrementGameCardCountStateValue';
 import { EffectType, StateType } from 'src/graphql';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
 
 export type EffectRuteruteDrawActionPayload = {
   gameCard: GameCardModel;
@@ -18,6 +20,10 @@ export function handleEffectRuteruteDraw(
 ): GameModel {
   gameModel = subtractUserEnergy(gameModel, userId, 1);
   gameModel = incrementGameCardCountStateValue(gameModel, payload.gameCard, StateType.EFFECT_RUTERUTE_DRAW_COUNT);
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}がエナジー1をコストとして${payload.gameCard.card.name}の効果を発動しました。`,
+  );
 
   const gameChainId = uuidv4();
   const gameChain = new GameChainModel({

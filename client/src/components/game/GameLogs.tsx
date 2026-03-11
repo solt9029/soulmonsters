@@ -5,9 +5,12 @@ interface Props {
 }
 
 export default function GameLogs({ gameLogs }: Props) {
-  const sortedGameLogs = [...gameLogs].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
+  const sortedGameLogs = [...gameLogs].sort((a, b) => {
+    const timeDiff =
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    if (timeDiff !== 0) return timeDiff;
+    return b.id - a.id;
+  });
 
   return (
     <div className="game-logs">

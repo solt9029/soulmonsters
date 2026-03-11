@@ -5,6 +5,8 @@ import { GameChainModel, GameChainStatus } from '../../../models/game-chain.mode
 import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-chain-link.model';
 import { incrementGameCardCountStateValue } from 'src/game/mutations/incrementGameCardCountStateValue';
 import { EffectType, StateType } from 'src/graphql';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
 
 export type EffectEmeraldEnergyIncreaseActionPayload = {
   gameCard: GameCardModel;
@@ -19,6 +21,10 @@ export function handleEffectEmeraldEnergyIncrease(
     gameModel,
     payload.gameCard,
     StateType.EFFECT_EMERALD_ENERGY_INCREASE_COUNT,
+  );
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}が${payload.gameCard.card.name}の効果を発動しました。`,
   );
 
   const gameChainId = uuidv4();

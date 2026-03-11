@@ -5,6 +5,8 @@ import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { subtractUserEnergy } from 'src/game/mutations/subtractUserEnergy';
 import { EffectType } from 'src/graphql/index';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
 
 export type EffectNatsukashinorudePowerDownActionPayload = {
   gameCard: GameCardModel;
@@ -16,7 +18,11 @@ export function handleEffectNatsukashinorudePowerDown(
   payload: EffectNatsukashinorudePowerDownActionPayload,
   gameModel: GameModel,
 ): GameModel {
-  subtractUserEnergy(gameModel, userId, 2);
+  gameModel = subtractUserEnergy(gameModel, userId, 2);
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}がエナジー2をコストとして${payload.gameCard.card.name}の効果を発動しました。`,
+  );
 
   const gameChainId = uuidv4();
   const gameChain = new GameChainModel({
