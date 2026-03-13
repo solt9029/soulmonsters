@@ -27,7 +27,7 @@ export const resolveSupernewvoltsDestroyMonster = (
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
   gameModel = addGameLog(
     gameModel,
-    `${CARD_NAME.SUPERNEWVOLTS}の効果を処理し、${targetGameCard.card.name}を破壊しました。`,
+    `${CARD_NAME.SUPERNEWVOLTS}の効果を処理し、${targetGameCard.card.name}をモルグゾーンに置きました。`,
   );
 
   return gameModel;

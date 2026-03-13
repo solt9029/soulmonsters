@@ -20,7 +20,10 @@ export const resolveSoulCanon = (gameModel: GameModel, gameChainLink: GameChainL
 
   gameModel = moveGameCardToMorgue(gameModel, targetGameCard);
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
-  gameModel = addGameLog(gameModel, `ソウルキャノンの効果を処理し、${targetGameCard.card.name}を破壊しました。`);
+  gameModel = addGameLog(
+    gameModel,
+    `ソウルキャノンの効果を処理し、${targetGameCard.card.name}をモルグゾーンに置きました。`,
+  );
 
   return gameModel;
 };
