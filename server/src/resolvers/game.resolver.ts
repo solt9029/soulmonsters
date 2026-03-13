@@ -1,24 +1,28 @@
 import { UserService } from 'src/services/user.service';
-import { GameActionDispatchInput } from 'src/graphql/index';
+import { Game, GameActionDispatchInput } from 'src/graphql/index';
 import { GameService } from 'src/services/game.service';
 import { GameRepository } from 'src/repositories/game.repository';
+import { GameLogRepository } from 'src/repositories/game-log.repository';
 import { AuthGuard } from 'src/guards/auth.guard';
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, ResolveField, Parent } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { User } from 'src/decorators/user.decorator';
 import { GameActionGrantor } from 'src/game/actions/grantors';
 import { GameStateReflector } from 'src/game/states/reflectors';
 import { GamePresenter } from 'src/presenters/game.presenter';
+import { GameLogPresenter } from 'src/presenters/game-log.presenter';
 
-@Resolver()
+@Resolver('Game')
 @UseGuards(AuthGuard)
 export class GameResolver {
   constructor(
     private readonly gameService: GameService,
     private readonly gameRepository: GameRepository,
+    private readonly gameLogRepository: GameLogRepository,
     private readonly userService: UserService,
     private readonly gamePresenter: GamePresenter,
+    private readonly gameLogPresenter: GameLogPresenter,
     private readonly gameActionGrantor: GameActionGrantor,
     private readonly gameStateReflector: GameStateReflector,
   ) {}
@@ -77,6 +81,12 @@ export class GameResolver {
     }
 
     return await this.game(user, gameEntity.id);
+  }
+
+  @ResolveField('gameLogs')
+  async gameLogs(@Parent() game: Game) {
+    const logs = await this.gameLogRepository.findByGameId(game.id);
+    return logs.map(log => this.gameLogPresenter.present(log));
   }
 
   @Mutation()

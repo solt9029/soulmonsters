@@ -48,8 +48,8 @@ import { GameChainToModelMapper } from 'src/mappers/to-model/game-chain.to-model
 import { GameChainLinkToModelMapper } from 'src/mappers/to-model/game-chain-link.to-model.mapper';
 import { GamePendingEffectToModelMapper } from 'src/mappers/to-model/game-pending-effect.to-model.mapper';
 import { GameLogToModelMapper } from 'src/mappers/to-model/game-log.to-model.mapper';
-import { GameLogToEntityMapper } from 'src/mappers/to-entity/game-log.to-entity.mapper';
 import { GameLogEntity } from 'src/entities/game-log.entity';
+import { GameLogRepository } from 'src/repositories/game-log.repository';
 
 @Module({
   imports: [
@@ -91,6 +91,7 @@ import { GameLogEntity } from 'src/entities/game-log.entity';
     GameCardRepository,
     GameUserRepository,
     GameStateRepository,
+    GameLogRepository,
     UserService,
     DeckResolver,
     CardResolver,
@@ -115,7 +116,6 @@ import { GameLogEntity } from 'src/entities/game-log.entity';
     GameChainLinkToModelMapper,
     GamePendingEffectToModelMapper,
     GameLogToModelMapper,
-    GameLogToEntityMapper,
     GameActionGrantor,
     GameActionHandler,
     GameStateReflector,

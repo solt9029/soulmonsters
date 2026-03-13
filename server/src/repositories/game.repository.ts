@@ -58,7 +58,6 @@ export class GameRepository {
         'gameChains',
         'gameChains.gameChainLinks',
         'gamePendingEffects',
-        'gameLogs',
       ],
     });
 
@@ -77,7 +76,6 @@ export class GameRepository {
       .leftJoinAndSelect('games.gameChains', 'gameChains')
       .leftJoinAndSelect('gameChains.gameChainLinks', 'gameChainLinks')
       .leftJoinAndSelect('games.gamePendingEffects', 'gamePendingEffects')
-      .leftJoinAndSelect('games.gameLogs', 'gameLogs')
       .where('games.id = :id', { id })
       .getOne();
 
