@@ -2,6 +2,8 @@ import { GameModel } from 'src/models/game.model';
 import { GameChainLinkModel } from 'src/models/game-chain-link.model';
 import { dealDamageToPlayer } from 'src/game/mutations/dealDamageToPlayer';
 import { markGameChainLinkAsResolved } from 'src/game/mutations/markGameChainLinkAsResolved';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { CARD_NAME } from 'src/constants/card';
 
 export const resolveAikawarazuyokuwakaranaihana = (
   gameModel: GameModel,
@@ -18,6 +20,10 @@ export const resolveAikawarazuyokuwakaranaihana = (
   }
 
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
+  gameModel = addGameLog(
+    gameModel,
+    `${CARD_NAME.AIKAWARAZUYOKUWAKARANAIHANA}の効果を処理し、相手に600のダメージを与えました。`,
+  );
 
   return gameModel;
 };

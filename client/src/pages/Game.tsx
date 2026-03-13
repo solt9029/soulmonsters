@@ -9,6 +9,7 @@ import 'react-splitter-layout/lib/index.css';
 import './Game.css';
 import GameCardModal from '../components/game/GameCardModal';
 import GameCardListModal from '../components/game/GameCardListModal';
+import GameLogs from '../components/game/GameLogs';
 import { AppContext } from '../contexts/AppContext';
 
 export default function Game() {
@@ -41,14 +42,14 @@ export default function Game() {
   return (
     <>
       {isEnded && <GameResult isWinner={isWinner} />}
-      <SplitterLayout secondaryInitialSize={0} percentage>
+      <SplitterLayout secondaryInitialSize={20} percentage>
         <GameArea
           gameId={parseInt(id)}
           gameCards={game?.gameCards}
           gameUsers={game?.gameUsers}
           onRefetch={refetch}
         />
-        <div>pane2</div>
+        <GameLogs gameLogs={game?.gameLogs ?? []} />
       </SplitterLayout>
       <GameCardModal />
       <GameCardListModal />

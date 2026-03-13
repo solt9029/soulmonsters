@@ -27,6 +27,7 @@ import { CardPresenter } from 'src/presenters/card.presenter';
 import { DeckCardPresenter } from 'src/presenters/deck-card.presenter';
 import { DeckPresenter } from 'src/presenters/deck.presenter';
 import { GameCardPresenter } from 'src/presenters/game-card.presenter';
+import { GameLogPresenter } from 'src/presenters/game-log.presenter';
 import { GamePresenter } from 'src/presenters/game.presenter';
 import { GameUserPresenter } from 'src/presenters/game-user.presenter';
 import { CardToModelMapper } from 'src/mappers/to-model/card.to-model.mapper';
@@ -46,6 +47,9 @@ import { ChainBuilder } from 'src/game/chains/builders';
 import { GameChainToModelMapper } from 'src/mappers/to-model/game-chain.to-model.mapper';
 import { GameChainLinkToModelMapper } from 'src/mappers/to-model/game-chain-link.to-model.mapper';
 import { GamePendingEffectToModelMapper } from 'src/mappers/to-model/game-pending-effect.to-model.mapper';
+import { GameLogToModelMapper } from 'src/mappers/to-model/game-log.to-model.mapper';
+import { GameLogToEntityMapper } from 'src/mappers/to-entity/game-log.to-entity.mapper';
+import { GameLogEntity } from 'src/entities/game-log.entity';
 
 @Module({
   imports: [
@@ -58,6 +62,7 @@ import { GamePendingEffectToModelMapper } from 'src/mappers/to-model/game-pendin
       GameUserEntity,
       GameCardEntity,
       GameStateEntity,
+      GameLogEntity,
     ]),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
@@ -96,6 +101,7 @@ import { GamePendingEffectToModelMapper } from 'src/mappers/to-model/game-pendin
     DeckCardPresenter,
     DeckPresenter,
     GameCardPresenter,
+    GameLogPresenter,
     GamePresenter,
     GameUserPresenter,
     CardToModelMapper,
@@ -108,6 +114,8 @@ import { GamePendingEffectToModelMapper } from 'src/mappers/to-model/game-pendin
     GameChainToModelMapper,
     GameChainLinkToModelMapper,
     GamePendingEffectToModelMapper,
+    GameLogToModelMapper,
+    GameLogToEntityMapper,
     GameActionGrantor,
     GameActionHandler,
     GameStateReflector,

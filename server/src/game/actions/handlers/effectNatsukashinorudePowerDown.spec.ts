@@ -1,6 +1,7 @@
 import { GameModel } from 'src/models/game.model';
 import { GameUserModel } from 'src/models/game-user.model';
 import { GameCardModel } from 'src/models/game-card.model';
+import { CardModel } from 'src/models/card.model';
 import { EffectType, Zone } from 'src/graphql/index';
 import { GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkStatus } from 'src/models/game-chain-link.model';
@@ -18,6 +19,7 @@ describe('handleEffectNatsukashinorudePowerDown', () => {
       id: 1,
       currentUserId: 'user1',
       zone: Zone.BATTLE,
+      card: new CardModel({ name: '懐かしのルード' }),
     });
 
     const targetGameCard = new GameCardModel({

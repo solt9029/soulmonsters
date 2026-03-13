@@ -6,6 +6,8 @@ import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-l
 import { EffectType, StateType } from 'src/graphql/index';
 import { incrementGameCardCountStateValue } from 'src/game/mutations/incrementGameCardCountStateValue';
 import { moveDeckTopCardToMorgue } from '../../mutations/moveDeckTopCardToMorgue';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
 
 export type EffectSupernewvoltsDestroyMonsterActionPayload = {
   gameCard: GameCardModel;
@@ -22,6 +24,12 @@ export function handleEffectSupernewvoltsDestroyMonster(
     gameModel,
     payload.gameCard,
     StateType.EFFECT_SUPERNEWVOLTS_DESTROY_MONSTER_COUNT,
+  );
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}がデッキトップをコストとして${
+      payload.gameCard.card.name
+    }の効果を発動しました。`,
   );
 
   const gameChainId = uuidv4();

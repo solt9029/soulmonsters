@@ -17,6 +17,9 @@ export class GameUserEntity extends AppEntity<GameUserEntity> {
   @Column()
   userId: string;
 
+  @Column()
+  displayName: string;
+
   @Column({ nullable: true })
   energy: number;
 

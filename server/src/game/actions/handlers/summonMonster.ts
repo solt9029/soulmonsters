@@ -3,6 +3,8 @@ import { subtractUserEnergy } from '../../mutations/subtractUserEnergy';
 import { moveGameCardToBattle } from '../../mutations/moveGameCardToBattle';
 import { packHandPositions } from '../../mutations/packHandPositions';
 import { SummonMonsterActionPayload } from '../validators/summonMonster';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
 
 export function handleSummonMonsterAction(
   userId: string,
@@ -19,6 +21,10 @@ export function handleSummonMonsterAction(
   gameModel = subtractUserEnergy(gameModel, userId, payload.cost);
   gameModel = moveGameCardToBattle(gameModel, userId, payload.gameCardId);
   gameModel = packHandPositions(gameModel, userId, originalPosition);
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}が${gameCard.card.name}をバトルゾーンに置きました。`,
+  );
 
   return gameModel;
 }

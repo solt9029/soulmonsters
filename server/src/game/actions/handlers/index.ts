@@ -75,7 +75,7 @@ export class GameActionHandler {
         return handleEffectEmeraldEnergyIncrease(userId, validationResult.payload, gameModel);
       }
       case ActionType.CHANGE_BATTLE_POSITION: {
-        return handleChangeBattlePositionAction(validationResult.payload, gameModel);
+        return handleChangeBattlePositionAction(userId, validationResult.payload, gameModel);
       }
       case ActionType.USE_SOUL_CANON: {
         return handleUseSoulCanonAction(userId, validationResult.payload, gameModel);

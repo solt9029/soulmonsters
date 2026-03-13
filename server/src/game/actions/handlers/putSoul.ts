@@ -5,6 +5,7 @@ import { packHandPositions } from '../../mutations/packHandPositions';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
 import { StateType } from 'src/graphql';
+import { addGameLog } from 'src/game/mutations/addGameLog';
 
 export type PutSoulActionPayload = {
   gameCard: GameCardModel;
@@ -17,5 +18,9 @@ export function handlePutSoulAction(userId: string, payload: PutSoulActionPayloa
   gameModel = moveGameCardToSoul(gameModel, userId, payload.gameCard.id);
   gameModel = packHandPositions(gameModel, userId, originalPosition);
   gameModel = incrementUserCountStateValue(gameModel, payload.gameUser.id, StateType.PUT_SOUL_COUNT);
+  gameModel = addGameLog(
+    gameModel,
+    `${payload.gameUser.displayName}が${payload.gameCard.card.name}をソウルにセットしました。`,
+  );
   return gameModel;
 }

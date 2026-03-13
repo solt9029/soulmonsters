@@ -6,6 +6,8 @@ import { GameChainLinkModel, GameChainLinkStatus } from '../../../models/game-ch
 import { moveGameCardsToMorgue } from 'src/game/mutations/moveGameCardsToMorgue';
 import { incrementGameCardCountStateValue } from 'src/game/mutations/incrementGameCardCountStateValue';
 import { EffectType, StateType } from 'src/graphql';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
 
 export type EffectFreshFishDrawActionPayload = {
   gameCard: GameCardModel;
@@ -21,6 +23,10 @@ export function handleEffectFreshFishDraw(
 
   gameModel = moveGameCardsToMorgue(gameModel, userId, costGameCards);
   gameModel = incrementGameCardCountStateValue(gameModel, payload.gameCard, StateType.EFFECT_FRESH_FISH_DRAW_COUNT);
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}がソウル3をコストとして${payload.gameCard.card.name}の効果を発動しました。`,
+  );
 
   const gameChainId = uuidv4();
   const gameChain = new GameChainModel({

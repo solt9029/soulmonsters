@@ -18,6 +18,7 @@ export const dbOptions: DataSourceOptions & TypeOrmModuleOptions = {
   username: DB_USERNAME,
   password: DB_PASSWORD,
   database: DB_DATABASE,
+  timezone: 'Z',
   synchronize: DB_SYNCHRONIZE?.toLowerCase() === 'true',
   logging: true,
   entities: [path.join(__dirname, 'entities/*.{ts,js}')],

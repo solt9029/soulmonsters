@@ -3,6 +3,7 @@ import { GameCardEntity } from './game-card.entity';
 import { GameUserEntity } from './game-user.entity';
 import { GameChainEntity } from './game-chain.entity';
 import { GamePendingEffectEntity } from './game-pending-effect.entity';
+import { GameLogEntity } from './game-log.entity';
 import { Phase } from './../graphql/index';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { AppEntity } from './app.entity';
@@ -70,4 +71,11 @@ export class GameEntity extends AppEntity<GameEntity> {
     { cascade: true },
   )
   gamePendingEffects: GamePendingEffectEntity[];
+
+  @OneToMany(
+    () => GameLogEntity,
+    gameLogEntity => gameLogEntity.game,
+    { cascade: true },
+  )
+  gameLogs: GameLogEntity[];
 }

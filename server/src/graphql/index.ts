@@ -199,6 +199,13 @@ export interface GameCard extends Node {
     actionTypes: ActionType[];
 }
 
+export interface GameLog {
+    id: number;
+    gameId: number;
+    message: string;
+    createdAt: DateTime;
+}
+
 export interface Game extends Node {
     id: number;
     turnUserId?: Nullable<string>;
@@ -208,6 +215,7 @@ export interface Game extends Node {
     endedAt?: Nullable<DateTime>;
     gameUsers: GameUser[];
     gameCards: GameCard[];
+    gameLogs: GameLog[];
 }
 
 export interface GameUser extends Node {

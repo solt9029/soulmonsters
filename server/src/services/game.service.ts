@@ -64,7 +64,7 @@ export class GameService {
     });
   }
 
-  async start(userId: string, deckId: number) {
+  async start(userId: string, deckId: number, displayName: string | null) {
     return this.dataSource.transaction(async manager => {
       const userActiveGameEntity = await this.gameRepository.findActiveGameByUserId(userId, manager);
 
@@ -107,6 +107,7 @@ export class GameService {
         await this.gameUserRepository.insert(
           {
             userId,
+            displayName: displayName ?? 'ユーザー1',
             deck: { id: deckId },
             lastViewedAt: new Date(),
             game: { id: gameId },
@@ -138,6 +139,7 @@ export class GameService {
       await this.gameUserRepository.insert(
         {
           userId,
+          displayName: displayName ?? 'ユーザー2',
           deck: { id: deckId },
           energy: turnUserId === userId ? 0 : 1,
           lastViewedAt: new Date(),

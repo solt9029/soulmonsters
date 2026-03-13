@@ -5,6 +5,8 @@ import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { moveGameCardsToMorgue } from 'src/game/mutations/moveGameCardsToMorgue';
 import { EffectType } from 'src/graphql/index';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
 
 export interface UseSoulCanonActionPayload {
   costGameCards: GameCardModel[];
@@ -19,6 +21,12 @@ export function handleUseSoulCanonAction(
   const { costGameCards, targetGameCard } = payload;
 
   gameModel = moveGameCardsToMorgue(gameModel, userId, costGameCards);
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}がソウル4をコストとして、${
+      targetGameCard.card.name
+    }を対象にソウルキャノンを発動しました。`,
+  );
 
   const gameChainId = uuidv4();
   const gameChain = new GameChainModel({

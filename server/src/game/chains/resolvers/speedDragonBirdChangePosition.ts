@@ -3,6 +3,8 @@ import { GameCardModel } from 'src/models/game-card.model';
 import { GameChainLinkModel } from 'src/models/game-chain-link.model';
 import { BattlePosition, EffectType } from 'src/graphql/index';
 import { markGameChainLinkAsResolved } from 'src/game/mutations/markGameChainLinkAsResolved';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { CARD_NAME } from 'src/constants/card';
 
 const getTargetGameCard = (gameModel: GameModel, gameChainLink: GameChainLinkModel) => {
   const targetGameCardId =
@@ -34,6 +36,10 @@ export const resolveSpeedDragonBirdChangePosition = (
   );
 
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
+  gameModel = addGameLog(
+    gameModel,
+    `${CARD_NAME.SPEEDDRAGONANDSPEEDBIRD}の効果を処理し、${targetGameCard.card.name}の表示形式を変更しました。`,
+  );
 
   return gameModel;
 };

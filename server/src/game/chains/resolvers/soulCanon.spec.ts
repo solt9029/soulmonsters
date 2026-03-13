@@ -2,6 +2,7 @@ import { GameModel } from 'src/models/game.model';
 import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { GameCardModel } from 'src/models/game-card.model';
+import { CardModel } from 'src/models/card.model';
 import { EffectType, Zone } from 'src/graphql/index';
 import { resolveSoulCanon } from './soulCanon';
 
@@ -12,6 +13,7 @@ describe('resolveSoulCanon', () => {
       zone: Zone.BATTLE,
       currentUserId: 'user1',
       position: 0,
+      card: new CardModel({ name: 'テストカード' }),
     });
 
     const gameChainId = 'chain-uuid-1';

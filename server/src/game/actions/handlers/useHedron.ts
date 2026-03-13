@@ -5,6 +5,9 @@ import { GameChainModel, GameChainStatus } from 'src/models/game-chain.model';
 import { GameChainLinkModel, GameChainLinkStatus } from 'src/models/game-chain-link.model';
 import { moveGameCardsToMorgue } from 'src/game/mutations/moveGameCardsToMorgue';
 import { EffectType } from 'src/graphql/index';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
+import { CARD_NAME } from 'src/constants/card';
 
 export interface UseHedronActionPayload {
   costGameCards: GameCardModel[];
@@ -18,6 +21,10 @@ export function handleUseHedronAction(
   const { costGameCards } = payload;
 
   gameModel = moveGameCardsToMorgue(gameModel, userId, costGameCards);
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}がソウル3をコストとして${CARD_NAME.HEDORON}の効果を発動しました。`,
+  );
 
   const gameChainId = uuidv4();
   const gameChain = new GameChainModel({
