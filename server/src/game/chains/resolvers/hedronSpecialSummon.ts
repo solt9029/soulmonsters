@@ -41,7 +41,7 @@ export const resolveHedronSpecialSummon = (gameModel: GameModel, gameChainLink: 
   if (summonedGameCard) {
     gameModel = addGameLog(
       gameModel,
-      `${CARD_NAME.HEDORON}の効果を処理し、${summonedGameCard.card.name}を特殊召喚しました。`,
+      `${CARD_NAME.HEDORON}の効果を処理し、${summonedGameCard.card.name}をバトルゾーンに置きました。`,
     );
   }
 

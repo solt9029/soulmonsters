@@ -21,7 +21,10 @@ export function handleSummonMonsterAction(
   gameModel = subtractUserEnergy(gameModel, userId, payload.cost);
   gameModel = moveGameCardToBattle(gameModel, userId, payload.gameCardId);
   gameModel = packHandPositions(gameModel, userId, originalPosition);
-  gameModel = addGameLog(gameModel, `${getDisplayName(gameModel, userId)}が${gameCard.card.name}を召喚しました。`);
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}が${gameCard.card.name}をバトルゾーンに置きました。`,
+  );
 
   return gameModel;
 }

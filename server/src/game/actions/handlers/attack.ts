@@ -5,7 +5,9 @@ import { incrementGameCardCountStateValue } from '../../mutations/incrementGameC
 import { packBattlePositions } from '../../mutations/packBattlePositions';
 import { GameCardModel } from 'src/models/game-card.model';
 import { GameUserModel } from 'src/models/game-user.model';
-import { StateType } from 'src/graphql';
+import { StateType, Zone } from 'src/graphql';
+import { addGameLog } from 'src/game/mutations/addGameLog';
+import { getDisplayName } from 'src/game/selectors/getDisplayName';
 
 export type AttackActionPayload =
   | {
@@ -26,6 +28,10 @@ export function handleAttackAction(userId: string, payload: AttackActionPayload,
   if (payload.type === 'DIRECT_ATTACK') {
     directAttack(gameModel, payload.attackerCard.id, payload.opponentGameUser.userId);
     incrementGameCardCountStateValue(gameModel, payload.attackerCard, StateType.ATTACK_COUNT);
+    gameModel = addGameLog(
+      gameModel,
+      `${getDisplayName(gameModel, userId)}が${payload.attackerCard.card.name}で直接攻撃しました。`,
+    );
     return gameModel;
   }
 
@@ -38,11 +44,19 @@ export function handleAttackAction(userId: string, payload: AttackActionPayload,
   const updatedGameCardZone = gameModel.gameCards.find(gameCard => gameCard.id === payload.attackerCard.id)?.zone;
   const updatedTargetGameCardZone = gameModel.gameCards.find(gameCard => gameCard.id === payload.targetCard.id)?.zone;
 
-  if (updatedGameCardZone !== 'BATTLE' && originalGameCardPosition) {
+  const attackerDestroyed = updatedGameCardZone !== Zone.BATTLE;
+  const targetDestroyed = updatedTargetGameCardZone !== Zone.BATTLE;
+
+  gameModel = addGameLog(
+    gameModel,
+    `${getDisplayName(gameModel, userId)}が${payload.attackerCard.card.name}で${payload.targetCard.card.name}を攻撃しました。`,
+  );
+
+  if (attackerDestroyed && originalGameCardPosition) {
     gameModel = packBattlePositions(gameModel, userId, originalGameCardPosition);
   }
 
-  if (updatedTargetGameCardZone !== 'BATTLE' && originalTargetGameCardPosition) {
+  if (targetDestroyed && originalTargetGameCardPosition) {
     gameModel = packBattlePositions(gameModel, payload.opponentUserId, originalTargetGameCardPosition);
   }
 

@@ -23,9 +23,9 @@ export function handleUseSoulCanonAction(
   gameModel = moveGameCardsToMorgue(gameModel, userId, costGameCards);
   gameModel = addGameLog(
     gameModel,
-    `${getDisplayName(gameModel, userId)}がソウル4をコストとしてソウルキャノンを発動し、${
+    `${getDisplayName(gameModel, userId)}がソウル4をコストとして、${
       targetGameCard.card.name
-    }を対象にしました。`,
+    }を対象にソウルキャノンを発動しました。`,
   );
 
   const gameChainId = uuidv4();

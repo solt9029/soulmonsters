@@ -38,7 +38,7 @@ export const resolveSpeedDragonBirdChangePosition = (
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
   gameModel = addGameLog(
     gameModel,
-    `${CARD_NAME.SPEEDDRAGONANDSPEEDBIRD}の効果を処理し、${targetGameCard.card.name}のバトルポジションを変更しました。`,
+    `${CARD_NAME.SPEEDDRAGONANDSPEEDBIRD}の効果を処理し、${targetGameCard.card.name}の表示形式を変更しました。`,
   );
 
   return gameModel;

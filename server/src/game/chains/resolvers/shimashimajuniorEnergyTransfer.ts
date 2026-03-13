@@ -22,7 +22,10 @@ export const resolveShimashimajuniorEnergyTransfer = (
   }
 
   gameModel = markGameChainLinkAsResolved(gameModel, gameChainLink);
-  gameModel = addGameLog(gameModel, `${CARD_NAME.SHIMASHIMAJUNIOR}の効果を処理し、相手のエナジーを1移しました。`);
+  gameModel = addGameLog(
+    gameModel,
+    `${CARD_NAME.SHIMASHIMAJUNIOR}の効果を処理し、相手のエナジーを1減らし、自分のエナジーを1増やしました。`,
+  );
 
   return gameModel;
 };
