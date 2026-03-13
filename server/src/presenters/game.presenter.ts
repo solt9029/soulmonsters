@@ -2,7 +2,6 @@ import { Game, User } from '../graphql';
 import { GameModel } from '../models/game.model';
 import { GameUserPresenter } from './game-user.presenter';
 import { GameCardPresenter } from './game-card.presenter';
-import { GameLogPresenter } from './game-log.presenter';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -10,10 +9,9 @@ export class GamePresenter {
   constructor(
     private readonly gameUserPresenter: GameUserPresenter,
     private readonly gameCardPresenter: GameCardPresenter,
-    private readonly gameLogPresenter: GameLogPresenter,
   ) {}
 
-  present(model: GameModel, users: User[]): Game {
+  present(model: GameModel, users: User[]): Omit<Game, 'gameLogs'> {
     const gameUsers = model.gameUsers.map(gameUser => {
       const user = users.find(u => u.id === gameUser.userId);
 
@@ -33,7 +31,6 @@ export class GamePresenter {
       endedAt: model.endedAt,
       gameUsers,
       gameCards: model.gameCards.map(gameCard => this.gameCardPresenter.present(gameCard)),
-      gameLogs: model.gameLogs.map(gameLog => this.gameLogPresenter.present(gameLog)),
     };
   }
 }

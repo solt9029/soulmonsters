@@ -13,6 +13,7 @@ import { GameStateReflector } from 'src/game/states/reflectors';
 import { ChainResolver } from 'src/game/chains/resolvers';
 import { ChainBuilder } from 'src/game/chains/builders';
 import { endGameIfUserLifeDepleted } from 'src/game/mutations/endGameIfUserLifeDepleted';
+import { GameLogEntity } from 'src/entities/game-log.entity';
 
 @Injectable()
 export class GameService {
@@ -50,7 +51,15 @@ export class GameService {
 
       // チェーン処理前のゲーム終了チェック
       if (handledGameModel.endedAt !== null) {
-        return await manager.save(handledGameModel.toEntity());
+        const savedEntity = await manager.save(handledGameModel.toEntity());
+        if (handledGameModel.gameLogs.length > 0) {
+          await manager.save(
+            handledGameModel.gameLogs.map(
+              log => new GameLogEntity({ gameId: handledGameModel.id, message: log.message }),
+            ),
+          );
+        }
+        return savedEntity;
       }
 
       // GameChainを解決
@@ -60,7 +69,13 @@ export class GameService {
       const builtGameModel = this.chainBuilder.buildChain(resolvedGameModel);
       const finalGameModel = this.chainResolver.resolveChain(builtGameModel);
 
-      return await manager.save(finalGameModel.toEntity());
+      const savedEntity = await manager.save(finalGameModel.toEntity());
+      if (finalGameModel.gameLogs.length > 0) {
+        await manager.save(
+          finalGameModel.gameLogs.map(log => new GameLogEntity({ gameId: finalGameModel.id, message: log.message })),
+        );
+      }
+      return savedEntity;
     });
   }
 

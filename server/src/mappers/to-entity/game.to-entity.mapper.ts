@@ -6,7 +6,6 @@ import { GameUserToEntityMapper } from './game-user.to-entity.mapper';
 import { GameCardToEntityMapper } from './game-card.to-entity.mapper';
 import { GameStateToEntityMapper } from './game-state.to-entity.mapper';
 import { GamePendingEffectToEntityMapper } from './game-pending-effect.to-entity.mapper';
-import { GameLogToEntityMapper } from './game-log.to-entity.mapper';
 
 @Injectable()
 export class GameToEntityMapper {
@@ -16,7 +15,6 @@ export class GameToEntityMapper {
     private readonly gameStateToEntityMapper: GameStateToEntityMapper,
     private readonly gameChainToEntityMapper: GameChainToEntityMapper,
     private readonly gamePendingEffectToEntityMapper: GamePendingEffectToEntityMapper,
-    private readonly gameLogToEntityMapper: GameLogToEntityMapper,
   ) {}
 
   toEntity(model: GameModel): GameEntity {
@@ -35,7 +33,6 @@ export class GameToEntityMapper {
       gameStates: model.gameStates.map(m => this.gameStateToEntityMapper.toEntity(m)),
       gameChains: model.gameChains.map(m => this.gameChainToEntityMapper.toEntity(m)),
       gamePendingEffects: model.gamePendingEffects.map(m => this.gamePendingEffectToEntityMapper.toEntity(m)),
-      gameLogs: model.gameLogs.map(m => this.gameLogToEntityMapper.toEntity(m)),
     });
   }
 }
