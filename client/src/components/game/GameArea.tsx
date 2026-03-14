@@ -7,6 +7,10 @@ import {
 } from '../../graphql/generated/graphql-client';
 import GameUser from './GameUser';
 import { AppContext } from '../../contexts/AppContext';
+import {
+  AttackAnimationContext,
+  AttackAnimationProvider,
+} from '../../contexts/AttackAnimationContext';
 import { GameActionAlert } from './GameActionAlert';
 import GameBoard3D from './three/GameBoard3D';
 
@@ -80,13 +84,33 @@ const ReloadButton = styled.button<{ $loading: boolean }>`
   }
 
   svg {
-    animation: ${({ $loading }) => ($loading ? 'spin 1s linear infinite' : 'none')};
+    animation: ${({ $loading }) =>
+      $loading ? 'spin 1s linear infinite' : 'none'};
   }
 
   @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
+`;
+
+const ScreenFlash = styled.div<{ $active: boolean }>`
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 160, 40, 0.75) 0%,
+    rgba(255, 80, 10, 0.5) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 50;
+  opacity: ${({ $active }) => ($active ? 1 : 0)};
+  transition: opacity ${({ $active }) => ($active ? '0.04s' : '0.35s')} ease;
 `;
 
 const GameAlert = styled.div<{ variant?: 'primary' | 'danger' }>`
@@ -125,7 +149,7 @@ export type GameAreaProps = {
   onRefetch: () => Promise<unknown>;
 };
 
-export default function GameArea({
+function GameAreaContent({
   gameId,
   gameCards,
   gameUsers,
@@ -134,6 +158,7 @@ export default function GameArea({
   const {
     state: { actionStatus, dispatchGameActionError },
   } = useContext(AppContext);
+  const { isFlashing } = useContext(AttackAnimationContext);
   const [refetching, setRefetching] = useState(false);
 
   const handleRefetch = async () => {
@@ -159,6 +184,7 @@ export default function GameArea({
         background: '#111',
       }}
     >
+      <ScreenFlash $active={isFlashing} />
       <GameBoard3D gameId={gameId} gameCards={gameCards} />
 
       <AlertsOverlay>
@@ -215,5 +241,13 @@ export default function GameArea({
         再読み込み
       </ReloadButton>
     </div>
+  );
+}
+
+export default function GameArea(props: GameAreaProps) {
+  return (
+    <AttackAnimationProvider>
+      <GameAreaContent {...props} />
+    </AttackAnimationProvider>
   );
 }

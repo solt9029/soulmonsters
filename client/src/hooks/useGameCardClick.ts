@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
+import { AttackAnimationContext } from '../contexts/AttackAnimationContext';
 import {
+  ActionType,
   type GameCardFragment,
   Zone,
 } from '../graphql/generated/graphql-client';
@@ -13,6 +15,7 @@ export function useGameCardClick(data: GameCardFragment, gameId: number) {
     state: { gameCardModal, actionStatus, user },
     dispatch,
   } = useContext(AppContext);
+  const { startAttackAnimation } = useContext(AttackAnimationContext);
 
   const [dispatchGameAction] = useDispatchGameActionMutation(gameId);
 
@@ -101,6 +104,15 @@ export function useGameCardClick(data: GameCardFragment, gameId: number) {
 
     if (newActionStatus.isCompleted() && newActionStatus.type) {
       const { type, payload } = newActionStatus;
+
+      if (type === ActionType.Attack && payload.gameCardId) {
+        await startAttackAnimation({
+          attackerGameCardId: payload.gameCardId,
+          targetGameCardId: payload.targetGameCardIds?.[0] ?? null,
+          targetGameUserId: payload.targetGameUserIds?.[0] ?? null,
+        });
+      }
+
       await dispatchGameAction({
         variables: {
           id: gameId,

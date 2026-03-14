@@ -9,6 +9,7 @@ import { findGameCards } from '../../../utils/game';
 import TableMesh from './TableMesh';
 import ZoneCards3D from './ZoneCards3D';
 import FloatingSouls from './FloatingSouls';
+import AttackAnimationEffect from './AttackAnimationEffect';
 
 const ALL_ZONES = [Zone.Hand, Zone.Battle, Zone.Soul, Zone.Morgue, Zone.Deck];
 
@@ -34,6 +35,7 @@ export default function GameBoard3D({ gameId, gameCards }: GameBoard3DProps) {
 
       <TableMesh />
       <FloatingSouls />
+      <AttackAnimationEffect gameCards={gameCards ?? []} />
 
       <Suspense fallback={null}>
         {ALL_ZONES.map((zone) => (

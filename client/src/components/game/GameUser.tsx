@@ -1,10 +1,12 @@
 import { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 import {
+  ActionType,
   type GameUserFragment,
   useActiveGameIdQuery,
 } from '../../graphql/generated/graphql-client';
 import { AppContext } from '../../contexts/AppContext';
+import { AttackAnimationContext } from '../../contexts/AttackAnimationContext';
 import { findGameUser } from '../../utils/game';
 import GameActionButton from './GameActionButton';
 import ActionStatus from '../../models/ActionStatus';
@@ -203,6 +205,7 @@ export default function GameUser({ gameUsers, isYours }: GameUserProps) {
     state: { user, actionStatus },
     dispatch,
   } = useContext(AppContext);
+  const { startAttackAnimation } = useContext(AttackAnimationContext);
 
   const activeGameIdQueryResult = useActiveGameIdQuery();
   const activeGameId = activeGameIdQueryResult.data?.activeGameId || 1;
@@ -221,6 +224,15 @@ export default function GameUser({ gameUsers, isYours }: GameUserProps) {
 
     if (newActionStatus.isCompleted()) {
       const { type, payload } = newActionStatus;
+
+      if (type === ActionType.Attack && payload.gameCardId) {
+        await startAttackAnimation({
+          attackerGameCardId: payload.gameCardId,
+          targetGameCardId: null,
+          targetGameUserId: gameUser!.id,
+        });
+      }
+
       await dispatchGameAction({
         variables: {
           id: activeGameId,
